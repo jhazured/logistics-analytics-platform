@@ -1,13 +1,13 @@
-name: smart_logistics
-version: 1.0.0
+name: 'logistics_analytics'
+version: '1.0.0'
 config-version: 2
 
-profile: smart_logistics
+profile: 'logistics_analytics'
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
-seed-paths: ["seeds"]
+seed-paths: ["data"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
@@ -16,43 +16,110 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+# Environment-specific variables
+vars:
+  # Development environment
+  dev:
+    start_date: '2023-01-01'
+    test_store_failures: true
+    refresh_incremental: false
+    max_partition_days: 30
+    enable_real_time_features: false
+    
+  # Staging environment  
+  staging:
+    start_date: '2022-01-01'
+    test_store_failures: true
+    refresh_incremental: true
+    max_partition_days: 90
+    enable_real_time_features: true
+    
+  # Production environment
+  prod:
+    start_date: '2021-01-01'
+    test_store_failures: false
+    refresh_incremental: true
+    max_partition_days: 365
+    enable_real_time_features: true
+
+# Environment-specific model configurations
 models:
-  smart_logistics:
-    +materialized: table
+  logistics_analytics:
+    +materialized: view
+    +persist_docs:
+      relation: true
+      columns: true
+    
     staging:
       +materialized: view
-      +tags: ["staging"]
+      +on_schema_change: "sync_all_columns"
+      dev:
+        +materialized: ephemeral
+        
     marts:
       +materialized: table
-      +tags: ["marts"]
-      analytics:
-        +materialized: table
-        +tags: ["ml", "analytics"]
+      +on_schema_change: "sync_all_columns"
+      
       dimensions:
         +materialized: table
-        +tags: ["dim"]
+        dev:
+          +materialized: view
+        prod:
+          +post-hook: "{{ log_table_stats(this) }}"
+          
       facts:
-        +materialized: table
-        +tags: ["fact"]
+        +materialized: incremental
+        +unique_key: 'id'
+        +on_schema_change: "sync_all_columns"
+        dev:
+          +materialized: view
+        prod:
+          +post-hook: 
+            - "{{ optimize_clustering(this) }}"
+            - "{{ log_table_stats(this) }}"
+            
+      analytics:
+        +materialized: view
+        prod:
+          +post-hook: "{{ refresh_materialized_view(this) }}"
+          
       ml_features:
         +materialized: table
         +tags: ["ml", "features"]
-      business_intelligence:
-        +materialized: view
-        +tags: ["bi", "dashboard"]
-      monitoring:
-        +materialized: view
-        +tags: ["monitoring", "quality"]
+        dev:
+          +materialized: view
+        prod:
+          +post-hook: "{{ update_feature_store_metadata(this) }}"
 
+# Environment-specific seeds
+seeds:
+  logistics_analytics:
+    +quote_columns: false
+    dev:
+      +enabled: true
+    staging:
+      +enabled: true  
+    prod:
+      +enabled: false
+
+# Environment-specific tests
+tests:
+  logistics_analytics:
+    +store_failures: "{{ var('test_store_failures', true) }}"
+    +severity: warn
+    prod:
+      +severity: error
+
+# Environment-specific snapshots
 snapshots:
-  smart_logistics:
+  logistics_analytics:
     +target_schema: snapshots
     +strategy: timestamp
     +updated_at: updated_at
-
-tests:
-  +store_failures: true
-  +severity: error
+    dev:
+      +enabled: false
+    prod:
+      +enabled: true
 
 vars:
   start_date: 2023-01-01

@@ -2,67 +2,138 @@ version: 2
 
 models:
   - name: fact_shipments
+    description: |
+      Core shipment fact table containing transactional shipment data:
+      - Shipment identifiers and foreign keys to dimensions
+      - Calculated metrics (distance, time, costs)
+      - Performance indicators (on-time delivery, efficiency scores)
+      - Financial data (revenue, costs, margins)
+    meta:
+      owner: "data-engineering"
+      contains_pii: false
+      update_frequency: "hourly"
     columns:
       - name: shipment_id
-        tests: [not_null, unique]
-      - name: date_key
-        tests: [not_null]
+        description: "Unique identifier for each shipment"
+        tests:
+          - unique
+          - not_null
       - name: customer_id
-        tests: [not_null]
-      - name: delivery_status
+        description: "Foreign key to customer dimension"
         tests:
-          - accepted_values:
-              values: ["Delivered", "In Transit", "Delayed", "Failed"]
-      - name: priority_level
-        tests:
-          - accepted_values:
-              values: ["Standard", "High", "Urgent"]
-      - name: revenue
-        tests:
-          - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 0
-              strictly: false
-      - name: weight_kg
-        tests:
-          - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 0
-              strictly: true
-  - name: fact_vehicle_telemetry
-    columns:
-      - name: telemetry_id
-        tests: [not_null, unique]
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id
       - name: vehicle_id
-        tests: [not_null]
-      - name: timestamp
-        tests: [not_null]
-      - name: fuel_level_percent
+        description: "Foreign key to vehicle dimension"
         tests:
-          - dbt_expectations.expect_column_values_to_be_between:
+          - relationships:
+              to: ref('dim_vehicle')  
+              field: vehicle_id
+      - name: route_id
+        description: "Foreign key to route dimension"
+        tests:
+          - relationships:
+              to: ref('dim_route')
+              field: route_id
+      - name: shipment_date_id
+        description: "Foreign key to date dimension for shipment date"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: actual_distance_miles
+        description: "Actual distance traveled for shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 5000
+      - name: planned_distance_miles  
+        description: "Originally planned distance for shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 5000
+      - name: actual_delivery_time_hours
+        description: "Actual time taken for delivery in hours"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0.1
+              max_value: 720
+      - name: estimated_delivery_time_hours
+        description: "Originally estimated delivery time"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0.1
+              max_value: 720
+      - name: fuel_cost_usd
+        description: "Total fuel cost for the shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: driver_cost_usd
+        description: "Driver labor cost for the shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 5000
+      - name: total_cost_usd
+        description: "Total cost for the shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50000
+      - name: revenue_usd
+        description: "Revenue generated from the shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100000
+      - name: profit_margin_pct
+        description: "Profit margin percentage"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -100
+              max_value: 100
+      - name: on_time_delivery_flag
+        description: "Boolean indicating if delivery was on time"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+      - name: route_efficiency_score
+        description: "Efficiency score for the route (0-100)"
+        tests:
+          - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100
-              strictly: false
-  - name: fact_route_conditions
-    columns:
-      - name: condition_id
-        tests: [not_null, unique]
-      - name: route_id
-        tests: [not_null]
-      - name: date_key
-        tests: [not_null]
-  - name: fact_vehicle_utilization
-    columns:
-      - name: utilization_id
-        tests: [not_null, unique]
-      - name: vehicle_id
-        tests: [not_null]
-      - name: date_key
-        tests: [not_null]
-  - name: fact_route_performance
-    columns:
-      - name: performance_id
-        tests: [not_null, unique]
-      - name: route_id
-        tests: [not_null]
-      - name: date_key
-        tests: [not_null]
-
+      - name: carbon_emissions_kg
+        description: "Estimated carbon emissions in kg CO2"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000
+      - name: weather_delay_minutes
+        description: "Delay attributed to weather conditions"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1440  # 24 hours max
+      - name: traffic_delay_minutes  
+        description: "Delay attributed to traffic conditions"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1440

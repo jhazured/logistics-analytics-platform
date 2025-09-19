@@ -1,0 +1,112 @@
+version: 2
+
+models:
+  - name: performance_dashboard
+    description: |
+      Executive performance dashboard providing key logistics KPIs:
+      - Operational metrics (on-time delivery, route efficiency)
+      - Financial performance (costs, revenue, margins)  
+      - Customer satisfaction indicators
+      - Trend analysis and period-over-period comparisons
+    meta:
+      owner: "analytics-team"
+      refresh_frequency: "every 4 hours"
+      business_users: ["operations", "finance", "executive"]
+    columns:
+      - name: metric_date
+        description: "Date for the metrics calculation"
+        tests:
+          - not_null
+      - name: total_shipments
+        description: "Total number of shipments for the period"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: on_time_delivery_rate
+        description: "Percentage of shipments delivered on time"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: avg_delivery_time_hours
+        description: "Average delivery time in hours"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 168  # 1 week max average
+      - name: total_revenue_usd
+        description: "Total revenue for the period"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: total_cost_usd
+        description: "Total operational costs for the period"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: profit_margin_pct
+        description: "Overall profit margin percentage"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -50
+              max_value: 50
+      - name: avg_route_efficiency_score
+        description: "Average route efficiency score"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: customer_satisfaction_score
+        description: "Aggregated customer satisfaction score"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 10
+
+  - name: sustainability_metrics
+    description: |
+      Environmental impact and sustainability tracking:
+      - Carbon emissions tracking
+      - Fuel efficiency metrics
+      - Route optimization savings
+      - Green logistics initiatives performance
+    meta:
+      owner: "sustainability-team"
+      compliance: ["ESG_REPORTING", "CARBON_ACCOUNTING"]
+    columns:
+      - name: metric_date
+        description: "Date for sustainability metrics"
+        tests:
+          - not_null
+      - name: total_carbon_emissions_kg
+        description: "Total carbon emissions in kg CO2"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: carbon_per_mile_kg
+        description: "Carbon emissions per mile traveled"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 2
+      - name: fuel_efficiency_mpg
+        description: "Fleet average fuel efficiency"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 3
+              max_value: 20
+      - name: route_optimization_savings_usd
+        description: "Cost savings from route optimization"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: green_delivery_percentage
+        description: "Percentage of deliveries using eco-friendly vehicles"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100

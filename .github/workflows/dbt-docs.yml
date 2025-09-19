@@ -1,0 +1,45 @@
+name: 📚 dbt Documentation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dbt/models/**'
+      - 'dbt/macros/**'
+
+jobs:
+  generate-docs:
+    name: 📚 Generate & Deploy Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 🔧 Install dependencies
+        run: |
+          pip install dbt-snowflake
+
+      - name: 📋 Install dbt packages
+        run: |
+          cd dbt && dbt deps
+
+      - name: 📊 Generate documentation
+        run: |
+          cd dbt && dbt docs generate --target prod
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_PROD_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PROD_PASSWORD }}
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dbt/target
+          destination_dir: docs

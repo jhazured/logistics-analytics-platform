@@ -1,0 +1,290 @@
+name: dbt CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'dbt/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'dbt/**'
+  schedule:
+    # Run nightly data quality checks
+    - cron: '0 2 * * *'
+
+env:
+  DBT_PROFILES_DIR: ./dbt
+  DBT_PROJECT_DIR: ./dbt
+
+jobs:
+  # Data Quality & Testing Job
+  test:
+    name: 🧪 Data Quality Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dbt-version: [1.6.0, 1.7.0]
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+
+      - name: 🔧 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install dbt-snowflake==${{ matrix.dbt-version }}
+          pip install sqlfluff pre-commit
+
+      - name: 📋 Install dbt packages
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt deps
+
+      - name: 🔍 SQL Linting
+        run: |
+          sqlfluff lint ${{ env.DBT_PROJECT_DIR }}/models/ --config ${{ env.DBT_PROJECT_DIR }}/.sqlfluff
+
+      - name: 🧪 dbt Debug
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt debug --target ci
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_CI_USER }}
+          SF_PASSWORD: ${{ secrets.SF_CI_PASSWORD }}
+          SF_ROLE: ${{ secrets.SF_CI_ROLE }}
+          SF_DATABASE: ${{ secrets.SF_CI_DATABASE }}
+          SF_WAREHOUSE: ${{ secrets.SF_CI_WAREHOUSE }}
+          SF_SCHEMA: ${{ secrets.SF_CI_SCHEMA }}
+
+      - name: 🔄 Parse dbt models
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt parse --target ci
+
+      - name: 🧪 Run dbt tests
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt test --target ci --store-failures
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_CI_USER }}
+          SF_PASSWORD: ${{ secrets.SF_CI_PASSWORD }}
+          SF_ROLE: ${{ secrets.SF_CI_ROLE }}
+          SF_DATABASE: ${{ secrets.SF_CI_DATABASE }}
+          SF_WAREHOUSE: ${{ secrets.SF_CI_WAREHOUSE }}
+          SF_SCHEMA: ${{ secrets.SF_CI_SCHEMA }}
+
+      - name: 📊 Generate test results
+        if: always()
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt docs generate --target ci
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_CI_USER }}
+          SF_PASSWORD: ${{ secrets.SF_CI_PASSWORD }}
+
+      - name: 📤 Upload test artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: dbt-test-results-${{ matrix.dbt-version }}
+          path: |
+            ${{ env.DBT_PROJECT_DIR }}/target/
+            ${{ env.DBT_PROJECT_DIR }}/logs/
+
+  # Staging Deployment
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 🔧 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install dbt-snowflake
+
+      - name: 📋 Install dbt packages
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt deps
+
+      - name: 🏗️ dbt Run (Staging)
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt run --target staging --full-refresh
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_STAGING_USER }}
+          SF_PASSWORD: ${{ secrets.SF_STAGING_PASSWORD }}
+          SF_ROLE: ${{ secrets.SF_STAGING_ROLE }}
+          SF_DATABASE: ${{ secrets.SF_STAGING_DATABASE }}
+          SF_WAREHOUSE: ${{ secrets.SF_STAGING_WAREHOUSE }}
+          SF_SCHEMA: ${{ secrets.SF_STAGING_SCHEMA }}
+
+      - name: 🧪 Post-deployment tests
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt test --target staging
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_STAGING_USER }}
+          SF_PASSWORD: ${{ secrets.SF_STAGING_PASSWORD }}
+
+      - name: 📊 Generate documentation
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt docs generate --target staging
+
+  # Production Deployment  
+  deploy-production:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 🔧 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install dbt-snowflake slack-sdk
+
+      - name: 📋 Install dbt packages
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt deps
+
+      - name: 📸 Create snapshot before deployment
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt snapshot --target prod
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_PROD_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PROD_PASSWORD }}
+          SF_ROLE: ${{ secrets.SF_PROD_ROLE }}
+          SF_DATABASE: ${{ secrets.SF_PROD_DATABASE }}
+          SF_WAREHOUSE: ${{ secrets.SF_PROD_WAREHOUSE }}
+          SF_SCHEMA: ${{ secrets.SF_PROD_SCHEMA }}
+
+      - name: 🏗️ dbt Run (Production)
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt run --target prod --exclude tag:dev_only
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_PROD_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PROD_PASSWORD }}
+          SF_ROLE: ${{ secrets.SF_PROD_ROLE }}
+          SF_DATABASE: ${{ secrets.SF_PROD_DATABASE }}
+          SF_WAREHOUSE: ${{ secrets.SF_PROD_WAREHOUSE }}
+          SF_SCHEMA: ${{ secrets.SF_PROD_SCHEMA }}
+
+      - name: 🧪 Critical tests only
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt test --target prod --select tag:critical
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_PROD_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PROD_PASSWORD }}
+
+      - name: 📊 Update documentation
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt docs generate --target prod
+
+      - name: 📱 Notify Slack on success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "✅ Production deployment successful!"
+          SLACK_TITLE: "dbt Production Deployment"
+          SLACK_COLOR: good
+
+      - name: 📱 Notify Slack on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "❌ Production deployment failed!"
+          SLACK_TITLE: "dbt Production Deployment"
+          SLACK_COLOR: danger
+
+  # Data Quality Monitoring
+  data-quality-monitoring:
+    name: 📊 Data Quality Monitoring
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 🔧 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install dbt-snowflake pandas great-expectations
+
+      - name: 🔍 Run data quality checks
+        run: |
+          cd ${{ env.DBT_PROJECT_DIR }}
+          dbt test --target prod --select tag:data_quality
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_PROD_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PROD_PASSWORD }}
+
+      - name: 📊 Generate quality report
+        run: |
+          python scripts/monitoring/generate_quality_report.py
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_PROD_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PROD_PASSWORD }}
+
+      - name: 📤 Upload quality report
+        uses: actions/upload-artifact@v3
+        with:
+          name: data-quality-report
+          path: reports/quality_report.html

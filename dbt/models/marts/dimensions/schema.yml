@@ -1,0 +1,134 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: |
+      Customer dimension containing all customer master data including:
+      - Basic customer information (name, contact details)
+      - Customer segmentation and tier classification  
+      - Geographic information
+      - Account status and preferences
+      - Historical performance metrics
+    columns:
+      - name: customer_id
+        description: "Unique identifier for each customer (surrogate key)"
+        tests:
+          - unique
+          - not_null
+      - name: customer_natural_key
+        description: "Natural business key from source system"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Full customer company name"
+        tests:
+          - not_null
+      - name: customer_tier
+        description: "Customer service tier (PREMIUM, STANDARD, BASIC)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PREMIUM', 'STANDARD', 'BASIC']
+              quote: false
+      - name: industry_vertical
+        description: "Industry classification for the customer"
+        tests:
+          - accepted_values:
+              values: ['RETAIL', 'MANUFACTURING', 'HEALTHCARE', 'TECHNOLOGY', 'AUTOMOTIVE', 'FOOD_BEVERAGE', 'OTHER']
+      - name: credit_limit_usd
+        description: "Customer credit limit in USD"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000000
+      - name: customer_since_date
+        description: "Date when customer relationship began"
+        tests:
+          - not_null
+      - name: is_active
+        description: "Flag indicating if customer is currently active"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: payment_terms_days
+        description: "Standard payment terms in days"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 120
+      - name: preferred_delivery_window
+        description: "Customer's preferred delivery time window"
+      - name: special_handling_requirements
+        description: "Any special handling instructions or requirements"
+
+  - name: dim_vehicle
+    description: |
+      Vehicle dimension containing comprehensive vehicle information:
+      - Vehicle specifications (make, model, year, capacity)
+      - Operational characteristics (fuel efficiency, maintenance schedule)
+      - Current status and assignment
+      - Historical performance metrics
+    columns:
+      - name: vehicle_id
+        description: "Unique identifier for each vehicle (surrogate key)"
+        tests:
+          - unique
+          - not_null
+      - name: vehicle_number
+        description: "Business vehicle number/license plate"
+        tests:
+          - unique
+          - not_null
+      - name: vehicle_type
+        description: "Classification of vehicle type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'TRAILER']
+      - name: make_model
+        description: "Vehicle make and model"
+        tests:
+          - not_null
+      - name: model_year
+        description: "Manufacturing year of the vehicle"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1990
+              max_value: 2030
+      - name: capacity_lbs
+        description: "Maximum weight capacity in pounds"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 100
+              max_value: 80000
+      - name: fuel_efficiency_mpg
+        description: "Average fuel efficiency in miles per gallon"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 3
+              max_value: 50
+      - name: maintenance_interval_miles
+        description: "Recommended maintenance interval in miles"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 3000
+              max_value: 25000
+      - name: current_mileage
+        description: "Current odometer reading"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000000
+      - name: vehicle_status
+        description: "Current operational status"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ACTIVE', 'MAINTENANCE', 'RETIRED', 'OUT_OF_SERVICE']

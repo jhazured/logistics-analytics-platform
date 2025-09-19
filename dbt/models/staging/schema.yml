@@ -1,0 +1,107 @@
+version: 2
+
+sources:
+  - name: raw_logistics
+    description: "Raw logistics data from various source systems"
+    database: "{{ var('raw_database', 'LOGISTICS_RAW') }}"
+    schema: raw
+    freshness:
+      warn_after: {count: 2, period: hour}
+      error_after: {count: 6, period: hour}
+    loaded_at_field: _loaded_at
+    
+    tables:
+      - name: shipments
+        description: "Raw shipment data from TMS system"
+        columns:
+          - name: shipment_id
+            description: "Unique identifier for each shipment"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: "Foreign key to customer dimension"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw_logistics', 'customers')
+                  field: customer_id
+          - name: origin_location_id
+            description: "Pickup location identifier"
+            tests:
+              - not_null
+          - name: destination_location_id  
+            description: "Delivery location identifier"
+            tests:
+              - not_null
+          - name: shipment_date
+            description: "Date when shipment was created"
+            tests:
+              - not_null
+          - name: requested_delivery_date
+            description: "Customer requested delivery date"
+          - name: actual_delivery_date
+            description: "Actual delivery completion date"
+          - name: shipment_value_usd
+            description: "Total value of shipment in USD"
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  max_value: 1000000
+          - name: weight_lbs
+            description: "Total weight of shipment in pounds"
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  max_value: 80000
+          - name: status
+            description: "Current status of the shipment"
+            tests:
+              - accepted_values:
+                  values: ['PENDING', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED', 'DELAYED']
+
+models:
+  - name: stg_shipments
+    description: "Cleaned and standardized shipment data"
+    columns:
+      - name: shipment_id
+        description: "Unique identifier for each shipment"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key to customer dimension"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id
+      - name: shipment_date
+        description: "Date when shipment was created"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: "'2020-01-01'"
+              max_value: "current_date()"
+      - name: delivery_time_hours
+        description: "Calculated delivery time in hours"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 720  # 30 days max
+      - name: on_time_delivery
+        description: "Boolean flag indicating if delivery was on time"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: distance_miles
+        description: "Calculated distance between origin and destination"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 5000

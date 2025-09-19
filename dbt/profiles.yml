@@ -1,4 +1,4 @@
-smart_logistics:
+logistics_analytics:
   target: dev
   outputs:
     dev:
@@ -6,9 +6,36 @@ smart_logistics:
       account: "{{ env_var('SF_ACCOUNT') }}"
       user: "{{ env_var('SF_USER') }}"
       password: "{{ env_var('SF_PASSWORD') }}"
-      role: "{{ env_var('SF_ROLE', 'TRANSFORMER') }}"
-      database: "{{ env_var('SF_DATABASE', 'LOGISTICS_DW') }}"
-      warehouse: "{{ env_var('SF_WAREHOUSE', 'TRANSFORMING') }}"
-      schema: "{{ env_var('SF_SCHEMA', 'DBT_DEV') }}"
+      role: "{{ env_var('SF_ROLE', 'DBT_DEV_ROLE') }}"
+      database: LOGISTICS_DW_DEV
+      warehouse: COMPUTE_WH_XS
+      schema: analytics_dev
+      threads: 4
+      keepalive: false
+      query_tag: dbt_dev
+
+    staging:
+      type: snowflake
+      account: "{{ env_var('SF_ACCOUNT') }}"
+      user: "{{ env_var('SF_USER') }}"
+      password: "{{ env_var('SF_PASSWORD') }}"
+      role: "{{ env_var('SF_ROLE', 'DBT_STAGING_ROLE') }}"
+      database: LOGISTICS_DW_STAGING
+      warehouse: COMPUTE_WH_SMALL
+      schema: analytics_staging
       threads: 8
-      client_session_keep_alive: true
+      keepalive: false
+      query_tag: dbt_staging
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('SF_ACCOUNT') }}"
+      user: "{{ env_var('SF_USER') }}"
+      password: "{{ env_var('SF_PASSWORD') }}"
+      role: "{{ env_var('SF_ROLE', 'DBT_PROD_ROLE') }}"
+      database: LOGISTICS_DW_PROD
+      warehouse: COMPUTE_WH_MEDIUM
+      schema: analytics_prod
+      threads: 12
+      keepalive: false
+      query_tag: dbt_prod
