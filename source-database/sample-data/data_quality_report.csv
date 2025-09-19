@@ -1,0 +1,9 @@
+table,row_count,column_count,null_percentage,duplicate_rows,memory_usage_mb
+dim_date,993,16,0.0,0,0.35
+dim_location,240,11,0.0,0,0.11
+dim_customer,1000,15,0.0,0,0.56
+dim_vehicle,200,17,0.0,0,0.09
+dim_route,137,13,0.0,0,0.05
+dim_weather,3650,11,0.0,0,0.76
+fact_shipments,65031,24,1.75,0,28.7
+fact_vehicle_telemetry,198002,18,0.0,0,44.31

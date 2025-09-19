@@ -1,0 +1,1001 @@
+customer_id,customer_name,customer_type,volume_segment,industry,preferred_delivery_window,service_level,credit_rating,payment_terms,signup_date,last_order_date,total_lifetime_value,average_order_value,delivery_flexibility_score,satisfaction_score
+1,"Johnson, Miller and King",SME,Low Volume,Retail,Afternoon,Premium,Fair,Net 30,2025-07-20,2025-07-27,437221.0,2229.52,5.7,7.8
+2,"Bryan, Smith and Booth",SME,Low Volume,Automotive,Afternoon,Standard,Poor,COD,2025-01-12,2025-05-07,169942.06,3478.89,6.8,9.4
+3,"Cox, Avila and Garrett",Individual,Low Volume,Technology,Evening,Premium,Poor,Net 30,2022-11-17,2025-01-13,309112.27,1212.11,7.2,7.1
+4,"Anderson, Roberts and Gilmore",Enterprise,Medium Volume,Technology,Morning,Premium,Excellent,Prepaid,2023-04-30,2024-06-26,84016.03,1532.36,1.3,7.3
+5,"Lynch, Allen and Moore",SME,High Volume,Healthcare,Any,Standard,Good,Prepaid,2022-10-20,2024-05-28,283398.1,3972.97,2.5,6.3
+6,Walker Inc,Individual,Low Volume,Automotive,Afternoon,Express,Good,Net 15,2024-05-16,2024-12-28,231113.81,1307.19,3.3,6.0
+7,Jimenez Ltd,SME,Low Volume,Automotive,Afternoon,Standard,Poor,COD,2023-01-25,2023-11-03,493838.2,1530.81,9.7,8.8
+8,Davenport-Baird,SME,Low Volume,Manufacturing,Any,Express,Excellent,Net 15,2024-10-31,2025-01-17,191300.78,1826.85,3.7,8.8
+9,Lee-Greene,Individual,High Volume,Technology,Evening,Standard,Excellent,Prepaid,2024-05-15,2025-05-17,416586.61,4519.53,8.0,6.9
+10,Hill Group,Enterprise,Low Volume,Automotive,Afternoon,Premium,Fair,Net 15,2023-02-15,2024-01-02,314495.8,4521.85,6.8,7.2
+11,Hoover-Campbell,Individual,Low Volume,Healthcare,Afternoon,Standard,Fair,COD,2025-01-29,2025-04-08,373992.95,919.42,2.2,8.2
+12,"Burns, Hernandez and Ryan",Individual,Low Volume,Food & Beverage,Evening,Standard,Fair,Prepaid,2024-06-23,2024-11-26,483724.65,1510.95,8.8,9.2
+13,"Bennett, Cantu and Kane",Enterprise,Low Volume,Manufacturing,Afternoon,Premium,Poor,COD,2024-05-15,2025-09-09,46061.13,2003.14,3.4,6.5
+14,Hall-Rowe,Individual,Medium Volume,Automotive,Evening,Premium,Poor,COD,2023-06-07,2023-07-13,55064.7,1207.42,1.2,9.5
+15,"Mcintyre, James and Mcneil",Individual,Low Volume,Manufacturing,Morning,Premium,Poor,COD,2024-12-13,2025-07-22,324970.48,627.55,1.4,6.1
+16,Simpson Inc,Enterprise,Low Volume,Retail,Afternoon,Premium,Good,Prepaid,2024-09-02,2024-10-20,227368.23,3368.91,7.7,9.8
+17,Kane-Sawyer,Individual,Low Volume,Automotive,Afternoon,Express,Excellent,Prepaid,2025-08-12,2025-08-28,308210.45,4698.31,3.5,8.8
+18,Smith-Thomas,SME,Medium Volume,Manufacturing,Evening,Standard,Fair,COD,2024-04-17,2025-07-13,31214.49,1415.61,9.7,9.8
+19,Harrison LLC,Enterprise,Low Volume,Automotive,Afternoon,Premium,Excellent,Net 30,2025-08-17,2025-08-28,393610.5,1255.67,2.1,8.3
+20,"Miller, Murphy and Craig",Individual,High Volume,Manufacturing,Afternoon,Standard,Fair,Net 15,2024-10-17,2025-04-14,394533.23,3000.11,3.5,9.9
+21,"Higgins, Malone and Brennan",Individual,Low Volume,Healthcare,Afternoon,Standard,Excellent,Net 15,2025-07-30,2025-07-31,8415.3,3960.42,3.1,7.3
+22,"Cohen, Mitchell and Perez",Enterprise,Medium Volume,Manufacturing,Any,Premium,Excellent,Net 30,2022-12-02,2023-03-04,238646.74,3901.18,5.6,6.4
+23,"Padilla, Garcia and Jackson",Individual,Low Volume,Retail,Evening,Express,Excellent,Net 30,2025-08-26,2025-09-02,499294.79,4244.13,4.8,6.4
+24,Flynn-Carter,SME,Low Volume,Retail,Morning,Express,Good,Net 30,2022-10-20,2023-11-23,63969.6,3140.37,6.3,8.8
+25,"Jenkins, Maldonado and White",Individual,Medium Volume,Food & Beverage,Evening,Express,Poor,Net 30,2023-02-25,2023-08-08,396754.95,616.35,6.9,9.5
+26,Harvey-Allen,Enterprise,Low Volume,Technology,Any,Standard,Poor,COD,2024-07-18,2025-08-12,413882.19,2023.71,7.6,7.3
+27,Little-Stevens,SME,Medium Volume,Healthcare,Afternoon,Premium,Poor,Net 30,2023-02-22,2024-11-09,46521.17,472.55,4.9,9.0
+28,Santana-Byrd,Enterprise,Medium Volume,Food & Beverage,Morning,Premium,Fair,Net 30,2025-05-31,2025-06-17,205993.51,4374.36,9.5,7.7
+29,Huerta-Evans,Enterprise,Low Volume,Healthcare,Evening,Express,Excellent,Net 15,2024-01-16,2025-08-26,78210.36,2436.84,8.6,7.4
+30,Bruce-Gonzalez,Enterprise,Low Volume,Healthcare,Afternoon,Express,Excellent,COD,2024-10-14,2025-02-21,15447.64,1402.69,7.9,9.7
+31,James LLC,Enterprise,Medium Volume,Manufacturing,Any,Standard,Good,Net 30,2024-03-01,2025-01-20,46787.08,2675.89,4.4,7.8
+32,Johnson-Greer,SME,Medium Volume,Automotive,Evening,Premium,Excellent,Net 30,2025-09-10,2025-09-13,78634.37,3784.46,1.4,6.3
+33,"Osborne, Beltran and Lozano",SME,Low Volume,Technology,Any,Express,Fair,Net 15,2022-09-27,2024-12-15,377716.63,613.4,4.9,7.1
+34,Parsons-Hall,SME,Low Volume,Food & Beverage,Evening,Standard,Good,Prepaid,2025-03-19,2025-08-13,492238.38,321.17,2.8,9.8
+35,Oliver Ltd,SME,Low Volume,Healthcare,Evening,Standard,Excellent,Prepaid,2023-05-17,2025-02-21,373760.05,919.69,4.4,8.8
+36,"Massey, Fuller and Berger",Individual,Low Volume,Healthcare,Morning,Express,Excellent,Prepaid,2025-01-07,2025-06-20,10352.03,4609.75,8.8,8.3
+37,Johnson-Diaz,Individual,Low Volume,Automotive,Any,Express,Excellent,Prepaid,2023-08-23,2023-11-30,11407.42,1657.6,8.2,8.5
+38,Burgess-Thompson,SME,Low Volume,Retail,Any,Standard,Good,Prepaid,2025-06-11,2025-06-24,294846.77,2643.61,4.6,7.2
+39,Schmidt-Mcintyre,SME,Medium Volume,Manufacturing,Morning,Premium,Excellent,Net 15,2024-05-02,2025-06-25,453055.44,1779.41,7.5,9.3
+40,Coffey-Phillips,Enterprise,Low Volume,Retail,Afternoon,Express,Good,Net 15,2023-06-27,2025-06-05,301597.09,3813.07,6.9,6.7
+41,Mccarty-Taylor,SME,Low Volume,Technology,Any,Premium,Fair,COD,2025-02-16,2025-09-11,76327.74,388.02,5.0,7.2
+42,"Craig, Sanders and Singleton",Enterprise,Medium Volume,Healthcare,Morning,Express,Poor,Prepaid,2025-04-18,2025-07-12,19766.02,1875.25,3.6,8.6
+43,Smith-Herrera,Enterprise,Low Volume,Food & Beverage,Any,Express,Excellent,Prepaid,2022-12-26,2024-03-23,454615.93,2879.7,2.7,8.4
+44,"Baker, James and Little",Enterprise,Low Volume,Technology,Morning,Express,Excellent,Net 15,2024-09-25,2025-02-05,20531.92,3552.73,9.9,8.1
+45,Johnson-Henson,SME,Low Volume,Healthcare,Evening,Express,Poor,COD,2024-09-27,2025-04-15,339769.96,309.21,6.7,7.3
+46,Holland Ltd,Individual,Medium Volume,Automotive,Any,Express,Fair,Net 15,2025-06-18,2025-09-02,167347.66,2934.56,2.3,7.4
+47,Banks-Wilson,Individual,Low Volume,Automotive,Any,Standard,Excellent,COD,2025-06-11,2025-06-15,279902.11,3235.29,4.0,6.5
+48,Wilson-Young,Individual,Low Volume,Automotive,Morning,Premium,Poor,COD,2022-10-29,2024-05-18,10097.04,1578.89,9.6,7.4
+49,Santiago-Paul,Enterprise,Low Volume,Manufacturing,Afternoon,Standard,Excellent,COD,2023-11-18,2025-08-13,422369.77,550.65,7.9,9.3
+50,"Barber, Mcclure and Pena",Enterprise,Low Volume,Automotive,Evening,Premium,Good,Prepaid,2023-12-22,2025-06-05,77972.13,945.19,7.2,8.5
+51,Johnson-Wood,Individual,Low Volume,Technology,Morning,Express,Fair,Net 15,2024-07-24,2025-01-27,484824.71,3072.45,7.8,9.1
+52,Garcia-Jennings,Enterprise,Medium Volume,Healthcare,Any,Standard,Fair,Prepaid,2025-07-26,2025-08-24,231378.31,1444.77,4.4,8.1
+53,Brown-Hill,Enterprise,Low Volume,Food & Beverage,Afternoon,Express,Excellent,Prepaid,2025-08-25,2025-09-18,437184.36,2794.98,1.9,9.4
+54,Davis-Lewis,SME,Low Volume,Retail,Afternoon,Express,Poor,Net 15,2025-07-25,2025-08-29,415692.31,503.98,9.2,9.3
+55,Buchanan and Sons,Enterprise,Low Volume,Technology,Morning,Express,Fair,Net 15,2025-08-18,2025-09-18,193696.89,453.95,3.0,7.3
+56,Jones PLC,Individual,High Volume,Automotive,Evening,Standard,Good,Net 30,2025-01-28,2025-03-17,144152.82,4157.32,7.3,6.6
+57,Murphy and Sons,SME,Low Volume,Food & Beverage,Morning,Standard,Excellent,COD,2023-05-13,2025-03-21,108611.72,790.12,9.5,8.4
+58,Garrison-Thomas,SME,Low Volume,Manufacturing,Evening,Standard,Excellent,Net 15,2024-07-03,2024-08-29,210492.95,3979.8,5.1,6.4
+59,Rodriguez Inc,Individual,Low Volume,Food & Beverage,Morning,Premium,Good,Net 15,2023-06-20,2023-10-06,146344.72,57.74,4.2,8.3
+60,Chapman Inc,Individual,Medium Volume,Retail,Evening,Standard,Excellent,Prepaid,2023-10-16,2024-02-15,436792.39,265.5,4.5,7.5
+61,"Fisher, Wilson and Brown",SME,Low Volume,Retail,Evening,Standard,Excellent,COD,2022-11-15,2024-02-23,67571.39,1793.88,4.0,8.6
+62,"Rodriguez, Gordon and Dougherty",Individual,Low Volume,Technology,Any,Premium,Good,Net 15,2023-10-20,2023-11-19,32487.17,3892.14,5.1,7.2
+63,"Boyd, Ellis and Maynard",Enterprise,High Volume,Retail,Evening,Express,Poor,Prepaid,2025-01-24,2025-02-07,127403.57,3778.79,2.7,7.4
+64,Simmons-Rodriguez,Individual,Low Volume,Healthcare,Evening,Standard,Fair,Prepaid,2024-02-25,2025-04-07,444853.77,3729.37,9.1,7.5
+65,Morris and Sons,SME,Low Volume,Automotive,Any,Express,Fair,Net 30,2024-01-18,2024-02-27,363813.58,440.69,6.4,9.3
+66,"Richards, Joseph and James",SME,Low Volume,Retail,Morning,Express,Fair,COD,2023-07-17,2024-11-02,223511.97,3602.43,2.5,7.8
+67,"Jacobs, Garcia and Miles",Individual,Low Volume,Healthcare,Any,Express,Excellent,Net 30,2023-08-08,2025-05-28,335920.76,2060.74,5.6,9.0
+68,"Le, Lewis and Hayes",Enterprise,Medium Volume,Manufacturing,Any,Standard,Good,Net 30,2024-09-01,2024-11-27,118761.69,3243.56,4.3,9.8
+69,Ross-Blair,Enterprise,High Volume,Automotive,Any,Express,Fair,Prepaid,2023-09-25,2024-05-08,381779.15,2890.91,5.8,7.6
+70,Brooks-Hernandez,Enterprise,Low Volume,Retail,Morning,Premium,Good,Prepaid,2023-08-27,2025-07-22,259354.89,4572.04,2.1,9.1
+71,Davis Inc,Enterprise,Low Volume,Food & Beverage,Evening,Premium,Poor,Net 15,2022-12-01,2024-12-31,62196.07,4271.49,5.1,9.6
+72,Hawkins PLC,Enterprise,Low Volume,Automotive,Evening,Premium,Fair,Net 30,2023-11-01,2025-08-20,275448.58,1487.29,3.7,6.6
+73,"Martinez, Gomez and Ortega",Individual,Low Volume,Automotive,Afternoon,Express,Good,Net 30,2024-05-26,2025-05-21,492581.14,3970.73,3.1,8.0
+74,"Williams, Roberts and Edwards",Individual,Medium Volume,Healthcare,Any,Premium,Good,Net 30,2025-04-27,2025-05-12,33808.3,2020.89,7.5,7.9
+75,Douglas and Sons,SME,Low Volume,Food & Beverage,Morning,Standard,Fair,Net 30,2024-03-28,2025-06-28,225537.27,3416.54,4.1,9.5
+76,"Richardson, Farmer and Andrews",Individual,Low Volume,Food & Beverage,Afternoon,Standard,Poor,Net 30,2023-10-07,2025-05-04,415864.01,2614.61,3.7,6.6
+77,"Austin, Day and Johnson",Enterprise,Low Volume,Healthcare,Evening,Standard,Fair,Net 15,2025-04-02,2025-09-06,317893.49,2776.67,2.1,7.2
+78,Johnson-Nelson,Individual,Low Volume,Automotive,Afternoon,Premium,Good,Net 15,2025-03-16,2025-08-05,329707.7,3617.13,6.4,9.4
+79,Smith-Kane,Enterprise,Low Volume,Retail,Morning,Premium,Fair,Net 15,2025-06-25,2025-08-12,383712.54,2112.1,6.8,8.0
+80,Figueroa Inc,SME,Low Volume,Automotive,Evening,Express,Good,Prepaid,2023-12-02,2024-01-31,149419.5,411.22,1.5,7.8
+81,Barnes-Peterson,Enterprise,Low Volume,Healthcare,Afternoon,Express,Fair,COD,2024-04-22,2024-10-29,487711.69,697.29,4.3,8.2
+82,"Carlson, Ware and Moore",SME,Medium Volume,Retail,Evening,Express,Good,Net 15,2024-11-17,2025-07-05,49309.01,1486.55,4.5,8.5
+83,Nelson Ltd,Enterprise,Medium Volume,Healthcare,Evening,Standard,Good,Prepaid,2022-11-12,2024-01-27,497988.74,2360.73,8.9,8.0
+84,Nelson-Fischer,SME,High Volume,Food & Beverage,Any,Standard,Good,COD,2024-07-15,2024-09-02,25280.41,1442.71,6.4,9.4
+85,Gregory-Watkins,SME,Low Volume,Food & Beverage,Morning,Standard,Poor,Net 15,2024-01-03,2024-11-27,441345.41,3651.16,7.9,7.5
+86,Foster PLC,Individual,Low Volume,Food & Beverage,Afternoon,Express,Fair,Net 30,2023-08-23,2023-10-03,193788.06,2279.25,5.9,9.3
+87,Saunders LLC,Individual,Low Volume,Retail,Afternoon,Standard,Poor,COD,2023-05-01,2024-01-08,397653.72,1728.47,9.5,9.0
+88,Burgess-Thompson,Individual,Medium Volume,Technology,Morning,Standard,Excellent,Net 15,2023-01-28,2024-01-29,357082.33,4029.63,5.7,6.6
+89,"Hansen, Barnett and Gomez",Enterprise,Low Volume,Healthcare,Evening,Standard,Poor,COD,2024-10-29,2025-03-07,297268.6,2561.21,5.6,8.0
+90,Smith-Morse,SME,Low Volume,Retail,Evening,Express,Excellent,Prepaid,2024-12-10,2025-08-10,292267.37,3993.94,7.5,8.8
+91,"Sullivan, Bowman and Roberts",SME,High Volume,Healthcare,Afternoon,Premium,Excellent,Prepaid,2024-06-11,2024-12-16,86085.52,3163.67,6.6,9.4
+92,Solis PLC,Individual,Medium Volume,Manufacturing,Morning,Premium,Excellent,Net 15,2025-08-12,2025-08-29,10449.75,1602.78,2.4,8.8
+93,Davis-Richard,Individual,Low Volume,Technology,Morning,Premium,Good,Net 15,2024-10-13,2025-01-03,280882.5,4990.71,5.3,7.5
+94,"Miller, Harrell and Reese",SME,Low Volume,Food & Beverage,Evening,Premium,Fair,COD,2024-06-25,2024-10-02,305428.21,1001.71,3.2,8.2
+95,Dixon Inc,SME,Medium Volume,Healthcare,Afternoon,Premium,Poor,COD,2025-01-19,2025-05-27,240421.91,2824.41,9.4,8.9
+96,Bell-Mullen,Individual,Medium Volume,Automotive,Any,Express,Fair,Net 15,2023-04-19,2024-11-09,145935.87,1473.77,7.4,7.4
+97,Thomas and Sons,SME,Low Volume,Automotive,Any,Standard,Good,COD,2023-02-27,2023-08-08,466578.94,3496.05,2.2,8.5
+98,"Jones, Bean and Burton",Enterprise,Low Volume,Retail,Afternoon,Premium,Good,Net 30,2023-03-05,2024-05-09,50998.78,1684.95,5.3,8.7
+99,"Cole, Glass and Cunningham",Individual,Medium Volume,Manufacturing,Any,Premium,Poor,Prepaid,2024-05-28,2025-03-28,325618.81,3791.76,3.6,7.1
+100,"Stewart, Gonzales and Harrison",Enterprise,High Volume,Automotive,Afternoon,Premium,Excellent,Net 15,2024-08-03,2025-04-20,209524.61,4196.14,9.4,6.1
+101,"Brown, Romero and Collins",SME,Low Volume,Manufacturing,Evening,Standard,Excellent,COD,2025-02-07,2025-05-19,284412.97,581.14,9.8,7.1
+102,Jones-Lin,Individual,Low Volume,Food & Beverage,Any,Standard,Poor,COD,2022-11-20,2025-04-22,97212.89,607.6,2.5,7.8
+103,"Cruz, Carpenter and Best",Enterprise,Medium Volume,Retail,Evening,Express,Good,Net 15,2024-07-24,2025-05-31,305866.3,3211.69,4.6,7.7
+104,"Pearson, Morris and Alvarez",SME,Medium Volume,Automotive,Morning,Standard,Good,Prepaid,2022-11-02,2023-04-09,162477.23,1277.83,3.3,6.9
+105,Shepherd LLC,SME,Low Volume,Healthcare,Morning,Express,Fair,Net 15,2022-11-25,2025-08-31,32000.04,635.21,3.8,7.6
+106,"Thompson, Wright and Kim",Individual,Low Volume,Healthcare,Morning,Premium,Fair,COD,2022-12-20,2024-03-05,307698.1,1134.69,2.2,6.6
+107,Cox LLC,Individual,Low Volume,Healthcare,Any,Premium,Poor,Net 15,2024-04-13,2024-11-02,381167.95,3417.69,6.4,9.1
+108,"Harper, Mccormick and Holland",Individual,Low Volume,Automotive,Evening,Standard,Excellent,Net 30,2025-01-14,2025-01-30,414558.25,4519.3,2.8,8.1
+109,"Hughes, King and York",Individual,Medium Volume,Technology,Morning,Premium,Good,Prepaid,2022-12-31,2025-08-14,46379.88,2576.36,8.3,7.8
+110,Cook PLC,SME,Low Volume,Food & Beverage,Morning,Premium,Poor,COD,2024-07-10,2025-04-25,361916.76,2009.95,8.3,9.0
+111,Ponce-Hale,Enterprise,Low Volume,Technology,Evening,Premium,Excellent,Net 30,2025-06-19,2025-07-25,467356.82,391.64,9.4,6.1
+112,Collins Group,Enterprise,Low Volume,Automotive,Any,Express,Poor,Prepaid,2024-07-02,2025-04-13,434940.52,4538.5,4.4,8.7
+113,Santiago Ltd,Individual,Low Volume,Manufacturing,Evening,Standard,Good,Prepaid,2023-09-14,2025-09-16,264892.43,3652.9,3.0,6.0
+114,Lucas Group,SME,High Volume,Technology,Any,Premium,Poor,Net 15,2025-06-15,2025-08-02,124508.51,1763.49,3.5,9.7
+115,White-Lewis,Enterprise,Low Volume,Retail,Any,Premium,Excellent,Net 15,2022-10-08,2025-07-24,103834.73,549.44,1.3,8.4
+116,Cooke and Sons,Enterprise,Low Volume,Manufacturing,Morning,Express,Poor,Net 15,2024-03-04,2024-04-16,270340.14,3784.21,8.0,6.6
+117,Romero PLC,Enterprise,Low Volume,Automotive,Evening,Premium,Fair,Net 15,2025-04-01,2025-08-21,151580.45,759.14,6.9,6.9
+118,Stanley PLC,Enterprise,Medium Volume,Food & Beverage,Afternoon,Premium,Poor,Prepaid,2025-05-14,2025-05-30,24395.16,1754.85,6.8,7.5
+119,White Ltd,Individual,Low Volume,Technology,Any,Standard,Fair,Prepaid,2023-11-05,2025-04-15,92755.61,2712.74,3.2,6.9
+120,Griffith Inc,Enterprise,Low Volume,Technology,Morning,Premium,Poor,Prepaid,2025-02-21,2025-05-18,279086.09,713.76,3.2,6.8
+121,Montes PLC,SME,Low Volume,Healthcare,Morning,Premium,Good,Net 30,2024-09-29,2025-01-08,134962.33,3384.68,6.4,9.5
+122,Young-Allen,Individual,Medium Volume,Automotive,Afternoon,Express,Good,COD,2024-12-17,2025-09-09,152290.82,4549.52,2.9,6.8
+123,Richardson PLC,Individual,Low Volume,Technology,Afternoon,Premium,Good,Prepaid,2025-01-25,2025-09-15,457648.1,2782.79,8.0,7.5
+124,Strickland-Shaw,SME,Low Volume,Healthcare,Evening,Express,Poor,Prepaid,2024-02-07,2024-10-11,50205.51,4907.53,5.2,9.4
+125,Solis and Sons,SME,Low Volume,Healthcare,Any,Standard,Good,Net 15,2023-03-15,2025-05-25,9093.73,2788.89,6.3,8.9
+126,Sawyer-Spencer,Enterprise,Medium Volume,Healthcare,Afternoon,Express,Good,Prepaid,2022-11-15,2023-03-01,275770.62,4720.15,4.0,9.1
+127,Mitchell and Sons,Individual,Low Volume,Automotive,Any,Express,Good,COD,2025-04-03,2025-05-19,85463.59,3615.55,5.4,9.7
+128,Guerra Inc,Individual,Low Volume,Retail,Morning,Standard,Excellent,Net 30,2025-06-07,2025-09-13,206783.72,4220.6,3.1,8.8
+129,Wilkerson-Arias,Individual,High Volume,Technology,Evening,Standard,Poor,Prepaid,2023-05-20,2024-05-07,8850.15,2684.45,4.7,6.1
+130,Young-Vang,Individual,Low Volume,Healthcare,Morning,Premium,Poor,Net 15,2023-11-27,2024-08-01,54401.2,526.75,2.3,6.8
+131,Combs Ltd,SME,Low Volume,Healthcare,Any,Standard,Fair,Prepaid,2022-10-19,2023-10-11,230039.88,1253.88,7.3,7.2
+132,Mitchell Group,Enterprise,Low Volume,Automotive,Morning,Standard,Poor,Prepaid,2023-02-26,2024-12-08,189207.61,2406.23,6.7,8.8
+133,"Harrison, Gilbert and Bullock",SME,High Volume,Automotive,Evening,Premium,Excellent,Net 30,2023-02-18,2023-03-07,115653.48,4511.3,7.2,8.3
+134,Dunn Ltd,Enterprise,Medium Volume,Automotive,Evening,Premium,Excellent,Net 15,2023-05-13,2024-10-17,464454.41,1606.7,9.7,8.3
+135,Young-Martinez,Individual,Low Volume,Technology,Morning,Express,Good,Net 15,2023-12-26,2024-05-24,283781.26,4254.74,7.1,8.2
+136,"Bryant, Rodriguez and Stein",Individual,Medium Volume,Manufacturing,Morning,Premium,Fair,Net 30,2024-08-19,2025-04-12,49745.21,1199.11,1.7,8.4
+137,"Andrews, Higgins and Carter",Individual,Low Volume,Technology,Evening,Standard,Fair,Prepaid,2022-10-07,2022-10-08,245811.12,1811.27,9.5,7.7
+138,"Butler, Beck and Miller",Individual,Low Volume,Technology,Morning,Premium,Fair,Net 15,2023-10-10,2025-09-01,356841.16,456.09,2.4,8.8
+139,"Stephens, Hartman and Romero",Individual,Low Volume,Technology,Evening,Express,Excellent,Net 30,2022-12-02,2022-12-22,3592.42,1575.92,4.2,7.1
+140,Reid LLC,Enterprise,Medium Volume,Technology,Any,Premium,Poor,Net 30,2025-05-03,2025-06-07,14104.69,1801.88,1.8,8.4
+141,Cooper Ltd,SME,Medium Volume,Retail,Evening,Express,Poor,Net 30,2022-10-06,2024-09-14,362697.08,2819.71,9.9,7.0
+142,"Moss, Cook and Williams",Individual,Low Volume,Technology,Afternoon,Standard,Fair,COD,2023-01-10,2024-06-29,134934.99,772.38,2.5,7.1
+143,Greer Ltd,Enterprise,Medium Volume,Healthcare,Evening,Standard,Poor,Net 15,2025-02-26,2025-06-01,229472.95,720.67,1.1,7.6
+144,"White, Taylor and Baldwin",SME,Low Volume,Healthcare,Any,Express,Poor,Net 15,2024-10-20,2025-08-31,150917.21,3035.9,7.3,7.9
+145,Williams and Sons,SME,Medium Volume,Healthcare,Evening,Premium,Poor,Net 15,2022-10-29,2025-05-21,163617.23,1437.49,8.1,7.5
+146,Robertson-Hays,Enterprise,Low Volume,Food & Beverage,Afternoon,Premium,Excellent,Prepaid,2023-08-30,2024-10-10,471544.48,1087.76,8.2,9.3
+147,"Lee, Kelly and Norman",SME,High Volume,Automotive,Any,Standard,Fair,Net 15,2023-06-23,2025-06-01,127088.16,813.01,4.8,7.5
+148,Lloyd Group,Individual,Low Volume,Technology,Any,Premium,Poor,Net 30,2023-09-17,2025-06-29,395569.74,1829.67,9.1,8.1
+149,Morgan-Lopez,Enterprise,Low Volume,Retail,Afternoon,Premium,Fair,Net 15,2024-12-11,2025-06-24,323852.92,269.27,9.9,8.7
+150,"Adams, Miller and Coleman",SME,Medium Volume,Technology,Morning,Standard,Excellent,COD,2023-10-26,2024-08-19,111778.54,3746.92,6.0,8.8
+151,Gardner LLC,SME,Medium Volume,Technology,Any,Premium,Good,COD,2025-09-13,2025-09-13,498853.66,2439.72,3.7,9.7
+152,Parker-Morrison,Individual,High Volume,Manufacturing,Evening,Express,Fair,Prepaid,2023-09-13,2024-07-23,392350.73,2629.52,4.1,6.4
+153,West-Acosta,SME,Low Volume,Healthcare,Morning,Express,Excellent,Net 30,2024-10-13,2025-08-19,12269.97,1748.24,2.0,9.2
+154,Hill-Whitney,Individual,Low Volume,Manufacturing,Afternoon,Premium,Good,COD,2024-07-23,2025-08-27,280364.63,4794.39,3.1,7.6
+155,"Sullivan, Palmer and Brady",Individual,Medium Volume,Automotive,Any,Express,Excellent,Net 15,2022-12-10,2023-05-21,225337.93,2176.29,1.0,6.9
+156,"Gregory, Kim and Martinez",Individual,Medium Volume,Retail,Morning,Premium,Good,COD,2022-10-23,2023-06-30,163666.47,2314.87,3.4,9.5
+157,Reyes-Bradley,Individual,Low Volume,Healthcare,Any,Premium,Poor,Net 30,2024-08-26,2025-04-18,174614.39,4235.31,6.6,9.3
+158,Watson-Hines,SME,Low Volume,Food & Beverage,Morning,Premium,Good,COD,2024-10-02,2025-04-22,59812.96,1561.63,2.6,8.8
+159,Edwards-Ramirez,SME,Low Volume,Food & Beverage,Afternoon,Premium,Poor,Prepaid,2024-04-21,2025-08-29,93691.1,3195.73,7.2,8.6
+160,Porter Group,Individual,Low Volume,Manufacturing,Any,Express,Good,Net 15,2022-10-17,2025-06-18,157975.43,2282.45,1.5,7.4
+161,Padilla-Lewis,Enterprise,High Volume,Manufacturing,Any,Premium,Poor,Prepaid,2023-01-26,2024-09-08,342663.64,2107.37,8.6,8.0
+162,Gonzalez-Taylor,Enterprise,High Volume,Manufacturing,Evening,Standard,Fair,Net 15,2024-10-18,2024-11-11,269266.7,882.63,5.1,9.0
+163,"Wallace, Miller and Fleming",Individual,Low Volume,Food & Beverage,Morning,Premium,Excellent,COD,2023-03-27,2025-05-01,387781.4,4125.25,4.3,9.3
+164,Mckinney-Pierce,Individual,High Volume,Technology,Afternoon,Express,Excellent,Net 15,2023-09-04,2024-04-07,149556.76,4996.6,5.0,7.4
+165,Joseph Ltd,SME,Low Volume,Retail,Afternoon,Standard,Fair,Prepaid,2023-08-13,2024-12-14,83824.83,739.21,2.9,6.8
+166,"Walker, Galloway and Conner",SME,High Volume,Food & Beverage,Evening,Premium,Good,COD,2025-02-04,2025-03-29,489521.08,1498.54,6.2,9.8
+167,Spencer-Wood,Individual,Low Volume,Retail,Afternoon,Express,Excellent,COD,2024-03-13,2025-06-02,433656.75,678.1,8.8,7.0
+168,"Henson, Jones and Sanders",Enterprise,Low Volume,Automotive,Any,Express,Good,COD,2024-05-15,2025-05-02,314278.6,1907.1,1.7,9.2
+169,Hammond-Morrow,SME,Low Volume,Food & Beverage,Evening,Premium,Fair,Prepaid,2024-02-25,2024-04-07,475176.79,1670.08,1.0,9.1
+170,"Jones, Owens and Holmes",Individual,Low Volume,Technology,Evening,Standard,Poor,Net 15,2025-08-19,2025-08-22,484096.16,4133.0,5.5,7.3
+171,"Bowman, White and Burch",Individual,Medium Volume,Food & Beverage,Afternoon,Premium,Poor,COD,2025-03-15,2025-06-04,447183.17,3823.16,1.4,8.5
+172,Guerra PLC,Enterprise,Low Volume,Retail,Afternoon,Express,Poor,Net 30,2025-06-13,2025-06-27,495927.28,2167.61,10.0,9.6
+173,Donovan-Perez,SME,Low Volume,Manufacturing,Evening,Standard,Fair,COD,2023-03-18,2025-08-01,42127.84,3339.32,6.8,6.2
+174,Singleton-King,Individual,Low Volume,Automotive,Afternoon,Express,Excellent,Net 30,2024-04-09,2025-03-10,1542.07,2410.19,2.2,6.9
+175,Weber PLC,Enterprise,Low Volume,Retail,Evening,Standard,Poor,Net 15,2024-05-14,2025-02-01,239372.42,1183.29,1.8,9.2
+176,Vargas PLC,SME,Medium Volume,Healthcare,Afternoon,Express,Good,Net 15,2024-03-22,2024-06-14,35137.39,2838.29,6.5,6.7
+177,"Winters, Morgan and Bradshaw",Enterprise,Medium Volume,Automotive,Afternoon,Express,Poor,Net 15,2024-09-09,2024-09-24,44257.33,547.3,7.8,8.4
+178,Williams Ltd,SME,Medium Volume,Healthcare,Afternoon,Standard,Fair,Net 30,2025-04-22,2025-08-15,124835.35,3024.95,7.5,7.1
+179,Wang Group,Enterprise,Low Volume,Automotive,Evening,Standard,Good,Prepaid,2023-07-06,2024-11-15,148475.48,320.12,9.1,9.8
+180,"Gardner, May and Turner",Enterprise,Low Volume,Manufacturing,Any,Premium,Excellent,Net 30,2022-10-22,2023-07-09,493454.38,4672.93,2.2,9.4
+181,Evans-Jones,SME,Low Volume,Food & Beverage,Afternoon,Express,Excellent,Net 30,2025-02-19,2025-03-03,294094.38,118.28,2.9,9.7
+182,Marshall-Peterson,SME,Low Volume,Food & Beverage,Evening,Premium,Poor,Prepaid,2024-01-13,2024-04-10,351203.51,458.02,5.8,8.5
+183,Gross-Valencia,SME,Medium Volume,Retail,Afternoon,Standard,Fair,Prepaid,2025-04-20,2025-09-15,293632.14,3827.96,6.8,8.6
+184,Robertson-Rodriguez,SME,Medium Volume,Automotive,Afternoon,Standard,Good,Net 30,2023-02-09,2023-09-27,462389.25,624.13,6.5,6.2
+185,Wright-Davis,Individual,Low Volume,Automotive,Afternoon,Standard,Excellent,Net 15,2023-01-31,2023-11-06,351048.31,860.97,9.6,8.1
+186,"Barnes, Estes and Barrera",Individual,Low Volume,Healthcare,Afternoon,Express,Good,COD,2023-11-14,2025-05-16,366734.98,634.38,9.1,7.3
+187,"Edwards, Hines and Jimenez",Individual,Low Volume,Retail,Evening,Premium,Excellent,Prepaid,2025-07-08,2025-08-14,228143.69,1832.61,5.5,8.3
+188,Jimenez-Davis,SME,Medium Volume,Retail,Morning,Standard,Excellent,Net 30,2024-03-18,2024-10-20,429485.82,110.83,1.4,7.5
+189,Lewis LLC,Enterprise,Low Volume,Retail,Any,Standard,Fair,Net 15,2024-02-02,2024-03-01,208712.04,3615.43,3.4,6.3
+190,"Khan, Pena and Ruiz",Individual,Medium Volume,Automotive,Morning,Standard,Good,Net 30,2023-07-24,2024-09-18,477085.62,391.19,5.2,7.1
+191,Anderson-Baker,SME,Low Volume,Retail,Any,Standard,Fair,Net 15,2025-04-04,2025-06-04,146505.95,3933.31,7.7,7.0
+192,Morales PLC,SME,Medium Volume,Manufacturing,Afternoon,Standard,Excellent,Prepaid,2023-12-04,2024-12-05,12931.22,2730.65,6.7,8.8
+193,Jones-Gordon,SME,High Volume,Retail,Any,Premium,Fair,Net 30,2023-10-21,2025-04-07,103391.99,4916.42,4.8,9.8
+194,"Becker, Wilson and Hester",Enterprise,Low Volume,Automotive,Evening,Standard,Excellent,Net 15,2023-07-22,2024-05-28,448746.45,2622.81,7.3,7.5
+195,Grant-Diaz,Enterprise,Low Volume,Food & Beverage,Morning,Premium,Good,Prepaid,2025-02-06,2025-03-10,38340.41,2860.71,4.9,9.9
+196,Porter-Williams,SME,Medium Volume,Healthcare,Any,Premium,Fair,COD,2024-07-10,2024-09-07,226926.17,1206.38,9.5,6.5
+197,Stone-Hernandez,Enterprise,Low Volume,Manufacturing,Morning,Standard,Poor,Prepaid,2023-09-19,2025-07-02,157702.61,647.65,4.2,9.1
+198,"Flores, Long and Jensen",SME,Low Volume,Healthcare,Morning,Standard,Good,COD,2023-02-19,2025-04-23,413366.96,3499.55,1.4,9.3
+199,"Clayton, Patel and Erickson",Enterprise,Medium Volume,Automotive,Afternoon,Express,Poor,Net 30,2024-06-30,2024-11-10,338914.51,1337.83,9.9,6.1
+200,Rivera-Rodriguez,SME,Low Volume,Food & Beverage,Afternoon,Standard,Poor,Net 30,2025-03-01,2025-05-24,402144.48,741.98,1.1,9.3
+201,"Wiggins, Soto and Carlson",Enterprise,Low Volume,Manufacturing,Any,Express,Excellent,COD,2023-08-22,2024-03-10,458796.86,421.19,10.0,6.8
+202,"Lane, Griffith and Silva",Enterprise,Low Volume,Retail,Evening,Standard,Excellent,Prepaid,2024-09-06,2024-11-09,26268.21,4624.45,4.9,8.9
+203,"Hampton, James and Underwood",SME,Low Volume,Automotive,Any,Standard,Fair,Net 15,2024-08-08,2024-11-14,454243.8,1411.16,5.0,6.6
+204,"Rodriguez, Smith and Edwards",Individual,Low Volume,Manufacturing,Evening,Express,Poor,Prepaid,2024-06-07,2024-08-17,31428.56,1434.89,2.2,6.8
+205,Shaw-Carr,Individual,Low Volume,Manufacturing,Morning,Express,Fair,Prepaid,2024-10-14,2025-03-23,272714.39,2449.16,9.2,8.0
+206,"Brown, Taylor and Clark",Enterprise,Medium Volume,Retail,Evening,Premium,Good,Net 30,2025-04-05,2025-05-29,447986.63,3903.76,1.5,10.0
+207,"Bennett, Frye and Stevens",Individual,Low Volume,Manufacturing,Afternoon,Standard,Good,Net 15,2024-09-13,2025-03-29,133996.97,4090.61,9.3,6.2
+208,"Ingram, Le and Schneider",Enterprise,Low Volume,Food & Beverage,Any,Express,Good,Net 15,2024-05-09,2025-04-19,119039.02,1624.12,7.6,7.4
+209,Bernard LLC,Individual,Low Volume,Automotive,Evening,Premium,Good,Net 15,2024-07-18,2025-03-13,418511.72,4061.49,9.7,8.2
+210,Wise-Bush,Enterprise,Medium Volume,Retail,Morning,Standard,Good,Net 30,2023-05-23,2024-12-29,263697.81,53.38,9.3,6.8
+211,Bailey-Peck,Individual,Medium Volume,Manufacturing,Evening,Standard,Excellent,Net 15,2024-03-07,2025-05-27,293717.98,4590.26,8.0,9.4
+212,Berry PLC,Enterprise,Low Volume,Healthcare,Any,Premium,Excellent,COD,2023-07-15,2024-05-12,151580.81,725.44,2.4,9.8
+213,Blevins-Ballard,SME,Low Volume,Automotive,Evening,Standard,Fair,Net 15,2025-08-28,2025-09-03,333100.3,4081.55,4.4,8.9
+214,"Miller, Bradshaw and Douglas",Enterprise,Medium Volume,Automotive,Morning,Premium,Poor,Net 30,2023-07-31,2025-03-05,91858.8,1625.17,8.3,8.4
+215,"Nelson, Hoffman and Nelson",Enterprise,Low Volume,Technology,Afternoon,Express,Excellent,Net 15,2023-05-11,2023-08-13,174058.25,1631.62,6.7,9.9
+216,Sanchez Ltd,Individual,Low Volume,Automotive,Evening,Express,Excellent,COD,2024-12-09,2025-08-23,105632.46,3481.22,4.2,9.1
+217,Williams Group,Enterprise,Low Volume,Technology,Any,Premium,Poor,Net 15,2023-05-24,2024-02-28,442391.45,2490.76,4.4,8.2
+218,"Townsend, Smith and Pierce",SME,Medium Volume,Food & Beverage,Afternoon,Standard,Poor,Net 30,2024-02-18,2025-08-08,399798.09,215.39,1.2,7.0
+219,Woods-Gonzalez,SME,Medium Volume,Manufacturing,Any,Standard,Excellent,Net 30,2023-12-08,2025-08-26,169637.34,4927.12,9.0,8.8
+220,"Brown, Mack and Pearson",Individual,Low Volume,Manufacturing,Any,Standard,Excellent,Net 30,2023-09-05,2024-02-25,166216.2,4873.27,4.7,8.2
+221,Gentry and Sons,Individual,Low Volume,Healthcare,Evening,Express,Good,Net 30,2024-12-06,2025-04-04,25768.09,2880.26,8.6,6.6
+222,Osborn Group,SME,Medium Volume,Retail,Evening,Premium,Poor,Net 15,2025-03-25,2025-08-12,49396.46,1074.42,6.7,9.9
+223,"Hayden, Howe and Mcdowell",Enterprise,Low Volume,Healthcare,Any,Express,Poor,COD,2023-04-11,2023-04-19,46477.3,2743.42,2.7,9.5
+224,Hebert LLC,SME,Medium Volume,Retail,Evening,Express,Poor,COD,2024-06-02,2024-10-14,113894.9,1379.38,1.6,9.0
+225,"Warren, Small and Anderson",Enterprise,Low Volume,Automotive,Evening,Premium,Poor,Net 15,2025-09-07,2025-09-13,277247.35,4211.95,8.4,7.7
+226,Rivera Ltd,SME,Low Volume,Food & Beverage,Afternoon,Express,Fair,Net 30,2023-07-15,2024-07-14,198007.38,4277.0,1.3,8.3
+227,Smith LLC,Individual,Low Volume,Automotive,Afternoon,Standard,Poor,Net 15,2023-06-27,2025-04-01,474581.68,877.47,2.9,6.8
+228,Thompson Ltd,Enterprise,High Volume,Automotive,Any,Standard,Good,COD,2024-06-02,2025-08-01,160554.99,3649.16,8.3,6.3
+229,"Murphy, Morales and Davis",Individual,Low Volume,Healthcare,Evening,Premium,Poor,Net 30,2025-03-13,2025-09-15,393488.77,3134.14,5.7,7.7
+230,Smith Group,Enterprise,Low Volume,Food & Beverage,Morning,Standard,Excellent,COD,2024-02-24,2024-07-07,433870.16,4406.67,8.9,7.1
+231,Turner-Sharp,Individual,Low Volume,Food & Beverage,Any,Standard,Good,COD,2024-12-23,2024-12-26,202084.01,3110.31,7.1,7.6
+232,"Young, Contreras and Marshall",SME,Medium Volume,Automotive,Afternoon,Standard,Poor,COD,2024-09-04,2024-11-03,448618.65,150.15,8.4,7.2
+233,"Carrillo, Vaughn and Fowler",SME,Medium Volume,Automotive,Morning,Standard,Good,COD,2024-10-09,2025-08-29,487135.49,2243.4,8.4,7.1
+234,Robinson and Sons,Individual,Low Volume,Retail,Afternoon,Express,Good,Prepaid,2023-10-26,2024-09-21,370731.45,3809.49,8.8,9.3
+235,"Brooks, Miles and Durham",Enterprise,Low Volume,Retail,Evening,Premium,Poor,Net 15,2024-01-30,2025-04-26,390477.7,2645.22,6.1,6.7
+236,Gill Ltd,Enterprise,Low Volume,Retail,Afternoon,Standard,Poor,Net 30,2025-02-13,2025-07-27,459097.5,3537.94,3.5,9.3
+237,Fox PLC,Individual,Low Volume,Retail,Morning,Standard,Fair,Prepaid,2025-05-02,2025-08-08,297427.75,929.04,8.8,8.3
+238,"Rodriguez, Poole and Leach",Enterprise,Medium Volume,Healthcare,Morning,Express,Excellent,Prepaid,2022-12-13,2023-07-05,25775.87,4276.42,8.0,6.9
+239,Murphy PLC,Enterprise,Medium Volume,Automotive,Afternoon,Express,Poor,Net 30,2024-04-29,2024-12-09,432450.34,4837.33,7.1,7.9
+240,"Aguilar, Davis and Dixon",Enterprise,Medium Volume,Food & Beverage,Morning,Standard,Fair,COD,2024-10-03,2025-07-13,356657.5,3561.37,3.5,9.6
+241,"Perry, Elliott and Hansen",SME,Low Volume,Healthcare,Afternoon,Express,Fair,Prepaid,2024-01-28,2025-03-06,292659.09,86.37,10.0,9.9
+242,Foster Inc,Individual,Low Volume,Automotive,Evening,Express,Excellent,Prepaid,2023-08-22,2025-03-10,32854.69,4942.39,6.8,9.4
+243,Henderson Ltd,Individual,Medium Volume,Automotive,Evening,Standard,Good,Net 15,2024-06-13,2024-07-12,449943.84,4036.88,8.2,8.4
+244,Andersen Group,Individual,Low Volume,Manufacturing,Morning,Premium,Poor,COD,2025-09-12,2025-09-12,130453.71,2121.9,4.5,6.1
+245,Cannon Ltd,Individual,Low Volume,Manufacturing,Evening,Premium,Good,Prepaid,2023-12-11,2025-02-01,453356.73,3375.75,5.6,9.4
+246,West-Stark,Individual,Low Volume,Manufacturing,Evening,Standard,Poor,Net 15,2023-12-23,2024-08-19,370718.53,3639.67,6.0,9.7
+247,"Baxter, Anderson and Dalton",SME,Low Volume,Automotive,Morning,Standard,Fair,Net 15,2022-12-15,2023-04-13,372360.75,1570.07,8.1,7.3
+248,Rice-Luna,SME,Medium Volume,Technology,Morning,Express,Excellent,Net 30,2025-09-11,2025-09-12,236637.62,1012.99,2.1,8.7
+249,Good Group,SME,Low Volume,Retail,Afternoon,Standard,Good,COD,2022-09-22,2024-09-27,205186.73,2868.55,9.2,7.8
+250,"Gray, Hall and Murray",Individual,Medium Volume,Manufacturing,Morning,Express,Fair,Net 15,2024-05-07,2024-07-23,157393.62,337.17,5.1,6.8
+251,"Cannon, Johnson and Keller",Individual,Low Volume,Manufacturing,Any,Standard,Good,Prepaid,2023-04-13,2024-10-11,317110.28,2046.8,9.7,7.5
+252,Allen Inc,Enterprise,High Volume,Automotive,Evening,Standard,Fair,Net 15,2025-07-11,2025-07-18,9940.15,70.41,7.6,6.9
+253,"Powers, Brennan and Sanchez",SME,Low Volume,Manufacturing,Morning,Express,Fair,Net 15,2022-10-25,2022-12-10,33578.22,276.31,9.5,7.8
+254,"Robinson, Shields and Brown",Individual,Low Volume,Healthcare,Any,Premium,Good,COD,2024-01-13,2024-11-17,498073.32,2476.38,7.8,6.7
+255,"Johnston, Ray and Barton",SME,Low Volume,Retail,Afternoon,Standard,Good,Net 15,2023-08-02,2025-04-30,367304.23,2968.98,2.5,7.5
+256,Odom PLC,Enterprise,Low Volume,Technology,Evening,Premium,Excellent,Net 30,2023-06-05,2023-12-07,331322.99,3285.16,1.2,8.8
+257,Hawkins PLC,SME,Low Volume,Retail,Evening,Express,Good,Net 15,2023-08-14,2025-06-18,347900.82,3170.04,3.7,8.6
+258,"Shelton, Peters and Williams",SME,Low Volume,Food & Beverage,Afternoon,Express,Excellent,Net 30,2025-06-14,2025-07-17,142070.68,3934.56,5.5,8.4
+259,Floyd-Flores,Individual,Low Volume,Manufacturing,Evening,Premium,Poor,COD,2024-08-24,2025-02-02,81026.43,2763.29,9.2,8.8
+260,White-Medina,Enterprise,Low Volume,Retail,Morning,Premium,Excellent,Net 30,2023-03-01,2023-10-11,417780.85,3361.66,2.3,6.4
+261,"Thomas, Ford and Brown",Individual,Low Volume,Automotive,Morning,Express,Good,Prepaid,2023-05-23,2024-05-07,494344.3,1515.31,5.2,6.4
+262,"Anderson, Sanchez and Harris",Enterprise,Medium Volume,Healthcare,Evening,Premium,Fair,Prepaid,2023-12-19,2025-02-04,369531.56,520.24,7.8,6.2
+263,Davis-Hardy,Individual,Low Volume,Automotive,Afternoon,Express,Fair,Prepaid,2025-06-25,2025-07-11,477589.49,1378.13,7.6,7.5
+264,"Jacobs, Williams and Jones",Enterprise,Medium Volume,Technology,Any,Express,Fair,Prepaid,2023-07-10,2025-04-15,345261.31,2417.31,4.8,9.5
+265,"Hansen, Mendoza and Booth",Enterprise,Medium Volume,Automotive,Morning,Standard,Excellent,Prepaid,2024-06-23,2024-11-20,455702.15,2439.24,6.1,7.8
+266,Lewis and Sons,SME,Low Volume,Food & Beverage,Morning,Premium,Good,Prepaid,2025-08-02,2025-09-17,460278.59,609.04,4.7,6.2
+267,Rocha-Dominguez,SME,Medium Volume,Retail,Afternoon,Premium,Fair,Net 30,2023-01-25,2024-12-06,216991.11,3646.93,5.3,8.7
+268,Arnold LLC,Enterprise,Low Volume,Food & Beverage,Morning,Standard,Good,Prepaid,2023-11-27,2024-08-04,426083.7,4353.61,1.7,8.0
+269,Parker-Ward,SME,Medium Volume,Retail,Afternoon,Premium,Poor,Prepaid,2024-04-25,2025-07-20,408734.55,440.21,5.0,8.3
+270,"Harrison, Franco and Rocha",SME,High Volume,Technology,Evening,Standard,Poor,Net 30,2024-02-11,2024-09-15,52219.02,2091.08,6.0,6.0
+271,"Shields, Figueroa and Smith",Individual,High Volume,Food & Beverage,Evening,Premium,Good,Prepaid,2023-12-16,2024-12-05,475227.21,1848.55,1.5,6.9
+272,"Butler, Hernandez and Rivera",Individual,Low Volume,Food & Beverage,Any,Premium,Fair,Prepaid,2024-06-20,2024-12-10,57897.66,3808.63,3.0,7.4
+273,Pierce-Harding,SME,Low Volume,Food & Beverage,Evening,Premium,Excellent,Net 30,2025-03-20,2025-05-20,448541.68,2487.49,8.4,9.0
+274,Levy-May,SME,Low Volume,Food & Beverage,Afternoon,Standard,Excellent,Prepaid,2025-01-02,2025-05-09,108579.16,4131.54,2.7,7.4
+275,Jackson-Cortez,Enterprise,Low Volume,Automotive,Morning,Express,Poor,Net 15,2023-03-22,2024-06-09,481963.52,71.47,7.6,8.2
+276,"Mooney, Bernard and Warren",Individual,Low Volume,Technology,Afternoon,Premium,Good,Net 15,2025-06-19,2025-09-04,52673.43,3304.73,6.5,7.3
+277,"Williams, Smith and Taylor",SME,Low Volume,Food & Beverage,Afternoon,Express,Poor,COD,2022-12-09,2024-09-09,485275.33,2291.59,2.2,7.7
+278,Smith PLC,Individual,Low Volume,Food & Beverage,Evening,Premium,Fair,Net 15,2022-12-02,2024-03-12,101243.65,3139.63,3.6,7.4
+279,"Estrada, Jensen and Webb",Individual,Low Volume,Automotive,Afternoon,Premium,Fair,Net 30,2022-11-24,2024-04-09,380626.74,2833.29,6.2,9.8
+280,"Jenkins, Smith and Bowen",Individual,Low Volume,Automotive,Evening,Express,Excellent,Net 30,2022-09-26,2024-05-01,13610.8,769.37,7.0,6.8
+281,"Li, Craig and Drake",Enterprise,Low Volume,Healthcare,Evening,Standard,Excellent,COD,2023-07-30,2025-07-10,102796.45,2728.8,4.2,7.8
+282,Warren and Sons,Individual,Low Volume,Automotive,Afternoon,Premium,Poor,Net 15,2023-01-14,2023-07-20,255950.23,3994.33,7.3,8.8
+283,Adams-Sanders,SME,High Volume,Technology,Any,Premium,Fair,Net 30,2024-04-17,2024-10-27,7469.65,1294.14,6.6,9.1
+284,"Sanchez, Terry and Evans",Enterprise,Low Volume,Automotive,Evening,Premium,Good,Net 15,2023-12-08,2025-05-30,147794.68,928.26,7.1,6.7
+285,"Malone, Davis and Gray",Individual,Medium Volume,Retail,Any,Standard,Poor,COD,2022-12-16,2024-06-25,278742.71,693.83,6.3,7.0
+286,Warner Inc,Individual,Medium Volume,Manufacturing,Morning,Standard,Fair,Net 30,2022-11-19,2024-04-19,387056.81,3145.56,8.6,7.2
+287,Knight-Hodge,Individual,Low Volume,Healthcare,Morning,Premium,Fair,Net 15,2024-01-07,2024-03-06,478536.87,2627.0,8.1,6.6
+288,Hall Ltd,SME,Low Volume,Retail,Evening,Standard,Good,COD,2024-04-19,2025-07-22,166202.2,1503.19,9.6,8.5
+289,Glass Ltd,Individual,Low Volume,Automotive,Morning,Standard,Fair,Prepaid,2024-02-22,2025-08-07,120933.59,3229.21,9.3,7.0
+290,"Barrett, White and Jefferson",SME,High Volume,Technology,Morning,Express,Fair,COD,2025-05-31,2025-06-01,13328.16,2608.5,7.9,8.1
+291,Goodwin Ltd,SME,Low Volume,Retail,Evening,Premium,Good,COD,2023-05-04,2025-04-16,257433.46,4743.65,2.5,9.8
+292,Martin-Allen,Enterprise,Low Volume,Automotive,Morning,Standard,Good,Prepaid,2025-07-03,2025-09-06,417996.87,1067.62,8.5,9.5
+293,"Rivera, Campos and Taylor",SME,Low Volume,Automotive,Morning,Premium,Good,Net 30,2023-11-19,2025-09-11,230153.39,1691.99,1.8,6.2
+294,"Mcgee, Reed and Davis",Individual,Low Volume,Retail,Afternoon,Express,Poor,Prepaid,2024-11-20,2025-01-29,226111.71,2052.02,3.8,7.6
+295,"Mack, Friedman and Sanders",Enterprise,Medium Volume,Automotive,Morning,Premium,Excellent,Net 30,2022-12-11,2025-02-01,179492.37,2539.04,3.6,8.7
+296,Bowers-Hayes,SME,Low Volume,Technology,Any,Express,Excellent,Prepaid,2022-10-21,2023-06-20,79005.41,1138.34,7.7,9.2
+297,Reynolds-Frazier,SME,Low Volume,Automotive,Afternoon,Express,Fair,Net 30,2024-05-17,2025-04-05,277208.57,2797.6,2.1,6.0
+298,"Phillips, Wright and Jones",Individual,Low Volume,Food & Beverage,Morning,Express,Good,COD,2022-12-21,2023-09-15,106656.73,4532.86,8.7,6.6
+299,"Moore, Price and Ward",Individual,Medium Volume,Healthcare,Afternoon,Standard,Good,Net 30,2023-11-09,2024-01-10,425842.47,4665.23,9.9,7.8
+300,Ward-Nelson,SME,Low Volume,Automotive,Morning,Express,Excellent,Net 15,2025-07-18,2025-07-26,363069.04,2461.59,4.0,6.5
+301,Hawkins-Hunt,Enterprise,Low Volume,Healthcare,Morning,Standard,Fair,Prepaid,2023-04-12,2023-07-13,225872.34,3100.9,3.8,8.3
+302,"Davis, George and Nguyen",SME,Low Volume,Healthcare,Any,Standard,Excellent,COD,2022-12-26,2024-01-14,123841.39,1146.55,7.7,7.7
+303,Maxwell-Hardy,Enterprise,Low Volume,Automotive,Evening,Express,Poor,Prepaid,2023-08-04,2024-10-11,180012.06,1562.09,6.0,6.7
+304,Armstrong and Sons,SME,Low Volume,Manufacturing,Afternoon,Express,Excellent,Net 30,2025-09-11,2025-09-16,446160.49,4255.46,6.7,9.3
+305,Turner-Snyder,Individual,Low Volume,Manufacturing,Morning,Premium,Fair,Prepaid,2023-03-23,2023-05-19,327300.16,785.73,4.5,9.6
+306,Evans-Patton,SME,Low Volume,Manufacturing,Any,Premium,Excellent,Prepaid,2024-01-08,2024-08-18,182568.91,102.43,3.1,9.9
+307,"Weber, Wheeler and Gonzalez",Individual,Low Volume,Manufacturing,Afternoon,Express,Good,Net 15,2025-07-19,2025-07-25,283612.27,2850.77,8.8,6.6
+308,Cook-Oliver,SME,Low Volume,Retail,Afternoon,Express,Good,Net 30,2023-08-18,2025-04-22,132914.2,1208.39,7.0,8.1
+309,Jordan-Colon,SME,Low Volume,Technology,Any,Standard,Excellent,COD,2023-09-15,2025-01-05,52509.28,4843.78,6.7,7.1
+310,Flores-Valentine,Individual,Low Volume,Food & Beverage,Afternoon,Express,Poor,COD,2024-07-01,2024-09-28,294251.73,4496.22,1.7,7.0
+311,Novak-Carter,Enterprise,Low Volume,Food & Beverage,Any,Express,Fair,Prepaid,2023-08-29,2025-02-01,396536.07,4441.5,1.1,9.5
+312,"Casey, Nguyen and Ramirez",Enterprise,Low Volume,Retail,Evening,Standard,Good,Net 15,2024-03-10,2025-05-22,79521.32,3030.0,8.4,8.6
+313,"Gonzalez, Osborn and White",SME,Low Volume,Automotive,Morning,Express,Poor,Prepaid,2023-10-24,2025-04-10,106141.27,848.17,8.5,6.1
+314,"Murray, Erickson and Gonzales",Individual,High Volume,Food & Beverage,Afternoon,Standard,Excellent,Net 15,2022-10-18,2023-08-24,28900.09,1328.39,2.6,9.8
+315,Chambers-Taylor,Individual,Low Volume,Automotive,Morning,Premium,Fair,Net 30,2024-10-17,2025-01-27,109080.12,3052.3,5.2,7.9
+316,Espinoza Group,SME,Medium Volume,Food & Beverage,Afternoon,Premium,Good,COD,2023-06-22,2023-08-21,84693.13,3443.68,9.3,8.4
+317,Aguilar-Ferguson,SME,High Volume,Technology,Afternoon,Standard,Excellent,Net 15,2025-09-08,2025-09-18,261832.96,4551.23,7.2,9.3
+318,Stephens-Gibbs,Enterprise,Low Volume,Technology,Morning,Premium,Excellent,Net 30,2025-04-29,2025-06-19,241638.23,695.13,6.4,9.3
+319,"Wheeler, Rocha and Rodriguez",Individual,Low Volume,Automotive,Any,Premium,Poor,COD,2025-05-27,2025-06-24,437537.33,3503.33,4.9,9.8
+320,Holland Inc,SME,Low Volume,Healthcare,Morning,Express,Good,COD,2024-09-16,2025-04-11,239093.48,1200.94,8.7,7.1
+321,"Ross, Goodwin and Sheppard",SME,Low Volume,Healthcare,Afternoon,Standard,Excellent,Net 30,2024-08-25,2025-02-08,260361.16,1906.4,2.8,9.2
+322,Walker-Burgess,Enterprise,Low Volume,Manufacturing,Any,Premium,Fair,COD,2022-09-30,2024-05-27,427633.49,2146.63,4.3,7.1
+323,Griffin Group,Enterprise,Low Volume,Technology,Any,Standard,Fair,Prepaid,2024-10-11,2025-03-18,127635.05,1567.93,4.1,8.8
+324,"Mason, Cooper and Johnson",Individual,Low Volume,Retail,Afternoon,Express,Good,Net 30,2024-10-02,2024-11-07,108014.61,2032.78,4.0,8.2
+325,Wilson Ltd,Individual,Low Volume,Retail,Afternoon,Express,Excellent,Net 30,2023-12-18,2024-03-17,411804.48,2384.76,6.4,6.4
+326,Mueller-Boyd,SME,Medium Volume,Retail,Morning,Premium,Poor,Prepaid,2023-08-26,2024-05-14,307368.83,2628.98,7.4,8.4
+327,"Horton, Flores and Evans",Enterprise,Low Volume,Automotive,Any,Express,Excellent,Net 15,2023-01-03,2025-03-15,425433.25,4657.25,5.7,6.8
+328,Wong-Byrd,Individual,Low Volume,Food & Beverage,Afternoon,Premium,Good,Net 30,2023-01-23,2023-07-01,180510.26,3292.34,9.8,6.3
+329,Black PLC,SME,Medium Volume,Healthcare,Any,Express,Good,Net 30,2025-09-01,2025-09-03,368725.84,389.66,1.8,7.1
+330,Hall-Sullivan,Individual,Low Volume,Healthcare,Evening,Express,Good,Net 15,2024-05-24,2024-08-21,227924.75,2049.58,1.0,6.7
+331,Foster-Mclaughlin,Individual,Low Volume,Retail,Evening,Express,Excellent,COD,2024-08-20,2025-08-03,438180.41,4075.08,6.2,8.8
+332,Price-Bush,Individual,Low Volume,Technology,Afternoon,Express,Poor,Prepaid,2024-01-24,2024-05-27,448365.39,4317.02,5.3,7.0
+333,Ray PLC,Enterprise,Medium Volume,Automotive,Afternoon,Express,Poor,COD,2024-12-21,2025-02-09,258735.6,98.13,8.5,7.0
+334,Wilson-Lambert,Individual,High Volume,Automotive,Evening,Standard,Good,Prepaid,2023-09-11,2024-09-06,157622.52,1131.9,6.2,6.7
+335,Harper-Carr,Enterprise,Low Volume,Technology,Afternoon,Standard,Good,COD,2025-08-12,2025-09-03,104182.54,1053.69,3.2,8.5
+336,Williamson-Cervantes,Enterprise,Medium Volume,Retail,Morning,Premium,Poor,Net 30,2023-10-05,2025-02-20,382357.86,2730.3,1.4,7.9
+337,"Lawrence, Powers and Edwards",SME,Low Volume,Food & Beverage,Evening,Express,Good,COD,2023-08-10,2024-02-09,199541.87,3763.34,2.2,8.1
+338,Steele-Dixon,Individual,Low Volume,Retail,Evening,Express,Good,Prepaid,2023-01-25,2024-03-04,488277.09,3506.31,5.1,8.8
+339,Henderson-Tucker,Enterprise,High Volume,Technology,Morning,Express,Fair,COD,2023-02-17,2024-07-08,94389.07,1351.1,3.4,9.8
+340,Peters Group,Enterprise,Medium Volume,Technology,Any,Standard,Poor,COD,2025-06-22,2025-07-17,183173.92,2032.93,5.1,8.3
+341,Harvey-Glenn,Individual,Low Volume,Manufacturing,Morning,Premium,Fair,Net 15,2023-04-12,2025-08-07,278114.68,4288.73,2.8,9.2
+342,Ochoa PLC,SME,Low Volume,Retail,Afternoon,Express,Poor,Net 15,2024-03-03,2024-12-13,497785.32,4254.48,5.7,8.9
+343,"Vasquez, Mckinney and Wallace",SME,Low Volume,Healthcare,Morning,Express,Excellent,Net 15,2024-03-14,2024-06-14,30958.15,4078.4,5.3,8.5
+344,Carter LLC,SME,Low Volume,Healthcare,Evening,Express,Fair,COD,2024-05-30,2024-09-14,10897.83,650.13,8.8,9.9
+345,Cunningham-Barton,Individual,Medium Volume,Automotive,Afternoon,Express,Fair,COD,2023-08-01,2024-08-21,336923.23,2463.09,7.6,9.6
+346,"Wilson, Hampton and Morrow",SME,Medium Volume,Technology,Afternoon,Standard,Fair,Prepaid,2024-03-31,2024-10-14,316005.43,2879.61,8.6,6.3
+347,Wolf Group,Enterprise,Medium Volume,Healthcare,Evening,Premium,Fair,COD,2025-03-08,2025-06-22,303087.1,2007.5,9.0,9.1
+348,Fitzgerald Ltd,Individual,Low Volume,Food & Beverage,Any,Express,Good,Net 15,2025-09-07,2025-09-16,427251.71,668.95,3.1,7.0
+349,Cole LLC,Individual,Low Volume,Retail,Afternoon,Standard,Poor,Net 30,2023-08-11,2025-06-04,48681.31,4687.13,5.3,6.2
+350,Rowe and Sons,Individual,Low Volume,Retail,Morning,Express,Good,Net 30,2022-12-23,2023-07-21,327761.51,4433.08,3.8,7.0
+351,"Bell, Page and Chen",Individual,Medium Volume,Manufacturing,Afternoon,Premium,Good,Net 30,2024-12-05,2025-01-21,18542.34,1816.36,9.2,9.5
+352,Li Inc,Individual,Low Volume,Healthcare,Any,Standard,Good,Prepaid,2023-02-18,2024-08-09,315892.71,3197.46,6.1,8.1
+353,"Ryan, Morris and Padilla",SME,Low Volume,Healthcare,Any,Premium,Good,Net 30,2024-04-24,2024-09-19,221488.29,1860.63,3.3,7.2
+354,"Duke, Shelton and Davis",Enterprise,High Volume,Healthcare,Evening,Express,Excellent,Prepaid,2023-07-09,2025-08-20,473531.8,2411.48,1.1,7.7
+355,Riddle Ltd,Enterprise,Medium Volume,Retail,Evening,Standard,Poor,Prepaid,2025-01-27,2025-02-25,197981.29,858.18,7.6,7.6
+356,Thomas LLC,SME,Medium Volume,Retail,Any,Premium,Good,COD,2025-04-25,2025-08-24,143053.75,3727.49,8.3,7.7
+357,"Long, Thomas and Chen",Enterprise,Low Volume,Manufacturing,Evening,Standard,Poor,Prepaid,2024-12-31,2025-06-13,136794.93,3132.63,2.7,6.1
+358,Schultz Inc,Individual,High Volume,Retail,Afternoon,Standard,Fair,COD,2023-11-04,2024-08-05,63394.56,2220.16,1.1,6.4
+359,"Mayer, Wood and Clements",Enterprise,High Volume,Healthcare,Any,Express,Poor,COD,2024-12-18,2025-03-18,232378.55,3967.55,4.0,9.4
+360,"Davis, Stanton and Reid",Enterprise,Low Volume,Healthcare,Any,Standard,Poor,Net 15,2022-09-21,2024-10-22,96903.95,4215.62,8.4,9.3
+361,"Sanders, Donaldson and Summers",Individual,Medium Volume,Manufacturing,Any,Express,Good,Net 30,2025-04-07,2025-06-27,100390.76,3689.85,1.8,8.7
+362,Morgan-Lane,SME,Medium Volume,Automotive,Evening,Express,Good,Net 30,2023-09-07,2024-10-31,372617.56,2770.42,2.1,7.9
+363,Shannon-Farmer,SME,Medium Volume,Retail,Afternoon,Standard,Good,Prepaid,2024-03-03,2024-03-28,162932.23,878.43,3.5,6.5
+364,Smith-Noble,Enterprise,Low Volume,Retail,Any,Premium,Good,COD,2024-08-05,2024-10-08,385627.7,1281.18,5.5,8.7
+365,Harris-Barker,Individual,Medium Volume,Retail,Morning,Express,Good,Net 30,2024-02-01,2024-04-19,63787.9,1201.74,9.8,9.2
+366,Baxter LLC,SME,Low Volume,Automotive,Afternoon,Standard,Poor,COD,2024-08-31,2024-10-05,362475.18,1290.95,1.4,8.8
+367,Watson Ltd,Individual,Low Volume,Automotive,Any,Standard,Good,COD,2023-10-19,2024-02-12,162516.76,2368.55,8.8,8.4
+368,Barber-Fischer,Enterprise,Low Volume,Retail,Afternoon,Express,Fair,COD,2023-11-27,2024-09-06,271261.37,2297.69,8.0,8.0
+369,Smith Group,Enterprise,Low Volume,Food & Beverage,Evening,Premium,Good,COD,2022-12-27,2023-03-14,360780.78,3308.53,5.9,7.5
+370,"Frazier, Smith and Dominguez",SME,Low Volume,Food & Beverage,Afternoon,Premium,Fair,COD,2024-06-30,2025-06-29,205492.46,1644.02,1.9,8.6
+371,Benson-Woods,Enterprise,High Volume,Manufacturing,Morning,Standard,Excellent,Prepaid,2025-09-06,2025-09-08,96616.7,207.49,6.8,7.6
+372,Garcia LLC,Individual,Low Volume,Automotive,Evening,Standard,Fair,Net 15,2022-12-25,2025-05-23,303370.86,400.83,9.4,6.8
+373,May Ltd,Enterprise,Low Volume,Technology,Morning,Express,Poor,COD,2023-02-16,2023-07-01,397330.54,338.59,6.6,8.1
+374,Bishop and Sons,SME,Low Volume,Retail,Afternoon,Premium,Excellent,Net 30,2024-04-22,2024-12-04,362860.79,2681.72,2.7,8.1
+375,"Goodman, Gillespie and Jensen",Individual,Medium Volume,Manufacturing,Any,Premium,Excellent,COD,2024-11-18,2025-04-01,337571.79,3527.62,4.8,6.4
+376,Taylor Inc,Individual,Low Volume,Technology,Evening,Premium,Good,Prepaid,2023-05-15,2024-10-01,466826.46,4517.3,6.0,10.0
+377,Edwards-Taylor,SME,Low Volume,Automotive,Any,Premium,Fair,Net 15,2023-11-13,2024-05-18,282009.21,1108.94,7.9,9.7
+378,"Burke, Griffith and Mitchell",SME,Medium Volume,Technology,Any,Standard,Excellent,COD,2022-12-20,2025-07-22,298285.65,2612.17,9.9,7.2
+379,"Liu, Harris and Lawson",Enterprise,Medium Volume,Manufacturing,Evening,Standard,Fair,Net 15,2022-10-18,2023-05-07,48049.28,2328.83,2.4,7.1
+380,"Brown, Hurst and Blevins",Enterprise,Low Volume,Manufacturing,Evening,Express,Excellent,Prepaid,2023-11-22,2024-10-17,284963.4,1126.31,1.7,7.3
+381,Little-Jones,SME,Low Volume,Automotive,Morning,Premium,Fair,Net 30,2023-01-20,2025-06-02,365663.89,2902.6,1.7,6.2
+382,Peck-Anderson,SME,Low Volume,Technology,Any,Standard,Good,Net 30,2022-10-02,2025-04-21,317309.66,3179.36,1.5,8.1
+383,Payne-Thompson,Individual,Medium Volume,Manufacturing,Evening,Premium,Good,Net 15,2024-06-02,2025-01-11,26209.39,3671.31,4.5,7.8
+384,Smith Inc,Individual,Low Volume,Retail,Afternoon,Express,Fair,Prepaid,2025-09-05,2025-09-05,74858.19,1714.03,5.3,9.0
+385,Fry Group,SME,Low Volume,Retail,Any,Premium,Poor,Net 15,2023-05-13,2024-07-21,381254.43,2430.57,2.8,7.6
+386,"Wang, Henderson and Morales",Individual,Low Volume,Food & Beverage,Afternoon,Standard,Excellent,COD,2024-08-07,2025-04-25,388609.18,1650.89,9.3,6.4
+387,Ramirez LLC,SME,Low Volume,Healthcare,Evening,Standard,Fair,COD,2024-04-30,2024-06-09,297344.7,169.82,3.7,10.0
+388,Herrera Group,SME,Low Volume,Food & Beverage,Afternoon,Express,Excellent,Net 15,2025-06-24,2025-08-14,100642.92,1900.41,7.8,9.4
+389,"Becker, Jones and Hale",Enterprise,Medium Volume,Manufacturing,Afternoon,Express,Excellent,COD,2025-01-02,2025-07-10,347203.82,600.83,5.1,6.1
+390,Sanchez Group,Individual,Medium Volume,Manufacturing,Afternoon,Premium,Fair,Prepaid,2025-04-03,2025-04-22,311897.95,4961.9,7.3,8.7
+391,Parker Ltd,Individual,Medium Volume,Food & Beverage,Morning,Express,Good,Net 30,2024-07-21,2025-04-26,142722.76,3956.48,6.6,6.2
+392,Zimmerman Ltd,Enterprise,Low Volume,Retail,Any,Premium,Fair,COD,2023-03-30,2023-04-09,432276.85,144.44,8.8,8.6
+393,Mills-Logan,SME,Medium Volume,Food & Beverage,Morning,Express,Poor,Net 30,2024-03-16,2025-04-17,94022.28,2528.22,5.1,9.7
+394,Brady LLC,Enterprise,High Volume,Food & Beverage,Evening,Express,Poor,Prepaid,2023-03-20,2025-01-17,372450.97,140.94,7.2,7.4
+395,Rogers Group,Individual,Medium Volume,Healthcare,Morning,Premium,Fair,Prepaid,2023-01-26,2023-10-16,445310.64,4083.55,1.3,8.2
+396,"Proctor, Burton and Crawford",Enterprise,Medium Volume,Healthcare,Any,Premium,Good,Net 30,2022-11-28,2024-05-05,365214.94,2627.55,7.1,9.5
+397,"Jackson, Moore and Ayala",SME,Low Volume,Manufacturing,Afternoon,Express,Fair,COD,2022-11-18,2025-06-01,225135.42,702.27,6.9,8.3
+398,Perez PLC,Enterprise,Low Volume,Manufacturing,Evening,Premium,Good,Prepaid,2024-09-26,2024-09-26,497847.21,4880.1,2.3,9.7
+399,Sanchez Group,SME,Low Volume,Retail,Morning,Standard,Fair,Net 15,2025-04-17,2025-06-12,363812.69,3838.9,8.9,7.7
+400,Velazquez Inc,SME,Low Volume,Automotive,Evening,Standard,Good,Net 30,2025-06-23,2025-08-10,66641.39,179.68,9.9,8.5
+401,"Rios, Walker and Wright",Individual,Low Volume,Manufacturing,Afternoon,Standard,Excellent,COD,2025-06-16,2025-09-11,40658.24,3910.14,2.2,9.4
+402,Duncan Inc,Individual,Low Volume,Healthcare,Afternoon,Express,Poor,Prepaid,2023-09-04,2024-09-12,69618.85,1006.64,1.3,9.1
+403,Walker PLC,SME,High Volume,Technology,Afternoon,Premium,Good,Net 15,2025-06-03,2025-09-16,34002.03,4639.16,9.9,9.5
+404,Wiley LLC,SME,Low Volume,Technology,Afternoon,Express,Poor,Net 30,2025-07-30,2025-09-07,304357.05,4130.43,7.5,7.6
+405,Tran Inc,Individual,Low Volume,Food & Beverage,Morning,Premium,Excellent,Prepaid,2023-08-25,2024-05-29,228993.31,4394.95,8.9,7.0
+406,Stevenson-Sanchez,Individual,Low Volume,Retail,Any,Premium,Excellent,Net 15,2023-08-04,2024-05-16,146298.5,2020.3,3.7,9.3
+407,Oconnor PLC,SME,Low Volume,Healthcare,Morning,Premium,Good,Prepaid,2025-08-19,2025-09-11,415116.86,2285.91,7.5,6.5
+408,Randolph Inc,Individual,Low Volume,Food & Beverage,Afternoon,Express,Poor,COD,2023-06-14,2023-12-23,225992.04,935.45,6.3,8.9
+409,"Wiley, Tapia and Smith",SME,Medium Volume,Retail,Evening,Express,Good,Net 30,2023-10-03,2025-01-16,46504.43,3545.82,6.7,6.3
+410,"Parker, Harris and Bird",Individual,Low Volume,Food & Beverage,Afternoon,Express,Poor,Net 30,2025-04-06,2025-06-14,384361.9,4565.65,6.1,8.6
+411,Dawson Inc,Enterprise,Medium Volume,Manufacturing,Morning,Express,Fair,COD,2025-08-07,2025-08-08,365350.71,4806.78,3.6,6.7
+412,"Gutierrez, Huang and Ellis",Enterprise,Low Volume,Retail,Evening,Standard,Poor,Prepaid,2023-05-30,2025-02-18,427850.12,2740.33,1.1,9.5
+413,"Anderson, Wilkins and Jones",Individual,Medium Volume,Automotive,Any,Express,Poor,Prepaid,2024-06-16,2025-03-04,40623.05,3020.51,3.2,8.2
+414,Young LLC,Individual,Low Volume,Manufacturing,Morning,Standard,Good,Net 30,2024-01-08,2025-06-18,326985.16,231.77,8.7,8.7
+415,Haynes-Moss,SME,Low Volume,Healthcare,Morning,Standard,Excellent,Prepaid,2025-06-29,2025-07-25,496873.86,848.61,3.6,8.6
+416,Harding and Sons,Individual,Low Volume,Food & Beverage,Afternoon,Express,Fair,Net 30,2023-07-14,2025-03-27,47470.02,1531.51,4.3,7.5
+417,Garcia Group,SME,High Volume,Food & Beverage,Morning,Express,Poor,Net 15,2024-06-20,2025-01-18,61889.59,4304.07,4.0,7.7
+418,"Howard, Townsend and Hayes",Enterprise,Medium Volume,Food & Beverage,Morning,Standard,Excellent,Prepaid,2023-12-08,2024-10-04,362312.99,3043.65,8.1,8.8
+419,Moore Ltd,SME,Low Volume,Healthcare,Evening,Standard,Poor,Prepaid,2025-04-10,2025-05-29,246759.72,940.54,6.5,8.8
+420,"Williams, Huff and Murphy",Enterprise,Low Volume,Retail,Morning,Express,Excellent,Net 15,2024-10-30,2024-11-28,399982.61,4994.99,4.7,7.3
+421,Foster-Williams,Individual,Low Volume,Manufacturing,Morning,Premium,Good,COD,2023-06-18,2024-02-19,127954.34,385.79,3.7,8.2
+422,Johnson Group,Enterprise,Low Volume,Automotive,Evening,Express,Poor,Net 30,2025-03-05,2025-08-21,416189.34,1010.38,8.5,9.7
+423,"Wright, Murray and Lara",SME,Low Volume,Retail,Afternoon,Express,Good,Prepaid,2024-05-20,2024-07-27,446137.11,2707.99,4.0,9.1
+424,Anderson Group,Individual,Low Volume,Retail,Evening,Premium,Fair,Net 30,2022-10-02,2023-11-09,104922.97,3443.19,8.2,9.6
+425,"Miller, Willis and Lowery",Enterprise,Medium Volume,Healthcare,Morning,Express,Poor,Net 15,2024-08-09,2024-09-08,285919.84,1978.35,6.4,9.5
+426,Orr Group,Individual,Low Volume,Healthcare,Morning,Express,Poor,Net 30,2025-09-15,2025-09-18,249030.16,1226.33,5.1,9.8
+427,Martinez-Dunlap,SME,Medium Volume,Manufacturing,Morning,Express,Excellent,Net 15,2022-12-28,2023-02-16,456763.57,2246.68,1.2,7.9
+428,Underwood-Foster,Enterprise,Low Volume,Healthcare,Any,Premium,Fair,COD,2025-06-27,2025-06-29,72504.23,4365.4,8.4,9.8
+429,Gomez and Sons,Enterprise,Low Volume,Manufacturing,Morning,Express,Poor,Net 30,2024-10-06,2025-01-09,3050.82,4665.07,7.2,8.4
+430,Johnson PLC,SME,High Volume,Retail,Morning,Premium,Fair,Net 30,2024-01-20,2025-01-29,289202.36,1595.11,9.0,7.3
+431,Jenkins-Pierce,SME,Medium Volume,Food & Beverage,Evening,Express,Excellent,COD,2024-08-28,2024-09-20,75511.04,1404.5,1.1,8.5
+432,Barnes Ltd,Enterprise,Low Volume,Food & Beverage,Evening,Premium,Fair,COD,2023-07-22,2025-06-19,71636.86,3536.55,3.5,7.0
+433,"Mcknight, Stephens and Smith",Individual,High Volume,Healthcare,Any,Standard,Good,Net 30,2024-04-17,2024-11-01,235897.05,3393.7,2.0,6.2
+434,Stephens-Washington,Enterprise,Low Volume,Automotive,Any,Premium,Fair,COD,2024-11-08,2025-08-22,166833.72,1030.83,7.8,9.2
+435,Nelson-Johnson,SME,High Volume,Food & Beverage,Afternoon,Standard,Poor,Net 30,2024-03-22,2025-02-11,228336.5,3438.17,7.4,7.9
+436,Brown-Frey,Enterprise,Medium Volume,Manufacturing,Evening,Express,Poor,Net 15,2022-10-21,2024-05-06,350107.7,3342.64,8.1,9.5
+437,Dickson Inc,Enterprise,Low Volume,Retail,Any,Standard,Fair,Prepaid,2025-01-06,2025-03-10,231159.6,895.47,7.9,8.4
+438,"Velasquez, Stark and Brown",Enterprise,Medium Volume,Technology,Morning,Express,Excellent,COD,2023-06-10,2025-09-15,266840.04,2034.04,4.7,8.5
+439,Kelly-Combs,SME,Low Volume,Technology,Morning,Express,Good,Prepaid,2023-05-17,2025-05-09,392372.67,2205.0,8.1,8.2
+440,"Stewart, Rojas and Howard",Individual,Medium Volume,Automotive,Morning,Premium,Poor,Net 30,2023-03-31,2024-09-15,296489.4,2341.4,6.0,9.3
+441,Meza-Elliott,SME,Medium Volume,Retail,Morning,Premium,Poor,COD,2024-10-28,2025-04-29,247653.28,3317.82,1.8,9.3
+442,Weaver-Thompson,Individual,Low Volume,Retail,Afternoon,Premium,Good,Prepaid,2023-04-13,2023-05-16,266096.65,1980.41,6.2,6.8
+443,"Robinson, Fox and Smith",SME,Low Volume,Healthcare,Evening,Express,Fair,Net 30,2022-11-19,2025-06-26,291780.76,3076.88,5.6,9.4
+444,Peterson and Sons,Enterprise,Low Volume,Healthcare,Morning,Standard,Fair,Net 30,2023-04-27,2025-07-09,430762.67,4335.11,3.1,8.8
+445,Brown-Hernandez,SME,Medium Volume,Automotive,Any,Express,Poor,Prepaid,2025-04-01,2025-07-30,273014.28,3329.31,5.3,6.8
+446,Mathis LLC,SME,Medium Volume,Technology,Afternoon,Express,Good,Net 15,2023-02-21,2025-08-12,6789.77,3259.53,2.3,9.5
+447,"Foster, Garcia and Turner",Enterprise,Low Volume,Retail,Afternoon,Premium,Poor,Prepaid,2023-11-02,2024-02-03,446897.65,3492.18,9.4,8.5
+448,Conner-Yu,SME,Low Volume,Food & Beverage,Any,Express,Fair,Net 15,2023-03-10,2024-10-29,93709.73,3042.64,6.2,9.4
+449,"Steele, Mcfarland and Buchanan",Individual,Medium Volume,Healthcare,Any,Premium,Fair,Net 30,2023-03-28,2023-10-16,489138.49,2862.34,7.3,6.5
+450,Gray Ltd,Individual,Low Volume,Retail,Afternoon,Premium,Fair,Prepaid,2024-06-25,2025-05-01,258957.83,2640.62,6.5,7.0
+451,"Smith, Miles and Berry",Individual,Low Volume,Automotive,Morning,Premium,Fair,Net 30,2023-02-05,2025-04-29,451889.05,2698.41,1.1,7.8
+452,"Johnson, Guzman and Mccall",Individual,Low Volume,Automotive,Evening,Express,Fair,COD,2025-01-10,2025-09-10,145315.01,224.86,9.3,9.0
+453,"Garcia, Crawford and Rivera",Individual,Low Volume,Healthcare,Morning,Premium,Poor,Net 15,2023-05-19,2023-07-24,286857.14,3298.78,3.6,8.9
+454,Jackson-Mcclure,SME,High Volume,Retail,Afternoon,Premium,Excellent,COD,2023-10-04,2023-12-06,126773.44,3098.2,3.5,7.0
+455,"Daniel, Rogers and Smith",Individual,Low Volume,Manufacturing,Afternoon,Premium,Poor,COD,2024-11-04,2025-01-09,404112.5,1343.2,7.3,7.9
+456,Scott-Rodriguez,Enterprise,Low Volume,Healthcare,Morning,Standard,Good,Prepaid,2024-10-17,2024-10-17,376627.89,2094.09,4.4,8.6
+457,"Barnes, Jackson and Gutierrez",Enterprise,Low Volume,Manufacturing,Evening,Standard,Fair,Net 30,2023-11-15,2025-07-01,27209.08,2346.87,5.3,7.9
+458,Garcia-Mendoza,Individual,Low Volume,Manufacturing,Any,Premium,Poor,Prepaid,2023-10-08,2025-06-14,132049.95,2675.69,4.9,7.2
+459,"Perez, Hayes and Lloyd",SME,Low Volume,Automotive,Evening,Premium,Excellent,Net 30,2024-09-01,2024-09-13,458938.36,3205.25,9.6,7.7
+460,Lynn-Jones,SME,Low Volume,Healthcare,Evening,Express,Excellent,COD,2022-10-11,2023-04-11,327517.3,1986.21,8.0,9.0
+461,"Jones, Mcmahon and Spence",Individual,Low Volume,Manufacturing,Evening,Premium,Good,COD,2023-11-04,2024-06-22,274258.67,3380.37,8.5,6.0
+462,Bush-Reynolds,Enterprise,High Volume,Automotive,Any,Express,Good,COD,2025-09-02,2025-09-13,126696.16,218.51,6.6,6.2
+463,Moore-Garcia,Enterprise,Low Volume,Food & Beverage,Morning,Premium,Excellent,Net 30,2024-07-15,2024-10-11,428363.97,693.04,6.9,9.6
+464,"Spencer, Frost and Fernandez",Enterprise,Low Volume,Retail,Afternoon,Express,Fair,Prepaid,2023-04-15,2024-11-21,330578.45,424.79,5.1,10.0
+465,Williams PLC,Individual,Low Volume,Automotive,Evening,Express,Good,Net 30,2023-08-10,2024-10-06,139366.45,358.82,4.5,10.0
+466,Ward Group,SME,Medium Volume,Manufacturing,Any,Standard,Poor,Net 15,2024-03-10,2024-04-27,305540.64,933.29,5.4,6.6
+467,"Greene, Gonzalez and Johnson",Enterprise,Low Volume,Food & Beverage,Morning,Express,Fair,Net 30,2025-03-09,2025-04-11,18395.59,398.54,7.5,9.1
+468,Wells Inc,SME,High Volume,Manufacturing,Morning,Standard,Poor,COD,2023-08-04,2024-03-30,76652.13,1682.66,4.5,6.0
+469,Jacobson-Baker,SME,Low Volume,Technology,Any,Express,Excellent,Net 15,2023-11-28,2025-01-25,2650.37,4773.07,8.4,7.9
+470,Mcclure-Wood,SME,Low Volume,Healthcare,Evening,Express,Excellent,Net 30,2023-11-17,2024-09-11,183312.33,4274.04,4.1,9.4
+471,Baker-Hood,SME,Low Volume,Automotive,Afternoon,Standard,Excellent,Prepaid,2023-07-04,2024-10-01,330706.31,1529.41,4.5,6.4
+472,"Contreras, Miller and Cooper",SME,Low Volume,Retail,Any,Premium,Good,Net 15,2023-03-03,2024-07-19,18813.45,175.55,10.0,7.0
+473,"Perez, Brown and Hughes",Individual,Medium Volume,Automotive,Evening,Express,Poor,Net 30,2025-08-17,2025-09-03,19484.3,327.47,8.1,6.2
+474,"Camacho, Wells and Keith",Individual,Medium Volume,Automotive,Any,Premium,Good,Net 15,2025-08-12,2025-08-30,462483.09,232.54,2.3,8.6
+475,"Johnson, Duncan and Black",Individual,Low Volume,Retail,Afternoon,Premium,Good,Net 30,2022-12-14,2024-07-13,86952.26,297.29,3.8,9.2
+476,Martinez Group,Enterprise,Low Volume,Food & Beverage,Morning,Standard,Excellent,Prepaid,2025-08-31,2025-09-03,297893.73,3097.36,1.6,6.8
+477,Stokes and Sons,Individual,Medium Volume,Automotive,Any,Express,Excellent,Net 15,2025-09-01,2025-09-01,161473.35,4825.23,2.9,6.2
+478,"Graham, Osborn and Burton",Enterprise,Medium Volume,Retail,Evening,Standard,Poor,Net 15,2022-12-13,2025-04-04,348451.6,2789.37,4.9,9.7
+479,"Sloan, Jones and Hughes",Enterprise,High Volume,Automotive,Any,Standard,Excellent,Prepaid,2023-06-28,2024-05-16,41280.58,85.76,9.3,8.8
+480,Stone-Stark,SME,Low Volume,Technology,Any,Premium,Good,Net 15,2023-09-11,2023-09-20,72400.84,1391.2,5.1,7.0
+481,"Mills, Barnes and Perry",Individual,Medium Volume,Retail,Afternoon,Premium,Poor,Net 30,2024-10-25,2024-12-12,313968.64,3923.79,4.1,6.0
+482,Buckley PLC,Enterprise,Medium Volume,Food & Beverage,Morning,Premium,Fair,Net 15,2024-06-24,2025-06-11,232643.79,3151.0,2.9,6.2
+483,"Beard, Humphrey and Baker",Enterprise,Medium Volume,Automotive,Any,Express,Good,Net 15,2025-01-27,2025-06-29,335401.17,263.42,6.8,7.1
+484,Johnson-Hill,SME,Low Volume,Food & Beverage,Any,Standard,Excellent,Net 30,2024-06-06,2024-08-12,462505.81,920.64,8.1,7.9
+485,"Morales, Foster and Koch",Enterprise,Medium Volume,Automotive,Any,Premium,Fair,Prepaid,2024-07-17,2025-05-09,100176.95,3400.42,3.9,9.1
+486,Mccall-Prince,Enterprise,Medium Volume,Manufacturing,Any,Standard,Poor,Net 15,2022-11-12,2022-12-03,37691.33,2946.21,1.5,7.7
+487,Collins-Cameron,Individual,Medium Volume,Technology,Afternoon,Express,Fair,Net 15,2025-03-02,2025-08-21,229412.36,1011.07,4.2,7.1
+488,Taylor Ltd,Enterprise,Medium Volume,Automotive,Morning,Express,Good,Net 30,2024-10-08,2025-03-10,425974.03,2319.97,2.5,7.4
+489,Daniel-Jacobs,Individual,Low Volume,Manufacturing,Afternoon,Premium,Good,Net 30,2025-03-12,2025-03-29,206436.38,2632.76,8.8,6.9
+490,Figueroa-Malone,SME,Low Volume,Healthcare,Morning,Premium,Poor,Net 15,2024-01-16,2025-06-29,124667.89,2199.53,3.0,9.7
+491,"Moody, Jones and Mckinney",Individual,Low Volume,Retail,Any,Standard,Excellent,Prepaid,2025-03-06,2025-05-24,367004.67,2545.87,4.8,7.6
+492,"Suarez, Johnson and Lee",Individual,Low Volume,Retail,Any,Express,Good,Net 30,2025-01-21,2025-08-09,279685.0,111.49,7.6,9.8
+493,Johnson Inc,SME,Medium Volume,Manufacturing,Morning,Standard,Poor,COD,2025-03-24,2025-09-04,81739.61,2323.45,6.1,8.3
+494,Richardson-Marshall,SME,Low Volume,Manufacturing,Any,Standard,Fair,Prepaid,2024-10-30,2025-03-07,352247.13,56.75,6.6,7.5
+495,"Johnson, Watson and Wheeler",Individual,Low Volume,Retail,Evening,Express,Fair,Net 15,2025-06-26,2025-07-11,394058.23,450.75,8.9,8.9
+496,"Arnold, Cooper and Monroe",Individual,High Volume,Healthcare,Morning,Standard,Poor,COD,2025-04-30,2025-06-05,233211.08,252.33,4.3,8.6
+497,Mitchell Group,Individual,Low Volume,Automotive,Afternoon,Standard,Fair,Net 15,2025-03-17,2025-03-26,270277.28,3262.74,7.6,9.0
+498,Vincent Ltd,Individual,Low Volume,Manufacturing,Afternoon,Express,Fair,COD,2025-04-11,2025-05-17,252279.42,2143.5,1.5,7.5
+499,"Ortiz, Smith and Deleon",Individual,Low Volume,Food & Beverage,Morning,Express,Fair,Prepaid,2023-05-03,2025-02-28,310854.68,4009.52,9.5,9.2
+500,Holland PLC,Enterprise,Low Volume,Manufacturing,Any,Standard,Excellent,Prepaid,2022-09-28,2025-02-14,449074.98,1477.44,9.6,6.4
+501,"Trujillo, Torres and Rasmussen",Individual,Medium Volume,Manufacturing,Any,Standard,Good,Net 30,2023-05-22,2024-11-18,147291.55,4849.39,5.9,6.5
+502,York-Stevens,SME,Medium Volume,Automotive,Morning,Express,Good,Net 30,2023-12-27,2024-05-12,11996.27,4019.85,8.5,8.1
+503,"Holloway, Sanders and Garcia",Individual,Medium Volume,Healthcare,Evening,Express,Poor,Prepaid,2023-08-16,2024-09-10,152737.09,703.17,8.1,6.7
+504,Hoffman-Wheeler,SME,Medium Volume,Healthcare,Evening,Standard,Good,COD,2024-09-13,2024-12-26,142906.63,4783.26,6.6,6.6
+505,Brown-Mcneil,Enterprise,Low Volume,Manufacturing,Afternoon,Standard,Good,Net 30,2024-10-08,2025-05-17,21534.58,1617.3,2.1,7.0
+506,Douglas-Farley,Individual,Medium Volume,Automotive,Morning,Premium,Fair,COD,2025-04-20,2025-07-28,74824.16,2269.72,9.8,8.1
+507,"Cannon, Yoder and Trujillo",Enterprise,Medium Volume,Technology,Any,Standard,Poor,COD,2023-04-13,2025-03-27,78870.58,4852.24,5.9,8.0
+508,"Flores, Taylor and Johnson",SME,Low Volume,Technology,Evening,Premium,Good,Prepaid,2024-07-07,2025-02-10,170003.53,605.96,5.3,6.2
+509,Sullivan-Doyle,Enterprise,Low Volume,Healthcare,Morning,Express,Good,Prepaid,2023-08-08,2024-10-31,179339.38,1665.51,6.5,6.8
+510,Cooper Ltd,SME,Low Volume,Manufacturing,Morning,Standard,Poor,Net 30,2025-09-13,2025-09-14,487943.91,2002.4,5.4,8.4
+511,Knox-Powers,Enterprise,Low Volume,Automotive,Evening,Express,Good,Prepaid,2024-04-26,2025-01-10,185445.35,1895.51,3.6,7.4
+512,"Walter, White and Davis",Individual,Low Volume,Retail,Afternoon,Premium,Poor,Prepaid,2025-04-02,2025-04-23,402039.07,1478.74,8.3,9.9
+513,"Hines, White and Frazier",SME,Low Volume,Manufacturing,Morning,Standard,Good,COD,2023-06-29,2024-03-27,237831.95,4344.25,9.9,6.3
+514,Walker-Savage,SME,Low Volume,Retail,Morning,Express,Fair,Prepaid,2022-12-25,2024-02-18,88271.61,2337.49,6.1,9.7
+515,Green-Carter,SME,Medium Volume,Healthcare,Any,Standard,Fair,COD,2025-05-17,2025-08-31,247556.14,3712.29,3.0,9.2
+516,"Silva, Blackburn and Jones",SME,Medium Volume,Automotive,Any,Standard,Fair,Prepaid,2024-02-16,2025-07-16,90506.78,4538.63,6.8,6.1
+517,"James, Evans and Brown",SME,Low Volume,Retail,Evening,Premium,Poor,Prepaid,2024-03-20,2025-07-01,434304.61,3158.58,5.3,8.8
+518,Cooper PLC,Individual,Medium Volume,Automotive,Morning,Express,Good,Net 30,2023-02-16,2025-06-09,73922.42,2332.17,7.2,7.4
+519,Stewart Ltd,SME,High Volume,Technology,Evening,Standard,Fair,COD,2025-09-04,2025-09-06,265276.55,4684.77,5.6,9.1
+520,Welch-Thompson,Enterprise,Medium Volume,Food & Beverage,Afternoon,Premium,Fair,COD,2022-12-16,2024-09-15,413584.18,3440.59,3.7,8.7
+521,Clark-Ayala,Enterprise,Low Volume,Food & Beverage,Evening,Standard,Excellent,Net 15,2022-09-24,2024-06-13,259567.2,1896.42,5.4,7.4
+522,Anderson Group,Enterprise,Low Volume,Manufacturing,Afternoon,Premium,Good,Net 15,2023-03-11,2024-10-15,397758.26,2815.34,7.2,9.8
+523,Reyes-Johnson,Individual,Low Volume,Food & Beverage,Morning,Express,Poor,Net 30,2023-12-05,2024-04-13,59166.26,699.6,1.2,7.4
+524,Mcclain PLC,Enterprise,Low Volume,Technology,Evening,Standard,Fair,Net 30,2023-11-01,2024-03-11,372485.65,637.05,2.2,8.8
+525,"Gross, Perez and Wiley",SME,Low Volume,Manufacturing,Afternoon,Standard,Excellent,Prepaid,2024-09-29,2025-01-17,345718.25,3930.95,1.7,9.1
+526,"Chapman, Jackson and Colon",Enterprise,Low Volume,Manufacturing,Morning,Standard,Excellent,Prepaid,2023-01-09,2023-10-29,60342.19,1302.41,1.6,8.7
+527,"Meyer, Warren and Hamilton",Enterprise,Low Volume,Food & Beverage,Afternoon,Premium,Good,Net 15,2023-08-03,2025-01-18,335629.72,194.83,2.3,9.0
+528,Howard-Lopez,Individual,Medium Volume,Healthcare,Evening,Standard,Good,Net 30,2023-02-12,2025-07-31,50453.74,2911.76,1.1,6.9
+529,Smith-Walker,SME,Medium Volume,Manufacturing,Morning,Premium,Excellent,Net 15,2025-06-21,2025-09-17,460318.11,4263.92,5.3,8.8
+530,Lawrence and Sons,Individual,Medium Volume,Retail,Afternoon,Express,Poor,Prepaid,2023-05-08,2023-08-22,107922.73,1176.39,2.0,9.9
+531,Brooks Ltd,Enterprise,Medium Volume,Food & Beverage,Afternoon,Express,Fair,COD,2024-11-06,2025-01-26,279008.93,251.01,4.0,6.5
+532,Wheeler Inc,Individual,Medium Volume,Automotive,Evening,Premium,Poor,Net 15,2024-04-27,2025-03-30,277404.03,1488.42,8.7,6.8
+533,Williams Inc,SME,High Volume,Automotive,Evening,Standard,Excellent,Prepaid,2024-09-04,2025-02-09,336375.64,2012.03,5.7,8.7
+534,"King, Miles and Harris",SME,Medium Volume,Technology,Morning,Premium,Good,Net 30,2023-11-09,2025-02-17,182491.29,1035.48,2.8,9.4
+535,Stanley-Bates,Enterprise,Low Volume,Technology,Any,Express,Fair,Prepaid,2022-09-29,2023-07-19,178692.56,3350.05,9.6,10.0
+536,Barnes Inc,Enterprise,Low Volume,Technology,Morning,Standard,Fair,Prepaid,2024-07-13,2025-02-19,249139.62,3160.44,2.2,6.4
+537,Wilson-Rodriguez,Enterprise,High Volume,Technology,Morning,Standard,Poor,COD,2024-07-26,2024-10-17,77215.59,3128.74,1.9,6.3
+538,Decker-Dudley,SME,Low Volume,Technology,Afternoon,Express,Poor,Prepaid,2023-04-25,2024-03-04,252892.58,2735.07,8.3,8.2
+539,Williams Group,Enterprise,High Volume,Technology,Morning,Express,Poor,COD,2023-12-12,2025-07-23,426584.27,2240.65,1.3,6.7
+540,Rivera-Smith,SME,Low Volume,Automotive,Afternoon,Express,Poor,Net 15,2024-10-12,2025-05-29,156917.38,1975.95,7.9,8.3
+541,"Caldwell, Hernandez and Davis",Individual,Low Volume,Automotive,Any,Express,Good,Net 30,2025-06-08,2025-07-30,196301.02,2498.72,9.7,8.5
+542,Conway Ltd,SME,Medium Volume,Healthcare,Morning,Standard,Excellent,Net 15,2024-11-20,2025-01-29,418630.14,1776.94,7.7,6.1
+543,Baker-Williams,SME,Low Volume,Technology,Morning,Express,Fair,COD,2025-09-06,2025-09-16,206552.87,329.42,3.2,6.9
+544,Ward-Rhodes,Enterprise,Medium Volume,Automotive,Morning,Express,Excellent,COD,2025-05-04,2025-07-01,85719.84,2715.16,1.3,8.6
+545,Smith and Sons,Individual,Low Volume,Technology,Evening,Standard,Poor,Net 30,2023-01-24,2024-10-27,492896.63,1919.8,4.5,8.3
+546,Kline-Friedman,Enterprise,Low Volume,Automotive,Afternoon,Express,Poor,COD,2023-03-24,2023-11-23,84146.98,1532.63,9.7,6.8
+547,Briggs-White,Enterprise,Low Volume,Food & Beverage,Afternoon,Express,Fair,Net 30,2024-11-30,2025-03-27,149362.81,2888.93,8.2,8.5
+548,Houston-Vaughn,Individual,Low Volume,Food & Beverage,Morning,Premium,Fair,COD,2025-08-08,2025-08-28,34567.62,4015.87,5.3,6.8
+549,Wilson Ltd,Individual,Low Volume,Healthcare,Evening,Express,Fair,Net 15,2023-12-25,2025-03-29,207742.81,1293.76,5.6,8.7
+550,Garcia PLC,Enterprise,Low Volume,Automotive,Afternoon,Premium,Poor,Net 15,2025-08-29,2025-09-08,330742.3,4128.34,9.4,7.1
+551,White-James,Individual,Low Volume,Technology,Morning,Premium,Good,COD,2024-06-03,2024-11-19,231780.86,1239.85,7.7,9.1
+552,"Hobbs, Acosta and Snow",SME,Low Volume,Healthcare,Morning,Premium,Good,Prepaid,2022-10-20,2024-03-17,134200.44,1470.87,2.4,8.7
+553,Alexander-Brown,Enterprise,Medium Volume,Retail,Afternoon,Standard,Excellent,Net 15,2024-03-06,2025-03-09,398725.34,1587.18,5.4,10.0
+554,"Warren, Manning and Cummings",Enterprise,Low Volume,Manufacturing,Afternoon,Express,Good,Net 30,2022-10-02,2023-06-01,129940.03,4027.51,6.9,6.7
+555,Stone-Watts,Individual,Low Volume,Technology,Morning,Standard,Excellent,COD,2025-08-01,2025-08-31,301198.27,4342.5,9.1,7.6
+556,"Wright, Reed and Rhodes",Individual,Medium Volume,Retail,Any,Premium,Good,Net 15,2024-01-06,2024-09-01,56854.25,3685.68,9.4,8.1
+557,"Mcclain, Salazar and Smith",Individual,Low Volume,Healthcare,Any,Standard,Good,Net 30,2025-03-26,2025-09-07,386822.25,1601.38,8.5,8.9
+558,Christian-Booth,Individual,Low Volume,Manufacturing,Any,Standard,Good,Net 30,2024-03-26,2024-05-05,88401.97,4851.12,5.0,7.0
+559,Rivera LLC,SME,Low Volume,Food & Beverage,Evening,Premium,Excellent,COD,2024-03-10,2024-04-07,273326.77,2400.53,3.2,7.1
+560,"Gray, Montoya and Miller",Enterprise,Low Volume,Healthcare,Any,Premium,Fair,COD,2023-05-21,2024-06-02,11516.03,4835.69,6.5,9.4
+561,Gates Group,Enterprise,Low Volume,Automotive,Afternoon,Express,Poor,COD,2024-06-08,2024-11-02,319835.58,3518.05,9.1,8.7
+562,"Valdez, Garcia and Gutierrez",Enterprise,Low Volume,Technology,Any,Standard,Poor,COD,2025-08-28,2025-09-09,151143.19,4684.8,7.8,7.2
+563,Conner PLC,Enterprise,Low Volume,Technology,Evening,Premium,Poor,Net 30,2022-09-19,2024-08-17,137744.23,446.47,8.0,8.0
+564,"Clark, Powers and Clements",SME,Low Volume,Automotive,Any,Standard,Good,COD,2025-05-21,2025-07-03,253660.92,1791.69,6.4,9.3
+565,Richard LLC,SME,Low Volume,Automotive,Morning,Standard,Good,Prepaid,2022-11-17,2024-06-19,395718.64,723.66,4.6,8.5
+566,Moran-Cox,Enterprise,Medium Volume,Retail,Afternoon,Standard,Good,Prepaid,2024-07-29,2025-02-02,396528.51,1631.03,5.3,8.9
+567,"Walker, Peterson and Gallegos",Individual,Medium Volume,Food & Beverage,Evening,Express,Good,Net 30,2023-01-03,2025-08-14,207833.72,950.35,8.9,9.8
+568,"Brooks, Rodriguez and Prince",Enterprise,Low Volume,Retail,Morning,Premium,Good,Net 30,2023-08-05,2024-08-21,487089.66,1031.42,7.3,6.7
+569,"Griffith, Rodriguez and Carr",SME,Low Volume,Food & Beverage,Evening,Standard,Excellent,COD,2025-03-07,2025-04-12,85891.32,2857.85,1.1,8.1
+570,Lewis-Summers,SME,Low Volume,Automotive,Any,Standard,Good,Net 15,2025-07-04,2025-07-18,96081.54,4316.59,8.0,7.2
+571,Williams-Schultz,Enterprise,Low Volume,Technology,Afternoon,Premium,Good,COD,2023-09-24,2025-01-23,363627.33,987.35,2.6,9.2
+572,Ellis-Lawrence,SME,High Volume,Manufacturing,Any,Standard,Fair,Prepaid,2023-02-01,2024-05-30,43783.6,2370.96,8.8,9.9
+573,Moreno Inc,Enterprise,Medium Volume,Automotive,Any,Premium,Poor,COD,2025-08-10,2025-09-01,37454.75,2807.15,1.5,9.7
+574,"Webb, Romero and Morse",SME,Low Volume,Food & Beverage,Morning,Standard,Fair,Prepaid,2024-01-06,2024-04-25,151951.17,2003.75,4.3,9.9
+575,"Ochoa, Garcia and Sandoval",Individual,Low Volume,Manufacturing,Evening,Standard,Poor,COD,2024-06-14,2025-03-21,439070.48,703.0,3.9,8.1
+576,Barnes-Lynch,Enterprise,Medium Volume,Healthcare,Morning,Standard,Poor,COD,2023-09-06,2025-02-02,374163.86,4634.87,3.5,9.5
+577,Stuart-Waller,SME,Low Volume,Food & Beverage,Evening,Express,Good,COD,2023-06-18,2024-06-25,368697.75,2481.81,9.6,8.2
+578,Morrison-Tanner,Individual,Low Volume,Technology,Morning,Standard,Good,Net 30,2023-02-12,2024-06-12,115700.41,227.52,3.3,8.8
+579,"Valencia, Joseph and Walls",SME,Low Volume,Retail,Any,Express,Poor,Prepaid,2025-03-31,2025-07-17,247001.29,4236.9,8.8,6.5
+580,"Klein, Parks and Morse",SME,High Volume,Manufacturing,Afternoon,Premium,Fair,Net 15,2023-04-27,2023-08-21,292190.15,4859.56,5.7,8.3
+581,Gordon Ltd,Enterprise,Low Volume,Manufacturing,Any,Premium,Excellent,COD,2024-11-05,2025-05-26,13955.12,3422.5,7.1,7.6
+582,Hart-Aguilar,Enterprise,Low Volume,Healthcare,Afternoon,Standard,Excellent,Prepaid,2024-11-05,2025-08-31,415518.91,3314.72,5.1,9.8
+583,"Adkins, Skinner and Mitchell",Enterprise,Low Volume,Healthcare,Morning,Premium,Poor,COD,2024-11-05,2025-08-01,473761.78,4999.11,9.2,9.2
+584,"Rodriguez, James and Brown",Enterprise,Medium Volume,Automotive,Evening,Express,Excellent,Net 30,2025-02-20,2025-03-03,274030.95,3031.34,1.8,7.0
+585,Terrell Ltd,SME,Medium Volume,Retail,Morning,Standard,Good,Prepaid,2023-07-08,2024-01-25,389966.78,1460.43,7.8,8.6
+586,"Mueller, Harris and Weaver",SME,Medium Volume,Technology,Evening,Premium,Good,COD,2025-03-26,2025-05-28,333094.63,4168.66,5.6,8.0
+587,"Parrish, Stevenson and Hancock",SME,Low Volume,Healthcare,Any,Standard,Poor,COD,2024-01-28,2025-04-17,307320.02,2198.82,4.8,6.2
+588,Dixon Ltd,SME,Medium Volume,Automotive,Afternoon,Premium,Good,Prepaid,2024-05-26,2024-10-11,264112.08,3253.77,1.8,7.9
+589,Hughes-Frye,SME,High Volume,Healthcare,Afternoon,Standard,Fair,Net 15,2024-09-16,2025-09-10,262022.94,1512.63,1.4,6.3
+590,"Brown, Manning and Harris",Enterprise,High Volume,Food & Beverage,Any,Express,Excellent,Prepaid,2023-08-27,2025-06-12,330766.77,2863.97,3.3,7.0
+591,Greer-Pruitt,Individual,High Volume,Retail,Morning,Premium,Poor,Net 15,2025-04-19,2025-08-04,393302.37,4222.4,1.4,7.7
+592,"Payne, Morrison and Parsons",SME,Low Volume,Food & Beverage,Any,Premium,Poor,COD,2024-08-28,2025-09-05,171325.86,4594.65,8.3,6.8
+593,Lucero Inc,Individual,High Volume,Healthcare,Morning,Express,Excellent,Net 30,2023-08-07,2023-12-29,198071.99,115.86,6.9,7.8
+594,"Wilson, Williams and Ramirez",Individual,Low Volume,Automotive,Any,Express,Fair,Prepaid,2023-03-28,2023-11-22,402515.73,483.79,2.2,6.8
+595,Smith-Owens,Individual,Low Volume,Manufacturing,Morning,Standard,Poor,Net 15,2023-03-14,2025-07-23,325220.17,2207.15,6.6,9.2
+596,Carlson-Ayala,SME,Medium Volume,Technology,Afternoon,Express,Poor,Net 30,2022-11-01,2024-08-20,59112.95,4516.96,7.6,7.8
+597,Henry-Armstrong,Enterprise,Low Volume,Technology,Afternoon,Standard,Fair,Prepaid,2025-03-31,2025-05-31,26410.17,88.98,6.7,8.9
+598,Fox-Krueger,SME,Low Volume,Automotive,Evening,Standard,Poor,Prepaid,2025-01-25,2025-05-28,243564.38,2975.64,6.5,8.7
+599,Perry PLC,SME,Low Volume,Manufacturing,Morning,Premium,Excellent,Prepaid,2025-01-27,2025-05-01,288625.27,2788.62,3.4,8.6
+600,Alvarado LLC,Enterprise,Low Volume,Technology,Evening,Express,Poor,Net 30,2023-10-06,2024-06-19,81505.38,3644.74,5.2,7.8
+601,"Moreno, Barajas and Colon",Individual,Low Volume,Automotive,Evening,Premium,Poor,Net 15,2023-05-16,2025-09-02,441703.52,3628.83,4.5,7.7
+602,"Reed, Allen and May",Individual,Low Volume,Automotive,Evening,Express,Good,Net 15,2022-09-28,2025-06-22,141946.15,3758.81,7.0,6.5
+603,Fleming LLC,Individual,Medium Volume,Technology,Morning,Express,Poor,COD,2023-06-13,2024-04-24,118124.73,2806.31,10.0,7.4
+604,Cruz PLC,Individual,Medium Volume,Manufacturing,Afternoon,Premium,Excellent,Net 30,2025-02-07,2025-07-19,169529.64,614.15,3.0,8.2
+605,"Short, Brooks and Lang",SME,Low Volume,Healthcare,Morning,Premium,Fair,Net 15,2022-10-16,2024-02-04,426850.67,4374.79,6.4,6.4
+606,"Lee, Palmer and Vaughan",SME,High Volume,Technology,Morning,Standard,Excellent,Net 30,2022-11-06,2023-04-30,254145.56,876.88,2.1,6.8
+607,"Ferguson, Sims and Clark",Individual,Medium Volume,Healthcare,Any,Premium,Poor,Net 30,2025-08-02,2025-09-01,77993.57,1850.5,8.4,6.5
+608,"Coleman, Garcia and Medina",SME,Medium Volume,Retail,Afternoon,Express,Fair,COD,2023-05-10,2025-01-05,253006.34,471.91,4.4,9.0
+609,Lucas-Case,Individual,Medium Volume,Manufacturing,Afternoon,Premium,Poor,Net 15,2025-08-23,2025-09-12,69859.17,2172.67,9.3,9.6
+610,Love-Johnson,Individual,Low Volume,Automotive,Evening,Standard,Poor,Net 15,2023-03-06,2023-05-12,385305.78,3602.25,5.7,6.3
+611,Grant-Andrews,SME,Medium Volume,Manufacturing,Any,Standard,Poor,Net 30,2023-04-02,2023-10-24,330427.91,3225.26,9.1,6.2
+612,Hayes-Sullivan,Individual,Low Volume,Automotive,Evening,Express,Poor,COD,2023-06-29,2024-03-12,361053.97,1602.79,4.1,9.3
+613,Nichols Ltd,Individual,Low Volume,Manufacturing,Any,Express,Good,Prepaid,2023-11-19,2025-03-15,349038.01,4443.99,8.0,7.6
+614,"Richards, Haynes and Jones",SME,Medium Volume,Retail,Morning,Premium,Fair,Prepaid,2022-11-27,2025-07-07,362824.24,3713.26,2.1,10.0
+615,"Turner, Miller and Hubbard",Enterprise,Medium Volume,Food & Beverage,Evening,Premium,Fair,Net 15,2023-01-13,2024-03-16,12687.45,4457.08,5.9,7.0
+616,"Johnson, Moore and Robinson",SME,Low Volume,Automotive,Any,Premium,Excellent,Net 30,2023-11-26,2025-04-04,420950.14,1335.79,5.6,6.5
+617,"Phillips, Walters and Evans",Enterprise,Low Volume,Technology,Evening,Premium,Excellent,Prepaid,2025-02-08,2025-08-24,170151.17,1218.68,7.7,8.3
+618,"Wong, Bernard and Smith",Individual,Low Volume,Automotive,Afternoon,Express,Fair,COD,2025-08-12,2025-09-14,333794.26,4084.64,6.2,6.6
+619,Smith PLC,Individual,Medium Volume,Manufacturing,Morning,Express,Good,COD,2023-02-20,2024-02-26,227700.49,775.44,4.8,7.6
+620,Torres Ltd,SME,High Volume,Manufacturing,Any,Standard,Poor,Net 30,2024-05-11,2025-05-13,185277.81,2654.97,6.3,8.1
+621,Gutierrez Ltd,SME,Medium Volume,Food & Beverage,Any,Premium,Poor,Prepaid,2024-11-22,2025-08-05,344819.91,4741.71,7.6,7.7
+622,Walker LLC,Individual,Medium Volume,Manufacturing,Any,Premium,Poor,Net 15,2023-02-22,2023-08-23,484047.87,2590.27,5.8,8.8
+623,"Phelps, York and Randolph",Enterprise,Low Volume,Automotive,Afternoon,Premium,Fair,Net 30,2023-04-05,2025-09-13,301198.51,2072.67,2.1,8.3
+624,"Jones, Powers and King",Enterprise,High Volume,Retail,Evening,Express,Fair,COD,2024-02-06,2024-06-01,147696.67,188.49,2.3,9.1
+625,Howard-Lambert,SME,Low Volume,Healthcare,Afternoon,Standard,Poor,Net 30,2024-06-16,2024-10-01,62041.62,1775.81,8.8,7.7
+626,Mccullough LLC,Individual,Low Volume,Technology,Evening,Express,Poor,Net 15,2023-07-28,2024-08-11,381213.66,2548.58,5.1,7.8
+627,"Torres, Silva and Cunningham",Individual,Low Volume,Healthcare,Morning,Premium,Poor,Prepaid,2023-09-13,2024-06-07,117178.32,2007.22,5.9,9.8
+628,Jackson-Edwards,Individual,Low Volume,Healthcare,Morning,Standard,Excellent,COD,2023-08-31,2025-04-11,280961.13,662.72,6.0,6.8
+629,"Graham, Larsen and Taylor",Individual,Low Volume,Retail,Afternoon,Express,Excellent,Net 30,2024-11-07,2025-06-26,329468.95,2682.7,9.7,7.1
+630,Griffin-Hampton,Individual,Medium Volume,Food & Beverage,Any,Standard,Fair,Prepaid,2025-05-08,2025-07-12,294857.62,2482.79,9.4,7.4
+631,"Obrien, Wilkinson and Trevino",Enterprise,Medium Volume,Food & Beverage,Evening,Express,Fair,Net 30,2023-01-16,2023-06-01,58207.67,541.7,2.5,6.6
+632,Gross-Sims,Enterprise,Medium Volume,Manufacturing,Evening,Express,Good,Net 30,2024-05-01,2025-05-04,307623.24,1660.19,1.2,6.2
+633,"Welch, Hess and Riley",SME,Medium Volume,Manufacturing,Any,Express,Fair,Prepaid,2025-05-23,2025-08-22,470847.18,4502.53,1.5,7.0
+634,Arnold PLC,Enterprise,Low Volume,Technology,Any,Standard,Fair,Net 30,2023-05-10,2025-06-19,159849.89,2787.95,1.6,6.1
+635,"Rowe, Diaz and Walker",Enterprise,Low Volume,Healthcare,Morning,Standard,Good,COD,2024-05-02,2025-05-26,284554.57,2257.61,8.6,8.0
+636,Anderson-Mason,Enterprise,Low Volume,Healthcare,Afternoon,Standard,Poor,Prepaid,2024-11-30,2024-12-26,21854.25,4072.59,9.7,8.5
+637,Bates PLC,Enterprise,Low Volume,Retail,Morning,Express,Fair,COD,2023-10-22,2025-02-10,419904.37,1931.76,4.2,8.5
+638,Griffin and Sons,Individual,Low Volume,Healthcare,Morning,Standard,Excellent,COD,2024-12-26,2025-05-26,45767.84,3507.23,8.5,8.9
+639,Fitzgerald Group,SME,Low Volume,Manufacturing,Evening,Premium,Fair,COD,2024-05-31,2025-08-21,489840.53,3553.38,3.5,8.6
+640,Hall-Baker,Enterprise,Medium Volume,Technology,Evening,Standard,Good,Net 30,2022-11-02,2023-07-06,304784.59,71.18,1.1,6.7
+641,"Velez, Ward and Harrison",Individual,Low Volume,Automotive,Any,Express,Excellent,Net 30,2024-09-20,2025-03-04,269786.01,4468.23,8.3,7.8
+642,"Nguyen, Padilla and Boyd",SME,Medium Volume,Food & Beverage,Evening,Express,Good,Net 30,2022-11-08,2025-03-24,63257.17,1883.88,2.7,6.0
+643,Lane-Hudson,SME,Low Volume,Automotive,Evening,Standard,Excellent,COD,2025-03-22,2025-05-29,404398.83,1144.68,9.8,9.9
+644,"Valdez, Houston and Black",SME,High Volume,Automotive,Afternoon,Standard,Good,Prepaid,2023-11-07,2024-07-20,56362.32,1422.87,5.5,6.7
+645,"Sullivan, Roth and Reed",Individual,Medium Volume,Food & Beverage,Afternoon,Standard,Good,Net 30,2025-06-09,2025-08-28,64588.02,4671.14,8.7,9.5
+646,Shaw and Sons,SME,Low Volume,Manufacturing,Morning,Premium,Fair,Prepaid,2025-05-18,2025-07-11,1975.53,2164.22,7.1,8.6
+647,"Schneider, Lewis and Lopez",SME,Low Volume,Technology,Any,Express,Excellent,Prepaid,2023-05-29,2024-03-29,248291.78,2610.42,1.4,8.9
+648,Guerrero Group,SME,High Volume,Food & Beverage,Any,Express,Excellent,Prepaid,2024-11-13,2025-07-22,98109.46,454.95,6.1,6.1
+649,Leonard-Mendoza,Individual,Low Volume,Technology,Morning,Standard,Good,Net 15,2024-11-16,2025-05-16,165283.09,361.08,6.6,6.1
+650,Johnson-Williams,Enterprise,Low Volume,Food & Beverage,Evening,Express,Good,Net 30,2024-08-28,2025-04-06,237314.69,4796.07,8.5,9.3
+651,"Hunt, Macdonald and Thomas",Enterprise,Low Volume,Retail,Any,Standard,Poor,Net 30,2023-03-14,2023-08-14,43681.81,350.4,1.3,7.3
+652,"Mullen, Greene and Elliott",Enterprise,Low Volume,Manufacturing,Morning,Express,Excellent,COD,2025-06-26,2025-06-27,305758.58,2187.6,1.9,6.2
+653,"Nicholson, Valentine and Robinson",SME,High Volume,Technology,Morning,Premium,Poor,Net 15,2024-11-15,2025-05-20,432426.79,3948.0,6.6,7.8
+654,Jackson-Greer,SME,Low Volume,Food & Beverage,Morning,Express,Excellent,Prepaid,2024-02-17,2025-01-30,259089.23,2959.68,2.0,6.0
+655,Hanson PLC,Individual,Low Volume,Manufacturing,Afternoon,Premium,Fair,COD,2025-02-05,2025-04-05,211082.49,3636.88,5.0,7.0
+656,Nielsen-Carlson,Enterprise,Low Volume,Manufacturing,Evening,Premium,Poor,COD,2024-11-20,2024-12-10,156282.93,4431.85,8.0,6.6
+657,Rodriguez and Sons,SME,Medium Volume,Healthcare,Evening,Standard,Good,Net 30,2023-11-07,2024-10-28,119456.29,4104.96,6.0,6.2
+658,"Barnes, Hernandez and Davis",Enterprise,Medium Volume,Automotive,Afternoon,Standard,Fair,Net 15,2025-06-11,2025-07-28,334262.21,3489.17,9.8,8.4
+659,Rich PLC,Individual,Medium Volume,Food & Beverage,Evening,Premium,Fair,Prepaid,2024-07-23,2025-02-20,164980.91,569.0,8.9,9.6
+660,Hopkins-Winters,Enterprise,Low Volume,Automotive,Afternoon,Premium,Good,Prepaid,2023-01-25,2024-06-30,312336.09,1233.14,7.6,9.8
+661,"Banks, Boyd and Wood",Individual,Medium Volume,Technology,Afternoon,Express,Good,Net 30,2022-09-20,2022-11-06,182045.76,414.97,1.3,6.5
+662,Mays Group,Enterprise,Medium Volume,Automotive,Evening,Standard,Excellent,Net 15,2024-04-21,2025-06-02,99714.67,912.03,9.0,8.9
+663,"Ballard, Velez and Hood",Individual,Medium Volume,Manufacturing,Afternoon,Standard,Excellent,Net 15,2023-11-10,2024-12-05,421597.83,4557.71,1.2,8.7
+664,Woods-Hall,Enterprise,Medium Volume,Healthcare,Afternoon,Express,Poor,Net 15,2023-12-29,2025-06-22,185450.69,1893.13,2.5,8.1
+665,"Ortiz, Lopez and Fletcher",Individual,Low Volume,Technology,Morning,Standard,Good,Net 15,2023-07-26,2025-04-06,397654.16,998.82,4.4,7.5
+666,Meyer Group,Individual,Low Volume,Manufacturing,Morning,Premium,Good,COD,2024-06-13,2025-04-12,395004.31,1672.02,1.5,9.2
+667,Ortiz-Rodriguez,Individual,Low Volume,Food & Beverage,Any,Standard,Excellent,Prepaid,2024-10-11,2025-03-06,395707.61,3093.69,2.5,7.6
+668,Wyatt-Henderson,Individual,Low Volume,Healthcare,Any,Premium,Poor,Net 15,2024-06-21,2024-12-04,161589.74,1900.7,7.3,8.9
+669,"Sanders, Harris and Arnold",SME,Low Volume,Food & Beverage,Any,Premium,Excellent,Net 15,2023-07-18,2024-10-02,110543.62,1054.85,8.8,7.6
+670,"Peters, King and Parker",SME,Medium Volume,Food & Beverage,Afternoon,Express,Fair,Net 30,2023-04-02,2024-02-06,68030.83,465.94,5.0,7.4
+671,"Taylor, Shields and Wilson",SME,Low Volume,Food & Beverage,Evening,Express,Poor,Prepaid,2024-10-31,2025-01-13,216820.33,1869.18,5.5,7.1
+672,Garcia PLC,SME,High Volume,Manufacturing,Evening,Premium,Excellent,COD,2025-01-24,2025-04-29,450836.45,1507.86,5.5,8.2
+673,"Mendez, Cohen and Williams",SME,High Volume,Manufacturing,Morning,Standard,Excellent,COD,2023-09-24,2024-07-02,20102.41,1041.52,2.8,7.3
+674,Morrow Group,Individual,Medium Volume,Healthcare,Afternoon,Premium,Good,COD,2024-08-15,2025-08-20,5258.41,1532.4,8.4,9.1
+675,Baker LLC,SME,Low Volume,Food & Beverage,Morning,Express,Good,Prepaid,2024-01-09,2024-02-27,114561.67,3630.51,2.9,6.9
+676,Arias-Morales,Individual,Low Volume,Technology,Any,Express,Excellent,COD,2022-10-30,2024-09-21,423055.03,2172.53,9.5,7.7
+677,"Brown, Ayala and Thompson",Individual,Low Volume,Retail,Evening,Standard,Good,COD,2023-07-29,2024-08-19,471733.65,97.92,8.3,9.3
+678,"Galvan, Holmes and Lee",SME,Medium Volume,Technology,Any,Premium,Fair,COD,2022-09-30,2025-01-27,293890.59,2859.51,1.3,6.6
+679,"Hall, Jackson and Johnson",SME,Low Volume,Food & Beverage,Any,Express,Good,Prepaid,2024-03-31,2024-08-06,32790.91,1962.85,5.3,7.3
+680,Miller LLC,Individual,Low Volume,Healthcare,Morning,Standard,Excellent,Net 15,2022-09-19,2025-01-20,16997.52,3460.67,5.4,6.7
+681,Sullivan-Gonzalez,SME,High Volume,Healthcare,Afternoon,Standard,Fair,Net 30,2023-10-11,2023-10-21,227877.18,1874.83,1.1,7.3
+682,Dunn Ltd,SME,Low Volume,Manufacturing,Morning,Standard,Poor,Prepaid,2024-10-29,2025-07-25,371828.23,1975.51,9.1,6.8
+683,Bailey-Ochoa,SME,Low Volume,Technology,Any,Standard,Fair,Net 15,2025-06-17,2025-07-08,251735.04,3439.94,3.5,6.0
+684,Spears-Andrews,Enterprise,Medium Volume,Technology,Afternoon,Premium,Fair,Prepaid,2025-08-09,2025-08-19,230642.08,2901.86,7.6,7.2
+685,Hansen PLC,SME,Low Volume,Healthcare,Evening,Express,Good,Prepaid,2023-12-09,2024-06-17,125318.27,4504.82,7.6,7.8
+686,"Frye, Walter and Li",Enterprise,Low Volume,Automotive,Morning,Express,Excellent,Net 15,2025-07-22,2025-08-24,442885.37,831.76,8.9,8.2
+687,Hart-Carrillo,Enterprise,Low Volume,Automotive,Afternoon,Express,Poor,Net 30,2024-10-18,2025-06-29,497662.87,428.84,1.9,9.1
+688,Maldonado-Mosley,SME,Medium Volume,Manufacturing,Evening,Standard,Excellent,Prepaid,2025-08-07,2025-09-13,14332.22,3212.39,7.1,7.8
+689,Jones-Schultz,SME,Medium Volume,Manufacturing,Any,Standard,Excellent,COD,2024-02-29,2025-09-15,58226.68,4589.83,3.9,9.0
+690,Mcbride Group,Enterprise,Low Volume,Retail,Afternoon,Premium,Poor,Net 15,2024-09-29,2025-09-03,235923.08,1431.75,2.5,9.4
+691,Haynes LLC,Enterprise,Low Volume,Healthcare,Morning,Premium,Poor,Net 15,2024-04-07,2024-08-16,39715.06,3829.77,7.1,6.6
+692,"Goodman, Peterson and Spencer",Enterprise,Medium Volume,Automotive,Morning,Premium,Good,Prepaid,2022-12-29,2023-06-24,348674.44,4190.68,8.3,8.6
+693,Shannon LLC,Enterprise,Low Volume,Technology,Evening,Express,Excellent,Net 30,2023-08-29,2024-01-13,25283.68,1918.11,2.8,7.0
+694,Porter and Sons,Enterprise,Low Volume,Retail,Morning,Express,Excellent,Net 30,2024-12-14,2025-02-17,169221.2,1001.15,7.0,6.9
+695,Clark-Harris,Individual,Low Volume,Manufacturing,Afternoon,Standard,Poor,Net 30,2023-06-11,2024-01-04,407996.54,1647.26,6.6,8.5
+696,Maxwell Inc,SME,Low Volume,Technology,Morning,Standard,Good,Net 30,2024-07-27,2025-08-16,178931.59,909.43,4.6,7.3
+697,"Vasquez, Smith and Vincent",SME,Medium Volume,Manufacturing,Morning,Premium,Fair,COD,2024-09-28,2025-09-04,22925.53,4433.03,4.7,9.1
+698,Oliver-Vasquez,Enterprise,Low Volume,Automotive,Afternoon,Express,Excellent,COD,2025-04-05,2025-09-16,490726.53,3496.76,7.1,9.9
+699,Henry-Joyce,SME,Low Volume,Manufacturing,Evening,Premium,Poor,Net 30,2025-05-29,2025-09-09,168217.5,3062.24,6.3,7.5
+700,Christensen and Sons,Enterprise,Low Volume,Food & Beverage,Morning,Standard,Excellent,Net 30,2023-07-23,2023-09-03,155115.47,3702.67,7.8,8.5
+701,Ayers-Johnson,SME,High Volume,Technology,Evening,Standard,Good,Prepaid,2025-02-10,2025-04-27,102988.28,237.64,9.3,8.4
+702,Bryant Inc,Individual,Low Volume,Healthcare,Afternoon,Express,Fair,Net 30,2025-04-18,2025-08-03,260915.56,4888.96,6.8,7.2
+703,"Smith, Craig and Gray",Individual,High Volume,Healthcare,Evening,Standard,Good,Net 30,2024-02-05,2024-04-04,453409.4,3341.78,3.2,8.7
+704,Lopez-Baker,Individual,Low Volume,Technology,Evening,Standard,Poor,Net 30,2023-10-20,2024-04-25,33243.82,2483.63,9.6,6.2
+705,Diaz-Jimenez,Enterprise,Low Volume,Manufacturing,Morning,Standard,Good,Net 15,2025-08-04,2025-08-13,254204.85,2159.89,5.2,6.7
+706,Diaz-Morales,SME,Medium Volume,Manufacturing,Afternoon,Express,Fair,Prepaid,2024-10-25,2025-03-22,483895.18,1046.93,8.8,7.9
+707,"Parks, Olsen and Le",SME,Low Volume,Technology,Any,Standard,Poor,Prepaid,2024-06-06,2025-06-18,211925.93,3066.5,4.9,6.6
+708,Gonzalez-Marsh,SME,Low Volume,Retail,Any,Express,Excellent,COD,2024-05-19,2025-05-14,297996.5,806.35,7.5,7.0
+709,Thompson Group,SME,Low Volume,Healthcare,Any,Premium,Poor,Net 30,2024-02-19,2024-05-06,167283.84,3588.57,2.8,9.7
+710,"Holmes, Le and Floyd",Individual,High Volume,Automotive,Evening,Express,Poor,Prepaid,2025-05-25,2025-06-29,470202.21,4853.94,4.4,8.0
+711,"Williams, Garcia and Martin",Individual,Low Volume,Retail,Any,Standard,Excellent,Prepaid,2024-05-27,2024-09-07,466132.65,853.69,7.9,9.8
+712,"Davis, Garner and Green",Individual,Low Volume,Healthcare,Any,Premium,Fair,Net 30,2023-06-24,2024-04-13,325802.26,4636.27,7.6,7.0
+713,Cooper-Jenkins,SME,High Volume,Automotive,Morning,Premium,Good,COD,2024-05-22,2024-11-08,303112.38,4724.11,2.3,7.0
+714,"Gonzalez, Johnston and Banks",Individual,Low Volume,Manufacturing,Morning,Standard,Excellent,Prepaid,2024-10-02,2024-12-02,199435.79,2951.49,9.1,8.1
+715,Nguyen-Dixon,SME,Medium Volume,Manufacturing,Any,Express,Fair,Prepaid,2025-01-21,2025-07-26,293453.81,3682.97,7.8,9.7
+716,James LLC,Enterprise,Low Volume,Automotive,Evening,Standard,Fair,Net 15,2024-01-21,2024-10-28,465078.42,2019.95,3.8,9.9
+717,Davidson LLC,Enterprise,Low Volume,Retail,Morning,Premium,Poor,Prepaid,2025-08-02,2025-08-22,327606.07,3678.56,2.5,7.5
+718,Sweeney-Jones,Enterprise,Low Volume,Technology,Afternoon,Premium,Excellent,Prepaid,2024-07-21,2024-09-27,283978.97,1102.24,2.8,9.0
+719,Delgado-Page,Enterprise,Low Volume,Healthcare,Any,Express,Excellent,Net 15,2023-05-27,2024-10-20,40825.09,474.25,2.1,6.3
+720,Norman-Mcmillan,Enterprise,High Volume,Technology,Any,Premium,Excellent,Net 30,2023-11-26,2025-04-04,31467.18,3771.4,1.1,8.3
+721,Gutierrez-White,Enterprise,Low Volume,Manufacturing,Morning,Express,Fair,Prepaid,2024-04-11,2024-04-23,237142.66,1718.3,4.9,7.5
+722,"King, Manning and Brady",SME,Low Volume,Manufacturing,Evening,Premium,Poor,Prepaid,2024-11-24,2025-01-25,305793.72,4877.76,8.9,9.2
+723,Brown Group,Individual,High Volume,Technology,Afternoon,Standard,Excellent,COD,2023-11-28,2024-11-24,475579.91,3769.63,3.2,7.8
+724,Warren-Ferrell,SME,Low Volume,Food & Beverage,Any,Premium,Good,Net 30,2022-10-17,2023-02-04,493104.52,4789.86,8.3,6.1
+725,Pena Group,Enterprise,Medium Volume,Automotive,Evening,Premium,Poor,Net 15,2024-07-27,2024-12-03,303774.75,2030.82,6.5,6.3
+726,Ramos-Martinez,SME,Low Volume,Automotive,Morning,Premium,Poor,COD,2023-06-17,2024-08-24,303979.73,3574.11,8.8,9.5
+727,Alvarado LLC,Individual,Low Volume,Food & Beverage,Morning,Standard,Poor,Net 30,2023-03-24,2025-05-18,151372.8,3381.66,5.9,9.5
+728,"Donovan, Dunn and Taylor",SME,Medium Volume,Retail,Any,Premium,Good,Net 15,2024-02-13,2025-08-19,106608.77,3778.6,6.9,6.4
+729,"Harper, Welch and Fields",Individual,Low Volume,Retail,Afternoon,Express,Poor,COD,2024-05-02,2025-02-10,110967.64,1325.26,5.3,9.6
+730,"Ferguson, Stout and Olson",Enterprise,Medium Volume,Food & Beverage,Any,Standard,Fair,Net 15,2024-04-14,2024-08-10,465958.2,3843.37,6.4,8.6
+731,Diaz-Green,Individual,Medium Volume,Automotive,Any,Premium,Poor,Net 15,2022-12-26,2023-10-24,112551.87,622.67,1.8,6.4
+732,Cooper Group,Enterprise,Low Volume,Automotive,Morning,Premium,Fair,Net 15,2022-09-19,2024-04-27,426811.82,4772.64,6.2,6.0
+733,Arroyo-Woods,Individual,High Volume,Manufacturing,Any,Express,Fair,COD,2024-10-11,2024-10-14,398961.55,4672.93,2.1,8.7
+734,Harper-Robles,Enterprise,Low Volume,Technology,Morning,Premium,Poor,COD,2024-01-03,2024-12-10,73205.69,4717.31,8.5,8.0
+735,"Kim, Wright and Espinoza",Individual,Low Volume,Healthcare,Afternoon,Premium,Excellent,COD,2023-04-13,2024-11-07,155136.82,4952.16,2.1,10.0
+736,Baker Group,SME,Low Volume,Automotive,Afternoon,Express,Fair,Prepaid,2025-03-14,2025-07-10,30347.48,4060.54,2.4,8.9
+737,"Aguirre, Cohen and Mitchell",Enterprise,Low Volume,Automotive,Morning,Standard,Poor,Prepaid,2024-04-07,2025-05-05,150251.79,4084.31,9.2,6.6
+738,Lopez-Jones,SME,High Volume,Healthcare,Any,Premium,Poor,COD,2025-02-21,2025-03-21,379099.38,1985.76,5.8,7.1
+739,Williamson-Nelson,Enterprise,Low Volume,Automotive,Any,Standard,Good,COD,2023-01-17,2024-09-15,376380.97,2922.9,8.2,9.4
+740,Hernandez PLC,SME,Low Volume,Automotive,Afternoon,Premium,Good,Prepaid,2023-04-12,2023-05-01,348281.81,1490.85,2.3,6.9
+741,Adams-Espinoza,Individual,Low Volume,Automotive,Morning,Express,Excellent,Net 15,2025-08-19,2025-09-10,188901.34,4914.37,7.1,6.7
+742,Smith and Sons,SME,High Volume,Technology,Afternoon,Standard,Excellent,COD,2023-06-01,2024-03-14,297102.8,4850.15,6.6,7.6
+743,Bolton-Ford,Enterprise,High Volume,Technology,Any,Express,Good,Prepaid,2023-08-26,2025-04-14,388149.05,4956.26,7.0,6.4
+744,Brown Group,Individual,Low Volume,Technology,Evening,Premium,Poor,COD,2023-09-15,2023-11-06,6789.61,627.31,2.1,8.6
+745,Huang LLC,Enterprise,Low Volume,Retail,Any,Express,Excellent,Net 15,2024-02-16,2025-06-04,192595.98,4999.77,7.3,7.2
+746,Villegas Ltd,SME,Medium Volume,Retail,Afternoon,Express,Excellent,Prepaid,2025-03-14,2025-04-30,278474.02,2705.26,8.3,8.0
+747,Wright-Vang,Individual,Low Volume,Food & Beverage,Morning,Standard,Excellent,Net 15,2025-01-11,2025-03-01,431139.72,3491.32,1.0,7.8
+748,Boyd and Sons,Enterprise,Medium Volume,Manufacturing,Afternoon,Premium,Good,Net 30,2024-12-02,2025-04-18,281685.61,4264.68,1.3,9.9
+749,Mayer-Moore,SME,Low Volume,Food & Beverage,Afternoon,Express,Excellent,Net 15,2024-10-04,2025-06-15,150999.39,4733.76,5.7,9.1
+750,"Meyer, King and Little",SME,Low Volume,Manufacturing,Any,Premium,Fair,COD,2024-12-13,2025-02-06,303479.89,2577.42,7.2,8.7
+751,"Robinson, Rodriguez and Chen",Enterprise,High Volume,Manufacturing,Afternoon,Express,Good,Net 15,2025-05-18,2025-06-27,301470.05,1119.4,4.2,6.5
+752,Richards-Foster,Enterprise,Low Volume,Food & Beverage,Evening,Express,Poor,Net 15,2023-03-21,2023-10-28,200629.63,462.11,3.3,7.7
+753,"Logan, Alvarez and Carlson",Individual,Low Volume,Manufacturing,Morning,Premium,Fair,Net 15,2025-08-15,2025-08-27,357508.04,2840.03,6.8,8.0
+754,Porter Ltd,Enterprise,Medium Volume,Healthcare,Any,Express,Excellent,Net 15,2022-12-26,2024-09-03,39684.77,666.88,2.0,8.2
+755,"Brown, Kelly and Moore",Individual,High Volume,Retail,Evening,Express,Fair,Net 15,2025-07-05,2025-08-14,434558.83,1167.54,1.1,7.5
+756,Hall-Holden,SME,Low Volume,Retail,Morning,Standard,Fair,Prepaid,2023-01-14,2025-02-24,48674.74,1777.06,6.1,7.1
+757,Quinn-Smith,Enterprise,Medium Volume,Retail,Afternoon,Express,Poor,Net 15,2024-12-26,2025-04-05,173241.27,3719.42,9.7,8.1
+758,Roach-Washington,SME,Low Volume,Technology,Afternoon,Express,Excellent,Net 15,2024-11-20,2025-04-01,329123.9,756.22,6.1,7.1
+759,"Henry, Knight and Stephens",Individual,Low Volume,Healthcare,Afternoon,Premium,Poor,Prepaid,2023-08-08,2024-04-14,92369.16,4931.92,8.2,8.0
+760,"Rocha, Spencer and Jones",SME,Medium Volume,Food & Beverage,Afternoon,Express,Excellent,COD,2024-02-14,2024-05-14,203850.88,1598.05,1.8,6.3
+761,Weaver-Gibson,Enterprise,Low Volume,Manufacturing,Morning,Standard,Fair,Prepaid,2023-08-09,2025-03-30,404365.11,102.94,9.5,8.7
+762,"Lopez, Smith and Vincent",Enterprise,Low Volume,Technology,Any,Premium,Excellent,Prepaid,2024-03-26,2025-05-20,7936.23,991.41,8.5,6.0
+763,"Brown, Coffey and Fuentes",Individual,Low Volume,Automotive,Evening,Standard,Excellent,Prepaid,2023-06-07,2023-11-12,482359.04,3388.88,8.9,8.1
+764,"Moore, Campbell and Ortiz",Enterprise,Medium Volume,Healthcare,Afternoon,Premium,Fair,Net 30,2024-10-06,2025-01-26,211938.41,1926.52,4.4,6.5
+765,"Jones, Conley and Anderson",Enterprise,Low Volume,Food & Beverage,Morning,Express,Fair,Prepaid,2023-01-02,2025-05-16,147478.97,1104.68,7.6,8.3
+766,Lee-Johnson,SME,Medium Volume,Automotive,Morning,Express,Poor,Net 30,2023-04-28,2024-11-09,178516.29,3096.87,4.0,7.4
+767,Fox-Miles,Individual,High Volume,Manufacturing,Any,Express,Excellent,Net 30,2023-11-18,2024-05-07,215971.1,1027.84,5.8,9.6
+768,"Robbins, Smith and Mccall",SME,Low Volume,Retail,Afternoon,Premium,Fair,Net 15,2023-10-25,2025-01-22,235878.64,1902.83,4.3,9.6
+769,Mcdonald Ltd,SME,Low Volume,Retail,Any,Premium,Poor,Net 15,2025-07-02,2025-07-06,70797.33,3748.1,1.1,9.5
+770,Short-Bauer,Enterprise,Low Volume,Manufacturing,Evening,Standard,Good,Prepaid,2024-05-22,2024-06-19,211106.83,1689.51,1.3,8.7
+771,"Williams, Jones and Torres",Individual,Low Volume,Healthcare,Morning,Express,Poor,Prepaid,2024-07-26,2025-08-26,400110.22,3585.89,3.9,9.1
+772,Garcia and Sons,Individual,Low Volume,Automotive,Any,Standard,Excellent,Net 30,2025-08-06,2025-08-29,396563.77,674.31,4.1,6.1
+773,"Sandoval, Hudson and Meza",Enterprise,Low Volume,Automotive,Evening,Express,Excellent,Prepaid,2023-04-14,2024-08-22,240616.31,1447.01,1.7,7.7
+774,"Garcia, Fowler and Howard",Individual,Low Volume,Food & Beverage,Afternoon,Standard,Fair,Net 30,2024-05-22,2024-12-30,432219.24,4971.57,3.2,9.3
+775,Jackson and Sons,Individual,Medium Volume,Retail,Afternoon,Standard,Good,Net 15,2024-09-17,2025-04-06,61110.13,2036.35,3.5,6.8
+776,"Moore, Murillo and Ramos",Enterprise,Medium Volume,Food & Beverage,Afternoon,Standard,Excellent,Prepaid,2024-03-25,2024-10-02,204241.3,1566.91,6.7,6.9
+777,Kirk-Gutierrez,SME,Medium Volume,Retail,Any,Premium,Excellent,COD,2023-08-30,2024-12-17,55917.42,1849.7,9.5,8.8
+778,Franklin-Hart,Enterprise,Medium Volume,Manufacturing,Morning,Standard,Excellent,COD,2025-03-12,2025-04-21,106776.8,2386.69,9.2,6.4
+779,"King, Nixon and West",SME,Medium Volume,Healthcare,Evening,Express,Excellent,Net 30,2025-01-05,2025-04-17,334804.82,3430.66,7.9,6.5
+780,Larson-Holmes,SME,Medium Volume,Automotive,Evening,Standard,Fair,Net 15,2024-11-23,2025-09-17,292579.28,481.79,2.0,8.5
+781,Joyce-Lewis,Enterprise,Low Volume,Food & Beverage,Afternoon,Standard,Poor,Net 30,2023-08-15,2024-04-12,38364.92,2755.57,4.1,8.9
+782,"Short, Ellison and Dixon",Enterprise,Low Volume,Food & Beverage,Afternoon,Standard,Good,Net 15,2025-01-11,2025-06-03,209688.07,3572.44,9.0,9.0
+783,Johnson LLC,Individual,Low Volume,Healthcare,Evening,Express,Excellent,Prepaid,2024-06-06,2024-08-18,34786.54,2124.07,9.4,8.0
+784,"Wright, Scott and Evans",Individual,High Volume,Healthcare,Afternoon,Express,Excellent,Net 30,2023-07-06,2024-10-07,397400.8,3484.33,7.7,7.6
+785,Navarro Ltd,Individual,Low Volume,Retail,Afternoon,Express,Poor,Prepaid,2024-06-03,2024-11-03,201023.63,1393.9,2.7,6.6
+786,Petersen-Norris,Individual,Medium Volume,Retail,Any,Premium,Fair,COD,2024-02-29,2025-01-21,426385.06,1517.0,3.4,6.5
+787,"May, Johnson and Stokes",Individual,Medium Volume,Manufacturing,Evening,Standard,Good,COD,2025-06-09,2025-07-17,463696.73,1388.65,8.1,8.6
+788,Bailey-Montoya,Enterprise,Medium Volume,Food & Beverage,Morning,Standard,Fair,COD,2025-01-21,2025-05-01,162956.37,4734.82,9.0,7.1
+789,Adkins PLC,Individual,Medium Volume,Healthcare,Evening,Standard,Excellent,COD,2025-04-27,2025-09-08,110420.52,4827.88,2.6,9.9
+790,"Reyes, Torres and Williams",Individual,Low Volume,Retail,Any,Premium,Fair,Net 15,2024-08-13,2025-03-18,408606.67,1142.16,3.4,8.3
+791,"Wolfe, Hernandez and Nunez",SME,Low Volume,Manufacturing,Any,Standard,Poor,COD,2023-03-01,2025-09-16,75018.76,2421.08,5.5,7.8
+792,"Johnston, Davis and Reynolds",Enterprise,Low Volume,Manufacturing,Any,Premium,Good,COD,2025-08-18,2025-09-12,11502.6,856.45,2.6,7.6
+793,Miller-Duncan,Enterprise,Low Volume,Manufacturing,Morning,Express,Good,Prepaid,2023-02-28,2023-04-15,454656.4,4853.41,1.9,8.1
+794,Ross Group,Enterprise,Low Volume,Food & Beverage,Morning,Express,Poor,Net 30,2023-11-30,2025-04-22,55907.72,117.08,8.5,9.7
+795,Castillo and Sons,Enterprise,Medium Volume,Healthcare,Afternoon,Premium,Excellent,Net 30,2023-02-08,2024-05-18,478851.23,576.38,7.6,7.4
+796,Hoffman Ltd,Enterprise,Low Volume,Manufacturing,Any,Premium,Poor,Net 15,2024-09-02,2025-03-21,154385.11,2420.6,3.2,8.2
+797,Frank-Morris,Individual,Medium Volume,Retail,Morning,Standard,Excellent,COD,2023-06-11,2025-07-17,52180.48,4437.96,4.7,6.0
+798,"Gutierrez, Diaz and Lee",Enterprise,Medium Volume,Technology,Any,Standard,Fair,COD,2022-12-26,2023-12-04,113716.31,4401.0,4.5,9.5
+799,Jackson-Bailey,Enterprise,Low Volume,Technology,Afternoon,Standard,Good,Net 30,2024-09-06,2025-07-13,478276.78,1444.98,1.7,7.3
+800,"Thomas, Williams and Meyers",Enterprise,Medium Volume,Retail,Afternoon,Standard,Poor,COD,2025-02-14,2025-03-29,300206.13,3413.19,2.4,8.7
+801,"Farrell, Rodriguez and Brown",SME,Medium Volume,Healthcare,Morning,Express,Poor,COD,2023-11-02,2025-08-14,466508.04,4063.06,7.4,6.3
+802,Smith-Benson,Enterprise,High Volume,Automotive,Afternoon,Express,Good,Prepaid,2025-06-30,2025-07-09,223901.0,3994.41,9.8,9.3
+803,Rivera Ltd,SME,Medium Volume,Automotive,Evening,Standard,Excellent,COD,2024-01-25,2024-12-14,497391.07,950.27,4.5,7.3
+804,"Christensen, Dunn and Dean",Individual,Low Volume,Technology,Evening,Standard,Good,Prepaid,2023-04-30,2025-09-12,209911.16,2510.66,5.8,8.1
+805,"Smith, Aguilar and Alvarado",SME,Low Volume,Retail,Any,Premium,Good,Net 30,2024-10-19,2024-11-02,118361.34,64.19,9.9,6.1
+806,Gonzalez-Horton,Enterprise,Low Volume,Retail,Morning,Express,Fair,Net 15,2023-03-24,2023-11-25,148053.95,763.49,8.7,9.9
+807,Jones Ltd,Enterprise,Low Volume,Manufacturing,Afternoon,Standard,Good,Net 30,2024-02-10,2024-07-18,481063.94,3534.62,4.4,6.1
+808,"Ward, Rodriguez and Carter",SME,Low Volume,Retail,Morning,Premium,Excellent,Prepaid,2025-04-09,2025-08-30,418881.16,4358.86,1.3,7.5
+809,Romero-Mckinney,Enterprise,High Volume,Retail,Any,Standard,Good,Prepaid,2023-11-16,2025-07-16,372035.41,3753.13,7.3,7.2
+810,"Schmidt, Lopez and Mason",SME,Low Volume,Technology,Morning,Express,Excellent,Net 15,2024-03-03,2024-11-16,30940.4,3230.15,6.4,6.7
+811,Williams PLC,SME,Medium Volume,Technology,Any,Premium,Fair,COD,2025-06-30,2025-07-24,354967.05,2147.17,2.4,9.9
+812,"Moore, Reed and Bell",Enterprise,Low Volume,Automotive,Afternoon,Express,Excellent,Net 15,2024-03-08,2025-02-21,196753.19,4121.4,9.8,8.4
+813,"Hill, Brown and Scott",Individual,High Volume,Technology,Any,Express,Poor,Prepaid,2023-06-04,2024-04-23,83247.36,4026.53,6.8,6.8
+814,Raymond LLC,Enterprise,Medium Volume,Healthcare,Evening,Standard,Good,COD,2025-09-18,2025-09-18,82217.44,577.0,2.9,6.0
+815,Sandoval-Miller,Enterprise,Low Volume,Food & Beverage,Afternoon,Premium,Excellent,Net 15,2023-09-28,2024-06-29,135314.84,4884.48,6.1,8.3
+816,"Salas, Parks and Butler",Enterprise,Low Volume,Retail,Evening,Standard,Fair,Net 30,2025-08-06,2025-08-31,490290.27,3770.81,9.6,8.0
+817,Browning-Murphy,SME,Medium Volume,Automotive,Evening,Standard,Excellent,COD,2023-12-30,2024-12-05,204235.99,3720.18,1.9,9.2
+818,Carpenter Ltd,Individual,Medium Volume,Technology,Any,Premium,Excellent,COD,2023-05-03,2025-03-29,81450.28,3427.75,1.7,8.5
+819,Barker-Roach,Enterprise,Low Volume,Manufacturing,Afternoon,Premium,Good,COD,2025-04-21,2025-09-05,224292.62,699.43,3.6,8.5
+820,Douglas PLC,Enterprise,Low Volume,Automotive,Any,Standard,Good,Net 30,2024-01-03,2025-07-29,479049.81,2856.16,9.9,6.4
+821,"Patel, Ball and White",SME,High Volume,Food & Beverage,Morning,Express,Excellent,Prepaid,2023-09-01,2025-05-21,157545.63,4673.58,2.5,7.1
+822,Cannon Group,Enterprise,Medium Volume,Retail,Afternoon,Premium,Poor,COD,2023-02-25,2025-08-13,493085.51,4893.49,7.9,7.8
+823,"Peck, Shannon and Mahoney",Enterprise,Low Volume,Food & Beverage,Any,Standard,Fair,COD,2023-08-17,2024-03-13,201068.67,4292.15,9.3,6.5
+824,Anderson Inc,Individual,Medium Volume,Healthcare,Evening,Standard,Poor,Prepaid,2025-01-19,2025-07-23,132150.89,4383.91,7.1,8.5
+825,Obrien-Salazar,Individual,Low Volume,Manufacturing,Morning,Standard,Excellent,COD,2024-07-20,2025-03-31,188535.02,2872.16,8.7,6.9
+826,Howard Ltd,Individual,Low Volume,Retail,Evening,Express,Poor,Prepaid,2023-05-30,2025-03-17,55450.41,942.35,2.0,9.8
+827,"Harrison, Banks and White",SME,Medium Volume,Manufacturing,Any,Express,Excellent,COD,2023-02-12,2024-02-15,171869.35,3041.63,2.9,9.0
+828,Lee Inc,SME,Medium Volume,Retail,Afternoon,Express,Good,Net 15,2024-02-20,2024-10-12,160773.12,205.05,6.4,7.5
+829,Clements-Walker,SME,Low Volume,Technology,Any,Standard,Excellent,Net 15,2025-08-15,2025-09-07,434142.28,4765.59,7.2,7.1
+830,Jones Group,Enterprise,Low Volume,Manufacturing,Morning,Express,Poor,Net 30,2023-04-29,2025-05-25,149870.06,3575.42,8.8,8.1
+831,Delacruz-Clay,SME,Low Volume,Manufacturing,Morning,Standard,Poor,COD,2024-03-08,2024-11-02,481719.52,1519.68,2.8,9.8
+832,"Moss, James and Edwards",Individual,Low Volume,Automotive,Afternoon,Premium,Poor,COD,2025-01-16,2025-06-15,456386.31,2873.07,8.4,8.2
+833,"Herrera, Davidson and Padilla",Enterprise,Low Volume,Retail,Afternoon,Express,Fair,Net 30,2024-12-10,2024-12-20,76102.63,2320.36,2.3,9.5
+834,Wilcox-Williams,Individual,Medium Volume,Technology,Evening,Premium,Excellent,Prepaid,2023-01-16,2025-09-14,471718.55,4293.47,6.7,8.6
+835,Terrell-Williams,Enterprise,Low Volume,Manufacturing,Afternoon,Express,Good,Prepaid,2024-04-09,2024-10-30,108852.51,1088.33,2.7,8.7
+836,Lee Group,SME,Low Volume,Healthcare,Morning,Express,Fair,Net 30,2025-01-04,2025-04-16,349959.26,3262.11,5.1,7.6
+837,Murray-Henderson,Individual,Medium Volume,Technology,Evening,Standard,Good,Prepaid,2023-08-18,2024-11-27,214763.42,925.63,6.4,8.2
+838,"Mckee, Ford and Lucas",Individual,Medium Volume,Automotive,Any,Premium,Fair,Net 30,2022-11-17,2023-02-18,497686.25,4039.4,1.9,8.6
+839,Osborne Ltd,SME,Low Volume,Retail,Any,Premium,Excellent,Prepaid,2024-03-20,2025-01-13,252177.4,4039.06,7.0,9.4
+840,Hayes-White,SME,Medium Volume,Food & Beverage,Any,Standard,Good,Prepaid,2023-11-23,2024-12-20,475325.2,1785.54,8.1,7.9
+841,Khan Inc,Individual,Low Volume,Automotive,Any,Standard,Fair,Net 15,2024-11-08,2025-01-25,254272.85,1374.67,6.9,7.2
+842,"Hogan, Higgins and Martinez",SME,Low Volume,Automotive,Afternoon,Standard,Poor,Net 30,2024-10-16,2024-11-23,8749.5,809.21,4.4,9.3
+843,Miller-Zimmerman,Individual,Low Volume,Healthcare,Evening,Standard,Poor,Net 15,2024-01-24,2025-04-07,278314.05,1987.24,6.5,7.6
+844,"Herring, Gray and James",Individual,High Volume,Technology,Afternoon,Premium,Poor,Net 15,2025-08-22,2025-09-12,202156.39,1624.72,2.4,6.9
+845,"Savage, Huffman and Martin",Enterprise,Low Volume,Food & Beverage,Morning,Premium,Poor,COD,2025-06-14,2025-06-28,418831.6,837.31,3.9,6.4
+846,Barnes LLC,Enterprise,High Volume,Automotive,Afternoon,Standard,Excellent,Prepaid,2025-01-08,2025-07-12,13619.65,3684.14,9.9,8.5
+847,Sims-Wilson,Enterprise,Low Volume,Manufacturing,Afternoon,Express,Good,Net 15,2025-08-07,2025-08-12,363430.0,4045.13,4.4,7.0
+848,"Cannon, Smith and Jimenez",Enterprise,High Volume,Manufacturing,Morning,Premium,Excellent,Net 30,2023-04-29,2024-07-07,230104.73,2999.68,2.0,7.1
+849,"Andrade, Young and Chapman",Enterprise,Low Volume,Retail,Any,Express,Good,Prepaid,2025-02-19,2025-05-30,51235.19,3987.44,4.7,7.9
+850,Burke Inc,Enterprise,Low Volume,Automotive,Any,Express,Fair,Prepaid,2023-12-12,2024-05-18,404465.98,940.04,1.1,6.7
+851,"Fuller, Wilkins and Clark",Individual,Low Volume,Retail,Morning,Express,Fair,Prepaid,2024-05-10,2024-08-09,497463.11,3019.96,1.0,8.1
+852,Johnson-Nash,Enterprise,Medium Volume,Manufacturing,Morning,Premium,Excellent,Net 15,2022-11-18,2024-10-09,108936.96,1856.21,9.1,6.1
+853,Rivera-Miller,Enterprise,Medium Volume,Automotive,Afternoon,Express,Fair,Prepaid,2025-03-25,2025-04-13,100419.53,505.25,7.4,8.6
+854,Powers PLC,SME,Low Volume,Technology,Any,Standard,Fair,Net 15,2025-09-12,2025-09-16,99740.35,4237.88,7.5,9.8
+855,"Cobb, Thompson and Gibson",Individual,Medium Volume,Healthcare,Afternoon,Standard,Poor,Prepaid,2024-10-25,2025-05-03,441545.81,2147.5,7.7,9.3
+856,Mack LLC,Individual,Low Volume,Technology,Any,Standard,Fair,COD,2025-07-05,2025-08-02,449049.44,4105.74,5.0,9.6
+857,Chang PLC,SME,Low Volume,Food & Beverage,Any,Express,Fair,Prepaid,2023-11-08,2023-12-22,15940.04,940.53,3.9,9.2
+858,Neal LLC,Enterprise,Medium Volume,Manufacturing,Evening,Express,Good,COD,2024-02-17,2024-08-25,62029.5,1627.02,1.1,7.3
+859,Dominguez PLC,SME,Low Volume,Manufacturing,Morning,Express,Fair,Net 15,2023-12-16,2024-01-22,264103.92,559.45,3.5,8.4
+860,"Rice, Miller and Ramsey",Individual,Low Volume,Retail,Any,Premium,Poor,COD,2024-06-06,2025-03-17,406883.84,1030.84,1.4,8.0
+861,"Mitchell, Lynch and Stewart",SME,High Volume,Technology,Morning,Standard,Poor,Net 15,2025-01-29,2025-05-31,301113.91,2976.3,3.1,6.1
+862,Ho-Mendez,Individual,High Volume,Retail,Any,Express,Good,Prepaid,2025-09-13,2025-09-15,19467.09,2690.66,5.7,7.3
+863,Vasquez-White,SME,High Volume,Retail,Any,Premium,Fair,COD,2024-11-26,2025-05-25,159277.64,1761.83,1.7,9.1
+864,Smith Inc,Enterprise,Low Volume,Technology,Evening,Premium,Poor,Prepaid,2024-11-03,2025-03-31,424487.48,4837.41,2.1,7.5
+865,"Charles, Marsh and Duarte",Enterprise,Low Volume,Manufacturing,Morning,Standard,Good,Net 30,2025-02-08,2025-05-11,496776.65,4313.87,7.5,6.9
+866,"Shaffer, Lewis and Davidson",Individual,High Volume,Healthcare,Morning,Premium,Excellent,COD,2023-09-19,2025-02-04,441776.35,263.23,1.4,7.2
+867,Parker PLC,Individual,Medium Volume,Food & Beverage,Any,Express,Good,Net 15,2023-06-24,2024-09-15,292143.15,643.51,3.9,6.6
+868,Jennings LLC,SME,Low Volume,Automotive,Any,Premium,Excellent,Net 15,2025-01-06,2025-04-17,289364.48,3323.28,9.8,7.3
+869,Collier and Sons,Enterprise,Low Volume,Retail,Evening,Express,Excellent,COD,2024-06-03,2024-11-06,279699.1,4370.72,6.9,8.9
+870,"Mendoza, Wells and Johnson",Enterprise,Medium Volume,Retail,Any,Standard,Good,Net 30,2023-09-24,2023-12-31,335578.98,2367.34,4.5,8.0
+871,Mcclain-Herrera,Individual,Medium Volume,Food & Beverage,Evening,Express,Poor,Net 15,2023-03-08,2024-01-12,424055.68,573.02,2.2,9.7
+872,Reilly-Brown,SME,Medium Volume,Food & Beverage,Afternoon,Express,Good,Net 30,2025-01-25,2025-05-28,139641.38,862.77,3.8,9.5
+873,"Stewart, Herrera and Clark",Enterprise,Low Volume,Technology,Morning,Premium,Excellent,Net 15,2024-05-30,2025-04-21,9277.38,2331.19,3.4,7.9
+874,Jones-Hernandez,SME,Low Volume,Healthcare,Morning,Premium,Excellent,COD,2025-02-11,2025-08-14,216305.34,795.57,5.5,8.0
+875,Sims-Kirby,SME,High Volume,Healthcare,Morning,Standard,Poor,Prepaid,2023-09-25,2024-11-11,97771.88,987.78,2.6,7.1
+876,"Wilson, Patton and Parker",Individual,Low Volume,Technology,Morning,Premium,Excellent,Net 15,2023-11-19,2025-06-15,479526.89,1136.92,1.5,6.1
+877,Gutierrez-Crawford,Enterprise,Medium Volume,Food & Beverage,Morning,Express,Good,Prepaid,2024-11-04,2025-01-18,196562.14,551.46,7.6,9.5
+878,Robinson-Turner,Enterprise,Medium Volume,Manufacturing,Afternoon,Express,Fair,COD,2024-01-27,2024-04-03,367207.25,516.5,5.5,8.8
+879,Gentry Group,SME,Low Volume,Automotive,Afternoon,Standard,Fair,Net 30,2025-01-26,2025-05-25,84156.08,1694.17,5.1,9.8
+880,"Moore, Peterson and Webb",SME,Low Volume,Healthcare,Morning,Standard,Fair,Net 30,2025-02-10,2025-08-22,86191.83,3813.29,1.1,7.4
+881,Thomas-Wiggins,Enterprise,Low Volume,Technology,Afternoon,Express,Excellent,Net 30,2023-08-25,2025-05-07,409644.29,2857.97,9.9,9.3
+882,"Haney, Harris and Johnson",Enterprise,Low Volume,Manufacturing,Morning,Standard,Fair,COD,2025-07-13,2025-08-08,226855.56,3687.33,9.9,7.0
+883,Smith Inc,SME,Low Volume,Technology,Morning,Express,Fair,COD,2025-04-23,2025-08-03,445794.84,3883.91,8.7,9.6
+884,Cook Inc,Enterprise,Low Volume,Healthcare,Morning,Standard,Poor,Net 15,2024-07-01,2024-08-15,330024.09,751.08,5.5,7.0
+885,"Edwards, Lane and Collins",SME,Low Volume,Healthcare,Afternoon,Premium,Excellent,Net 15,2025-01-05,2025-08-22,460402.98,1920.0,2.0,7.1
+886,Mitchell PLC,Individual,Low Volume,Technology,Afternoon,Express,Fair,COD,2023-09-05,2024-04-29,196122.09,2115.61,9.9,7.2
+887,Nelson and Sons,Individual,High Volume,Automotive,Evening,Premium,Excellent,Prepaid,2024-01-15,2024-06-30,397871.12,2854.98,8.1,7.4
+888,"Castro, Garcia and Daniels",Enterprise,Medium Volume,Technology,Afternoon,Express,Good,COD,2022-10-05,2024-05-20,312273.77,3338.39,3.7,7.2
+889,"Brock, Andrews and Jackson",Enterprise,Low Volume,Technology,Morning,Standard,Fair,Net 30,2023-07-13,2024-03-17,27543.45,1563.82,4.9,8.6
+890,"Wallace, Anderson and Ruiz",SME,High Volume,Manufacturing,Evening,Express,Good,Net 30,2025-05-23,2025-08-11,356885.35,756.09,7.6,7.7
+891,Miller Group,SME,Low Volume,Manufacturing,Morning,Express,Fair,Net 15,2023-01-13,2023-07-07,406042.84,3203.37,4.8,9.9
+892,"Soto, Vaughn and Griffin",SME,High Volume,Healthcare,Evening,Standard,Poor,COD,2024-07-03,2024-12-07,402385.74,738.92,7.9,7.0
+893,Marquez Ltd,Enterprise,Low Volume,Healthcare,Evening,Standard,Fair,Prepaid,2023-09-18,2025-05-02,273369.51,1911.03,8.9,7.7
+894,Bradley-Davis,SME,Medium Volume,Automotive,Evening,Premium,Fair,Prepaid,2022-12-14,2025-03-03,177742.73,2359.44,9.7,7.8
+895,Bryant Ltd,Enterprise,Low Volume,Technology,Morning,Standard,Fair,Net 15,2024-10-23,2025-05-24,290580.89,1896.9,6.6,9.6
+896,Hall-Walker,Enterprise,Low Volume,Technology,Afternoon,Express,Excellent,Prepaid,2025-01-06,2025-08-14,403933.03,4380.81,5.1,6.2
+897,Myers-Lyons,Individual,High Volume,Retail,Evening,Premium,Excellent,COD,2024-07-26,2025-05-01,283156.26,3468.43,8.8,6.5
+898,Chavez-Johnson,Individual,Low Volume,Automotive,Morning,Premium,Good,Net 15,2025-01-30,2025-05-20,281462.58,4838.03,2.2,9.6
+899,Singleton-Campbell,Enterprise,Low Volume,Healthcare,Evening,Premium,Excellent,Prepaid,2023-10-09,2024-06-12,312208.3,1043.46,1.6,6.6
+900,"Garcia, Roth and Robles",Individual,Low Volume,Retail,Afternoon,Standard,Excellent,Prepaid,2024-06-09,2024-11-08,13303.54,2553.73,4.5,9.7
+901,Patel-Morales,SME,Medium Volume,Manufacturing,Afternoon,Premium,Fair,Prepaid,2024-08-30,2025-02-05,429797.63,3104.93,4.9,8.5
+902,"Moore, Olson and Jones",Individual,Medium Volume,Automotive,Afternoon,Standard,Good,Prepaid,2024-07-30,2024-10-24,240752.77,1482.77,1.9,8.4
+903,Mueller-Graham,SME,Medium Volume,Technology,Any,Premium,Excellent,Prepaid,2024-10-18,2025-07-09,209031.34,2152.92,1.3,7.8
+904,Thompson Ltd,Enterprise,Low Volume,Food & Beverage,Evening,Standard,Poor,Net 30,2024-05-07,2024-06-14,454146.06,1805.9,2.3,9.5
+905,"Copeland, Wilson and Carlson",Enterprise,Low Volume,Manufacturing,Evening,Premium,Good,COD,2025-07-05,2025-07-29,451372.71,2649.03,5.6,6.7
+906,Thompson-Blanchard,Individual,Medium Volume,Automotive,Evening,Express,Good,COD,2023-01-04,2023-03-13,392695.51,3309.3,9.3,6.3
+907,"Wise, Gray and Snyder",SME,Low Volume,Technology,Any,Premium,Good,COD,2023-01-16,2024-10-21,65581.56,1654.18,9.6,7.4
+908,Clay Ltd,SME,Low Volume,Retail,Morning,Standard,Good,Net 15,2022-12-27,2025-03-13,49173.68,575.79,9.4,7.9
+909,"Hernandez, Schmidt and Price",Individual,Low Volume,Manufacturing,Morning,Standard,Poor,Prepaid,2024-12-26,2025-05-29,461265.52,356.54,3.3,6.1
+910,"Rich, Evans and Bauer",SME,Low Volume,Healthcare,Morning,Standard,Fair,Net 30,2023-04-21,2024-12-10,349664.14,1919.26,9.9,8.3
+911,Robbins-Herman,SME,Medium Volume,Technology,Any,Premium,Fair,Net 15,2025-06-21,2025-09-18,101395.18,852.34,8.3,9.2
+912,"Downs, Powell and Anderson",Individual,Medium Volume,Retail,Morning,Standard,Excellent,Net 15,2024-06-18,2024-10-30,446752.21,1829.83,4.7,8.2
+913,"Faulkner, Smith and Castro",Enterprise,High Volume,Automotive,Any,Standard,Good,Prepaid,2023-10-28,2025-09-04,250924.29,1814.6,9.1,9.4
+914,Glenn-Young,SME,Low Volume,Technology,Any,Standard,Excellent,Net 15,2023-01-17,2024-12-02,391411.29,1526.22,2.1,6.9
+915,Joseph-Sullivan,SME,Low Volume,Retail,Afternoon,Express,Fair,Prepaid,2023-11-25,2024-09-08,351933.38,386.37,8.8,9.9
+916,Wells and Sons,Individual,High Volume,Manufacturing,Evening,Express,Excellent,Net 30,2023-05-08,2024-08-30,291803.48,4687.79,9.9,8.6
+917,Larsen-Moore,SME,High Volume,Healthcare,Afternoon,Express,Excellent,Net 15,2025-03-31,2025-09-18,102912.42,4092.97,4.0,9.0
+918,Smith Ltd,Enterprise,Low Volume,Manufacturing,Any,Standard,Excellent,COD,2024-09-22,2024-09-27,490546.97,4752.04,6.4,8.4
+919,Barrett-Proctor,Individual,High Volume,Technology,Afternoon,Express,Excellent,Net 30,2024-11-17,2024-12-28,18764.44,2562.64,6.9,7.7
+920,Dalton-English,Enterprise,Medium Volume,Retail,Morning,Standard,Good,Prepaid,2023-02-16,2024-12-04,341288.67,3702.72,6.0,6.2
+921,"White, Hicks and Arnold",Individual,Low Volume,Manufacturing,Any,Premium,Poor,Net 15,2025-07-04,2025-08-07,58676.02,634.06,6.5,9.6
+922,Coleman Inc,SME,Medium Volume,Technology,Morning,Standard,Good,Net 30,2023-10-13,2024-11-24,294720.12,1174.27,7.7,9.6
+923,Joseph LLC,Individual,Low Volume,Retail,Morning,Premium,Good,Net 30,2025-04-04,2025-06-12,39229.23,677.24,2.6,6.2
+924,Johnson-Johnson,Individual,Medium Volume,Manufacturing,Evening,Standard,Poor,Prepaid,2024-05-09,2025-01-04,329133.83,3300.12,1.7,9.8
+925,"Olson, Vaughn and Thomas",Individual,Medium Volume,Automotive,Evening,Standard,Poor,COD,2023-10-27,2025-03-16,470772.07,3912.03,3.6,8.6
+926,Marshall-Miller,SME,Low Volume,Healthcare,Morning,Standard,Fair,Prepaid,2025-09-01,2025-09-17,353045.34,3128.27,3.5,6.8
+927,Mccoy-Alvarado,Individual,Medium Volume,Manufacturing,Evening,Premium,Good,Net 30,2022-12-24,2024-10-22,186822.6,4091.08,2.3,9.9
+928,"Yates, Edwards and Brown",Individual,Low Volume,Technology,Morning,Standard,Poor,Net 30,2024-10-07,2025-02-03,135878.99,2961.79,3.7,9.9
+929,Gibson-Escobar,Individual,High Volume,Technology,Any,Standard,Poor,Prepaid,2025-01-19,2025-06-07,222565.85,1161.02,4.4,8.6
+930,Yu-Yates,Individual,Low Volume,Healthcare,Morning,Premium,Fair,Net 30,2023-09-17,2024-04-15,455116.95,3784.67,4.0,9.3
+931,"Curry, Acosta and Elliott",Individual,Medium Volume,Manufacturing,Morning,Express,Poor,Prepaid,2022-10-27,2022-12-30,391523.73,4646.4,7.8,9.2
+932,Berry Ltd,Individual,Low Volume,Automotive,Evening,Premium,Poor,Prepaid,2024-02-19,2025-09-13,286728.67,2863.1,5.7,6.7
+933,"Johnson, Washington and Martinez",Individual,Medium Volume,Manufacturing,Afternoon,Standard,Fair,COD,2025-02-21,2025-03-09,43682.9,1287.17,5.9,7.4
+934,Anderson-Campbell,Individual,Medium Volume,Healthcare,Evening,Express,Fair,Net 30,2025-01-25,2025-08-16,63028.9,2863.78,3.9,7.1
+935,Munoz PLC,SME,Medium Volume,Retail,Any,Standard,Poor,Net 30,2022-10-04,2024-12-10,482976.86,2427.03,8.6,6.9
+936,Morton-Green,Enterprise,High Volume,Healthcare,Evening,Standard,Poor,Net 15,2024-09-10,2025-05-30,129745.47,3944.34,3.3,8.0
+937,"Atkins, Cooper and Miller",Enterprise,Medium Volume,Manufacturing,Morning,Standard,Excellent,Net 30,2024-03-03,2024-05-23,92943.49,2558.26,5.0,7.3
+938,Monroe Group,Enterprise,Low Volume,Retail,Evening,Express,Excellent,COD,2025-07-08,2025-09-02,270680.24,271.43,3.1,6.4
+939,Barber-Jackson,Enterprise,Low Volume,Food & Beverage,Morning,Standard,Good,COD,2023-06-06,2024-10-01,285612.58,4154.23,7.1,6.3
+940,May Inc,SME,Low Volume,Manufacturing,Morning,Express,Fair,COD,2025-03-29,2025-04-07,487574.32,4492.09,4.4,9.8
+941,Turner-Reese,Enterprise,Medium Volume,Manufacturing,Evening,Standard,Fair,Net 15,2024-02-09,2025-04-26,456024.46,176.4,6.5,9.2
+942,Vega-Price,Individual,Low Volume,Food & Beverage,Evening,Standard,Poor,Net 30,2024-04-24,2024-09-05,328872.61,792.87,7.9,8.6
+943,Smith-Ho,Enterprise,Low Volume,Food & Beverage,Any,Premium,Excellent,Net 30,2024-04-22,2024-12-09,303943.9,3313.03,5.7,7.3
+944,"Vega, Williams and Hardin",Individual,Medium Volume,Healthcare,Afternoon,Express,Good,COD,2024-10-01,2025-05-14,116214.46,1608.34,9.8,8.8
+945,Bishop-Pearson,SME,Low Volume,Healthcare,Morning,Express,Excellent,COD,2025-08-01,2025-08-14,327011.63,3045.83,5.0,7.7
+946,Scott PLC,Enterprise,Low Volume,Food & Beverage,Afternoon,Express,Good,COD,2023-07-12,2024-05-19,398132.12,1740.78,2.1,7.6
+947,"Allen, Powers and Townsend",Enterprise,Low Volume,Food & Beverage,Any,Premium,Good,Net 15,2025-01-13,2025-05-22,438326.44,126.79,2.1,7.1
+948,Edwards Inc,SME,Low Volume,Automotive,Morning,Standard,Excellent,Prepaid,2024-09-30,2025-05-26,12941.8,876.33,1.7,8.1
+949,Jenkins PLC,SME,Low Volume,Technology,Evening,Standard,Poor,Net 15,2025-03-18,2025-04-06,356279.77,639.2,9.1,9.6
+950,Hardy LLC,Individual,Low Volume,Retail,Morning,Standard,Fair,Prepaid,2024-01-20,2024-05-16,455426.44,3172.62,7.7,7.7
+951,Brown PLC,Individual,Low Volume,Manufacturing,Afternoon,Premium,Excellent,Net 15,2022-10-14,2024-09-16,447903.99,2988.09,4.3,8.6
+952,"Little, Erickson and Wilson",SME,Medium Volume,Manufacturing,Evening,Standard,Good,COD,2025-03-22,2025-08-24,247153.44,289.03,5.7,8.1
+953,"Gallagher, Wong and Pratt",SME,Low Volume,Healthcare,Evening,Express,Fair,Net 15,2023-02-08,2023-08-03,476803.32,257.58,9.5,9.5
+954,King Group,SME,Low Volume,Food & Beverage,Evening,Premium,Fair,Net 30,2023-01-18,2024-10-22,174325.46,869.68,3.6,7.9
+955,Livingston-Hill,Enterprise,Medium Volume,Healthcare,Evening,Premium,Excellent,Net 15,2022-12-10,2024-02-15,333550.37,747.97,2.9,9.4
+956,Scott-Norman,Enterprise,Low Volume,Food & Beverage,Morning,Premium,Good,Net 30,2025-06-05,2025-07-04,244694.58,4120.87,4.3,7.1
+957,Cook-Brown,SME,Low Volume,Automotive,Any,Premium,Good,Prepaid,2022-11-26,2025-08-04,148175.85,592.59,7.4,9.4
+958,Jones-Krause,SME,Low Volume,Technology,Evening,Standard,Good,COD,2023-07-06,2023-12-14,366085.24,626.49,4.2,6.3
+959,"Vasquez, Thomas and Mack",Individual,Low Volume,Retail,Evening,Standard,Fair,COD,2023-11-23,2024-04-16,227278.57,3690.83,7.0,6.3
+960,Baldwin-Garcia,Enterprise,Low Volume,Technology,Morning,Premium,Fair,Net 15,2024-08-24,2024-09-21,420874.09,3322.6,8.9,6.1
+961,Waters-Smith,Enterprise,Low Volume,Manufacturing,Afternoon,Premium,Poor,Net 15,2024-06-06,2025-01-25,337000.47,1363.17,2.4,9.3
+962,Fitzpatrick Ltd,SME,Low Volume,Manufacturing,Afternoon,Premium,Excellent,Net 15,2024-09-03,2025-01-29,2595.66,382.94,6.0,6.8
+963,Conway-Andrews,SME,Medium Volume,Automotive,Evening,Premium,Poor,Net 15,2023-03-04,2024-06-25,319219.6,2446.95,6.9,6.7
+964,Mendoza-Powell,Enterprise,Medium Volume,Healthcare,Any,Express,Poor,COD,2025-07-15,2025-09-01,272163.24,1512.32,3.0,9.9
+965,Fernandez Inc,SME,Low Volume,Technology,Any,Express,Good,Prepaid,2025-02-25,2025-05-15,58793.77,2350.44,3.9,6.5
+966,Martinez-Nichols,Individual,Low Volume,Manufacturing,Any,Express,Poor,Net 15,2024-10-13,2025-09-16,15452.31,1376.22,2.9,9.4
+967,Morales-Chen,Individual,Low Volume,Healthcare,Evening,Premium,Fair,Prepaid,2023-09-19,2025-08-19,196297.82,2237.66,4.6,9.6
+968,"Castaneda, Peterson and Randall",Individual,Medium Volume,Manufacturing,Evening,Premium,Excellent,COD,2022-12-27,2025-01-23,224370.54,1145.48,8.9,8.1
+969,Thompson Inc,Enterprise,Low Volume,Food & Beverage,Evening,Standard,Excellent,Net 30,2023-08-02,2025-08-24,401404.03,496.75,7.3,9.6
+970,Dominguez-Mosley,Individual,Low Volume,Retail,Morning,Premium,Good,COD,2024-09-12,2025-05-04,268200.86,4926.83,8.5,7.6
+971,Mcclure Group,SME,Low Volume,Manufacturing,Evening,Express,Poor,Net 15,2023-10-17,2025-03-16,276922.63,1281.08,1.1,9.4
+972,Johnson PLC,Individual,Low Volume,Retail,Any,Express,Excellent,Net 15,2023-02-19,2023-10-01,142261.77,170.01,6.7,8.8
+973,"Schneider, Porter and Hanna",Individual,High Volume,Retail,Any,Premium,Poor,Net 15,2023-11-19,2025-05-15,409329.65,4389.28,8.8,6.3
+974,Johnson Inc,Individual,Low Volume,Automotive,Any,Standard,Excellent,Net 15,2025-08-13,2025-08-25,48682.78,2961.57,4.5,9.3
+975,Wilson-Roman,SME,Low Volume,Technology,Morning,Express,Fair,Prepaid,2024-11-17,2025-06-09,102130.68,1358.14,6.9,7.9
+976,"Berg, Herrera and Figueroa",Enterprise,Medium Volume,Manufacturing,Any,Premium,Fair,Prepaid,2024-02-03,2024-06-20,142927.07,3529.25,5.6,7.5
+977,"Thomas, Valdez and Ruiz",Individual,Low Volume,Technology,Evening,Premium,Excellent,Prepaid,2022-12-06,2025-06-27,112806.37,4877.19,4.6,6.9
+978,"Banks, Smith and Chen",Individual,Medium Volume,Retail,Evening,Express,Good,Net 30,2022-11-08,2025-06-11,48599.13,887.82,8.8,8.0
+979,Bryant and Sons,Enterprise,Medium Volume,Technology,Any,Premium,Good,Net 30,2025-03-06,2025-08-17,383936.83,1297.52,3.8,7.4
+980,Wilson PLC,SME,Medium Volume,Automotive,Any,Standard,Fair,Net 15,2022-11-28,2025-02-24,377763.93,3983.74,5.9,7.3
+981,Simmons Ltd,SME,Low Volume,Technology,Any,Premium,Excellent,Net 30,2023-05-18,2024-12-18,213425.31,433.65,2.1,6.1
+982,"Johnston, Taylor and Copeland",Enterprise,Low Volume,Manufacturing,Afternoon,Express,Excellent,Net 30,2023-09-09,2025-04-18,442865.91,2501.16,6.6,8.1
+983,"Thompson, Brown and Hill",Individual,Medium Volume,Technology,Any,Standard,Fair,Net 30,2025-01-03,2025-07-18,218304.22,1506.41,9.3,8.7
+984,Tran-Gonzales,Individual,Low Volume,Healthcare,Afternoon,Standard,Fair,Net 15,2023-03-22,2025-07-13,401604.05,4762.38,4.3,8.4
+985,Moody Ltd,Enterprise,Low Volume,Healthcare,Afternoon,Standard,Poor,Net 30,2022-11-02,2024-08-07,159526.33,937.17,5.2,10.0
+986,Hobbs Inc,Individual,High Volume,Manufacturing,Afternoon,Premium,Excellent,Prepaid,2025-01-18,2025-01-19,166186.53,352.48,5.2,6.6
+987,Mann PLC,Individual,Medium Volume,Manufacturing,Evening,Premium,Excellent,Net 15,2023-04-03,2025-06-09,138015.73,4112.73,8.8,8.3
+988,Schwartz-Harris,Individual,Medium Volume,Technology,Evening,Premium,Good,Net 30,2023-12-19,2025-01-31,296726.92,559.73,2.9,6.7
+989,Allen-Thompson,Enterprise,Low Volume,Food & Beverage,Any,Express,Fair,Prepaid,2024-04-14,2025-04-10,105444.05,63.22,3.1,6.9
+990,"Porter, Clements and Burton",Individual,Low Volume,Manufacturing,Afternoon,Standard,Poor,Net 30,2024-07-03,2025-06-14,162345.6,4484.97,1.5,8.0
+991,Grant and Sons,Individual,Low Volume,Technology,Evening,Express,Excellent,Net 15,2023-10-05,2023-12-28,280512.42,1917.68,4.5,7.9
+992,Montgomery PLC,Individual,Medium Volume,Healthcare,Morning,Premium,Good,Net 15,2024-04-22,2025-01-08,472799.48,4176.34,7.4,9.4
+993,"Hopkins, Hill and Lee",SME,Low Volume,Automotive,Evening,Premium,Excellent,Prepaid,2024-02-09,2025-05-22,326393.97,931.16,8.8,9.4
+994,Jimenez-Moore,SME,Low Volume,Automotive,Any,Standard,Good,Prepaid,2024-10-09,2025-08-23,187728.72,4669.3,10.0,6.8
+995,Mitchell-Hamilton,Enterprise,Medium Volume,Retail,Evening,Express,Excellent,COD,2022-11-17,2023-10-29,457987.74,2538.83,1.1,7.1
+996,Williams-Yang,Individual,Low Volume,Technology,Any,Standard,Fair,COD,2025-02-17,2025-09-02,313009.94,4857.15,8.4,9.5
+997,Washington Inc,Individual,Low Volume,Automotive,Any,Express,Good,Prepaid,2023-03-30,2023-06-02,375218.06,3255.37,5.9,6.4
+998,Watkins-Nguyen,Individual,Medium Volume,Automotive,Afternoon,Premium,Good,Net 15,2023-06-03,2023-11-16,42329.49,4178.62,2.1,7.8
+999,Hall-Rodriguez,SME,Low Volume,Retail,Evening,Standard,Excellent,COD,2024-09-29,2024-12-18,418799.49,4248.74,3.8,8.8
+1000,Kane-Bennett,Individual,Low Volume,Automotive,Evening,Premium,Excellent,Prepaid,2023-06-05,2023-12-06,208772.99,3355.23,1.6,6.8
