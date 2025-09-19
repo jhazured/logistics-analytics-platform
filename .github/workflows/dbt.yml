@@ -1,0 +1,50 @@
+name: dbt build
+
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ setup-dbt-scaffold ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt and deps
+        run: |
+          pip install dbt-snowflake~=1.8
+          pip install -r requirements.txt || true
+
+      - name: Prepare profiles directory
+        run: |
+          mkdir -p dbt
+          # Use repo profiles.yml but allow CI env vars to override
+          echo "Using profiles.yml in repo"
+
+      - name: dbt deps
+        run: dbt deps --project-dir dbt
+
+      - name: dbt compile (no credentials required)
+        run: dbt compile --project-dir dbt
+
+      # Optional: enable build when secrets are configured
+      - name: dbt build (skipped without creds)
+        if: ${{ secrets.SF_ACCOUNT != '' }}
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USER: ${{ secrets.SF_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PASSWORD }}
+          SF_ROLE: ${{ secrets.SF_ROLE }}
+          SF_DATABASE: ${{ secrets.SF_DATABASE }}
+          SF_WAREHOUSE: ${{ secrets.SF_WAREHOUSE }}
+          SF_SCHEMA: ${{ secrets.SF_SCHEMA }}
+        run: dbt build --project-dir dbt --target dev
+

@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: dim_location
+    description: Location dimension derived from routes (origin/destination IDs)
+    columns:
+      - name: location_id
+        tests:
+          - not_null
+          - unique
+
