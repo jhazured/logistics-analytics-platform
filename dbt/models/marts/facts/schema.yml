@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: fact_shipments
+    columns:
+      - name: shipment_id
+        tests: [not_null, unique]
+      - name: date_key
+        tests: [not_null]
+      - name: customer_id
+        tests: [not_null]
+      - name: delivery_status
+        tests:
+          - accepted_values:
+              values: ["Delivered", "In Transit", "Delayed", "Failed"]
+      - name: priority_level
+        tests:
+          - accepted_values:
+              values: ["Standard", "High", "Urgent"]
+      - name: revenue
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              strictly: false
+      - name: weight_kg
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              strictly: true
+  - name: fact_vehicle_telemetry
+    columns:
+      - name: telemetry_id
+        tests: [not_null, unique]
+      - name: vehicle_id
+        tests: [not_null]
+      - name: timestamp
+        tests: [not_null]
+      - name: fuel_level_percent
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100
+              strictly: false
+  - name: fact_route_conditions
+    columns:
+      - name: condition_id
+        tests: [not_null, unique]
+      - name: route_id
+        tests: [not_null]
+      - name: date_key
+        tests: [not_null]
+  - name: fact_vehicle_utilization
+    columns:
+      - name: utilization_id
+        tests: [not_null, unique]
+      - name: vehicle_id
+        tests: [not_null]
+      - name: date_key
+        tests: [not_null]
+  - name: fact_route_performance
+    columns:
+      - name: performance_id
+        tests: [not_null, unique]
+      - name: route_id
+        tests: [not_null]
+      - name: date_key
+        tests: [not_null]
+

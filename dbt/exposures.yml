@@ -1,0 +1,38 @@
+version: 2
+
+exposures:
+  - name: executive_dashboard
+    type: dashboard
+    maturity: high
+    owner:
+      name: Analytics Team
+      email: analytics@example.com
+    depends_on:
+      - ref('performance_dashboard')
+      - ref('executive_dashboard_trending')
+    description: Executive KPIs and YoY trends
+
+  - name: ml_feature_store
+    type: application
+    maturity: medium
+    owner:
+      name: Data Science
+      email: ds@example.com
+    depends_on:
+      - ref('ml_feature_store')
+      - ref('ml_route_optimization_features')
+      - ref('ml_predictive_maintenance_features')
+    description: Central feature store powering ML models
+
+  - name: data_quality_monitoring
+    type: analysis
+    maturity: medium
+    owner:
+      name: Data Platform
+      email: platform@example.com
+    depends_on:
+      - ref('view_data_quality_summary')
+      - ref('view_dbt_run_results')
+      - ref('view_fivetran_sync_status')
+    description: Operational data quality and pipeline health
+

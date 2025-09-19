@@ -1,5 +1,5 @@
 with src as (
-  select * from {{ source(raw, azure_shipments) }}
+  select * from {{ source('raw', 'azure_shipments') }}
 )
 select
   cast(shipment_id as number) as shipment_id,

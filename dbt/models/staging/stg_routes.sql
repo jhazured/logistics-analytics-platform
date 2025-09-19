@@ -4,7 +4,7 @@ with src as (
     origin_location_id,
     destination_location_id,
     try_to_decimal(distance_km, 8, 1) as distance_km
-  from {{ source(raw, azure_shipments) }}
+  from {{ source('raw', 'azure_shipments') }}
   where route_id is not null
 )
 select distinct

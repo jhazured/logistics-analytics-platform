@@ -1,11 +1,11 @@
 with s as (
-  select * from {{ ref(stg_shipments) }}
+  select * from {{ ref('stg_shipments') }}
 )
 select
   shipment_id,
-  {{ dbt_utils.generate_surrogate_key([shipment_id]) }} as shipment_sk,
-  date_trunc(day, shipment_date) as shipment_date,
-  to_number(to_char(shipment_date, YYYYMMDD)) as date_key,
+  {{ dbt_utils.generate_surrogate_key(['shipment_id']) }} as shipment_sk,
+  date_trunc('day', shipment_date) as shipment_date,
+  to_number(to_char(shipment_date, 'YYYYMMDD')) as date_key,
   customer_id,
   origin_location_id,
   destination_location_id,

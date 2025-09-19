@@ -1,0 +1,19 @@
+# dbt
+/dbt/target/
+/dbt/dbt_packages/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+
+# Data outputs
+/logistics_sample_data/
+
+# OS/Editor
+.DS_Store
+.vscode/
+.idea/
+
