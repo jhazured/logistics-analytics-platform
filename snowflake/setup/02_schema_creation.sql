@@ -1,6 +1,3 @@
--- Schema Setup
--- =====================================================
-
 -- Create schemas for different layers
 CREATE SCHEMA IF NOT EXISTS RAW;           -- Raw data from sources
 CREATE SCHEMA IF NOT EXISTS STAGING;      -- Cleaned and validated data

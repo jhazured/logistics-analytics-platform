@@ -1,4 +1,9 @@
--- Create sequences for auto-increment IDs
-CREATE SEQUENCE IF NOT EXISTS seq_shipment_id START = 1 INCREMENT = 1;
-CREATE SEQUENCE IF NOT EXISTS seq_telemetry_id START = 1 INCREMENT = 1;
-CREATE SEQUENCE IF NOT EXISTS seq_condition_id START = 1 INCREMENT = 1;
+-- Schedule the optimization procedure to run weekly
+CREATE OR REPLACE TASK warehouse_optimization_task
+WAREHOUSE = WH_ANALYTICS
+SCHEDULE = 'USING CRON 0 9 * * 1'  -- 9 AM every Monday
+AS 
+    CALL optimize_warehouse_sizing();
+
+-- Start the task
+ALTER TASK warehouse_optimization_task RESUME;
