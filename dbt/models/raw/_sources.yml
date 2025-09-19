@@ -1,0 +1,13 @@
+version: 2
+sources:
+  - name: raw
+    database: LOGISTICS_DW
+    schema: RAW
+    tables:
+      - name: azure_customers
+      - name: azure_vehicles
+      - name: azure_shipments
+      - name: azure_maintenance
+      - name: telematics_data
+      - name: traffic_data
+      - name: weather_data
