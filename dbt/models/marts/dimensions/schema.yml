@@ -1,6 +1,71 @@
 version: 2
 
 models:
+  - name: dim_date
+    description: |
+      Calendar dimension providing date-related attributes for time-based analysis:
+      - Standard date attributes (year, month, day, quarter)
+      - Business calendar attributes (weekday, weekend, holidays)
+      - Fiscal year and period information
+      - Date hierarchies for reporting
+    columns:
+      - name: date_key
+        description: "Unique date key in YYYYMMDD format"
+        tests: 
+          - not_null
+          - unique
+      - name: date
+        description: "Standard date value"
+        tests: 
+          - not_null
+      - name: year
+        description: "Year (YYYY)"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 2020
+              max_value: 2030
+      - name: month
+        description: "Month (1-12)"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 12
+      - name: day
+        description: "Day of month (1-31)"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 31
+      - name: quarter
+        description: "Quarter (1-4)"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 4
+      - name: day_of_week
+        description: "Day of week (1=Sunday, 7=Saturday)"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 7
+      - name: is_weekend
+        description: "Flag indicating if date is weekend"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: is_holiday
+        description: "Flag indicating if date is a holiday"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
   - name: dim_customer
     description: |
       Customer dimension containing all customer master data including:
@@ -132,3 +197,119 @@ models:
           - not_null
           - accepted_values:
               values: ['ACTIVE', 'MAINTENANCE', 'RETIRED', 'OUT_OF_SERVICE']
+
+  - name: dim_location
+    description: |
+      Location dimension derived from routes (origin/destination IDs):
+      - Geographic coordinates and address information
+      - Location type classification (warehouse, customer, depot)
+      - Service area and delivery zone information
+      - Distance calculations and routing data
+    columns:
+      - name: location_id
+        description: "Unique identifier for each location"
+        tests:
+          - not_null
+          - unique
+      - name: location_name
+        description: "Human-readable location name"
+        tests:
+          - not_null
+      - name: location_type
+        description: "Type of location (WAREHOUSE, CUSTOMER, DEPOT, HUB)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['WAREHOUSE', 'CUSTOMER', 'DEPOT', 'HUB']
+      - name: address_line1
+        description: "Primary address line"
+        tests:
+          - not_null
+      - name: city
+        description: "City name"
+        tests:
+          - not_null
+      - name: state_province
+        description: "State or province"
+        tests:
+          - not_null
+      - name: postal_code
+        description: "Postal/ZIP code"
+        tests:
+          - not_null
+      - name: country
+        description: "Country code"
+        tests:
+          - not_null
+      - name: latitude
+        description: "Geographic latitude coordinate"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: -90
+              max_value: 90
+      - name: longitude
+        description: "Geographic longitude coordinate"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: -180
+              max_value: 180
+      - name: service_area
+        description: "Service area classification"
+      - name: delivery_zone
+        description: "Delivery zone identifier"
+
+  - name: dim_route
+    description: |
+      Route dimension derived from shipments:
+      - Origin and destination location pairs
+      - Route characteristics (distance, estimated time)
+      - Route type and classification
+      - Historical performance metrics
+    columns:
+      - name: route_id
+        description: "Unique identifier for each route"
+        tests:
+          - not_null
+          - unique
+      - name: origin_location_id
+        description: "Origin location identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_location')
+              field: location_id
+      - name: destination_location_id
+        description: "Destination location identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_location')
+              field: location_id
+      - name: distance_miles
+        description: "Standard distance between origin and destination"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 5000
+      - name: estimated_travel_time_hours
+        description: "Estimated travel time in hours"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0.1
+              max_value: 48
+      - name: route_type
+        description: "Route classification (HIGHWAY, URBAN, RURAL, MIXED)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGHWAY', 'URBAN', 'RURAL', 'MIXED']
+      - name: is_active
+        description: "Flag indicating if route is currently active"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]

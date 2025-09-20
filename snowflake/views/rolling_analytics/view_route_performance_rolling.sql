@@ -1,102 +1,274 @@
--- 8. Route Performance Rolling
--- File: models/analytics/rolling_analytics/view_route_performance_rolling.sql
-{{ config(
-    materialized='table',
-    tags=['analytics', 'rolling', 'routes']
-) }}
+-- Rolling Route Performance Analytics View
+-- This view provides rolling performance metrics for routes
 
-WITH route_daily_performance AS (
+CREATE OR REPLACE VIEW LOGISTICS_DW_PROD.ANALYTICS.V_ROUTE_PERFORMANCE_ROLLING AS
+WITH route_performance_base AS (
     SELECT 
-        fs.route_id,
-        fs.shipment_date,
-        dr.route_name,
-        dr.route_type,
-        {{ classify_haul_type('dr.total_distance_km') }} AS haul_type,
-        dl_origin.city AS origin_city,
+        r.route_id,
+        r.origin_location_id,
+        r.destination_location_id,
+        r.distance_miles,
+        r.route_type,
+        s.shipment_date,
+        s.actual_delivery_time_hours,
+        s.estimated_delivery_time_hours,
+        s.on_time_delivery_flag,
+        s.route_efficiency_score,
+        s.revenue_usd,
+        s.total_cost_usd,
+        s.profit_margin_pct,
+        s.carbon_emissions_kg,
+        s.weather_delay_minutes,
+        s.traffic_delay_minutes
+    FROM LOGISTICS_DW_PROD.MARTS.DIM_ROUTE r
+    JOIN LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS s ON r.route_id = s.route_id
+    WHERE s.shipment_date >= DATEADD('day', -365, CURRENT_DATE())
+),
+
+rolling_metrics AS (
+    SELECT 
+        route_id,
+        origin_location_id,
+        destination_location_id,
+        distance_miles,
+        route_type,
+        shipment_date,
+        actual_delivery_time_hours,
+        estimated_delivery_time_hours,
+        on_time_delivery_flag,
+        route_efficiency_score,
+        revenue_usd,
+        total_cost_usd,
+        profit_margin_pct,
+        carbon_emissions_kg,
+        weather_delay_minutes,
+        traffic_delay_minutes,
         
-        -- Daily route metrics
-        COUNT(*) AS daily_trips,
-        AVG(fs.actual_duration_minutes) AS avg_actual_duration,
-        AVG(fs.planned_duration_minutes) AS avg_planned_duration,
-        AVG(fs.actual_duration_minutes / NULLIF(fs.planned_duration_minutes, 1)) AS avg_duration_ratio,
-        AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
-        AVG(fs.customer_rating) AS avg_customer_satisfaction,
-        SUM(fs.fuel_cost) AS total_fuel_cost,
-        SUM(fs.delivery_cost) AS total_delivery_cost,
-        SUM(fs.revenue) AS total_revenue,
-        AVG(fs.fuel_cost / NULLIF(fs.distance_km, 0)) AS avg_fuel_cost_per_km,
+        -- 7-day rolling metrics
+        AVG(on_time_delivery_flag) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ) as on_time_rate_7d,
         
-        -- Operational challenges
-        SUM(CASE WHEN fs.actual_duration_minutes > fs.planned_duration_minutes * 1.5 THEN 1 ELSE 0 END) AS severe_delays,
-        SUM(CASE WHEN fs.customer_rating < 7 THEN 1 ELSE 0 END) AS poor_ratings
+        AVG(route_efficiency_score) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ) as efficiency_score_7d,
         
-    FROM {{ ref('fact_shipments') }} fs
-    JOIN {{ ref('dim_route') }} dr ON fs.route_id = dr.route_id
-    JOIN {{ ref('dim_location') }} dl_origin ON fs.origin_location_id = dl_origin.location_id
-    WHERE fs.shipment_date >= CURRENT_DATE() - 365
-        AND fs.is_delivered = TRUE
-    GROUP BY 1,2,3,4,5,6
+        AVG(actual_delivery_time_hours) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ) as avg_delivery_time_7d,
+        
+        AVG(profit_margin_pct) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ) as avg_profit_margin_7d,
+        
+        SUM(revenue_usd) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ) as total_revenue_7d,
+        
+        AVG(weather_delay_minutes) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ) as avg_weather_delay_7d,
+        
+        AVG(traffic_delay_minutes) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+        ) as avg_traffic_delay_7d,
+        
+        -- 30-day rolling metrics
+        AVG(on_time_delivery_flag) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+        ) as on_time_rate_30d,
+        
+        AVG(route_efficiency_score) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+        ) as efficiency_score_30d,
+        
+        AVG(actual_delivery_time_hours) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+        ) as avg_delivery_time_30d,
+        
+        AVG(profit_margin_pct) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+        ) as avg_profit_margin_30d,
+        
+        SUM(revenue_usd) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+        ) as total_revenue_30d,
+        
+        AVG(weather_delay_minutes) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+        ) as avg_weather_delay_30d,
+        
+        AVG(traffic_delay_minutes) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+        ) as avg_traffic_delay_30d,
+        
+        -- 90-day rolling metrics
+        AVG(on_time_delivery_flag) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+        ) as on_time_rate_90d,
+        
+        AVG(route_efficiency_score) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+        ) as efficiency_score_90d,
+        
+        AVG(actual_delivery_time_hours) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+        ) as avg_delivery_time_90d,
+        
+        AVG(profit_margin_pct) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+        ) as avg_profit_margin_90d,
+        
+        SUM(revenue_usd) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+        ) as total_revenue_90d,
+        
+        AVG(weather_delay_minutes) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+        ) as avg_weather_delay_90d,
+        
+        AVG(traffic_delay_minutes) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date 
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+        ) as avg_traffic_delay_90d,
+        
+        -- Trend analysis
+        LAG(on_time_delivery_flag, 7) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date
+        ) as on_time_rate_7d_ago,
+        
+        LAG(route_efficiency_score, 7) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date
+        ) as efficiency_score_7d_ago,
+        
+        LAG(profit_margin_pct, 7) OVER (
+            PARTITION BY route_id 
+            ORDER BY shipment_date
+        ) as profit_margin_7d_ago
+        
+    FROM route_performance_base
 )
 
 SELECT 
     route_id,
-    shipment_date,
-    route_name,
+    origin_location_id,
+    destination_location_id,
+    distance_miles,
     route_type,
-    haul_type,
-    origin_city,
+    shipment_date,
+    actual_delivery_time_hours,
+    estimated_delivery_time_hours,
+    on_time_delivery_flag,
+    route_efficiency_score,
+    revenue_usd,
+    total_cost_usd,
+    profit_margin_pct,
+    carbon_emissions_kg,
+    weather_delay_minutes,
+    traffic_delay_minutes,
     
-    -- Current performance
-    daily_trips,
-    avg_actual_duration,
-    avg_planned_duration,
-    avg_duration_ratio,
-    daily_on_time_rate,
-    avg_customer_satisfaction,
-    total_fuel_cost,
-    total_revenue,
-    avg_fuel_cost_per_km,
-    severe_delays,
-    poor_ratings,
+    -- 7-day metrics
+    on_time_rate_7d,
+    efficiency_score_7d,
+    avg_delivery_time_7d,
+    avg_profit_margin_7d,
+    total_revenue_7d,
+    avg_weather_delay_7d,
+    avg_traffic_delay_7d,
     
-    -- 7-day rolling metrics
-    {{ rolling_average('daily_on_time_rate', 'route_id', 'shipment_date', [7]) }} AS on_time_rate_7d_avg,
-    {{ rolling_average('avg_duration_ratio', 'route_id', 'shipment_date', [7]) }} AS duration_ratio_7d_avg,
-    {{ rolling_average('avg_customer_satisfaction', 'route_id', 'shipment_date', [7]) }} AS satisfaction_7d_avg,
-    {{ rolling_average('avg_fuel_cost_per_km', 'route_id', 'shipment_date', [7]) }} AS fuel_efficiency_7d_avg,
+    -- 30-day metrics
+    on_time_rate_30d,
+    efficiency_score_30d,
+    avg_delivery_time_30d,
+    avg_profit_margin_30d,
+    total_revenue_30d,
+    avg_weather_delay_30d,
+    avg_traffic_delay_30d,
     
-    -- 30-day rolling metrics  
-    {{ rolling_average('daily_on_time_rate', 'route_id', 'shipment_date', [30]) }} AS on_time_rate_30d_avg,
-    {{ rolling_average('avg_duration_ratio', 'route_id', 'shipment_date', [30]) }} AS duration_ratio_30d_avg,
-    {{ rolling_average('avg_customer_satisfaction', 'route_id', 'shipment_date', [30]) }} AS satisfaction_30d_avg,
+    -- 90-day metrics
+    on_time_rate_90d,
+    efficiency_score_90d,
+    avg_delivery_time_90d,
+    avg_profit_margin_90d,
+    total_revenue_90d,
+    avg_weather_delay_90d,
+    avg_traffic_delay_90d,
     
-    -- 90-day rolling metrics
-    {{ rolling_average('daily_on_time_rate', 'route_id', 'shipment_date', [90]) }} AS on_time_rate_90d_avg,
-    {{ rolling_average('avg_duration_ratio', 'route_id', 'shipment_date', [90]) }} AS duration_ratio_90d_avg,
-    {{ rolling_average('avg_customer_satisfaction', 'route_id', 'shipment_date', [90]) }} AS satisfaction_90d_avg,
+    -- Trend analysis
+    on_time_rate_7d - on_time_rate_7d_ago as on_time_rate_trend_7d,
+    efficiency_score_7d - efficiency_score_7d_ago as efficiency_trend_7d,
+    profit_margin_7d - profit_margin_7d_ago as profit_margin_trend_7d,
     
-    -- Volatility measures
-    {{ calculate_volatility('daily_on_time_rate', 'route_id', 'shipment_date', 30) }} AS on_time_volatility_30d,
-    {{ calculate_volatility('avg_duration_ratio', 'route_id', 'shipment_date', 30) }} AS duration_volatility_30d,
-    
-    -- Trend indicators
-    {{ calculate_trend('on_time_rate_7d_avg', 'on_time_rate_30d_avg') }} AS performance_trend_7d_vs_30d,
-    {{ calculate_trend('duration_ratio_7d_avg', 'duration_ratio_30d_avg') }} AS efficiency_trend_7d_vs_30d,
-    {{ calculate_trend('satisfaction_7d_avg', 'satisfaction_30d_avg') }} AS satisfaction_trend_7d_vs_30d,
-    
-    -- Performance classification
+    -- Performance indicators
     CASE 
-        WHEN on_time_rate_30d_avg >= 0.95 AND satisfaction_30d_avg >= 8.5 THEN 'excellent'
-        WHEN on_time_rate_30d_avg >= 0.90 AND satisfaction_30d_avg >= 8.0 THEN 'good'
-        WHEN on_time_rate_30d_avg >= 0.80 AND satisfaction_30d_avg >= 7.0 THEN 'acceptable'
-        ELSE 'needs_improvement'
-    END AS route_performance_rating,
+        WHEN on_time_rate_30d > 0.95 THEN 'EXCELLENT'
+        WHEN on_time_rate_30d > 0.85 THEN 'GOOD'
+        WHEN on_time_rate_30d > 0.70 THEN 'FAIR'
+        ELSE 'POOR'
+    END as performance_rating,
     
-    -- Risk assessment
     CASE 
-        WHEN on_time_volatility_30d > 0.3 OR duration_volatility_30d > 0.4 THEN 'high_risk'
-        WHEN on_time_volatility_30d > 0.2 OR duration_volatility_30d > 0.25 THEN 'medium_risk'
-        ELSE 'low_risk'
-    END AS route_risk_level
+        WHEN efficiency_score_30d > 80 THEN 'HIGH_EFFICIENCY'
+        WHEN efficiency_score_30d > 60 THEN 'MEDIUM_EFFICIENCY'
+        ELSE 'LOW_EFFICIENCY'
+    END as efficiency_rating,
+    
+    CASE 
+        WHEN avg_profit_margin_30d > 15 THEN 'HIGH_PROFIT'
+        WHEN avg_profit_margin_30d > 5 THEN 'MEDIUM_PROFIT'
+        ELSE 'LOW_PROFIT'
+    END as profit_rating,
+    
+    -- Risk indicators
+    CASE 
+        WHEN on_time_rate_30d < 0.70 OR efficiency_score_30d < 50 OR avg_profit_margin_30d < 0 THEN 'HIGH_RISK'
+        WHEN on_time_rate_30d < 0.80 OR efficiency_score_30d < 60 OR avg_profit_margin_30d < 5 THEN 'MEDIUM_RISK'
+        ELSE 'LOW_RISK'
+    END as risk_level
 
-FROM route_daily_performance
+FROM rolling_metrics
+WHERE shipment_date >= DATEADD('day', -90, CURRENT_DATE())
+ORDER BY route_id, shipment_date DESC
