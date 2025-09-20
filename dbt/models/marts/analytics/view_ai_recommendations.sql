@@ -19,7 +19,7 @@ WITH route_performance_analysis AS (
         COUNT(*) AS total_trips_last_30d,
         AVG(fs.actual_duration_minutes) AS avg_actual_duration,
         AVG(fs.planned_duration_minutes) AS avg_planned_duration,
-        AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS on_time_rate,
+        {{ calculate_on_time_rate('fs.is_on_time') }} AS on_time_rate,
         AVG(fs.fuel_cost) AS avg_fuel_cost,
         AVG(fs.customer_rating) AS avg_customer_rating,
         STDDEV(fs.actual_duration_minutes) AS duration_variability,

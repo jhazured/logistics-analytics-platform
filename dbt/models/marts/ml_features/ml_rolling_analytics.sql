@@ -23,7 +23,7 @@ WITH customer_daily_activity AS (
         SUM(fs.volume_m3) AS daily_volume,
         SUM(fs.revenue) AS daily_revenue,
         AVG(fs.route_efficiency_score) AS daily_avg_rating,
-        AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
+        {{ calculate_on_time_rate('fs.is_on_time') }} AS daily_on_time_rate,
         COUNT(DISTINCT fs.destination_location_id) AS daily_unique_destinations
         
     FROM {{ ref('fact_shipments') }} fs
@@ -46,11 +46,11 @@ vehicle_daily_performance AS (
         SUM(fs.delivery_cost) AS daily_delivery_cost,
         SUM(fs.revenue) AS daily_revenue,
         AVG(fs.customer_rating) AS daily_avg_rating,
-        AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
+        {{ calculate_on_time_rate('fs.is_on_time') }} AS daily_on_time_rate,
         
         -- Efficiency metrics
-        SUM(fs.distance_km) / NULLIF(SUM(fs.actual_duration_minutes), 0) * 60 AS daily_avg_speed_kmh,
-        SUM(fs.fuel_cost) / NULLIF(SUM(fs.distance_km), 0) AS daily_fuel_cost_per_km,
+        {{ calculate_speed_kmh('SUM(fs.distance_km)', 'SUM(fs.actual_duration_minutes)') }} AS daily_avg_speed_kmh,
+        {{ calculate_cost_per_km('SUM(fs.fuel_cost)', 'SUM(fs.distance_km)') }} AS daily_fuel_cost_per_km,
         SUM(fs.revenue - fs.delivery_cost - fs.fuel_cost) AS daily_profit
         
     FROM {{ ref('fact_shipments') }} fs
@@ -67,20 +67,20 @@ route_daily_performance AS (
         fs.shipment_date,
         dr.route_name,
         dr.route_type,
-        {{ classify_haul_type('dr.total_distance_km') }} AS haul_type,
+        {{ classify_haul_type('dr.distance_km') }} AS haul_type,
         dl_origin.city AS origin_city,
         
         -- Daily route metrics
         COUNT(*) AS daily_trips,
         AVG(fs.actual_duration_minutes) AS avg_actual_duration,
         AVG(fs.planned_duration_minutes) AS avg_planned_duration,
-        AVG(fs.actual_duration_minutes / NULLIF(fs.planned_duration_minutes, 1)) AS avg_duration_ratio,
-        AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
+        AVG({{ safe_divide('fs.actual_duration_minutes', 'fs.planned_duration_minutes', 1) }}) AS avg_duration_ratio,
+        {{ calculate_on_time_rate('fs.is_on_time') }} AS daily_on_time_rate,
         AVG(fs.customer_rating) AS avg_customer_satisfaction,
         SUM(fs.fuel_cost) AS total_fuel_cost,
         SUM(fs.delivery_cost) AS total_delivery_cost,
         SUM(fs.revenue) AS total_revenue,
-        AVG(fs.fuel_cost / NULLIF(fs.distance_km, 0)) AS avg_fuel_cost_per_km,
+        AVG({{ calculate_cost_per_km('fs.fuel_cost', 'fs.distance_km') }}) AS avg_fuel_cost_per_km,
         
         -- Operational challenges
         SUM(CASE WHEN fs.actual_duration_minutes > fs.planned_duration_minutes * 1.5 THEN 1 ELSE 0 END) AS severe_delays,
@@ -116,29 +116,29 @@ customer_rolling AS (
         AVG(cda.daily_shipments) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS shipments_30d_avg,
         AVG(cda.daily_revenue) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS revenue_30d_avg,
         AVG(cda.daily_weight) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS weight_30d_avg,
         
         SUM(cda.daily_shipments) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS shipments_30d_total,
         
         SUM(cda.daily_revenue) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS revenue_30d_total,
         
         -- Seasonal adjustment factors (year-over-year comparison)
@@ -163,12 +163,12 @@ customer_rolling AS (
         AVG(cda.daily_shipments) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS shipments_7d_avg,
         AVG(cda.daily_shipments) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS shipments_90d_avg,
         
         -- Activity ratio (recent vs historical)
@@ -180,18 +180,18 @@ customer_rolling AS (
         END AS activity_ratio_7d_vs_90d,
         
         -- Customer lifecycle indicators
-        DATEDIFF(day, MIN(cda.shipment_date) OVER (PARTITION BY cda.customer_id), cda.shipment_date) AS days_since_first_order,
-        DATEDIFF(day, cda.shipment_date, MAX(cda.shipment_date) OVER (PARTITION BY cda.customer_id)) AS days_to_last_order,
+        {{ days_between('MIN(cda.shipment_date) OVER (PARTITION BY cda.customer_id)', 'cda.shipment_date') }} AS days_since_first_order,
+        {{ days_between('cda.shipment_date', 'MAX(cda.shipment_date) OVER (PARTITION BY cda.customer_id)') }} AS days_to_last_order,
         
         -- Behavior consistency scoring
         STDDEV(cda.daily_shipments) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) / NULLIF(AVG(cda.daily_shipments) OVER (
             PARTITION BY cda.customer_id 
             ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ), 0) AS shipment_volatility_30d,
         
         CASE 
@@ -232,93 +232,93 @@ vehicle_rolling AS (
         AVG(vdp.daily_deliveries) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS deliveries_7d_avg,
         AVG(vdp.daily_distance_km) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS distance_7d_avg,
         AVG(vdp.daily_on_time_rate) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS on_time_rate_7d_avg,
         AVG(vdp.daily_avg_rating) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS rating_7d_avg,
         AVG(vdp.daily_fuel_cost_per_km) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS fuel_efficiency_7d_avg,
         
         -- 30-day rolling averages
         AVG(vdp.daily_deliveries) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS deliveries_30d_avg,
         AVG(vdp.daily_distance_km) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS distance_30d_avg,
         AVG(vdp.daily_on_time_rate) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS on_time_rate_30d_avg,
         AVG(vdp.daily_avg_rating) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS rating_30d_avg,
         AVG(vdp.daily_fuel_cost_per_km) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS fuel_efficiency_30d_avg,
         
         -- 90-day rolling averages
         AVG(vdp.daily_deliveries) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS deliveries_90d_avg,
         AVG(vdp.daily_distance_km) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS distance_90d_avg,
         AVG(vdp.daily_on_time_rate) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS on_time_rate_90d_avg,
         AVG(vdp.daily_avg_rating) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS rating_90d_avg,
         AVG(vdp.daily_fuel_cost_per_km) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS fuel_efficiency_90d_avg,
         
         -- Volatility measures
         STDDEV(vdp.daily_on_time_rate) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS on_time_volatility_30d,
         STDDEV(vdp.daily_fuel_cost_per_km) OVER (
             PARTITION BY vdp.vehicle_id 
             ORDER BY vdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS fuel_efficiency_volatility_30d,
         
         -- Performance degradation indicators
@@ -369,68 +369,68 @@ route_rolling AS (
         AVG(rdp.daily_on_time_rate) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS on_time_rate_7d_avg,
         AVG(rdp.avg_duration_ratio) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS duration_ratio_7d_avg,
         AVG(rdp.avg_customer_satisfaction) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS satisfaction_7d_avg,
         AVG(rdp.avg_fuel_cost_per_km) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(7) }}
         ) AS fuel_efficiency_7d_avg,
         
         -- 30-day rolling metrics  
         AVG(rdp.daily_on_time_rate) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS on_time_rate_30d_avg,
         AVG(rdp.avg_duration_ratio) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS duration_ratio_30d_avg,
         AVG(rdp.avg_customer_satisfaction) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS satisfaction_30d_avg,
         
         -- 90-day rolling metrics
         AVG(rdp.daily_on_time_rate) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS on_time_rate_90d_avg,
         AVG(rdp.avg_duration_ratio) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS duration_ratio_90d_avg,
         AVG(rdp.avg_customer_satisfaction) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(90) }}
         ) AS satisfaction_90d_avg,
         
         -- Volatility measures
         STDDEV(rdp.daily_on_time_rate) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS on_time_volatility_30d,
         STDDEV(rdp.avg_duration_ratio) OVER (
             PARTITION BY rdp.route_id 
             ORDER BY rdp.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
+            {{ rolling_window_days(30) }}
         ) AS duration_volatility_30d,
         
         -- Performance classification

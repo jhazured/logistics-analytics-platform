@@ -17,13 +17,8 @@ WITH customer_features AS (
         credit_limit_usd,
         payment_terms,
         customer_since_date,
-        DATEDIFF('day', customer_since_date, CURRENT_DATE()) as customer_tenure_days,
-        CASE 
-            WHEN customer_tier = 'PREMIUM' THEN 3
-            WHEN customer_tier = 'STANDARD' THEN 2
-            WHEN customer_tier = 'BASIC' THEN 1
-            ELSE 0
-        END as customer_tier_numeric
+        {{ days_between('customer_since_date', 'CURRENT_DATE()') }} as customer_tenure_days,
+        {{ customer_tier_to_numeric('customer_tier') }} as customer_tier_numeric
     FROM {{ ref('dim_customer') }}
     WHERE is_active = true
 ),
@@ -38,13 +33,8 @@ vehicle_features AS (
         maintenance_interval_miles,
         current_mileage,
         vehicle_status,
-        DATEDIFF('year', DATE(model_year || '-01-01'), CURRENT_DATE()) as vehicle_age_years,
-        CASE 
-            WHEN vehicle_type = 'TRUCK' THEN 1
-            WHEN vehicle_type = 'VAN' THEN 2
-            WHEN vehicle_type = 'MOTORCYCLE' THEN 3
-            ELSE 4
-        END as vehicle_type_numeric
+        {{ days_between('DATE(model_year || \'-01-01\')', 'CURRENT_DATE()') }} / 365.25 as vehicle_age_years,
+        {{ vehicle_type_to_numeric('vehicle_type') }} as vehicle_type_numeric
     FROM {{ ref('dim_vehicle') }}
     WHERE vehicle_status = 'ACTIVE'
 ),

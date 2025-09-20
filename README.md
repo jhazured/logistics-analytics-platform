@@ -103,12 +103,12 @@ logistics-analytics-platform/
 │   ├── 📄 profiles.yml                          # Multi-environment Snowflake profiles
 │   ├── 📄 exposures.yml                         # dbt exposures for downstream tools
 │   ├── 📁 macros/                               # Enhanced reusable macros
-│   │   ├── stream_processing.sql                # Stream processing utilities
+│   │   ├── aggregations.sql                     # Aggregation and rolling window macros
+│   │   ├── business_logic.sql                   # Business logic and calculations
 │   │   ├── cost_calculations.sql                # Business cost calculations
-│   │   ├── data_quality_checks.sql              # Data quality validation
-│   │   ├── logistics_calculations.sql           # Logistics-specific calculations
-│   │   ├── rolling_windows.sql                  # Rolling window analytics
-│   │   └── predictive_maintenance.sql           # Maintenance predictions
+│   │   ├── data_types.sql                       # Data type conversion and casting
+│   │   ├── date_time.sql                        # Date and time utilities
+│   │   └── rolling_windows.sql                  # Rolling window analytics
 │   ├── 📁 models/                               # dbt models (40+ models, 17+ tests)
 │   │   ├── 📁 marts/                            # Business logic layer
 │   │   │   ├── 📁 analytics/                    # Advanced analytics views (4 models)

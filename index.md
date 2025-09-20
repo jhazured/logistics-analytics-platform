@@ -23,16 +23,12 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [profiles.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/profiles.yml)
 
 ## dbt Macros
-- [advanced_logistics_analytics.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/advanced_logistics_analytics.sql)
+- [aggregations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/aggregations.sql)
+- [business_logic.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/business_logic.sql)
 - [cost_calculations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/cost_calculations.sql)
-- [data_quality_checks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/data_quality_checks.sql)
-- [date_helpers.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/date_helpers.sql)
-- [logistics_calculations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/logistics_calculations.sql)
-- [predictive_maintenance.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/predictive_maintenance.sql)
+- [data_types.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/data_types.sql)
+- [date_time.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/date_time.sql)
 - [rolling_windows.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/rolling_windows.sql)
-- [stream_processing.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/stream_processing.sql)
-- [traffic_calculations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/traffic_calculations.sql)
-- [weather_impact_calculations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/weather_impact_calculations.sql)
 
 ## dbt Analytics Models
 - [view_ai_recommendations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/view_ai_recommendations.sql)

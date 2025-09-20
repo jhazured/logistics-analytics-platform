@@ -28,7 +28,7 @@ WITH daily_kpis AS (
         COUNT(DISTINCT fs.vehicle_id) AS daily_active_vehicles,
         
         -- Performance metrics
-        AVG(CASE WHEN fs.on_time_delivery_flag THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
+        {{ calculate_on_time_rate('fs.on_time_delivery_flag') }} AS daily_on_time_rate,
         AVG(fs.route_efficiency_score) AS daily_satisfaction_score,
         AVG(fs.actual_delivery_time_hours / NULLIF(fs.estimated_delivery_time_hours, 1)) AS schedule_adherence,
         

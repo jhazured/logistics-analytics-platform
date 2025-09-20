@@ -53,7 +53,7 @@ maintenance_with_intervals AS (
         maintenance_type,
         cost,
         LAG(completed_date) OVER (PARTITION BY vehicle_id ORDER BY completed_date) AS previous_service_date,
-        DATEDIFF(day, LAG(completed_date) OVER (PARTITION BY vehicle_id ORDER BY completed_date), completed_date) AS days_between_service
+        {{ days_between('LAG(completed_date) OVER (PARTITION BY vehicle_id ORDER BY completed_date)', 'completed_date') }} AS days_between_service
     FROM maintenance_history
     WHERE completed_date IS NOT NULL
 ),
@@ -72,16 +72,16 @@ maintenance_rolling AS (
         v.next_maintenance_date,
         
         -- Rolling 7-day maintenance indicators
-        COUNT(CASE WHEN m.completed_date >= DATEADD(day, -7, CURRENT_DATE()) THEN 1 END) AS maintenance_events_7d,
-        SUM(CASE WHEN m.completed_date >= DATEADD(day, -7, CURRENT_DATE()) THEN m.cost ELSE 0 END) AS maintenance_cost_7d,
+        COUNT(CASE WHEN m.completed_date >= {{ days_ago(7) }} THEN 1 END) AS maintenance_events_7d,
+        SUM(CASE WHEN m.completed_date >= {{ days_ago(7) }} THEN m.cost ELSE 0 END) AS maintenance_cost_7d,
         
         -- Rolling 30-day maintenance indicators
-        COUNT(CASE WHEN m.completed_date >= DATEADD(day, -30, CURRENT_DATE()) THEN 1 END) AS maintenance_events_30d,
-        SUM(CASE WHEN m.completed_date >= DATEADD(day, -30, CURRENT_DATE()) THEN m.cost ELSE 0 END) AS maintenance_cost_30d,
+        COUNT(CASE WHEN m.completed_date >= {{ days_ago(30) }} THEN 1 END) AS maintenance_events_30d,
+        SUM(CASE WHEN m.completed_date >= {{ days_ago(30) }} THEN m.cost ELSE 0 END) AS maintenance_cost_30d,
         
         -- Rolling 90-day maintenance indicators
-        COUNT(CASE WHEN m.completed_date >= DATEADD(day, -90, CURRENT_DATE()) THEN 1 END) AS maintenance_events_90d,
-        SUM(CASE WHEN m.completed_date >= DATEADD(day, -90, CURRENT_DATE()) THEN m.cost ELSE 0 END) AS maintenance_cost_90d,
+        COUNT(CASE WHEN m.completed_date >= {{ days_ago(90) }} THEN 1 END) AS maintenance_events_90d,
+        SUM(CASE WHEN m.completed_date >= {{ days_ago(90) }} THEN m.cost ELSE 0 END) AS maintenance_cost_90d,
         
         -- Maintenance urgency indicators
         CASE 
