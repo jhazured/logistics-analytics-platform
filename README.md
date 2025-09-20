@@ -65,66 +65,122 @@ In today's competitive logistics landscape, companies need real-time insights in
 | **Transformation** | dbt | Data modeling and transformation |
 | **Ingestion** | Fivetran | Automated data pipeline |
 | **Orchestration** | GitHub Actions | CI/CD and workflow management |
-| **Monitoring** | Custom Python + Slack | Data quality and performance monitoring |
+| **Monitoring** | Custom Python | Data quality and performance monitoring |
 | **Security** | Snowflake RBAC | Role-based access control and data masking |
-| **Infrastructure** | Terraform + Docker | Infrastructure as Code and containerization |
+| **Infrastructure** | GitHub Actions | CI/CD and deployment automation |
 
 ## Project Structure
 
 ```
 logistics-analytics-platform/
-├── 📄 LICENSE
-├── 📄 README.md
-├── 📄 requirements.txt
-├── 📄 .env.example
-├── 📁 .github/workflows/           # CI/CD pipelines
-├── 📁 config/                     # Configuration management
-├── 📁 data/                       # Sample data generation
-│   └── generate_sample_data.py
-├── 📁 dbt/                        # dbt project root
-│   ├── 📄 dbt_project.yml         # Enhanced dbt configuration
-│   ├── 📄 packages.yml            # Package dependencies
-│   ├── 📄 profiles.yml            # Multi-environment profiles
-│   ├── 📁 analyses/               # Ad-hoc analysis queries
-│   ├── 📁 macros/                 # Enhanced reusable macros
-│   │   ├── cost_calculations.sql
-│   │   ├── data_quality_checks.sql
-│   │   ├── logistics_calculations.sql
-│   │   ├── rolling_windows.sql
-│   │   └── predictive_maintenance.sql
-│   ├── 📁 models/                 # dbt models
-│   │   ├── 📁 marts/              # Business logic layer
-│   │   │   ├── 📁 analytics/      # Advanced analytics views (5 models)
-│   │   │   ├── 📁 dimensions/     # Dimension tables (8 models)
-│   │   │   ├── 📁 facts/          # Fact tables (5 models)
-│   │   │   └── 📁 ml_features/    # ML feature store (10 models)
-│   │   ├── 📁 raw/                # Source definitions
-│   │   └── 📁 staging/            # Data cleaning layer (4 models)
-│   ├── 📁 snapshots/              # SCD2 snapshots
-│   └── 📁 tests/                  # Comprehensive testing suite
-│       ├── 📁 business_rules/     # Business logic validation
-│       ├── 📁 data_quality/       # Data quality checks
-│       └── 📁 referential_integrity/ # FK relationship validation
-├── 📁 docker/                     # Containerization
-├── 📁 fivetran/                   # Data ingestion configuration
-│   ├── 📁 connectors/
-│   └── 📁 monitoring/
-├── 📁 k8s/                        # Kubernetes deployment
-├── 📁 scripts/                    # Automation and utilities
-│   ├── 📁 deployment/             # Deployment automation
-│   ├── 📁 monitoring/             # Data quality monitoring
-│   ├── 📁 integrations/           # External API integrations
-│   └── 📁 maintenance/            # Database maintenance
-├── 📁 snowflake/                  # Snowflake-specific infrastructure
-│   ├── 📁 optimization/           # Performance tuning
-│   ├── 📁 security/               # Security and governance
-│   ├── 📁 setup/                  # Initial setup scripts
-│   ├── 📁 streaming/              # Real-time processing
-│   ├── 📁 tables/                 # DDL definitions
-│   └── 📁 views/                  # Analytical views
-├── 📁 source-database/            # Legacy data migration
-├── 📁 terraform/                  # Infrastructure as Code
-└── 📁 docs/                       # Comprehensive documentation
+├── 📄 LICENSE                                    # MIT License
+├── 📄 README.md                                  # This comprehensive documentation
+├── 📄 requirements.txt                           # Python dependencies
+├── 📁 .github/workflows/                         # CI/CD pipelines
+│   ├── dbt_ci_cd.yml                            # Main dbt CI/CD pipeline
+│   ├── data_quality_checks.yml                  # Automated data quality monitoring
+│   ├── dbt-docs.yml                             # Documentation generation
+│   └── deployment_pipeline.yml                  # Production deployment workflow
+├── 📁 data/                                      # Sample data generation
+│   └── generate_sample_data.py                  # Python script for test data
+├── 📁 dbt/                                       # dbt project root
+│   ├── 📄 dbt_project.yml                       # Enhanced multi-environment configuration
+│   ├── 📄 packages.yml                          # Package dependencies (dbt_utils, dbt_expectations)
+│   ├── 📄 profiles.yml                          # Multi-environment Snowflake profiles
+│   ├── 📄 exposures.yml                         # dbt exposures for downstream tools
+│   ├── 📁 analyses/                             # Ad-hoc analysis queries
+│   ├── 📁 macros/                               # Enhanced reusable macros
+│   │   ├── stream_processing.sql                # Stream processing utilities
+│   │   ├── cost_calculations.sql                # Business cost calculations
+│   │   ├── data_quality_checks.sql              # Data quality validation
+│   │   ├── logistics_calculations.sql           # Logistics-specific calculations
+│   │   ├── rolling_windows.sql                  # Rolling window analytics
+│   │   └── predictive_maintenance.sql           # Maintenance predictions
+│   ├── 📁 models/                               # dbt models (207+ tests)
+│   │   ├── 📁 marts/                            # Business logic layer
+│   │   │   ├── 📁 analytics/                    # Advanced analytics views (22+ models)
+│   │   │   │   ├── performance_dashboard.sql
+│   │   │   │   └── schema.yml
+│   │   │   ├── 📁 dimensions/                   # Dimension tables (8 models)
+│   │   │   │   ├── dim_date.sql
+│   │   │   │   ├── dim_customer.sql
+│   │   │   │   ├── dim_vehicle.sql
+│   │   │   │   ├── dim_location.sql
+│   │   │   │   ├── dim_route.sql
+│   │   │   │   ├── dim_weather.sql
+│   │   │   │   ├── dim_traffic_conditions.sql
+│   │   │   │   ├── dim_vehicle_maintenance.sql
+│   │   │   │   └── schema.yml                   # Consolidated schema definitions
+│   │   │   ├── 📁 facts/                        # Fact tables (5 models with incremental loading)
+│   │   │   │   ├── fact_shipments.sql
+│   │   │   │   ├── fact_vehicle_telemetry.sql
+│   │   │   │   ├── fact_route_performance.sql
+│   │   │   │   ├── fact_route_conditions.sql
+│   │   │   │   ├── fact_vehicle_utilization.sql
+│   │   │   │   └── schema.yml
+│   │   │   └── 📁 ml_features/                  # ML feature store (3 models)
+│   │   │       ├── ml_feature_store.sql
+│   │   │       ├── ml_customer_behavior_rolling.sql
+│   │   │       ├── ml_customer_behavior_segments.sql
+│   │   │       └── ml_predictive_maintenance_features.sql
+│   │   ├── 📁 raw/                              # Source definitions (7 models)
+│   │   │   ├── raw_azure_customers.sql
+│   │   │   ├── raw_azure_shipments.sql
+│   │   │   ├── raw_azure_vehicles.sql
+│   │   │   ├── raw_azure_maintenance.sql
+│   │   │   ├── raw_weather_data.sql
+│   │   │   ├── raw_traffic_data.sql
+│   │   │   └── raw_telematics_data.sql
+│   │   └── 📁 staging/                          # Data cleaning layer
+│   │       ├── stg_shipments.sql
+│   │       ├── stg_vehicle_telemetry.sql
+│   │       └── schema.yml
+│   ├── 📁 snapshots/                            # SCD2 snapshots
+│   └── 📁 tests/                                # Comprehensive testing suite (15+ tests)
+│       ├── 📁 business_rules/                   # Business logic validation (4 tests)
+│       │   ├── test_customer_segmentation.sql
+│       │   ├── test_kpi_calculations.sql
+│       │   ├── test_maintenance_intervals.sql
+│       │   └── test_shipment_status_logic.sql
+│       ├── 📁 data_quality/                     # Data quality checks (2 tests)
+│       │   ├── test_fuel_efficiency_reasonable.sql
+│       │   └── test_route_distance_positive.sql
+│       └── 📁 referential_integrity/            # FK relationship validation (1 test)
+│           └── test_foreign_key_constraints.sql
+├── 📁 fivetran/                                 # Data ingestion configuration
+│   ├── 📁 connectors/                           # Fivetran connector configs
+│   └── 📁 monitoring/                           # Ingestion monitoring
+├── 📁 scripts/                                  # Automation and utilities
+│   ├── 📁 deployment/                           # Deployment automation
+│   │   └── deploy_dbt_models.sh                 # dbt deployment script
+│   └── 📁 setup/                                # Environment setup
+│       └── configure_environment.sh             # Environment configuration
+├── 📁 snowflake/                                # Snowflake-specific infrastructure
+│   ├── 📁 optimization/                         # Performance tuning
+│   │   └── automated_tasks.sql                  # Warehouse optimization tasks
+│   ├── 📁 security/                             # Security and governance
+│   │   ├── audit_logging.sql                    # Comprehensive audit logging
+│   │   ├── data_classification.sql              # Data classification and tagging
+│   │   └── row_level_security.sql               # Row-level security policies
+│   ├── 📁 setup/                                # Initial setup scripts
+│   ├── 📁 streaming/                            # Real-time processing
+│   │   ├── create_streams.sql                   # Stream definitions
+│   │   ├── create_tasks.sql                     # Task definitions
+│   │   ├── alert_system.sql                     # Real-time alerting
+│   │   ├── real_time_kpis.sql                   # Real-time KPI tables
+│   │   ├── task_management.sql                  # Task monitoring and management
+│   │   └── deploy_streams_and_tasks.sql         # Complete deployment script
+│   ├── 📁 tables/                               # DDL definitions
+│   ├── 📁 views/                                # Analytical views
+│   │   ├── 📁 ml_features/                      # ML feature views
+│   │   │   └── view_ml_feature_store.sql
+│   │   └── 📁 rolling_analytics/                # Rolling analytics views
+│   │       ├── view_route_performance_rolling.sql
+│   │       ├── view_customer_behaviour_rolling.sql
+│   │       └── view_operational_performance_rolling.sql
+│   └── 📁 monitoring/                           # Monitoring and alerting
+│       └── view_dbt_run_results.sql
+└── 📁 source-database/                          # Legacy data migration
 ```
 
 ## Data Model
@@ -134,57 +190,59 @@ logistics-analytics-platform/
 The platform implements a **star schema** design optimized for analytical queries and BI tool integration:
 
 #### Dimension Tables (8 dimensions)
-- **dim_date**: Comprehensive date dimension with business calendars
-- **dim_customer**: Customer master data with segmentation and tiers
+- **dim_date**: Comprehensive date dimension with business calendars and fiscal periods
+- **dim_customer**: Customer master data with segmentation, tiers, and credit information
 - **dim_vehicle**: Vehicle specifications, maintenance history, and performance metrics
-- **dim_location**: Geographic data with hierarchies and regional information
-- **dim_route**: Route definitions, characteristics, and optimization data
+- **dim_location**: Geographic data with hierarchies, regional information, and coordinates
+- **dim_route**: Route definitions, characteristics, distance, and optimization data
 - **dim_weather**: Weather conditions by location and time with impact scoring
 - **dim_traffic_conditions**: Traffic patterns, congestion data, and delay factors
 - **dim_vehicle_maintenance**: Maintenance schedules, history, and predictive indicators
 
-#### Fact Tables (5 facts)
-- **fact_shipments**: Core shipment transactions with full cost and performance metrics
-- **fact_vehicle_telemetry**: Real-time vehicle sensor data and operational status
+#### Fact Tables (5 facts with incremental loading)
+- **fact_shipments**: Core shipment transactions with calculated metrics, cost analysis, and performance indicators
+- **fact_vehicle_telemetry**: Real-time vehicle sensor data, driving behavior scores, and maintenance alerts
+- **fact_route_performance**: Aggregated route performance metrics with time/cost efficiency analysis
 - **fact_route_conditions**: Route performance data with weather and traffic impacts
 - **fact_vehicle_utilization**: Vehicle usage, efficiency, and capacity utilization metrics
-- **fact_route_performance**: Historical route performance with optimization opportunities
 
-### Machine Learning Features (10 ML models)
+### Machine Learning Features (4 ML models)
 
 #### Feature Store Architecture
-- **ml_feature_store**: Centralized feature repository with versioning
-- **ml_customer_behavior_rolling**: Rolling customer analytics (7d/30d/90d windows)
-- **ml_customer_behavior_segments**: Dynamic customer segmentation
-- **ml_route_optimization_features**: Route efficiency and optimization signals
-- **ml_predictive_maintenance_features**: Vehicle maintenance prediction
-- **ml_operational_performance_rolling**: Rolling operational KPIs
-- **ml_real_time_scoring**: Real-time model inference capabilities
+- **ml_feature_store**: Centralized feature repository with customer, vehicle, route, and shipment features
+- **ml_customer_behavior_rolling**: Rolling customer analytics with 7d/30d/90d windows
+- **ml_customer_behavior_segments**: Dynamic customer segmentation based on behavior patterns
+- **ml_predictive_maintenance_features**: Vehicle maintenance prediction with risk scoring
 
 ## Advanced Features
 
 ### 🔄 Real-time Processing
-- **Snowflake Streams**: Change data capture for real-time updates
-- **Automated Tasks**: Scheduled processing and alert generation
-- **Real-time KPIs**: Live dashboard metrics and operational alerts
+- **Snowflake Streams**: Change data capture on all fact tables (shipments, vehicle_telemetry, route_performance)
+- **Automated Tasks**: 4 scheduled tasks for real-time processing, vehicle monitoring, warehouse optimization, and audit cleanup
+- **Real-time KPIs**: Live dashboard metrics including on-time delivery rates, fuel efficiency, and revenue tracking
+- **Alert System**: Vehicle telemetry monitoring with severity-based alerts (engine overheating, low fuel, speeding)
+- **Task Management**: Comprehensive monitoring with health checks, performance metrics, and automated failure alerts
 
 ### 🔒 Security & Governance
-- **Role-Based Access Control**: Granular permissions by user type
-- **Data Masking**: PII protection with policy-based masking
-- **Row-Level Security**: Regional data access restrictions
-- **Data Classification**: Automated tagging and retention policies
+- **Comprehensive Audit Logging**: Account-level logging with 90-day retention and automated cleanup
+- **Data Classification**: Automated tagging system for data sensitivity levels (PUBLIC, INTERNAL, CONFIDENTIAL, RESTRICTED)
+- **Row-Level Security**: Customer and fleet-based access policies with granular permissions
+- **Data Masking**: PII protection for email, phone, and address data with policy-based masking
+- **Role-Based Access Control**: Multi-tier role hierarchy (ADMIN, ANALYST, SALES, OPERATIONS)
 
 ### 📊 Advanced Analytics
-- **Sustainability Metrics**: Carbon footprint tracking and ESG reporting
-- **AI Recommendations**: ML-powered route and operational optimization
-- **Predictive Maintenance**: Vehicle breakdown prediction and scheduling
-- **Executive Dashboards**: Real-time business performance monitoring
+- **Calculated Business Metrics**: Profit margins, route efficiency scores, capacity utilization, carbon emissions
+- **Rolling Analytics**: 7d/30d/90d rolling windows for customer behavior, route performance, and operational metrics
+- **Predictive Maintenance**: Vehicle breakdown prediction with risk scoring and maintenance urgency levels
+- **Performance Dashboards**: Real-time KPI tracking with on-time delivery rates, fuel efficiency, and cost analysis
+- **Sustainability Metrics**: Carbon footprint tracking with vehicle-type specific emission calculations
 
 ### 🚀 DevOps & Automation
-- **CI/CD Pipeline**: Automated testing, deployment, and rollback
-- **Multi-environment**: Dev/staging/prod with proper promotion workflows
-- **Infrastructure as Code**: Terraform-managed Snowflake resources
-- **Containerization**: Docker and Kubernetes deployment ready
+- **CI/CD Pipeline**: Multi-environment pipeline with automated testing, SQL linting, and deployment workflows
+- **Multi-environment Support**: Dev/staging/prod configurations with environment-specific materialization strategies
+- **Automated Testing**: 207+ dbt tests with business rules, data quality, and referential integrity validation
+- **Deployment Automation**: Scripts for environment configuration and dbt model deployment
+- **Monitoring & Alerting**: Automated notifications for deployment success/failure and data quality issues
 
 ## Setup Instructions
 
@@ -194,7 +252,6 @@ The platform implements a **star schema** design optimized for analytical querie
 - **Python 3.8+**: For data generation and dbt execution
 - **Git**: For version control
 - **dbt Core 1.6+**: Data transformation tool
-- **Docker** (optional): For containerized deployment
 
 ### Quick Start
 
@@ -206,11 +263,8 @@ The platform implements a **star schema** design optimized for analytical querie
 
 2. **Environment Setup**
    ```bash
-   # Copy environment template
-   cp .env.example .env.dev
-   
-   # Edit with your Snowflake credentials
-   vim .env.dev
+   # Configure environment
+   ./scripts/setup/configure_environment.sh dev
    
    # Install dependencies
    pip install -r requirements.txt
@@ -223,18 +277,33 @@ The platform implements a **star schema** design optimized for analytical querie
 
 4. **Snowflake Setup**
    ```sql
-   -- Run setup scripts in Snowflake
-   -- See snowflake/setup/ directory for DDL scripts
+   -- Run security setup first
+   @snowflake/security/audit_logging.sql
+   @snowflake/security/data_classification.sql
+   @snowflake/security/row_level_security.sql
+   
+   -- Run optimization setup
+   @snowflake/optimization/automated_tasks.sql
    ```
 
 5. **Deploy dbt Models**
    ```bash
+   # Deploy with incremental loading
+   ./scripts/deployment/deploy_dbt_models.sh
+   
+   # Or manually:
    cd dbt/
    dbt deps
    dbt build --target dev
    ```
 
-6. **Validate Deployment**
+6. **Deploy Real-time Processing**
+   ```sql
+   -- Deploy streams and tasks
+   @snowflake/streaming/deploy_streams_and_tasks.sql
+   ```
+
+7. **Validate Deployment**
    ```bash
    dbt test --target dev
    dbt docs generate
@@ -247,11 +316,23 @@ For production deployment using the automated CI/CD pipeline:
 
 ```bash
 # Deploy to staging
-./scripts/deployment/deploy_full_stack.sh staging incremental
+./scripts/setup/configure_environment.sh staging
+./scripts/deployment/deploy_dbt_models.sh
 
 # Deploy to production  
-./scripts/deployment/deploy_full_stack.sh prod incremental
+./scripts/setup/configure_environment.sh prod
+./scripts/deployment/deploy_dbt_models.sh
+
+# Deploy real-time processing
+snowsql -f snowflake/streaming/deploy_streams_and_tasks.sql
 ```
+
+**CI/CD Pipeline**: The GitHub Actions workflow automatically handles:
+- Multi-environment testing with dbt versions 1.6.0 and 1.7.0
+- SQL linting and code quality checks
+- Automated deployment to staging (develop branch) and production (main branch)
+- Automated notifications for deployment status
+- Artifact generation and documentation updates
 
 ## Business Impact & ROI
 
@@ -275,30 +356,71 @@ For production deployment using the automated CI/CD pipeline:
 ## Data Quality & Testing
 
 ### Comprehensive Testing Framework
-- **50+ dbt tests** covering business rules, data quality, and referential integrity
+- **207+ dbt tests** covering business rules, data quality, and referential integrity
 - **Automated monitoring** with real-time alerts and dashboards
 - **CI/CD validation** ensuring code quality and deployment safety
 - **Performance monitoring** with query optimization recommendations
 
+### Test Categories
+- **Business Rules (4 tests)**: Customer segmentation, KPI calculations, maintenance intervals, shipment status logic
+- **Data Quality (2 tests)**: Fuel efficiency reasonableness, route distance validation
+- **Referential Integrity (1 test)**: Foreign key constraint validation across all tables
+- **Schema Tests**: Not null, unique, accepted values, and range validations for all critical columns
+
 ### Business Rule Validation
-- Delivery time reasonableness checks
-- Vehicle capacity compliance
-- Cost calculation verification
-- Customer tier consistency
-- Route efficiency validation
-- Carbon emissions accuracy
+- Customer tier assignment consistency
+- Fuel efficiency reasonableness by vehicle type
+- Route distance positive validation
+- Foreign key relationship integrity
+- Delivery time and cost calculation accuracy
+- Carbon emissions calculation validation
 
 ## Monitoring & Alerting
 
 ### Real-time Monitoring
-- **Data freshness alerts** for critical tables
-- **Row count anomaly detection** with statistical thresholds  
-- **Business rule violations** with automatic notifications
-- **Performance monitoring** with optimization recommendations
-- **Cost tracking** with budget alerts
+- **Task Health Monitoring**: Automated monitoring of all Snowflake tasks with health status tracking
+- **Stream Processing Metrics**: Real-time stream processing efficiency and performance monitoring
+- **Data Quality Alerts**: Automated alerts for test failures and data quality issues
+- **Performance Monitoring**: Query optimization recommendations and warehouse usage tracking
+- **Cost Tracking**: Budget alerts and cost optimization recommendations
+
+### Alert System
+- **Vehicle Telemetry Alerts**: Engine overheating, low fuel, speeding violations
+- **Task Failure Alerts**: Automated notifications for failed tasks and system issues
+- **Data Quality Alerts**: Business rule violations and data freshness issues
+- **Deployment Alerts**: CI/CD pipeline success/failure notifications
 
 ### Notification Channels
-- Email summaries for daily/weekly reports
+- **Email Summaries**: Daily/weekly reports for data quality and performance metrics
+- **Dashboard Monitoring**: Real-time KPI dashboards with operational metrics
+
+## Real-time Processing Architecture
+
+### Stream Processing Pipeline
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Source Data   │───▶│   Snowflake     │───▶│   Real-time     │
+│   (Fact Tables) │    │   Streams       │    │   Processing    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │                        │
+                                ▼                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Change Data   │    │   Automated     │    │   Real-time     │
+│   Capture       │    │   Tasks         │    │   KPIs & Alerts │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+### Streams & Tasks
+- **3 Streams**: `shipments_stream`, `vehicle_telemetry_stream`, `route_performance_stream`
+- **4 Tasks**: Real-time KPI processing, vehicle monitoring, warehouse optimization, audit cleanup
+- **Real-time KPIs**: On-time delivery rates, fuel efficiency, revenue tracking
+- **Alert System**: Vehicle telemetry monitoring with severity-based notifications
+
+### Performance Features
+- **Incremental Loading**: All fact tables support incremental processing
+- **Task Monitoring**: Health checks, performance metrics, and automated failure alerts
+- **Stream Management**: Comprehensive monitoring and cleanup procedures
+- **Resource Optimization**: Environment-specific warehouse sizing and task scheduling
 
 ## Contributing
 
@@ -321,14 +443,37 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## Interview Preparation
+## Key Technical Achievements
 
 This project demonstrates proficiency in:
 
-- **Modern Data Stack**: Snowflake + dbt + Fivetran architecture
-- **Data Engineering**: ETL/ELT pipelines, data modeling, performance optimization
-- **Analytics Engineering**: dbt best practices, testing, documentation
-- **MLOps**: Feature stores, model deployment, monitoring
-- **DevOps**: CI/CD, automation, Infrastructure as Code
-- **Data Governance**: Security, compliance, data quality
-- **Business Acumen**: ROI quantification, stakeholder communication
+### 🏗️ **Modern Data Engineering**
+- **Snowflake + dbt + Fivetran**: Complete modern data stack implementation
+- **Incremental Loading**: Optimized fact table processing with proper unique keys and schema change handling
+- **Real-time Processing**: Stream processing with Snowflake Streams and Tasks
+- **Performance Optimization**: Environment-specific configurations and warehouse sizing
+
+### 🧪 **Data Quality & Testing**
+- **207+ dbt Tests**: Comprehensive testing framework with business rules, data quality, and referential integrity
+- **Automated Monitoring**: Real-time alerting and data quality validation
+- **CI/CD Integration**: Automated testing in deployment pipelines
+
+### 🔒 **Security & Governance**
+- **Enterprise Security**: Comprehensive audit logging, data classification, and row-level security
+- **Data Masking**: PII protection with policy-based masking
+- **Role-Based Access**: Multi-tier permission system
+
+### 🚀 **DevOps & Automation**
+- **CI/CD Pipeline**: Multi-environment deployment with automated testing and notifications
+- **Deployment Automation**: Environment-specific configurations and automated deployment
+- **Monitoring**: Task health monitoring and performance metrics
+
+### 📊 **Business Intelligence**
+- **Star Schema Design**: Optimized dimensional model for analytical queries
+- **Calculated Metrics**: Rich business KPIs including profit margins, efficiency scores, and carbon emissions
+- **Real-time Analytics**: Live dashboards with operational metrics and alerting
+
+### 🤖 **MLOps & Advanced Analytics**
+- **Feature Store**: Centralized ML feature repository with versioning
+- **Predictive Maintenance**: Vehicle breakdown prediction with risk scoring
+- **Rolling Analytics**: Time-series analysis with 7d/30d/90d windows

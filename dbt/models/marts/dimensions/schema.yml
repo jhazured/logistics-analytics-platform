@@ -313,3 +313,190 @@ models:
           - not_null
           - accepted_values:
               values: [true, false]
+
+  - name: dim_weather
+    description: |
+      Weather dimension containing weather conditions by location and time:
+      - Temperature, precipitation, and visibility data
+      - Weather impact scoring for logistics operations
+      - Historical weather patterns and trends
+      - Seasonal weather characteristics
+    columns:
+      - name: weather_id
+        description: "Unique identifier for each weather record"
+        tests:
+          - unique
+          - not_null
+      - name: location_id
+        description: "Location identifier for weather data"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_location')
+              field: location_id
+      - name: weather_date
+        description: "Date of weather observation"
+        tests:
+          - not_null
+      - name: temperature_f
+        description: "Temperature in Fahrenheit"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -50
+              max_value: 120
+      - name: precipitation_inches
+        description: "Precipitation in inches"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 20
+      - name: visibility_miles
+        description: "Visibility in miles"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50
+      - name: wind_speed_mph
+        description: "Wind speed in miles per hour"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: weather_condition
+        description: "Weather condition description"
+        tests:
+          - accepted_values:
+              values: ['CLEAR', 'CLOUDY', 'RAIN', 'SNOW', 'FOG', 'STORM']
+      - name: impact_score
+        description: "Weather impact score for logistics operations (0-100)"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+
+  - name: dim_traffic_conditions
+    description: |
+      Traffic conditions dimension containing traffic patterns and congestion data:
+      - Traffic volume and congestion levels
+      - Historical traffic patterns by time and route
+      - Delay factors and impact scoring
+      - Peak hours and traffic flow characteristics
+    columns:
+      - name: traffic_id
+        description: "Unique identifier for each traffic record"
+        tests:
+          - unique
+          - not_null
+      - name: route_id
+        description: "Route identifier for traffic data"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_route')
+              field: route_id
+      - name: traffic_date
+        description: "Date of traffic observation"
+        tests:
+          - not_null
+      - name: time_of_day
+        description: "Time period for traffic data"
+        tests:
+          - accepted_values:
+              values: ['MORNING_RUSH', 'MIDDAY', 'EVENING_RUSH', 'NIGHT']
+      - name: traffic_volume
+        description: "Traffic volume level (LOW, MEDIUM, HIGH, VERY_HIGH)"
+        tests:
+          - accepted_values:
+              values: ['LOW', 'MEDIUM', 'HIGH', 'VERY_HIGH']
+      - name: congestion_level
+        description: "Congestion level (0-100 scale)"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: average_speed_mph
+        description: "Average traffic speed in miles per hour"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 80
+      - name: delay_factor
+        description: "Delay factor multiplier (1.0 = no delay)"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1.0
+              max_value: 3.0
+      - name: is_peak_hours
+        description: "Flag indicating if this is peak traffic hours"
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+  - name: dim_vehicle_maintenance
+    description: |
+      Vehicle maintenance dimension containing maintenance schedules and history:
+      - Maintenance schedules and intervals
+      - Historical maintenance records
+      - Predictive maintenance indicators
+      - Maintenance cost and efficiency metrics
+    columns:
+      - name: maintenance_id
+        description: "Unique identifier for each maintenance record"
+        tests:
+          - unique
+          - not_null
+      - name: vehicle_id
+        description: "Vehicle identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_vehicle')
+              field: vehicle_id
+      - name: maintenance_type
+        description: "Type of maintenance performed"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ROUTINE', 'PREVENTIVE', 'CORRECTIVE', 'EMERGENCY', 'INSPECTION']
+      - name: maintenance_date
+        description: "Date when maintenance was performed"
+        tests:
+          - not_null
+      - name: maintenance_mileage
+        description: "Vehicle mileage at time of maintenance"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000000
+      - name: maintenance_cost_usd
+        description: "Cost of maintenance in USD"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: maintenance_duration_hours
+        description: "Duration of maintenance in hours"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0.5
+              max_value: 48
+      - name: next_maintenance_due_date
+        description: "Date when next maintenance is due"
+      - name: next_maintenance_due_mileage
+        description: "Mileage when next maintenance is due"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000000
+      - name: maintenance_status
+        description: "Current maintenance status"
+        tests:
+          - accepted_values:
+              values: ['COMPLETED', 'SCHEDULED', 'OVERDUE', 'IN_PROGRESS']
+      - name: risk_score
+        description: "Maintenance risk score (0-100)"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100

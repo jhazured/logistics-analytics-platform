@@ -181,7 +181,7 @@ jobs:
       - name: 🔧 Install dependencies
         run: |
           pip install --upgrade pip
-          pip install dbt-snowflake slack-sdk
+          pip install dbt-snowflake
 
       - name: 📋 Install dbt packages
         run: |
@@ -228,23 +228,6 @@ jobs:
           cd ${{ env.DBT_PROJECT_DIR }}
           dbt docs generate --target prod
 
-      - name: 📱 Notify Slack on success
-        if: success()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "✅ Production deployment successful!"
-          SLACK_TITLE: "dbt Production Deployment"
-          SLACK_COLOR: good
-
-      - name: 📱 Notify Slack on failure
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "❌ Production deployment failed!"
-          SLACK_TITLE: "dbt Production Deployment"
-          SLACK_COLOR: danger
 
   # Data Quality Monitoring
   data-quality-monitoring:
