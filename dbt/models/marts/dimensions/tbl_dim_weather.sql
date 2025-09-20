@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with weather_data as (
-    select * from {{ source('raw_logistics', 'weather') }}
+    select * from {{ source('raw_logistics', 'WEATHER') }}
 ),
 
 locations as (

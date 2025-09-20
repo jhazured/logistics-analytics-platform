@@ -3,13 +3,13 @@ with s as (
 ), d as (
   select date_key, date from {{ ref('tbl_dim_date') }}
 ), w as (
-  select date, city, weather_id, driving_impact_score from {{ ref('tbl_stg_weather_conditions') }}
+  select date, location_id, weather_id, weather_condition from {{ ref('tbl_raw_weather_data') }}
 ), t as (
-  select date, city, traffic_id, congestion_score from {{ ref('tbl_stg_traffic_conditions') }}
+  select date, location_id, traffic_id, traffic_level from {{ ref('tbl_raw_traffic_data') }}
 ), r as (
-  select r.route_id, r.origin_location_id, l.city
-  from {{ ref('tbl_stg_routes') }} r
-  left join {{ ref('tbl_dim_location') }} l on r.origin_location_id = l.location_id
+  select s.origin_location_id, s.destination_location_id, l.location_id
+  from {{ ref('tbl_raw_azure_shipments') }} s
+  left join {{ ref('tbl_dim_location') }} l on s.origin_location_id = l.location_id
 )
 select
   {{ dbt_utils.generate_surrogate_key(['s.route_id','d.date_key']) }} as condition_id,

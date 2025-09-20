@@ -70,14 +70,23 @@ models:
       relation: true
       columns: true
     
+    raw:
+      +materialized: incremental
+      +on_schema_change: "sync_all_columns"
+      dev:
+        +materialized: incremental  # Raw models should be tables for performance
+        +full_refresh: true
+    
     staging:
       +materialized: view
+      +schema: "STAGING"
       +on_schema_change: "sync_all_columns"
       dev:
         +materialized: view  # Use views for cost optimization
         
     marts:
       +materialized: table
+      +schema: "MARTS"
       +on_schema_change: "sync_all_columns"
       
       dimensions:

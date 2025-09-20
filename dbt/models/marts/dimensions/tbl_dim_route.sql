@@ -1,5 +1,5 @@
 with r as (
-  select * from {{ ref('tbl_stg_routes') }}
+  select * from {{ ref('tbl_raw_azure_shipments') }}
 )
 select
   route_id,

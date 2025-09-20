@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with traffic_data as (
-    select * from {{ source('raw_logistics', 'traffic') }}
+    select * from {{ source('raw_logistics', 'TRAFFIC') }}
 ),
 
 routes as (

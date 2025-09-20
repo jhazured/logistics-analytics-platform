@@ -5,7 +5,7 @@
 ) }}
 
 with s as (
-  select * from {{ ref('tbl_stg_shipments') }}
+  select * from {{ ref('tbl_raw_azure_shipments') }}
   {% if is_incremental() %}
     where shipment_date > (select coalesce(max(shipment_date), '1900-01-01') from {{ this }})
   {% endif %}

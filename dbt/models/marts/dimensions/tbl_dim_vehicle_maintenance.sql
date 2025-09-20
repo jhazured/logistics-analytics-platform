@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with maintenance_data as (
-    select * from {{ source('raw_logistics', 'maintenance') }}
+    select * from {{ source('raw_logistics', 'MAINTENANCE') }}
 ),
 
 vehicles as (

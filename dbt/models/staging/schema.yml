@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: raw_logistics
     description: "Raw logistics data from various source systems"
-    database: "{{ var('raw_database', 'LOGISTICS_DW_PROD') }}"
+    database: "{{ env_var('SF_DATABASE', var('raw_database', 'LOGISTICS_DW_DEV')) }}"
     schema: RAW
     freshness:
       warn_after: {count: 2, period: hour}
@@ -11,7 +11,7 @@ sources:
     loaded_at_field: _loaded_at
     
     tables:
-      - name: shipments
+      - name: SHIPMENTS
         description: "Raw shipment data from TMS system"
         columns:
           - name: shipment_id
@@ -24,7 +24,7 @@ sources:
             tests:
               - not_null
               - relationships:
-                  to: source('raw_logistics', 'customers')
+                  to: source('raw_logistics', 'CUSTOMERS')
                   field: customer_id
           - name: origin_location_id
             description: "Pickup location identifier"
@@ -62,7 +62,7 @@ sources:
               - accepted_values:
                   values: ['PENDING', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED', 'DELAYED']
       
-      - name: maintenance
+      - name: MAINTENANCE
         description: "Raw maintenance data from vehicle management system"
         columns:
           - name: maintenance_id
@@ -91,7 +91,7 @@ sources:
               - dbt_utils.accepted_range:
                   min_value: 0
       
-      - name: customers
+      - name: CUSTOMERS
         description: "Raw customer data from CRM system"
         columns:
           - name: customer_id
@@ -110,7 +110,7 @@ sources:
               - accepted_values:
                   values: ['BASIC', 'STANDARD', 'PREMIUM']
       
-      - name: vehicles
+      - name: VEHICLES
         description: "Raw vehicle data from fleet management system"
         columns:
           - name: vehicle_id
@@ -131,7 +131,7 @@ sources:
               - dbt_utils.accepted_range:
                   min_value: 0
       
-      - name: telematics
+      - name: TELEMATICS
         description: "Raw telematics data from vehicle sensors"
         columns:
           - name: telemetry_id
@@ -154,7 +154,7 @@ sources:
                   min_value: 0
                   max_value: 120
       
-      - name: traffic
+      - name: TRAFFIC
         description: "Raw traffic condition data from traffic APIs"
         columns:
           - name: traffic_id
@@ -177,7 +177,7 @@ sources:
               - accepted_values:
                   values: ['LOW', 'MODERATE', 'HIGH', 'SEVERE']
       
-      - name: weather
+      - name: WEATHER
         description: "Raw weather data from weather APIs"
         columns:
           - name: weather_id

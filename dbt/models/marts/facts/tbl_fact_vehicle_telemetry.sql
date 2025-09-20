@@ -1,7 +1,7 @@
 {{ config(materialized='incremental', unique_key='telemetry_id') }}
 
 with s as (
-  select * from {{ ref('tbl_stg_vehicle_telemetry') }}
+  select * from {{ ref('tbl_raw_telematics_data') }}
   {% if is_incremental() %}
     where timestamp > (select coalesce(max(timestamp), '1900-01-01') from {{ this }})
   {% endif %}

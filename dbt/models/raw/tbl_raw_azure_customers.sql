@@ -10,26 +10,26 @@
 ) }}
 
 SELECT 
-    customer_id,
-    customer_name,
-    customer_type,
-    industry_code,
-    credit_limit,
-    payment_terms,
-    customer_since,
-    status,
-    billing_address,
-    shipping_address,
-    contact_email,
-    contact_phone,
-    account_manager,
-    created_at,
-    updated_at,
-    _loaded_at
-FROM {{ source('raw_logistics', 'customers') }}
-WHERE status = 'ACTIVE'
+    "customer_id",
+    "customer_name",
+    "customer_type",
+    "industry_code",
+    "credit_limit",
+    "payment_terms",
+    "customer_since",
+    "status",
+    "billing_address",
+    "shipping_address",
+    "contact_email",
+    "contact_phone",
+    "account_manager",
+    "created_at",
+    "updated_at",
+    "_loaded_at"
+FROM {{ source('raw_logistics', 'CUSTOMERS') }}
+WHERE "status" = 'ACTIVE'
 
 {% if is_incremental() %}
     -- Only process records that are new or updated since last run
-    AND _loaded_at > (SELECT MAX(_loaded_at) FROM {{ this }})
+    AND "_loaded_at" > (SELECT MAX("_loaded_at") FROM {{ this }})
 {% endif %}
