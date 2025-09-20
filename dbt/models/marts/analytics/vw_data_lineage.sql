@@ -117,7 +117,7 @@ SELECT
     md.materialization,
     md.tags,
     COUNT(cl.column_name) as column_count,
-    STRING_AGG(cl.column_name, ', ') as columns
+    LISTAGG(cl.column_name, ', ') as columns
 FROM data_flow df
 LEFT JOIN model_dependencies md ON df.table_name = md.model_name
 LEFT JOIN column_lineage cl ON df.table_name = cl.table_name

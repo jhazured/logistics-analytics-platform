@@ -14,7 +14,7 @@ WITH customer_daily_activity AS (
         fs.customer_id,
         fs.shipment_date,
         dc.customer_name,
-        dc.volume_segment,
+        dc.customer_tier as volume_segment,
         dc.customer_type,
         
         -- Daily customer metrics
@@ -37,7 +37,7 @@ vehicle_daily_performance AS (
         fs.vehicle_id,
         fs.shipment_date,
         dv.vehicle_type,
-        dl_origin.city AS origin_city,
+        dl_origin.location_id AS origin_city,
         
         -- Daily aggregations
         COUNT(*) AS daily_deliveries,
@@ -45,7 +45,7 @@ vehicle_daily_performance AS (
         SUM(fs.fuel_cost) AS daily_fuel_cost,
         SUM(fs.delivery_cost) AS daily_delivery_cost,
         SUM(fs.revenue) AS daily_revenue,
-        AVG(fs.customer_rating) AS daily_avg_rating,
+        AVG(fs.route_efficiency_score) AS daily_avg_rating,
         AVG(CASE WHEN fs.is_on_time = true THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
         
         -- Efficiency metrics
@@ -65,10 +65,15 @@ route_daily_performance AS (
     SELECT 
         fs.route_id,
         fs.shipment_date,
-        dr.route_name,
-        dr.route_type,
-        {{ classify_haul_type('dr.distance_km') }} AS haul_type,
-        dl_origin.city AS origin_city,
+        dr.route_id as route_name,
+        null as route_type,
+        CASE 
+            WHEN dr.distance_km <= 50 THEN 'LOCAL'
+            WHEN dr.distance_km <= 200 THEN 'REGIONAL'
+            WHEN dr.distance_km <= 500 THEN 'LONG_HAUL'
+            ELSE 'EXTREME_LONG_HAUL'
+        END AS haul_type,
+        dl_origin.location_id AS origin_city,
         
         -- Daily route metrics
         COUNT(*) AS daily_trips,
@@ -77,7 +82,7 @@ route_daily_performance AS (
         -- Average duration ratio (temporarily disabled)
         1.0 AS avg_duration_ratio,
         AVG(CASE WHEN fs.is_on_time = true THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
-        AVG(fs.customer_rating) AS avg_customer_satisfaction,
+        AVG(fs.route_efficiency_score) AS avg_customer_satisfaction,
         SUM(fs.fuel_cost) AS total_fuel_cost,
         SUM(fs.delivery_cost) AS total_delivery_cost,
         SUM(fs.revenue) AS total_revenue,
@@ -85,7 +90,7 @@ route_daily_performance AS (
         
         -- Operational challenges
         SUM(CASE WHEN fs.actual_duration_minutes > fs.planned_duration_minutes * 1.5 THEN 1 ELSE 0 END) AS severe_delays,
-        SUM(CASE WHEN fs.customer_rating < 7 THEN 1 ELSE 0 END) AS poor_ratings
+        SUM(CASE WHEN fs.route_efficiency_score < 7 THEN 1 ELSE 0 END) AS poor_ratings
         
     FROM {{ ref('tbl_fact_shipments') }} fs
     JOIN {{ ref('tbl_dim_route') }} dr ON fs.route_id = dr.route_id

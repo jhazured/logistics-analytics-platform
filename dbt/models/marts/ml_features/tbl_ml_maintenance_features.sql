@@ -49,11 +49,11 @@ telemetry_aggregated AS (
 maintenance_with_intervals AS (
     SELECT 
         vehicle_id,
-        completed_date,
+        maintenance_date as completed_date,
         maintenance_type,
-        cost,
-        LAG(completed_date) OVER (PARTITION BY vehicle_id ORDER BY completed_date) AS previous_service_date,
-        {{ days_between('LAG(completed_date) OVER (PARTITION BY vehicle_id ORDER BY completed_date)', 'completed_date') }} AS days_between_service
+        maintenance_cost_usd as cost,
+        LAG(maintenance_date) OVER (PARTITION BY vehicle_id ORDER BY maintenance_date) AS previous_service_date,
+        DATEDIFF(day, LAG(maintenance_date) OVER (PARTITION BY vehicle_id ORDER BY maintenance_date), maintenance_date) AS days_between_service
     FROM maintenance_history
     WHERE completed_date IS NOT NULL
 ),

@@ -12,10 +12,10 @@ WITH source_freshness AS (
     SELECT 
         'fact_shipments' AS table_name,
         'shipments' AS data_source,
-        MAX(updated_at) AS latest_update,
+        MAX(shipment_date) AS latest_update,
         COUNT(*) AS total_records,
-        COUNT(CASE WHEN updated_at >= CURRENT_TIMESTAMP() - INTERVAL '{{ var("data_freshness_hours") }} hours' THEN 1 END) AS recent_updates,
-        DATEDIFF(minute, MAX(updated_at), CURRENT_TIMESTAMP()) AS minutes_since_update
+        COUNT(CASE WHEN shipment_date >= CURRENT_DATE() - INTERVAL '{{ var("data_freshness_hours", 24) }} hours' THEN 1 END) AS recent_updates,
+        DATEDIFF(minute, MAX(shipment_date), CURRENT_TIMESTAMP()) AS minutes_since_update
     FROM {{ ref('tbl_fact_shipments') }}
     
     UNION ALL
@@ -23,33 +23,44 @@ WITH source_freshness AS (
     SELECT 
         'fact_vehicle_telemetry' AS table_name,
         'vehicle_telematics' AS data_source,
-        MAX(created_at) AS latest_update,
+        MAX(timestamp) AS latest_update,
         COUNT(*) AS total_records,
-        COUNT(CASE WHEN created_at >= CURRENT_TIMESTAMP() - INTERVAL '{{ var("critical_freshness_hours") }} hours' THEN 1 END) AS recent_updates,
-        DATEDIFF(minute, MAX(created_at), CURRENT_TIMESTAMP()) AS minutes_since_update
+        COUNT(CASE WHEN timestamp >= CURRENT_TIMESTAMP() - INTERVAL '{{ var("critical_freshness_hours", 1) }} hours' THEN 1 END) AS recent_updates,
+        DATEDIFF(minute, MAX(timestamp), CURRENT_TIMESTAMP()) AS minutes_since_update
     FROM {{ ref('tbl_fact_vehicle_telemetry') }}
     
     UNION ALL
     
     SELECT 
-        'dim_weather' AS table_name,
-        'weather_api' AS data_source,
-        MAX(created_at) AS latest_update,
+        'fact_route_conditions' AS table_name,
+        'route_conditions' AS data_source,
+        MAX(to_date(cast(date_key as string), 'YYYYMMDD')) AS latest_update,
         COUNT(*) AS total_records,
-        COUNT(CASE WHEN created_at >= CURRENT_TIMESTAMP() - INTERVAL '{{ var("data_freshness_hours") }} hours' THEN 1 END) AS recent_updates,
-        DATEDIFF(minute, MAX(created_at), CURRENT_TIMESTAMP()) AS minutes_since_update
-    FROM {{ ref('tbl_dim_weather') }}
+        COUNT(CASE WHEN to_date(cast(date_key as string), 'YYYYMMDD') >= CURRENT_DATE() - INTERVAL '{{ var("data_freshness_hours", 24) }} hours' THEN 1 END) AS recent_updates,
+        DATEDIFF(minute, MAX(to_date(cast(date_key as string), 'YYYYMMDD')), CURRENT_TIMESTAMP()) AS minutes_since_update
+    FROM {{ ref('tbl_fact_route_conditions') }}
     
     UNION ALL
     
     SELECT 
-        'dim_customer' AS table_name,
-        'customer_system' AS data_source,
-        MAX(updated_at) AS latest_update,
+        'fact_route_performance' AS table_name,
+        'route_performance' AS data_source,
+        MAX(to_date(cast(date_key as string), 'YYYYMMDD')) AS latest_update,
         COUNT(*) AS total_records,
-        COUNT(CASE WHEN updated_at >= CURRENT_TIMESTAMP() - INTERVAL '24 hours' THEN 1 END) AS recent_updates,
-        DATEDIFF(minute, MAX(updated_at), CURRENT_TIMESTAMP()) AS minutes_since_update
-    FROM {{ ref('tbl_dim_customer') }}
+        COUNT(CASE WHEN to_date(cast(date_key as string), 'YYYYMMDD') >= CURRENT_DATE() - INTERVAL '{{ var("data_freshness_hours", 24) }} hours' THEN 1 END) AS recent_updates,
+        DATEDIFF(minute, MAX(to_date(cast(date_key as string), 'YYYYMMDD')), CURRENT_TIMESTAMP()) AS minutes_since_update
+    FROM {{ ref('tbl_fact_route_performance') }}
+    
+    UNION ALL
+    
+    SELECT 
+        'fact_vehicle_utilization' AS table_name,
+        'vehicle_utilization' AS data_source,
+        MAX(to_date(cast(date_key as string), 'YYYYMMDD')) AS latest_update,
+        COUNT(*) AS total_records,
+        COUNT(CASE WHEN to_date(cast(date_key as string), 'YYYYMMDD') >= CURRENT_DATE() - INTERVAL '{{ var("data_freshness_hours", 24) }} hours' THEN 1 END) AS recent_updates,
+        DATEDIFF(minute, MAX(to_date(cast(date_key as string), 'YYYYMMDD')), CURRENT_TIMESTAMP()) AS minutes_since_update
+    FROM {{ ref('tbl_fact_vehicle_utilization') }}
 ),
 
 sla_thresholds AS (

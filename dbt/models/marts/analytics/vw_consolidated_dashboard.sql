@@ -13,13 +13,13 @@ WITH daily_kpis AS (
     SELECT 
         fs.shipment_date,
         dd.day_of_week,
-        dd.season,
+        null as season,
         dd.is_weekend,
-        dl_origin.city AS origin_city,
-        dl_origin.state AS origin_state,
-        dc.volume_segment,
+        dl_origin.location_id AS origin_city,
+        null AS origin_state,
+        dc.customer_tier as volume_segment,
         dc.customer_type,
-        dr.route_type,
+        null as route_type,
         dv.vehicle_type,
         
         -- Volume metrics
@@ -34,15 +34,15 @@ WITH daily_kpis AS (
         
         -- Financial metrics
         SUM(fs.revenue) AS daily_revenue,
-        SUM(fs.total_cost) AS daily_total_cost,
-        SUM(fs.revenue - fs.total_cost) AS daily_profit,
+        SUM(fs.delivery_cost + fs.fuel_cost) AS daily_total_cost,
+        SUM(fs.revenue - fs.delivery_cost - fs.fuel_cost) AS daily_profit,
         AVG(fs.revenue) AS avg_revenue_per_delivery,
         
         -- Efficiency metrics
         SUM(fs.distance_km) AS daily_distance,
         AVG(fs.weight_kg / NULLIF(dv.capacity_kg, 1)) AS daily_capacity_utilization,
         SUM(fs.distance_km) / NULLIF(SUM(fs.actual_delivery_time_hours), 0) AS daily_avg_speed_kmh,
-        SUM(fs.total_cost) / NULLIF(SUM(fs.distance_km), 0) AS cost_per_km,
+        SUM(fs.delivery_cost + fs.fuel_cost) / NULLIF(SUM(fs.distance_km), 0) AS cost_per_km,
         
         -- Volume metrics
         SUM(fs.weight_kg) AS daily_weight_kg,

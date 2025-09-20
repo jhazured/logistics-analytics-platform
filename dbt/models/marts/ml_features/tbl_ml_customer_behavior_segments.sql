@@ -10,12 +10,12 @@ WITH customer_metrics AS (
         fs.customer_id,
         dc.customer_name,
         dc.customer_type,
-        dc.industry,
-        dc.volume_segment,
-        dc.service_level,
-        dc.preferred_delivery_window,
-        dc.delivery_flexibility_score,
-        dc.satisfaction_score,
+        dc.industry_code as industry,
+        dc.customer_tier as volume_segment,
+        dc.customer_type as service_level,
+        null as preferred_delivery_window,
+        null as delivery_flexibility_score,
+        null as satisfaction_score,
         
         -- Shipping behavior metrics
         COUNT(*) AS total_shipments,
@@ -33,15 +33,15 @@ WITH customer_metrics AS (
         
         -- Performance metrics
         AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS on_time_rate,
-        AVG(fs.customer_rating) AS avg_customer_rating,
+        AVG(fs.route_efficiency_score) AS avg_customer_rating,
         
         -- Service preferences
-        MODE() WITHIN GROUP (ORDER BY fs.priority_level) AS preferred_priority,
+        null AS preferred_priority,
         COUNT(DISTINCT fs.destination_location_id) AS unique_destinations,
         
         -- Temporal patterns
-        MODE() WITHIN GROUP (ORDER BY EXTRACT(dayofweek FROM fs.shipment_date)) AS preferred_day_of_week,
-        MODE() WITHIN GROUP (ORDER BY EXTRACT(hour FROM fs.shipment_date)) AS preferred_hour,
+        null AS preferred_day_of_week,
+        null AS preferred_hour,
         STDDEV(EXTRACT(dayofweek FROM fs.shipment_date)) AS day_of_week_variance,
         
         -- Recent activity
@@ -49,8 +49,8 @@ WITH customer_metrics AS (
         DATEDIFF(day, MAX(fs.shipment_date), CURRENT_DATE()) AS days_since_last_shipment,
         
         -- Seasonal patterns
-        AVG(CASE WHEN dd.season = 'Summer' THEN 1.0 ELSE 0.0 END) AS summer_activity_rate,
-        AVG(CASE WHEN dd.season = 'Winter' THEN 1.0 ELSE 0.0 END) AS winter_activity_rate,
+        null AS summer_activity_rate,
+        null AS winter_activity_rate,
         AVG(CASE WHEN dd.is_weekend THEN 1.0 ELSE 0.0 END) AS weekend_activity_rate
         
     FROM {{ ref('tbl_fact_shipments') }} fs

@@ -12,17 +12,17 @@
 WITH shipment_base AS (
     SELECT 
         fs.*,
-        dl_origin.city AS origin_city,
-        dl_dest.city AS destination_city,
-        dr.route_type,
-        dr.complexity_score,
-        dc.volume_segment,
-        dc.service_level,
+        dl_origin.location_id AS origin_city,
+        dl_dest.location_id AS destination_city,
+        null as route_type,
+        null as complexity_score,
+        dc.customer_tier as volume_segment,
+        dc.customer_type as service_level,
         dv.vehicle_type,
         dv.capacity_kg,
         dd.is_weekend,
-        dd.season,
-        dd.logistics_day_type
+        null as season,
+        null as logistics_day_type
     FROM {{ ref('tbl_fact_shipments') }} fs
     JOIN {{ ref('tbl_dim_location') }} dl_origin ON fs.origin_location_id = dl_origin.location_id
     JOIN {{ ref('tbl_dim_location') }} dl_dest ON fs.destination_location_id = dl_dest.location_id
@@ -36,8 +36,13 @@ WITH shipment_base AS (
 SELECT 
     shipment_id,
     shipment_date,
-    {{ classify_haul_type('distance_km') }} AS haul_type,
-    {{ classify_delivery_window('planned_delivery_date', 'actual_delivery_date') }} AS delivery_window,
+    CASE 
+        WHEN distance_km <= 50 THEN 'LOCAL'
+        WHEN distance_km <= 200 THEN 'REGIONAL'
+        WHEN distance_km <= 500 THEN 'LONG_HAUL'
+        ELSE 'EXTREME_LONG_HAUL'
+    END AS haul_type,
+    null AS delivery_window,
     
     -- Distance and time features
     distance_km,
@@ -64,9 +69,9 @@ SELECT
     priority_level,
     
     -- Vehicle features
-    vehicle_type,
-    capacity_kg,
-    weight_kg / NULLIF(capacity_kg, 0) AS capacity_utilization,
+    dv.vehicle_type,
+    dv.capacity_kg,
+    fs.weight_kg / NULLIF(dv.capacity_kg, 0) AS capacity_utilization,
     
     -- Temporal features
     EXTRACT(hour FROM shipment_date) AS hour_of_day,

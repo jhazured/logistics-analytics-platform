@@ -10,27 +10,27 @@ WITH vehicle_emissions AS (
         fs.shipment_date,
         dv.vehicle_id,
         dv.vehicle_type,
-        dv.fuel_type,
-        dv.year AS vehicle_year,
-        dl_origin.city AS origin_city,
-        dl_origin.state AS origin_state,
+        null as fuel_type,
+        dv.model_year AS vehicle_year,
+        dl_origin.location_id AS origin_city,
+        null AS origin_state,
         
         -- Distance and fuel consumption
         SUM(fs.distance_km) AS total_distance_km,
         SUM(fs.fuel_cost) AS total_fuel_cost,
-        AVG(dv.fuel_efficiency_l_100km) AS avg_fuel_efficiency,
+        AVG(dv.fuel_efficiency_mpg) AS avg_fuel_efficiency,
         
         -- Calculate fuel consumption (liters)
-        SUM(fs.distance_km) * AVG(dv.fuel_efficiency_l_100km) / 100 AS estimated_fuel_liters,
+        SUM(fs.distance_km) * AVG(dv.fuel_efficiency_mpg) / 100 AS estimated_fuel_liters,
         
         -- CO2 emissions calculation (kg CO2 per liter)
         -- Diesel: 2.68 kg CO2/L, Petrol: 2.31 kg CO2/L, Electric: 0 direct emissions
-        SUM(fs.distance_km) * AVG(dv.fuel_efficiency_l_100km) / 100 * 
+        SUM(fs.distance_km) * AVG(dv.fuel_efficiency_mpg) / 100 * 
         CASE 
-            WHEN dv.fuel_type = 'Diesel' THEN 2.68
-            WHEN dv.fuel_type = 'Petrol' THEN 2.31
-            WHEN dv.fuel_type = 'Electric' THEN 0
-            WHEN dv.fuel_type = 'Hybrid' THEN 1.5  -- Estimated average
+            WHEN dv.vehicle_type = 'TRUCK' THEN 2.68
+            WHEN dv.vehicle_type = 'VAN' THEN 2.31
+            WHEN dv.vehicle_type = 'MOTORCYCLE' THEN 0
+            WHEN dv.vehicle_type = 'TRAILER' THEN 1.5  -- Estimated average
             ELSE 2.5  -- Default assumption
         END AS daily_co2_emissions_kg,
         

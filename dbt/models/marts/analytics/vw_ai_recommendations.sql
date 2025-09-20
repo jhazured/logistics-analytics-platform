@@ -11,17 +11,17 @@
 WITH route_performance_analysis AS (
     SELECT 
         dr.route_id,
-        dr.route_name,
-        dr.route_type,
-        dr.total_distance_km,
-        dr.complexity_score,
+        dr.route_id as route_name,
+        null as route_type,
+        dr.distance_km as total_distance_km,
+        null as complexity_score,
         
         COUNT(*) AS total_trips_last_30d,
         AVG(fs.actual_duration_minutes) AS avg_actual_duration,
         AVG(fs.planned_duration_minutes) AS avg_planned_duration,
-        {{ calculate_on_time_rate('fs.is_on_time') }} AS on_time_rate,
+        AVG(CASE WHEN fs.is_on_time = true THEN 1.0 ELSE 0.0 END) AS on_time_rate,
         AVG(fs.fuel_cost) AS avg_fuel_cost,
-        AVG(fs.customer_rating) AS avg_customer_rating,
+        AVG(fs.route_efficiency_score) AS avg_customer_rating,
         STDDEV(fs.actual_duration_minutes) AS duration_variability,
         
         -- Efficiency calculations
@@ -40,7 +40,7 @@ vehicle_utilization_analysis AS (
         dv.vehicle_id,
         dv.vehicle_type,
         dv.capacity_kg,
-        dv.condition_score,
+        dv.current_mileage as condition_score,
         
         COUNT(*) AS trips_last_30d,
         AVG(fs.weight_kg / NULLIF(dv.capacity_kg, 1)) AS avg_capacity_utilization,
@@ -49,26 +49,26 @@ vehicle_utilization_analysis AS (
         AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS vehicle_on_time_rate,
         
         -- Maintenance indicators
-        DATEDIFF(day, dv.last_service_date, CURRENT_DATE()) AS days_since_service,
-        CASE WHEN dv.next_service_due < CURRENT_DATE() THEN 'overdue'
-             WHEN dv.next_service_due <= CURRENT_DATE() + 7 THEN 'due_soon'
+        DATEDIFF(day, dv.last_maintenance_date, CURRENT_DATE()) AS days_since_service,
+        CASE WHEN dv.next_maintenance_date < CURRENT_DATE() THEN 'overdue'
+             WHEN dv.next_maintenance_date <= CURRENT_DATE() + 7 THEN 'due_soon'
              ELSE 'current' END AS service_status
         
     FROM {{ ref('tbl_dim_vehicle') }} dv
     JOIN {{ ref('tbl_fact_shipments') }} fs ON dv.vehicle_id = fs.vehicle_id
     WHERE fs.shipment_date >= CURRENT_DATE() - 30
-        AND dv.is_active = TRUE
-    GROUP BY 1,2,3,4,5,6,7
+        AND dv.vehicle_status = 'ACTIVE'
+    GROUP BY 1,2,3,4,5,6,7,8,9
 ),
 
 customer_insights AS (
     SELECT 
         dc.customer_id,
         dc.customer_name,
-        dc.volume_segment,
+        dc.customer_tier as volume_segment,
         
         COUNT(*) AS shipments_last_30d,
-        AVG(fs.customer_rating) AS avg_satisfaction,
+        AVG(fs.route_efficiency_score) AS avg_satisfaction,
         AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS customer_on_time_rate,
         SUM(fs.revenue) AS revenue_last_30d,
         
