@@ -729,8 +729,8 @@ main() {
     print_success "Enjoy your new analytics platform! 🚀"
 }
 
-# Check if running individual phase
-if [ $# -eq 1 ]; then
+# Check if running individual phase (but not flags)
+if [ $# -eq 1 ] && [[ ! "$1" =~ ^-- ]]; then
     case "$1" in
         "1"|"env"|"environment")
             setup_environment
