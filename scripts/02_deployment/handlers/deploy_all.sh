@@ -83,11 +83,28 @@ execute_sql_script() {
     
     if [[ -f "$sql_file" ]]; then
         print_status "Executing: $description"
-        # Execute SQL script (implementation depends on your SQL execution method)
-        # snowsql -a "$SF_ACCOUNT" -u "$SF_USER" -p "$SF_PASSWORD" -f "$sql_file"
-        print_success "$description completed"
+        print_status "Using parameterized SQL execution with environment variables"
+        
+        # Use Python SQL executor for parameterized execution
+        cd "$PROJECT_ROOT/scripts/01_setup/handlers"
+        
+        # Export environment variables for the Python script
+        export SF_ACCOUNT SF_USER SF_PASSWORD SF_ROLE SF_WAREHOUSE SF_DATABASE SF_SCHEMA DBT_TARGET DBT_THREADS
+        
+        # Execute with parameterization support - pass absolute path
+        python3 execute_sql_python.py "$sql_file"
+        local exit_code=$?
+        
+        cd "$PROJECT_ROOT"
+        
+        if [[ $exit_code -eq 0 ]]; then
+            print_success "$description completed successfully"
+        else
+            print_error "$description failed with exit code $exit_code"
+        fi
     else
         print_warning "SQL script not found: $sql_file"
+        print_warning "Expected path: $sql_file"
     fi
 }
 
@@ -99,8 +116,20 @@ execute_python_script() {
     if [[ -f "$python_file" ]]; then
         print_status "Executing: $description"
         cd "$PROJECT_ROOT"
+        
+        # Export environment variables for the Python script
+        export SF_ACCOUNT SF_USER SF_PASSWORD SF_ROLE SF_WAREHOUSE SF_DATABASE SF_SCHEMA DBT_TARGET DBT_THREADS
+        
+        # Activate virtual environment and run Python script
+        source venv/bin/activate
         python "$python_file"
-        print_success "$description completed"
+        local exit_code=$?
+        
+        if [[ $exit_code -eq 0 ]]; then
+            print_success "$description completed successfully"
+        else
+            print_error "$description failed with exit code $exit_code"
+        fi
     else
         print_warning "Python script not found: $python_file"
     fi
@@ -171,18 +200,25 @@ setup_snowflake_infrastructure() {
     
     # Execute SQL setup scripts in order
     local sql_scripts=(
-        "../01_setup/tasks/01_database_setup.sql:Database creation"
-        "../01_setup/tasks/02_schema_creation.sql:Schema creation"
-        "../01_setup/tasks/03_warehouse_configuration.sql:Warehouse configuration"
-        "../01_setup/tasks/04_user_roles_permissions.sql:Roles and permissions"
-        "../01_setup/tasks/05_resource_monitors.sql:Resource monitors"
-        "tasks/01_complete_setup.sql:Complete unified setup (configurable via environment variables)"
-        "tasks/99_verify_setup.sql:Setup verification"
+        "scripts/01_setup/tasks/01_database_setup.sql:Database creation"
+        "scripts/01_setup/tasks/02_schema_creation.sql:Schema creation"
+        "scripts/01_setup/tasks/03_warehouse_configuration.sql:Warehouse configuration"
+        "scripts/01_setup/tasks/04_user_roles_permissions.sql:Roles and permissions"
+        "scripts/01_setup/tasks/05_resource_monitors.sql:Resource monitors"
+        "scripts/02_deployment/tasks/01_complete_setup.sql:Complete unified setup (configurable via environment variables)"
+        "scripts/02_deployment/tasks/99_verify_setup.sql:Setup verification"
     )
     
     for script_info in "${sql_scripts[@]}"; do
         IFS=':' read -r script description <<< "$script_info"
-        execute_sql_script "$SCRIPT_DIR/$script" "$description"
+        # Convert relative path to absolute path
+        local full_path
+        if [[ "$script" == /* ]]; then
+            full_path="$script"
+        else
+            full_path="$PROJECT_ROOT/$script"
+        fi
+        execute_sql_script "$full_path" "$description"
     done
     
     print_success "Snowflake infrastructure setup complete"
@@ -228,7 +264,8 @@ generate_sample_data() {
         fi
     fi
     
-    execute_python_script "data/generate_sample_data.py" "Sample data generation"
+    # Use the new sample data generator
+    execute_python_script "scripts/04_data_loading/handlers/sample_data_generator.py" "Sample data generation"
     print_success "Sample data generation complete"
 }
 
@@ -237,27 +274,10 @@ load_raw_data() {
     print_status "📥 Phase 4: Raw Data Loading"
     echo "============================="
     
-    # Check if data files exist and load them
-    local data_files=(
-        "data/logistics_sample_data/raw_azure_customers.csv"
-        "data/logistics_sample_data/raw_azure_shipments.csv"
-        "data/logistics_sample_data/raw_azure_vehicles.csv"
-        "data/logistics_sample_data/raw_azure_maintenance.csv"
-        "data/logistics_sample_data/raw_weather_data.csv"
-        "data/logistics_sample_data/raw_traffic_data.csv"
-        "data/logistics_sample_data/raw_telematics_data.csv"
-    )
-    
-    for file in "${data_files[@]}"; do
-        if [[ -f "$PROJECT_ROOT/$file" ]]; then
-            print_status "Loading: $file"
-            # Load data file (implementation depends on your data loading method)
-        else
-            print_warning "Data file not found: $file"
-        fi
-    done
-    
-    print_success "Raw data loading complete"
+    # The sample data generator now handles both generation and loading
+    # So this phase is now handled by the sample data generator
+    print_status "Data loading is handled by the sample data generator"
+    print_success "Raw data loading complete (handled by sample data generator)"
 }
 
 # Function to analyze dbt errors and provide specific solutions

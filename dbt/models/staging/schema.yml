@@ -42,7 +42,7 @@ sources:
             description: "Customer requested delivery date"
           - name: actual_delivery_date
             description: "Actual delivery completion date"
-          - name: shipment_value_usd
+          - name: shipment_value
             description: "Total value of shipment in USD"
             tests:
               - not_null
@@ -56,7 +56,7 @@ sources:
               - dbt_utils.accepted_range:
                   min_value: 0
                   max_value: 80000
-          - name: status
+          - name: shipment_status
             description: "Current status of the shipment"
             tests:
               - accepted_values:
@@ -84,7 +84,7 @@ sources:
               - not_null
               - accepted_values:
                   values: ['ROUTINE', 'REPAIR', 'INSPECTION', 'EMERGENCY']
-          - name: cost_usd
+          - name: total_cost
             description: "Cost of maintenance in USD"
             tests:
               - not_null
@@ -103,8 +103,8 @@ sources:
             description: "Customer company name"
             tests:
               - not_null
-          - name: customer_tier
-            description: "Customer tier level"
+          - name: customer_type
+            description: "Customer type level"
             tests:
               - not_null
               - accepted_values:
@@ -123,7 +123,7 @@ sources:
             tests:
               - not_null
               - accepted_values:
-                  values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'CAR']
+                  values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'TRAILER']
           - name: capacity_lbs
             description: "Vehicle capacity in pounds"
             tests:
@@ -166,8 +166,8 @@ sources:
             description: "Location identifier"
             tests:
               - not_null
-          - name: timestamp
-            description: "Timestamp of traffic reading"
+          - name: date
+            description: "Date of traffic reading"
             tests:
               - not_null
           - name: traffic_level
@@ -189,8 +189,8 @@ sources:
             description: "Location identifier"
             tests:
               - not_null
-          - name: timestamp
-            description: "Timestamp of weather reading"
+          - name: date
+            description: "Date of weather reading"
             tests:
               - not_null
           - name: temperature_f
@@ -199,8 +199,8 @@ sources:
               - dbt_utils.accepted_range:
                   min_value: -50
                   max_value: 150
-          - name: precipitation_inches
-            description: "Precipitation in inches"
+          - name: precipitation_mm
+            description: "Precipitation in millimeters"
             tests:
               - dbt_utils.accepted_range:
                   min_value: 0
@@ -228,23 +228,23 @@ models:
           - dbt_utils.accepted_range:
               min_value: "'2020-01-01'"
               max_value: "current_date()"
-      - name: delivery_time_hours
-        description: "Calculated delivery time in hours"
+      - name: actual_duration_minutes
+        description: "Calculated delivery time in minutes"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 720  # 30 days max
-      - name: on_time_delivery
-        description: "Boolean flag indicating if delivery was on time"
+              max_value: 43200  # 30 days max in minutes
+      - name: delivery_status
+        description: "Delivery status of the shipment"
         tests:
           - not_null
           - accepted_values:
-              values: [true, false]
-      - name: distance_miles
-        description: "Calculated distance between origin and destination"
+              values: ['PENDING', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED', 'DELAYED']
+      - name: distance_km
+        description: "Calculated distance between origin and destination in km"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 5000
+              max_value: 8000

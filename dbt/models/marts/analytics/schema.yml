@@ -91,39 +91,153 @@ models:
       owner: "sustainability-team"
       compliance: ["ESG_REPORTING", "CARBON_ACCOUNTING"]
     columns:
-      - name: metric_date
+      - name: shipment_date
         description: "Date for sustainability metrics"
         tests:
           - not_null
-      - name: total_carbon_emissions_kg
-        description: "Total carbon emissions in kg CO2"
+      - name: origin_city
+        description: "Origin city for the metrics"
+        tests:
+          - not_null
+      - name: origin_state
+        description: "Origin state for the metrics"
+        tests:
+          - not_null
+      - name: active_vehicles
+        description: "Number of active vehicles"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-      - name: carbon_per_mile_kg
-        description: "Carbon emissions per mile traveled"
+      - name: electric_vehicles
+        description: "Number of electric vehicles"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 2
-      - name: fuel_efficiency_mpg
-        description: "Fleet average fuel efficiency"
+      - name: hybrid_vehicles
+        description: "Number of hybrid vehicles"
         tests:
-          - dbt_utils.accepted_range:
-              min_value: 3
-              max_value: 20
-      - name: route_optimization_savings_usd
-        description: "Cost savings from route optimization"
-        tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-      - name: green_delivery_percentage
-        description: "Percentage of deliveries using eco-friendly vehicles"
+      - name: traditional_vehicles
+        description: "Number of traditional vehicles"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: electric_vehicle_percentage
+        description: "Percentage of electric vehicles"
         tests:
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100
+      - name: eco_friendly_percentage
+        description: "Percentage of eco-friendly vehicles"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: total_distance_km
+        description: "Total distance traveled in kilometers"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: fuel_consumption_liters
+        description: "Total fuel consumption in liters"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: co2_emissions_kg
+        description: "Total CO2 emissions in kilograms"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: co2_emissions_tonnes
+        description: "Total CO2 emissions in tonnes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: total_deliveries
+        description: "Total number of deliveries"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_fuel_efficiency_l_per_100km
+        description: "Average fuel efficiency in liters per 100km"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50
+      - name: co2_grams_per_km
+        description: "CO2 emissions in grams per kilometer"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000
+      - name: co2_kg_per_delivery
+        description: "CO2 emissions in kg per delivery"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: avg_vehicle_age_years
+        description: "Average vehicle age in years"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 30
+      - name: modern_vehicles
+        description: "Number of modern vehicles"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: older_vehicles
+        description: "Number of older vehicles"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: modern_fleet_percentage
+        description: "Percentage of modern fleet"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: sustainability_score
+        description: "Overall sustainability score"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: electrification_maturity
+        description: "Electrification maturity level"
+        tests:
+          - accepted_values:
+              values: ['LOW', 'MEDIUM', 'HIGH', 'ADVANCED']
+      - name: co2_emissions_same_date_last_year
+        description: "CO2 emissions same date last year"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: co2_yoy_change_percent
+        description: "Year-over-year CO2 change percentage"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -100
+              max_value: 1000
+      - name: carbon_target_status
+        description: "Carbon target status"
+        tests:
+          - accepted_values:
+              values: ['ON_TRACK', 'BEHIND', 'EXCEEDED', 'NOT_SET']
 
   - name: vw_data_lineage
     description: |
@@ -209,3 +323,140 @@ models:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+
+  - name: vw_data_freshness_monitoring
+    description: |
+      Data freshness monitoring for all data sources and models:
+      - Last update timestamps
+      - Data age calculations
+      - Freshness alerts and warnings
+    meta:
+      owner: "data-engineering"
+      refresh_frequency: "hourly"
+    columns:
+      - name: table_name
+        description: "Name of the table or model"
+        tests:
+          - not_null
+      - name: data_source
+        description: "Data source system"
+        tests:
+          - not_null
+      - name: latest_update
+        description: "Latest update timestamp"
+        tests:
+          - not_null
+      - name: total_records
+        description: "Total number of records"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: recent_updates
+        description: "Number of recent updates"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: minutes_since_update
+        description: "Minutes since last update"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: sla_minutes
+        description: "SLA threshold in minutes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: freshness_status
+        description: "Freshness status"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['FRESH', 'STALE', 'CRITICAL', 'WARNING']
+      - name: sla_compliant
+        description: "SLA compliance flag"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: freshness_health_score
+        description: "Freshness health score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: alert_priority
+        description: "Alert priority level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH', 'MEDIUM', 'LOW', 'NONE']
+      - name: check_timestamp
+        description: "Timestamp when check was performed"
+        tests:
+          - not_null
+
+  - name: vw_ai_recommendations
+    description: |
+      AI-powered recommendations for logistics optimization:
+      - Route optimization suggestions
+      - Vehicle maintenance recommendations
+      - Cost reduction opportunities
+      - Performance improvement suggestions
+    meta:
+      owner: "ai-team"
+      refresh_frequency: "daily"
+    columns:
+      - name: recommendation_type
+        description: "Type of recommendation"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['route_optimization', 'maintenance', 'cost_reduction', 'performance', 'vehicle_assignment', 'customer_retention']
+      - name: entity_id
+        description: "Entity identifier"
+        tests:
+          - not_null
+      - name: entity_name
+        description: "Entity name"
+        tests:
+          - not_null
+      - name: priority_level
+        description: "Recommendation priority level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['high', 'medium', 'low']
+      - name: issue_description
+        description: "Description of the issue"
+        tests:
+          - not_null
+      - name: recommendation
+        description: "Recommendation details"
+        tests:
+          - not_null
+      - name: impact_hours_saved
+        description: "Impact in hours saved"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: estimated_cost_impact
+        description: "Estimated cost impact"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: confidence_score
+        description: "AI confidence score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: generated_at
+        description: "Timestamp when recommendation was generated"
+        tests:
+          - not_null

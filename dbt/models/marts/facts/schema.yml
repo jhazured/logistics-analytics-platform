@@ -23,77 +23,63 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_customer')
+              to: ref('tbl_dim_customer')
               field: customer_id
       - name: vehicle_id
         description: "Foreign key to vehicle dimension"
         tests:
           - relationships:
-              to: ref('dim_vehicle')  
+              to: ref('tbl_dim_vehicle')  
               field: vehicle_id
       - name: route_id
         description: "Foreign key to route dimension"
         tests:
           - relationships:
-              to: ref('dim_route')
+              to: ref('tbl_dim_route')
               field: route_id
       - name: date_key
         description: "Foreign key to date dimension for shipment date"
         tests:
           - not_null
           - relationships:
-              to: ref('dim_date')
+              to: ref('tbl_dim_date')
               field: date_key
-      - name: actual_distance_miles
-        description: "Actual distance traveled for shipment"
+      - name: distance_km
+        description: "Distance traveled for shipment in kilometers"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 5000
-      - name: planned_distance_miles  
-        description: "Originally planned distance for shipment"
+              max_value: 8000
+      - name: actual_duration_minutes
+        description: "Actual time taken for delivery in minutes"
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 5000
-      - name: actual_delivery_time_hours
-        description: "Actual time taken for delivery in hours"
+              min_value: 1
+              max_value: 43200
+      - name: planned_duration_minutes
+        description: "Originally planned delivery time in minutes"
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              min_value: 0.1
-              max_value: 720
-      - name: estimated_delivery_time_hours
-        description: "Originally estimated delivery time"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0.1
-              max_value: 720
-      - name: fuel_cost_usd
+              min_value: 1
+              max_value: 43200
+      - name: fuel_cost
         description: "Total fuel cost for the shipment"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 10000
-      - name: driver_cost_usd
-        description: "Driver labor cost for the shipment"
+      - name: delivery_cost
+        description: "Delivery cost for the shipment"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 5000
-      - name: total_cost_usd
-        description: "Total cost for the shipment"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 50000
-      - name: revenue_usd
+      - name: revenue
         description: "Revenue generated from the shipment"
         tests:
           - not_null
@@ -106,33 +92,21 @@ models:
           - dbt_utils.accepted_range:
               min_value: -100
               max_value: 100
-      - name: on_time_delivery_flag
-        description: "Boolean indicating if delivery was on time"
-        tests:
-          - not_null
-          - accepted_values:
-              values: [0, 1]
-      - name: route_efficiency_score
-        description: "Efficiency score for the route (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
       - name: carbon_emissions_kg
-        description: "Estimated carbon emissions in kg CO2"
+        description: "Carbon emissions in kilograms"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 1000
       - name: weather_delay_minutes
-        description: "Delay attributed to weather conditions"
+        description: "Weather-related delay in minutes"
         tests:
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 1440  # 24 hours max
-      - name: traffic_delay_minutes  
-        description: "Delay attributed to traffic conditions"
+              max_value: 1440
+      - name: traffic_delay_minutes
+        description: "Traffic-related delay in minutes"
         tests:
           - dbt_utils.accepted_range:
               min_value: 0
@@ -140,15 +114,10 @@ models:
 
   - name: tbl_fact_vehicle_telemetry
     description: |
-      Vehicle telemetry fact table containing IoT sensor data:
+      Vehicle telemetry fact table containing sensor data:
       - Real-time vehicle performance metrics
-      - Driver behavior indicators
-      - Maintenance alerts and diagnostics
-      - Fuel efficiency and emissions data
-    meta:
-      owner: "data-engineering"
-      contains_pii: false
-      update_frequency: "real-time"
+      - Engine and fuel consumption data
+      - Safety and efficiency indicators
     columns:
       - name: telemetry_id
         description: "Unique identifier for each telemetry record"
@@ -160,234 +129,109 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_vehicle')
+              to: ref('tbl_dim_vehicle')
               field: vehicle_id
       - name: timestamp
-        description: "Timestamp of telemetry data collection"
+        description: "Timestamp of telemetry reading"
         tests:
           - not_null
-      - name: latitude
-        description: "GPS latitude coordinate"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: -90
-              max_value: 90
-      - name: longitude
-        description: "GPS longitude coordinate"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: -180
-              max_value: 180
       - name: speed_kmh
         description: "Vehicle speed in kilometers per hour"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 200
       - name: fuel_level_percent
         description: "Fuel level percentage"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100
       - name: engine_rpm
         description: "Engine RPM"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 8000
       - name: engine_temp_c
         description: "Engine temperature in Celsius"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: -40
               max_value: 150
-      - name: odometer_km
-        description: "Odometer reading in kilometers"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 2000000
-      - name: fuel_consumption_lph
-        description: "Fuel consumption in liters per hour"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 200
-      - name: harsh_braking_events
-        description: "Number of harsh braking events"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: harsh_acceleration_events
-        description: "Number of harsh acceleration events"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: speeding_events
-        description: "Number of speeding events"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: idle_time_minutes
-        description: "Idle time in minutes"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1440
-      - name: diagnostic_codes
-        description: "Engine diagnostic codes"
-      - name: engine_health_score
-        description: "Engine health score (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: maintenance_alert
-        description: "Maintenance alert level"
-        tests:
-          - accepted_values:
-              values: ['INFO', 'WARNING', 'CRITICAL']
 
   - name: tbl_fact_route_performance
     description: |
-      Route performance fact table containing aggregated route metrics:
-      - Daily route performance summaries
-      - Time and cost efficiency metrics
+      Route performance fact table containing route analytics:
+      - Route efficiency and performance metrics
+      - Time and cost comparisons
       - Customer satisfaction scores
-      - Delay and reliability indicators
-    meta:
-      owner: "data-engineering"
-      contains_pii: false
-      update_frequency: "daily"
     columns:
-      - name: performance_id
-        description: "Unique identifier for each performance record"
-        tests:
-          - unique
-          - not_null
       - name: route_id
         description: "Foreign key to route dimension"
         tests:
           - not_null
           - relationships:
-              to: ref('dim_route')
+              to: ref('tbl_dim_route')
               field: route_id
       - name: date_key
         description: "Foreign key to date dimension"
         tests:
           - not_null
           - relationships:
-              to: ref('dim_date')
+              to: ref('tbl_dim_date')
               field: date_key
-      - name: vehicle_id
-        description: "Foreign key to vehicle dimension (nullable for aggregated data)"
-        tests:
-          - relationships:
-              to: ref('dim_vehicle')
-              field: vehicle_id
-      - name: planned_time_minutes
-        description: "Planned travel time in minutes"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 2880
       - name: actual_time_minutes
         description: "Actual travel time in minutes"
         tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 2880
+      - name: planned_time_minutes
+        description: "Planned travel time in minutes"
+        tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 2880
       - name: time_variance_minutes
-        description: "Variance between actual and planned time"
+        description: "Time variance in minutes"
         tests:
           - dbt_utils.accepted_range:
               min_value: -1440
               max_value: 1440
-      - name: planned_fuel_cost
-        description: "Planned fuel cost"
+      - name: traffic_delays_minutes
+        description: "Traffic delays in minutes"
         tests:
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 10000
-      - name: actual_fuel_cost
-        description: "Actual fuel cost"
+              max_value: 1440
+      - name: weather_delays_minutes
+        description: "Weather delays in minutes"
         tests:
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 10000
-      - name: fuel_variance
-        description: "Variance between actual and planned fuel cost"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: -5000
-              max_value: 5000
-      - name: on_time_deliveries
-        description: "Number of on-time deliveries"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1000
-      - name: total_deliveries
-        description: "Total number of deliveries"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1000
-      - name: on_time_percentage
-        description: "Percentage of on-time deliveries"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
+              max_value: 1440
       - name: customer_satisfaction_avg
-        description: "Average customer satisfaction rating"
+        description: "Average customer satisfaction score"
         tests:
           - dbt_utils.accepted_range:
               min_value: 1
               max_value: 5
-      - name: weather_delays_minutes
-        description: "Total weather delays in minutes"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1440
-      - name: traffic_delays_minutes
-        description: "Total traffic delays in minutes"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1440
-      - name: mechanical_delays_minutes
-        description: "Total mechanical delays in minutes"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1440
-      - name: performance_score
-        description: "Overall performance score (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
 
   - name: tbl_fact_route_conditions
     description: |
-      Route conditions fact table containing route performance data with weather and traffic impacts:
-      - Weather impact on route performance
-      - Traffic condition effects on delivery times
-      - Route reliability metrics
-      - Environmental factor analysis
-    meta:
-      owner: "data-engineering"
-      contains_pii: false
-      update_frequency: "daily"
+      Route conditions fact table containing environmental data:
+      - Weather and traffic conditions
+      - Impact scores and adjustments
     columns:
       - name: condition_id
-        description: "Unique identifier for each route condition record"
+        description: "Unique identifier for each condition record"
         tests:
           - unique
           - not_null
@@ -396,77 +240,21 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_route')
+              to: ref('tbl_dim_route')
               field: route_id
-      - name: condition_date
-        description: "Date of route condition observation"
+      - name: date_key
+        description: "Foreign key to date dimension"
         tests:
           - not_null
-      - name: weather_id
-        description: "Foreign key to weather dimension"
-        tests:
           - relationships:
-              to: ref('dim_weather')
-              field: weather_id
-      - name: traffic_id
-        description: "Foreign key to traffic conditions dimension"
-        tests:
-          - relationships:
-              to: ref('dim_traffic_conditions')
-              field: traffic_id
-      - name: temperature_impact_score
-        description: "Temperature impact on route performance (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: precipitation_impact_score
-        description: "Precipitation impact on route performance (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: visibility_impact_score
-        description: "Visibility impact on route performance (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: traffic_impact_score
-        description: "Traffic impact on route performance (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: overall_condition_score
-        description: "Overall route condition score (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: delay_minutes
-        description: "Total delay in minutes due to conditions"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1440
-      - name: safety_risk_level
-        description: "Safety risk level assessment"
-        tests:
-          - accepted_values:
-              values: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
+              to: ref('tbl_dim_date')
+              field: date_key
 
   - name: tbl_fact_vehicle_utilization
     description: |
-      Vehicle utilization fact table containing vehicle usage, efficiency, and capacity utilization metrics:
-      - Vehicle capacity utilization rates
-      - Fuel efficiency tracking
-      - Driver performance metrics
-      - Maintenance scheduling optimization
-    meta:
-      owner: "data-engineering"
-      contains_pii: false
-      update_frequency: "daily"
+      Vehicle utilization fact table containing fleet analytics:
+      - Vehicle usage and efficiency metrics
+      - Cost and performance indicators
     columns:
       - name: utilization_id
         description: "Unique identifier for each utilization record"
@@ -478,69 +266,68 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_vehicle')
+              to: ref('tbl_dim_vehicle')
               field: vehicle_id
-      - name: utilization_date
-        description: "Date of utilization metrics"
+      - name: date_key
+        description: "Foreign key to date dimension"
         tests:
           - not_null
+          - relationships:
+              to: ref('tbl_dim_date')
+              field: date_key
       - name: total_distance_km
         description: "Total distance traveled in kilometers"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 2000
-      - name: total_hours_operating
-        description: "Total hours vehicle was in operation"
+      - name: total_runtime_hours
+        description: "Total runtime in hours"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 24
-      - name: capacity_utilization_pct
-        description: "Percentage of vehicle capacity utilized"
+      - name: capacity_utilized_percent
+        description: "Capacity utilization percentage"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100
-      - name: fuel_efficiency_actual_mpg
-        description: "Actual fuel efficiency achieved in MPG"
+      - name: fuel_consumed_liters
+        description: "Fuel consumed in liters"
         tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: fuel_efficiency_variance_pct
-        description: "Variance from expected fuel efficiency"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: -50
-              max_value: 50
-      - name: idle_time_pct
-        description: "Percentage of time vehicle was idle"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: driver_efficiency_score
-        description: "Driver efficiency score (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: maintenance_urgency_score
-        description: "Maintenance urgency score (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: carbon_emissions_kg
-        description: "Total carbon emissions in kg CO2"
-        tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 1000
-      - name: cost_per_mile_usd
-        description: "Cost per mile in USD"
+      - name: utilization_score
+        description: "Overall utilization score"
         tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: efficiency_score
+        description: "Efficiency score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: cost_per_km
+        description: "Cost per kilometer"
+        tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 10
+      - name: revenue_per_km
+        description: "Revenue per kilometer"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 20

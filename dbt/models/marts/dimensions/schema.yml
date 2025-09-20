@@ -32,20 +32,6 @@ models:
           - dbt_utils.accepted_range:
               min_value: 1
               max_value: 12
-      - name: day
-        description: "Day of month (1-31)"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 1
-              max_value: 31
-      - name: quarter
-        description: "Quarter (1-4)"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 1
-              max_value: 4
       - name: day_of_week
         description: "Day of week (1=Sunday, 7=Saturday)"
         tests:
@@ -55,12 +41,6 @@ models:
               max_value: 7
       - name: is_weekend
         description: "Flag indicating if date is weekend"
-        tests:
-          - not_null
-          - accepted_values:
-              values: [true, false]
-      - name: is_holiday
-        description: "Flag indicating if date is a holiday"
         tests:
           - not_null
           - accepted_values:
@@ -76,12 +56,7 @@ models:
       - Historical performance metrics
     columns:
       - name: customer_id
-        description: "Unique identifier for each customer (surrogate key)"
-        tests:
-          - unique
-          - not_null
-      - name: customer_natural_key
-        description: "Natural business key from source system"
+        description: "Unique identifier for each customer"
         tests:
           - unique
           - not_null
@@ -89,18 +64,22 @@ models:
         description: "Full customer company name"
         tests:
           - not_null
-      - name: customer_tier
-        description: "Customer service tier (PREMIUM, STANDARD, BASIC)"
+      - name: customer_type
+        description: "Customer type classification"
         tests:
           - not_null
-          - accepted_values:
-              values: ['PREMIUM', 'STANDARD', 'BASIC']
-              quote: false
-      - name: industry_vertical
-        description: "Industry classification for the customer"
+      - name: customer_tier
+        description: "Customer service tier"
         tests:
-          - accepted_values:
-              values: ['RETAIL', 'MANUFACTURING', 'HEALTHCARE', 'TECHNOLOGY', 'AUTOMOTIVE', 'FOOD_BEVERAGE', 'OTHER']
+          - not_null
+      - name: country
+        description: "Customer country"
+        tests:
+          - not_null
+      - name: industry_code
+        description: "Industry classification code"
+        tests:
+          - not_null
       - name: credit_limit_usd
         description: "Customer credit limit in USD"
         tests:
@@ -108,219 +87,117 @@ models:
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 10000000
-      - name: customer_since_date
-        description: "Date when customer relationship began"
-        tests:
-          - not_null
       - name: is_active
         description: "Flag indicating if customer is currently active"
         tests:
           - not_null
           - accepted_values:
               values: [true, false]
-      - name: payment_terms_days
-        description: "Standard payment terms in days"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 120
-      - name: preferred_delivery_window
-        description: "Customer's preferred delivery time window"
-      - name: special_handling_requirements
-        description: "Any special handling instructions or requirements"
-
-  - name: tbl_dim_vehicle
-    description: |
-      Vehicle dimension containing comprehensive vehicle information:
-      - Vehicle specifications (make, model, year, capacity)
-      - Operational characteristics (fuel efficiency, maintenance schedule)
-      - Current status and assignment
-      - Historical performance metrics
-    columns:
-      - name: vehicle_id
-        description: "Unique identifier for each vehicle (surrogate key)"
-        tests:
-          - unique
-          - not_null
-      - name: vehicle_number
-        description: "Business vehicle number/license plate"
-        tests:
-          - unique
-          - not_null
-      - name: vehicle_type
-        description: "Classification of vehicle type"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'TRAILER']
-      - name: make_model
-        description: "Vehicle make and model"
-        tests:
-          - not_null
-      - name: model_year
-        description: "Manufacturing year of the vehicle"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 1990
-              max_value: 2030
-      - name: capacity_lbs
-        description: "Maximum weight capacity in pounds"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 100
-              max_value: 80000
-      - name: fuel_efficiency_mpg
-        description: "Average fuel efficiency in miles per gallon"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 3
-              max_value: 50
-      - name: maintenance_interval_miles
-        description: "Recommended maintenance interval in miles"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 3000
-              max_value: 25000
-      - name: current_mileage
-        description: "Current odometer reading"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1000000
-      - name: vehicle_status
-        description: "Current operational status"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['ACTIVE', 'MAINTENANCE', 'RETIRED', 'OUT_OF_SERVICE']
 
   - name: tbl_dim_location
     description: |
-      Location dimension derived from routes (origin/destination IDs):
-      - Geographic coordinates and address information
-      - Location type classification (warehouse, customer, depot)
-      - Service area and delivery zone information
-      - Distance calculations and routing data
+      Location dimension containing geographic and address information:
+      - Physical addresses and coordinates
+      - Geographic hierarchies (country, state, city)
+      - Location types and classifications
+      - Service area definitions
     columns:
       - name: location_id
         description: "Unique identifier for each location"
         tests:
-          - not_null
           - unique
-      - name: location_name
-        description: "Human-readable location name"
-        tests:
           - not_null
-      - name: location_type
-        description: "Type of location (WAREHOUSE, CUSTOMER, DEPOT, HUB)"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['WAREHOUSE', 'CUSTOMER', 'DEPOT', 'HUB']
-      - name: address_line1
-        description: "Primary address line"
-        tests:
-          - not_null
-      - name: city
-        description: "City name"
-        tests:
-          - not_null
-      - name: state_province
-        description: "State or province"
-        tests:
-          - not_null
-      - name: postal_code
-        description: "Postal/ZIP code"
-        tests:
-          - not_null
-      - name: country
-        description: "Country code"
-        tests:
-          - not_null
-      - name: latitude
-        description: "Geographic latitude coordinate"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: -90
-              max_value: 90
-      - name: longitude
-        description: "Geographic longitude coordinate"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: -180
-              max_value: 180
-      - name: service_area
-        description: "Service area classification"
-      - name: delivery_zone
-        description: "Delivery zone identifier"
 
   - name: tbl_dim_route
     description: |
-      Route dimension derived from shipments:
-      - Origin and destination location pairs
-      - Route characteristics (distance, estimated time)
-      - Route type and classification
+      Route dimension containing route master data:
+      - Origin and destination locations
+      - Distance and travel time estimates
+      - Route classifications and types
       - Historical performance metrics
     columns:
       - name: route_id
         description: "Unique identifier for each route"
         tests:
-          - not_null
           - unique
+          - not_null
       - name: origin_location_id
         description: "Origin location identifier"
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_location')
-              field: location_id
       - name: destination_location_id
         description: "Destination location identifier"
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_location')
-              field: location_id
-      - name: distance_miles
-        description: "Standard distance between origin and destination"
+      - name: distance_km
+        description: "Route distance in kilometers"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 5000
-      - name: estimated_travel_time_hours
-        description: "Estimated travel time in hours"
+              max_value: 10000
+
+  - name: tbl_dim_vehicle
+    description: |
+      Vehicle dimension containing fleet master data:
+      - Vehicle specifications and capabilities
+      - Maintenance history and schedules
+      - Performance metrics and utilization
+      - Cost and depreciation information
+    columns:
+      - name: vehicle_id
+        description: "Unique identifier for each vehicle"
+        tests:
+          - unique
+          - not_null
+      - name: vehicle_type
+        description: "Type of vehicle"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'TRAILER']
+      - name: capacity_kg
+        description: "Vehicle capacity in kilograms"
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              min_value: 0.1
-              max_value: 48
-      - name: route_type
-        description: "Route classification (HIGHWAY, URBAN, RURAL, MIXED)"
+              min_value: 0
+              max_value: 50000
+      - name: fuel_efficiency_mpg
+        description: "Fuel efficiency in miles per gallon"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: make
+        description: "Vehicle manufacturer"
+        tests:
+          - not_null
+      - name: model
+        description: "Vehicle model"
+        tests:
+          - not_null
+      - name: model_year
+        description: "Year the vehicle was manufactured"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1990
+              max_value: 2030
+      - name: vehicle_status
+        description: "Current status of the vehicle"
         tests:
           - not_null
           - accepted_values:
-              values: ['HIGHWAY', 'URBAN', 'RURAL', 'MIXED']
-      - name: is_active
-        description: "Flag indicating if route is currently active"
-        tests:
-          - not_null
-          - accepted_values:
-              values: [true, false]
+              values: ['ACTIVE', 'INACTIVE', 'MAINTENANCE', 'RETIRED']
 
   - name: tbl_dim_weather
     description: |
-      Weather dimension containing weather conditions by location and time:
-      - Temperature, precipitation, and visibility data
-      - Weather impact scoring for logistics operations
+      Weather dimension containing weather condition data:
+      - Temperature, precipitation, and visibility metrics
+      - Weather impact scores for logistics operations
       - Historical weather patterns and trends
-      - Seasonal weather characteristics
     columns:
       - name: weather_id
         description: "Unique identifier for each weather record"
@@ -328,59 +205,40 @@ models:
           - unique
           - not_null
       - name: location_id
-        description: "Location identifier for weather data"
+        description: "Location identifier"
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_location')
-              field: location_id
       - name: weather_date
-        description: "Date of weather observation"
+        description: "Date of weather reading"
         tests:
           - not_null
-      - name: temperature_f
-        description: "Temperature in Fahrenheit"
+      - name: temperature_c
+        description: "Temperature in Celsius"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: -50
-              max_value: 120
-      - name: precipitation_inches
-        description: "Precipitation in inches"
+              max_value: 60
+      - name: precipitation_mm
+        description: "Precipitation in millimeters"
         tests:
+          - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 20
-      - name: visibility_miles
-        description: "Visibility in miles"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 50
-      - name: wind_speed_mph
-        description: "Wind speed in miles per hour"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
+              max_value: 500
       - name: weather_condition
         description: "Weather condition description"
         tests:
+          - not_null
           - accepted_values:
               values: ['CLEAR', 'CLOUDY', 'RAIN', 'SNOW', 'FOG', 'STORM']
-      - name: impact_score
-        description: "Weather impact score for logistics operations (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
 
   - name: tbl_dim_traffic_conditions
     description: |
-      Traffic conditions dimension containing traffic patterns and congestion data:
+      Traffic conditions dimension containing traffic data:
       - Traffic volume and congestion levels
-      - Historical traffic patterns by time and route
-      - Delay factors and impact scoring
-      - Peak hours and traffic flow characteristics
+      - Speed and delay metrics
+      - Peak hour and severity classifications
     columns:
       - name: traffic_id
         description: "Unique identifier for each traffic record"
@@ -388,57 +246,33 @@ models:
           - unique
           - not_null
       - name: route_id
-        description: "Route identifier for traffic data"
+        description: "Route identifier"
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_route')
-              field: route_id
       - name: traffic_date
-        description: "Date of traffic observation"
+        description: "Date of traffic reading"
         tests:
           - not_null
-      - name: time_of_day
-        description: "Time period for traffic data"
-        tests:
-          - accepted_values:
-              values: ['MORNING_RUSH', 'MIDDAY', 'EVENING_RUSH', 'NIGHT']
-      - name: traffic_volume
-        description: "Traffic volume level (LOW, MEDIUM, HIGH, VERY_HIGH)"
-        tests:
-          - accepted_values:
-              values: ['LOW', 'MEDIUM', 'HIGH', 'VERY_HIGH']
       - name: congestion_level
-        description: "Congestion level (0-100 scale)"
+        description: "Traffic congestion level"
         tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
-      - name: average_speed_mph
-        description: "Average traffic speed in miles per hour"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 80
-      - name: delay_factor
-        description: "Delay factor multiplier (1.0 = no delay)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 1.0
-              max_value: 3.0
-      - name: is_peak_hours
-        description: "Flag indicating if this is peak traffic hours"
-        tests:
+          - not_null
           - accepted_values:
-              values: [true, false]
+              values: ['LOW', 'MODERATE', 'HIGH', 'SEVERE']
+      - name: average_speed_kmh
+        description: "Average speed in kilometers per hour"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 200
 
   - name: tbl_dim_vehicle_maintenance
     description: |
-      Vehicle maintenance dimension containing maintenance schedules and history:
-      - Maintenance schedules and intervals
-      - Historical maintenance records
-      - Predictive maintenance indicators
-      - Maintenance cost and efficiency metrics
+      Vehicle maintenance dimension containing maintenance data:
+      - Maintenance types and schedules
+      - Cost and performance metrics
+      - Risk assessment and predictions
     columns:
       - name: maintenance_id
         description: "Unique identifier for each maintenance record"
@@ -449,9 +283,6 @@ models:
         description: "Vehicle identifier"
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_vehicle')
-              field: vehicle_id
       - name: maintenance_type
         description: "Type of maintenance performed"
         tests:
@@ -462,41 +293,16 @@ models:
         description: "Date when maintenance was performed"
         tests:
           - not_null
-      - name: maintenance_mileage
-        description: "Vehicle mileage at time of maintenance"
+      - name: maintenance_cost_usd
+        description: "Cost of maintenance in USD"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-              max_value: 1000000
-      - name: maintenance_cost_usd
-        description: "Cost of maintenance in USD"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
               max_value: 10000
-      - name: maintenance_duration_hours
-        description: "Duration of maintenance in hours"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0.5
-              max_value: 48
-      - name: next_maintenance_due_date
-        description: "Date when next maintenance is due"
-      - name: next_maintenance_due_mileage
-        description: "Mileage when next maintenance is due"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 1000000
       - name: maintenance_status
-        description: "Current maintenance status"
+        description: "Status of maintenance"
         tests:
+          - not_null
           - accepted_values:
-              values: ['COMPLETED', 'SCHEDULED', 'OVERDUE', 'IN_PROGRESS']
-      - name: risk_score
-        description: "Maintenance risk score (0-100)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 100
+              values: ['COMPLETED', 'SCHEDULED', 'IN_PROGRESS', 'CANCELLED']

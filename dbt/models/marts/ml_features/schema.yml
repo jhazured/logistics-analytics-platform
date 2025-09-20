@@ -1,0 +1,1144 @@
+version: 2
+
+models:
+  - name: tbl_ml_consolidated_feature_store
+    description: |
+      Consolidated feature store for machine learning models:
+      - Aggregated features from multiple data sources
+      - Time-series features and rolling windows
+      - Customer behavior and segmentation features
+      - Vehicle performance and maintenance features
+    meta:
+      owner: "ml-engineering"
+      refresh_frequency: "hourly"
+      model_type: "feature_store"
+    columns:
+      - name: entity_id
+        description: "Entity identifier (customer, vehicle, route, etc.)"
+        tests:
+          - not_null
+      - name: entity_type
+        description: "Type of entity"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['customer', 'vehicle', 'route', 'shipment']
+      - name: feature_date
+        description: "Date for the feature calculation"
+        tests:
+          - not_null
+      - name: customer_id
+        description: "Customer identifier"
+        tests:
+          - not_null
+      - name: vehicle_id
+        description: "Vehicle identifier"
+        tests:
+          - not_null
+      - name: route_id
+        description: "Route identifier"
+        tests:
+          - not_null
+      - name: distance_km
+        description: "Distance in kilometers"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: weight_kg
+        description: "Weight in kilograms"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50000
+      - name: priority_level
+        description: "Priority level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH', 'MEDIUM', 'LOW']
+      - name: planned_duration_minutes
+        description: "Planned duration in minutes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 43200
+      - name: actual_duration_minutes
+        description: "Actual duration in minutes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 43200
+      - name: is_on_time
+        description: "On-time delivery flag"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: route_efficiency_score
+        description: "Route efficiency score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: fuel_cost
+        description: "Fuel cost"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: delivery_cost
+        description: "Delivery cost"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: revenue
+        description: "Revenue"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100000
+      - name: vehicle_type
+        description: "Vehicle type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'TRAILER']
+      - name: haul_type
+        description: "Haul type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SHORT_HAUL', 'MEDIUM_HAUL', 'LONG_HAUL', 'URGENT', 'STANDARD']
+      - name: delivery_performance
+        description: "Delivery performance score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: on_time_flag
+        description: "On-time delivery flag"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: profit_margin
+        description: "Profit margin percentage"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -100
+              max_value: 100
+      - name: cost_per_km
+        description: "Cost per kilometer"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10
+      - name: customer_tier
+        description: "Customer tier"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PREMIUM', 'STANDARD', 'BASIC']
+      - name: credit_limit_usd
+        description: "Credit limit in USD"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000000
+      - name: capacity_kg
+        description: "Vehicle capacity in kilograms"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50000
+      - name: fuel_efficiency_mpg
+        description: "Fuel efficiency in miles per gallon"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: model_year
+        description: "Vehicle model year"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1990
+              max_value: 2030
+      - name: current_mileage
+        description: "Current vehicle mileage"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000000
+
+  - name: tbl_ml_customer_behavior_segments
+    description: |
+      Customer behavior segmentation for ML models:
+      - Customer lifetime value predictions
+      - Churn risk assessment
+      - Service preference analysis
+      - Demand forecasting features
+    meta:
+      owner: "ml-engineering"
+      refresh_frequency: "daily"
+      model_type: "segmentation"
+    columns:
+      - name: customer_id
+        description: "Customer identifier"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Customer name"
+        tests:
+          - not_null
+      - name: customer_type
+        description: "Customer type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PREMIUM', 'STANDARD', 'BASIC']
+      - name: industry
+        description: "Industry classification"
+        tests:
+          - not_null
+      - name: volume_segment
+        description: "Volume segment"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH', 'MEDIUM', 'LOW', 'STANDARD', 'BASIC']
+      - name: service_level
+        description: "Service level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['EXPRESS', 'STANDARD', 'ECONOMY']
+      - name: recency_score
+        description: "Recency score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: frequency_score
+        description: "Frequency score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: monetary_score
+        description: "Monetary score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: rfm_segment
+        description: "RFM segment"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['CHAMPIONS', 'LOYAL_CUSTOMERS', 'POTENTIAL_LOYALISTS', 'NEW_CUSTOMERS', 'PROMISING', 'NEED_ATTENTION', 'ABOUT_TO_SLEEP', 'AT_RISK', 'CANT_LOSE_THEM', 'HIBERNATING', 'LOST']
+      - name: total_shipments
+        description: "Total number of shipments"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_monthly_shipments
+        description: "Average monthly shipments"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_shipment_weight
+        description: "Average shipment weight"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_shipment_volume
+        description: "Average shipment volume"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_shipping_distance
+        description: "Average shipping distance"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: total_revenue
+        description: "Total revenue"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_order_value
+        description: "Average order value"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: total_profit
+        description: "Total profit"
+        tests:
+          - not_null
+      - name: profit_margin_rate
+        description: "Profit margin rate"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -100
+              max_value: 100
+      - name: on_time_rate
+        description: "On-time delivery rate"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: avg_customer_rating
+        description: "Average customer rating"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: delivery_reliability
+        description: "Delivery reliability score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: satisfaction_level
+        description: "Satisfaction level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['VERY_SATISFIED', 'SATISFIED', 'NEUTRAL', 'DISSATISFIED', 'VERY_DISSATISFIED']
+      - name: preferred_delivery_window
+        description: "Preferred delivery window"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['MORNING', 'AFTERNOON', 'EVENING', 'ANYTIME']
+      - name: delivery_flexibility_score
+        description: "Delivery flexibility score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: preferred_priority
+        description: "Preferred priority level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH', 'MEDIUM', 'LOW']
+      - name: unique_destinations
+        description: "Number of unique destinations"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: preferred_day_of_week
+        description: "Preferred day of week"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+      - name: preferred_hour
+        description: "Preferred hour"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 23
+      - name: shipping_predictability
+        description: "Shipping predictability score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: summer_activity_rate
+        description: "Summer activity rate"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: winter_activity_rate
+        description: "Winter activity rate"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: weekend_activity_rate
+        description: "Weekend activity rate"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: days_since_last_shipment
+        description: "Days since last shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: activity_status
+        description: "Activity status"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ACTIVE', 'INACTIVE', 'AT_RISK', 'CHURNED']
+      - name: value_volume_segment
+        description: "Value volume segment"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH_VALUE_HIGH_VOLUME', 'HIGH_VALUE_LOW_VOLUME', 'LOW_VALUE_HIGH_VOLUME', 'LOW_VALUE_LOW_VOLUME']
+      - name: churn_risk_days
+        description: "Churn risk in days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: expected_vs_actual_frequency
+        description: "Expected vs actual frequency ratio"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: revenue_per_shipment
+        description: "Revenue per shipment"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shipments_per_month
+        description: "Shipments per month"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: tbl_ml_haul_segmentation
+    description: |
+      Haul segmentation for ML models:
+      - Route optimization features
+      - Cost prediction features
+      - Time estimation features
+      - Risk assessment features
+    meta:
+      owner: "ml-engineering"
+      refresh_frequency: "hourly"
+      model_type: "segmentation"
+    columns:
+      - name: shipment_id
+        description: "Shipment identifier"
+        tests:
+          - unique
+          - not_null
+      - name: shipment_date
+        description: "Shipment date"
+        tests:
+          - not_null
+      - name: haul_type
+        description: "Haul type classification"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SHORT_HAUL', 'MEDIUM_HAUL', 'LONG_HAUL', 'URGENT', 'STANDARD']
+      - name: delivery_window
+        description: "Delivery window"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['MORNING', 'AFTERNOON', 'EVENING', 'ANYTIME']
+      - name: distance_km
+        description: "Distance in kilometers"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: planned_duration_minutes
+        description: "Planned duration in minutes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 43200
+      - name: actual_duration_minutes
+        description: "Actual duration in minutes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 43200
+      - name: duration_ratio
+        description: "Duration ratio (actual/planned)"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10
+      - name: route_type
+        description: "Route type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['URBAN', 'SUBURBAN', 'RURAL', 'HIGHWAY', 'MIXED']
+      - name: complexity_score
+        description: "Route complexity score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: complexity_category
+        description: "Complexity category"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['LOW', 'MEDIUM', 'HIGH', 'VERY_HIGH']
+      - name: volume_segment
+        description: "Volume segment"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH', 'MEDIUM', 'LOW', 'STANDARD', 'BASIC']
+      - name: service_level
+        description: "Service level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['EXPRESS', 'STANDARD', 'ECONOMY']
+      - name: priority_level
+        description: "Priority level"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH', 'MEDIUM', 'LOW']
+      - name: vehicle_type
+        description: "Vehicle type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'TRAILER']
+      - name: capacity_kg
+        description: "Vehicle capacity in kilograms"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50000
+      - name: capacity_utilization
+        description: "Capacity utilization percentage"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: hour_of_day
+        description: "Hour of day"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 23
+      - name: day_of_week
+        description: "Day of week"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+      - name: is_weekend
+        description: "Weekend flag"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: season
+        description: "Season"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SPRING', 'SUMMER', 'FALL', 'WINTER']
+      - name: logistics_day_type
+        description: "Logistics day type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['BUSINESS_DAY', 'WEEKEND', 'HOLIDAY', 'PEAK_DAY']
+      - name: is_on_time
+        description: "On-time delivery flag"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+      - name: customer_rating
+        description: "Customer rating"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: fuel_cost
+        description: "Fuel cost"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: delivery_cost
+        description: "Delivery cost"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+      - name: revenue
+        description: "Revenue"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100000
+      - name: profit_margin
+        description: "Profit margin percentage"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -100
+              max_value: 100
+      - name: route_scope
+        description: "Route scope"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['LOCAL', 'REGIONAL', 'NATIONAL', 'INTERNATIONAL']
+
+  - name: tbl_ml_maintenance_features
+    description: |
+      Vehicle maintenance features for ML models:
+      - Predictive maintenance features
+      - Cost prediction features
+      - Failure risk assessment
+      - Maintenance scheduling optimization
+    meta:
+      owner: "ml-engineering"
+      refresh_frequency: "daily"
+      model_type: "predictive_maintenance"
+    columns:
+      - name: vehicle_id
+        description: "Vehicle identifier"
+        tests:
+          - not_null
+      - name: vehicle_type
+        description: "Vehicle type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'TRAILER']
+      - name: make
+        description: "Vehicle manufacturer"
+        tests:
+          - not_null
+      - name: model
+        description: "Vehicle model"
+        tests:
+          - not_null
+      - name: model_year
+        description: "Vehicle model year"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1990
+              max_value: 2030
+      - name: current_mileage
+        description: "Current vehicle mileage"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000000
+      - name: maintenance_interval_miles
+        description: "Maintenance interval in miles"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100000
+      - name: last_maintenance_date
+        description: "Last maintenance date"
+        tests:
+          - not_null
+      - name: next_maintenance_date
+        description: "Next maintenance date"
+        tests:
+          - not_null
+      - name: feature_date
+        description: "Feature calculation date"
+        tests:
+          - not_null
+      - name: avg_engine_temp
+        description: "Average engine temperature"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: -40
+              max_value: 150
+      - name: avg_fuel_level
+        description: "Average fuel level percentage"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: avg_engine_rpm
+        description: "Average engine RPM"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 8000
+      - name: total_harsh_braking
+        description: "Total harsh braking events"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: total_harsh_acceleration
+        description: "Total harsh acceleration events"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: total_speeding_events
+        description: "Total speeding events"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_idle_time
+        description: "Average idle time in minutes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_engine_health
+        description: "Average engine health score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: max_engine_temp
+        description: "Maximum engine temperature"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: -40
+              max_value: 150
+      - name: avg_fuel_consumption
+        description: "Average fuel consumption"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: daily_maintenance_alerts
+        description: "Daily maintenance alerts"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: unique_diagnostic_codes
+        description: "Number of unique diagnostic codes"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_events_7d
+        description: "Maintenance events in last 7 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_cost_7d
+        description: "Maintenance cost in last 7 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_events_30d
+        description: "Maintenance events in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_cost_30d
+        description: "Maintenance cost in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_events_90d
+        description: "Maintenance events in last 90 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_cost_90d
+        description: "Maintenance cost in last 90 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_urgency
+        description: "Maintenance urgency score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: days_since_last_maintenance
+        description: "Days since last maintenance"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: miles_since_last_maintenance
+        description: "Miles since last maintenance"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: last_service_interval_days
+        description: "Last service interval in days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_engine_temp_7d
+        description: "Average engine temperature in last 7 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: -40
+              max_value: 150
+      - name: avg_engine_health_7d
+        description: "Average engine health in last 7 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: harsh_braking_7d
+        description: "Harsh braking events in last 7 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: harsh_acceleration_7d
+        description: "Harsh acceleration events in last 7 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_alerts_7d
+        description: "Maintenance alerts in last 7 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: engine_health_14d_avg
+        description: "Engine health average in last 14 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: max_engine_temp_14d_avg
+        description: "Maximum engine temperature average in last 14 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: -40
+              max_value: 150
+      - name: avg_engine_temp_30d
+        description: "Average engine temperature in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: -40
+              max_value: 150
+      - name: avg_engine_health_30d
+        description: "Average engine health in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: harsh_braking_30d
+        description: "Harsh braking events in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: harsh_acceleration_30d
+        description: "Harsh acceleration events in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_alerts_30d
+        description: "Maintenance alerts in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: avg_engine_health_90d
+        description: "Average engine health in last 90 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: harsh_braking_90d
+        description: "Harsh braking events in last 90 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: maintenance_alerts_90d
+        description: "Maintenance alerts in last 90 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: engine_health_trend
+        description: "Engine health trend"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['IMPROVING', 'STABLE', 'DECLINING']
+      - name: service_recommendation
+        description: "Service recommendation"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['IMMEDIATE', 'SCHEDULED', 'ROUTINE', 'NONE']
+      - name: predictive_maintenance_score
+        description: "Predictive maintenance score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: maintenance_risk_score
+        description: "Maintenance risk score"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: next_maintenance_due_days
+        description: "Days until next maintenance due"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: tbl_ml_rolling_analytics
+    description: |
+      Rolling analytics features for ML models:
+      - Time-series features with rolling windows
+      - Trend analysis features
+      - Seasonal pattern features
+      - Anomaly detection features
+    meta:
+      owner: "ml-engineering"
+      refresh_frequency: "hourly"
+      model_type: "time_series"
+    columns:
+      - name: entity_type
+        description: "Entity type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['CUSTOMER', 'VEHICLE', 'ROUTE', 'SHIPMENT']
+      - name: entity_id
+        description: "Entity identifier"
+        tests:
+          - not_null
+      - name: feature_date
+        description: "Feature calculation date"
+        tests:
+          - not_null
+      - name: customer_name
+        description: "Customer name"
+        tests:
+          - not_null
+      - name: volume_segment
+        description: "Volume segment"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['HIGH', 'MEDIUM', 'LOW', 'STANDARD', 'BASIC']
+      - name: customer_type
+        description: "Customer type"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PREMIUM', 'STANDARD', 'BASIC']
+      - name: daily_shipments
+        description: "Daily shipments"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: daily_weight
+        description: "Daily weight"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: daily_volume
+        description: "Daily volume"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: daily_revenue
+        description: "Daily revenue"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: daily_avg_rating
+        description: "Daily average rating"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: daily_on_time_rate
+        description: "Daily on-time rate"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+      - name: shipments_30d_avg
+        description: "30-day average shipments"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: revenue_30d_avg
+        description: "30-day average revenue"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: weight_30d_avg
+        description: "30-day average weight"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shipments_30d_total
+        description: "30-day total shipments"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: revenue_30d_total
+        description: "30-day total revenue"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shipments_same_day_last_year
+        description: "Shipments same day last year"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: revenue_same_day_last_year
+        description: "Revenue same day last year"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: revenue_yoy_growth_percent
+        description: "Year-over-year revenue growth percentage"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -100
+              max_value: 1000
+      - name: shipments_7d_avg
+        description: "7-day average shipments"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shipments_90d_avg
+        description: "90-day average shipments"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: activity_ratio_7d_vs_90d
+        description: "Activity ratio 7d vs 90d"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: days_since_first_order
+        description: "Days since first order"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: days_to_last_order
+        description: "Days to last order"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: shipment_volatility_30d
+        description: "Shipment volatility in last 30 days"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      - name: behavior_consistency
+        description: "Behavior consistency score (text values)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['low', 'moderate', 'high', 'excellent']

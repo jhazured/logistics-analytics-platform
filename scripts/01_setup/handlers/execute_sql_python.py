@@ -26,14 +26,69 @@ def substitute_variables(sql_content, env_vars):
     
     sql_content = re.sub(ifnull_pattern, replace_ifnull, sql_content)
     
+    # Handle SET statements to create session variables
+    set_pattern = r'SET\s+([A-Z_]+)\s*=\s*IFNULL\(\$([A-Z_]+),\s*\'([^\']+)\'\)'
+    def replace_set(match):
+        session_var = match.group(1)
+        env_var = match.group(2)
+        default_value = match.group(3)
+        
+        if env_var in env_vars:
+            value = env_vars[env_var]
+        else:
+            value = default_value
+        
+        # Create a session variable assignment
+        return f"SET {session_var} = '{value}'"
+    
+    sql_content = re.sub(set_pattern, replace_set, sql_content)
+    
+    # Also handle direct SET statements with environment variables
+    direct_set_pattern = r'SET\s+([A-Z_]+)\s*=\s*\'([^\']+)\''
+    def replace_direct_set(match):
+        session_var = match.group(1)
+        value = match.group(2)
+        
+        # If the value is an environment variable reference, replace it
+        if value.startswith('$') and value[1:] in env_vars:
+            value = env_vars[value[1:]]
+        
+        return f"SET {session_var} = '{value}'"
+    
+    sql_content = re.sub(direct_set_pattern, replace_direct_set, sql_content)
+    
+    # Handle IDENTIFIER with concatenation - replace with direct values
+    identifier_concat_pattern = r'IDENTIFIER\(\$([A-Z_]+)\s*\|\|\s*\'\.([^\']+)\'\)'
+    def replace_identifier_concat(match):
+        var_name = match.group(1)
+        schema_name = match.group(2)
+        if var_name in env_vars:
+            return f"IDENTIFIER('{env_vars[var_name]}.{schema_name}')"
+        else:
+            return f"IDENTIFIER('LOGISTICS_DW_DEV.{schema_name}')"
+    
+    sql_content = re.sub(identifier_concat_pattern, replace_identifier_concat, sql_content)
+    
+    # Create a mapping of session variables for later reference
+    session_vars = {}
+    
+    # Extract session variables from SET statements
+    set_matches = re.findall(r'SET\s+([A-Z_]+)\s*=\s*\'([^\']+)\'', sql_content)
+    for var_name, var_value in set_matches:
+        session_vars[var_name] = var_value
+    
     # Then handle direct variable references
     pattern = r'\$([A-Z_]+)'
     def replace_var(match):
         var_name = match.group(1)
-        if var_name in env_vars:
+        # First check if it's a session variable
+        if var_name in session_vars:
+            return f"'{session_vars[var_name]}'"
+        # Then check if it's an environment variable
+        elif var_name in env_vars:
             return f"'{env_vars[var_name]}'"
         else:
-            print(f"Warning: Environment variable {var_name} not found, using literal")
+            print(f"Warning: Variable {var_name} not found, using literal")
             return match.group(0)
     
     # Replace session variables with quoted values
@@ -52,14 +107,15 @@ def execute_sql_file(sql_file_path, env_vars):
     sql_content = substitute_variables(sql_content, env_vars)
     
     # Connect to Snowflake
+    # For setup scripts, don't specify database in connection to allow account-level operations
     conn = snowflake.connector.connect(
         account=env_vars.get('SF_ACCOUNT'),
         user=env_vars.get('SF_USER'),
         password=env_vars.get('SF_PASSWORD'),
         role=env_vars.get('SF_ROLE', 'ACCOUNTADMIN'),
-        warehouse=env_vars.get('SF_WAREHOUSE', 'COMPUTE_WH_XS'),
-        database=env_vars.get('SF_DATABASE', 'LOGISTICS_DW_DEV'),
-        schema=env_vars.get('SF_SCHEMA', 'ANALYTICS')
+        warehouse=env_vars.get('SF_WAREHOUSE', 'COMPUTE_WH_XS')
+        # Note: Not specifying database and schema for setup scripts
+        # This allows the scripts to work at account level and create/use databases as needed
     )
     
     try:
