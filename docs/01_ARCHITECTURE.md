@@ -4,7 +4,7 @@
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   ML SERVING    │    │   ML FEATURES   │    │      MART       │
+│   ML SERVING    │    │   ML FEATURES   │    │      MARTS       │
 │                 │    │                 │    │                 │
 │ • Real-time     │    │ • Feature Store │    │ • Fact Tables   │
 │   Inference     │◄───│ • Model Registry│◄───│ • Dimensions    │
@@ -130,6 +130,8 @@ dbt run --select tag:incremental --store-failures
 ```
 
 > **📋 Detailed Strategy**: See [07_INCREMENTAL_LOADING_STRATEGY.md](07_INCREMENTAL_LOADING_STRATEGY.md) for complete implementation guide, monitoring procedures, and cost analysis.
+
+> **🗺️ Schema Mapping**: See [13_SCHEMA_MAPPING.md](13_SCHEMA_MAPPING.md) for comprehensive object-to-schema mapping, dependencies, and access control matrix.
 
 ## Comprehensive Automation Framework
 

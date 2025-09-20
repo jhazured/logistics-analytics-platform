@@ -24,7 +24,7 @@ class PerformanceOptimizer:
             'password': os.getenv('SNOWFLAKE_PASSWORD'),
             'warehouse': 'COMPUTE_WH_XS',
             'database': f'LOGISTICS_DW_{environment.upper()}',
-            'schema': 'OPTIMIZATION'
+            'schema': 'PERFORMANCE'
         }
         self.session = None
         self.optimization_thresholds = self.load_optimization_thresholds()

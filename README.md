@@ -97,7 +97,8 @@ logistics-analytics-platform/
 │   ├── 09_DATA_DICTIONARY.md                     # Business definitions and technical specs
 │   ├── 10_BUSINESS_PROCESSES.md                  # Core business processes
 │   ├── 11_OPERATIONAL_RUNBOOKS.md                # Operational procedures
-│   └── 12_TROUBLESHOOTING_GUIDES.md              # Troubleshooting procedures
+│   ├── 12_TROUBLESHOOTING_GUIDES.md              # Troubleshooting procedures
+│   └── 13_SCHEMA_MAPPING.md                      # Schema mapping and dependencies
 ├── 📁 dbt/                                       # dbt project (43+ models)
 │   ├── models/                                   # dbt models organized by layer
 │   │   ├── marts/                                # Business logic layer
@@ -117,7 +118,14 @@ logistics-analytics-platform/
 │   ├── monitoring/                              # Monitoring & alerting (5 files)
 │   ├── performance/                             # Performance optimization (6 files)
 │   ├── security/                                # Security and governance (4 files)
-│   ├── setup/                                   # Environment setup (5 files)
+│   ├── setup/                                   # Environment setup (7 files)
+│   │   ├── 00_complete_setup.sql                # Complete setup script
+│   │   ├── 01_database_setup.sql                # Database creation
+│   │   ├── 02_schema_creation.sql               # Schema creation
+│   │   ├── 03_warehouse_configuration.sql       # Warehouse configuration
+│   │   ├── 04_user_roles_permissions.sql        # Roles and permissions
+│   │   ├── 05_resource_monitors.sql             # Resource monitors
+│   │   └── 99_verify_setup.sql                  # Setup verification
 │   ├── streaming/                               # Stream processing (4 files)
 │   ├── tables/                                  # ML-optimized table definitions
 │   ├── views/                                   # Business intelligence views

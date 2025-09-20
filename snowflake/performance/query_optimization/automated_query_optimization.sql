@@ -2,7 +2,7 @@
 -- This script provides intelligent query optimization suggestions based on performance analysis
 
 -- Create query optimization recommendations table
-CREATE OR REPLACE TABLE LOGISTICS_DW_PROD.OPTIMIZATION.QUERY_OPTIMIZATION_RECOMMENDATIONS (
+CREATE OR REPLACE TABLE LOGISTICS_DW_PROD.PERFORMANCE.QUERY_OPTIMIZATION_RECOMMENDATIONS (
     RECOMMENDATION_ID VARCHAR(50) DEFAULT UUID_STRING(),
     QUERY_ID VARCHAR(100) NOT NULL,
     QUERY_TEXT TEXT NOT NULL,
@@ -92,7 +92,7 @@ $$
 $$;
 
 -- Create query performance analysis view
-CREATE OR REPLACE VIEW LOGISTICS_DW_PROD.OPTIMIZATION.VW_QUERY_PERFORMANCE_ANALYSIS AS
+CREATE OR REPLACE VIEW LOGISTICS_DW_PROD.PERFORMANCE.VW_QUERY_PERFORMANCE_ANALYSIS AS
 WITH slow_queries AS (
     SELECT 
         query_id,
@@ -162,7 +162,7 @@ FROM optimization_opportunities
 ORDER BY potential_cost_savings DESC, potential_time_savings DESC;
 
 -- Create automated query optimization recommendations procedure
-CREATE OR REPLACE PROCEDURE LOGISTICS_DW_PROD.OPTIMIZATION.GENERATE_QUERY_OPTIMIZATION_RECOMMENDATIONS()
+CREATE OR REPLACE PROCEDURE LOGISTICS_DW_PROD.PERFORMANCE.GENERATE_QUERY_OPTIMIZATION_RECOMMENDATIONS()
 RETURNS STRING
 LANGUAGE SQL
 AS
@@ -173,11 +173,11 @@ DECLARE
     result_message STRING;
 BEGIN
     -- Clear existing recommendations
-    DELETE FROM LOGISTICS_DW_PROD.OPTIMIZATION.QUERY_OPTIMIZATION_RECOMMENDATIONS
+    DELETE FROM LOGISTICS_DW_PROD.PERFORMANCE.QUERY_OPTIMIZATION_RECOMMENDATIONS
     WHERE DATE(created_at) = CURRENT_DATE();
     
     -- Insert new recommendations
-    INSERT INTO LOGISTICS_DW_PROD.OPTIMIZATION.QUERY_OPTIMIZATION_RECOMMENDATIONS (
+    INSERT INTO LOGISTICS_DW_PROD.PERFORMANCE.QUERY_OPTIMIZATION_RECOMMENDATIONS (
         query_id, query_text, optimization_type, recommendation_description,
         potential_time_savings_seconds, potential_cost_savings_usd, confidence_score,
         implementation_effort, business_impact
@@ -192,7 +192,7 @@ BEGIN
         confidence_score,
         implementation_effort,
         business_impact
-    FROM LOGISTICS_DW_PROD.OPTIMIZATION.VW_QUERY_PERFORMANCE_ANALYSIS
+    FROM LOGISTICS_DW_PROD.PERFORMANCE.VW_QUERY_PERFORMANCE_ANALYSIS
     WHERE potential_cost_savings > 1  -- Only recommendations with meaningful savings
     AND confidence_score > 0.6;  -- Only high-confidence recommendations
     
@@ -201,7 +201,7 @@ BEGIN
         COUNT(*),
         SUM(potential_cost_savings_usd)
     INTO recommendation_count, total_potential_savings
-    FROM LOGISTICS_DW_PROD.OPTIMIZATION.QUERY_OPTIMIZATION_RECOMMENDATIONS
+    FROM LOGISTICS_DW_PROD.PERFORMANCE.QUERY_OPTIMIZATION_RECOMMENDATIONS
     WHERE DATE(created_at) = CURRENT_DATE();
     
     result_message := 'Generated ' || recommendation_count || ' query optimization recommendations with potential savings of $' || 
@@ -223,7 +223,7 @@ END;
 $$;
 
 -- Create query optimization dashboard
-CREATE OR REPLACE VIEW LOGISTICS_DW_PROD.OPTIMIZATION.VW_QUERY_OPTIMIZATION_DASHBOARD AS
+CREATE OR REPLACE VIEW LOGISTICS_DW_PROD.PERFORMANCE.VW_QUERY_OPTIMIZATION_DASHBOARD AS
 WITH query_performance_summary AS (
     SELECT 
         DATE_TRUNC('day', start_time) as query_date,
@@ -246,7 +246,7 @@ optimization_summary AS (
         COUNT(CASE WHEN business_impact = 'HIGH' THEN 1 END) as high_impact_recommendations,
         COUNT(CASE WHEN optimization_type = 'COLUMN_SPECIFICATION' THEN 1 END) as select_star_issues,
         COUNT(CASE WHEN optimization_type = 'FILTER_OPTIMIZATION' THEN 1 END) as filter_issues
-    FROM LOGISTICS_DW_PROD.OPTIMIZATION.QUERY_OPTIMIZATION_RECOMMENDATIONS
+    FROM LOGISTICS_DW_PROD.PERFORMANCE.QUERY_OPTIMIZATION_RECOMMENDATIONS
     WHERE DATE(created_at) = CURRENT_DATE()
 )
 SELECT 
@@ -290,21 +290,21 @@ SELECT
     COUNT(CASE WHEN optimization_type = 'FILTER_OPTIMIZATION' THEN 1 END) as filter_issues,
     -- Calculate optimization score
     AVG(roi_score) * 100 as performance_score
-FROM LOGISTICS_DW_PROD.OPTIMIZATION.VW_QUERY_PERFORMANCE_ANALYSIS
+FROM LOGISTICS_DW_PROD.PERFORMANCE.VW_QUERY_PERFORMANCE_ANALYSIS
 WHERE potential_cost_savings > 1;
 
 -- Create automated query optimization task
-CREATE OR REPLACE TASK LOGISTICS_DW_PROD.OPTIMIZATION.TASK_QUERY_OPTIMIZATION_ANALYSIS
+CREATE OR REPLACE TASK LOGISTICS_DW_PROD.PERFORMANCE.TASK_QUERY_OPTIMIZATION_ANALYSIS
     WAREHOUSE = COMPUTE_WH_XS
     SCHEDULE = 'USING CRON 0 8 * * * UTC'  -- Daily at 8 AM UTC
     COMMENT = 'Generates daily query optimization recommendations'
 AS
 BEGIN
-    CALL LOGISTICS_DW_PROD.OPTIMIZATION.GENERATE_QUERY_OPTIMIZATION_RECOMMENDATIONS();
+    CALL LOGISTICS_DW_PROD.PERFORMANCE.GENERATE_QUERY_OPTIMIZATION_RECOMMENDATIONS();
 END;
 
 -- Create query optimization alerts
-CREATE OR REPLACE PROCEDURE LOGISTICS_DW_PROD.OPTIMIZATION.CHECK_QUERY_OPTIMIZATION_ALERTS()
+CREATE OR REPLACE PROCEDURE LOGISTICS_DW_PROD.PERFORMANCE.CHECK_QUERY_OPTIMIZATION_ALERTS()
 RETURNS STRING
 LANGUAGE SQL
 AS
@@ -316,13 +316,13 @@ DECLARE
 BEGIN
     -- Check for high-cost queries
     SELECT COUNT(*) INTO high_cost_queries
-    FROM LOGISTICS_DW_PROD.OPTIMIZATION.VW_QUERY_PERFORMANCE_ANALYSIS
+    FROM LOGISTICS_DW_PROD.PERFORMANCE.VW_QUERY_PERFORMANCE_ANALYSIS
     WHERE potential_cost_savings > 10
     AND business_impact = 'HIGH';
     
     -- Check for high savings opportunities
     SELECT COUNT(*) INTO high_savings_opportunities
-    FROM LOGISTICS_DW_PROD.OPTIMIZATION.QUERY_OPTIMIZATION_RECOMMENDATIONS
+    FROM LOGISTICS_DW_PROD.PERFORMANCE.QUERY_OPTIMIZATION_RECOMMENDATIONS
     WHERE DATE(created_at) = CURRENT_DATE()
     AND potential_cost_savings_usd > 5;
     
@@ -355,4 +355,4 @@ END;
 $$;
 
 -- Resume the query optimization task
-ALTER TASK LOGISTICS_DW_PROD.OPTIMIZATION.TASK_QUERY_OPTIMIZATION_ANALYSIS RESUME;
+ALTER TASK LOGISTICS_DW_PROD.PERFORMANCE.TASK_QUERY_OPTIMIZATION_ANALYSIS RESUME;

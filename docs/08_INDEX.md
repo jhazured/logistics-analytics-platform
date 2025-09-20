@@ -128,6 +128,22 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 ### Automation Templates
 - [automation_dashboard.html](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/templates/automation_dashboard.html)
 
+## Documentation
+- [00_README.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/00_README.md)
+- [01_ARCHITECTURE.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/01_ARCHITECTURE.md)
+- [02_SETUP.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/02_SETUP.md)
+- [03_ML_GUIDE.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/03_ML_GUIDE.md)
+- [04_ADVANCED_FEATURES.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/04_ADVANCED_FEATURES.md)
+- [05_MONITORING.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/05_MONITORING.md)
+- [06_BUSINESS_IMPACT.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/06_BUSINESS_IMPACT.md)
+- [07_INCREMENTAL_LOADING_STRATEGY.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/07_INCREMENTAL_LOADING_STRATEGY.md)
+- [08_INDEX.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/08_INDEX.md)
+- [09_DATA_DICTIONARY.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/09_DATA_DICTIONARY.md)
+- [10_BUSINESS_PROCESSES.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/10_BUSINESS_PROCESSES.md)
+- [11_OPERATIONAL_RUNBOOKS.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/11_OPERATIONAL_RUNBOOKS.md)
+- [12_TROUBLESHOOTING_GUIDES.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/12_TROUBLESHOOTING_GUIDES.md)
+- [13_SCHEMA_MAPPING.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/13_SCHEMA_MAPPING.md)
+
 ## dbt Business Rules Tests
 - [test_analytics_view_consistency.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_analytics_view_consistency.sql)
 - [test_customer_tier_validation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_customer_tier_validation.sql)
@@ -200,11 +216,13 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [row_level_security.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/security/row_level_security.sql)
 
 ## Snowflake Setup
+- [00_complete_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/00_complete_setup.sql)
 - [01_database_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/01_database_setup.sql)
 - [02_schema_creation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/02_schema_creation.sql)
 - [03_warehouse_configuration.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/03_warehouse_configuration.sql)
 - [04_user_roles_permissions.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/04_user_roles_permissions.sql)
 - [05_resource_monitors.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/05_resource_monitors.sql)
+- [99_verify_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/99_verify_setup.sql)
 
 ## Snowflake Streaming
 ### Streams
@@ -262,7 +280,7 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 
 ---
 
-**Total Files:** 160+ files across the entire logistics analytics platform
+**Total Files:** 170+ files across the entire logistics analytics platform
 
 **Repository:** [jhazured/logistics-analytics-platform](https://github.com/jhazured/logistics-analytics-platform)
 

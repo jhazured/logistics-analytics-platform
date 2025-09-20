@@ -12,21 +12,21 @@ case $ENVIRONMENT in
   dev)
     export SF_DATABASE="LOGISTICS_DW_DEV"
     export SF_WAREHOUSE="COMPUTE_WH_XS"  
-    export SF_SCHEMA="analytics_dev"
+    export SF_SCHEMA="ANALYTICS"
     export SF_ROLE="DBT_DEV_ROLE"
     export DBT_THREADS=4
     ;;
   staging)
     export SF_DATABASE="LOGISTICS_DW_STAGING"
     export SF_WAREHOUSE="COMPUTE_WH_SMALL"
-    export SF_SCHEMA="analytics_staging"  
+    export SF_SCHEMA="ANALYTICS"  
     export SF_ROLE="DBT_STAGING_ROLE"
     export DBT_THREADS=8
     ;;
   prod)
     export SF_DATABASE="LOGISTICS_DW_PROD"
     export SF_WAREHOUSE="COMPUTE_WH_MEDIUM"
-    export SF_SCHEMA="analytics_prod"
+    export SF_SCHEMA="ANALYTICS"
     export SF_ROLE="DBT_PROD_ROLE" 
     export DBT_THREADS=12
     ;;

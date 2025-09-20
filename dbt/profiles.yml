@@ -9,7 +9,7 @@ logistics_analytics:
       role: "{{ env_var('SF_ROLE', 'DBT_DEV_ROLE') }}"
       database: LOGISTICS_DW_DEV
       warehouse: COMPUTE_WH_XS
-      schema: analytics_dev
+      schema: ANALYTICS
       threads: 4
       keepalive: false
       query_tag: dbt_dev
@@ -22,7 +22,7 @@ logistics_analytics:
       role: "{{ env_var('SF_ROLE', 'DBT_STAGING_ROLE') }}"
       database: LOGISTICS_DW_STAGING
       warehouse: COMPUTE_WH_SMALL
-      schema: analytics_staging
+      schema: ANALYTICS
       threads: 8
       keepalive: false
       query_tag: dbt_staging
@@ -35,7 +35,7 @@ logistics_analytics:
       role: "{{ env_var('SF_ROLE', 'DBT_PROD_ROLE') }}"
       database: LOGISTICS_DW_PROD
       warehouse: COMPUTE_WH_MEDIUM
-      schema: analytics_prod
+      schema: ANALYTICS
       threads: 12
       keepalive: false
       query_tag: dbt_prod
