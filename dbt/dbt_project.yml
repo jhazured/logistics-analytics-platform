@@ -32,13 +32,14 @@ vars:
   marts_database: 'LOGISTICS_DW_PROD'
   analytics_database: 'LOGISTICS_DW_PROD'
   
-  # Development environment
+  # Development environment (optimized for build-and-run)
   dev:
     start_date: '2023-01-01'
-    test_store_failures: true
+    test_store_failures: false
     refresh_incremental: false
-    max_partition_days: 30
+    max_partition_days: 7
     enable_real_time_features: false
+    materialized: 'view'  # Use views to minimize storage costs
     
   # Staging environment  
   staging:
@@ -68,7 +69,7 @@ models:
       +materialized: view
       +on_schema_change: "sync_all_columns"
       dev:
-        +materialized: ephemeral
+        +materialized: view  # Use views for cost optimization
         
     marts:
       +materialized: table
@@ -77,7 +78,7 @@ models:
       dimensions:
         +materialized: table
         dev:
-          +materialized: view
+          +materialized: view  # Use views for cost optimization
         prod:
           +post-hook: "{{ log_table_stats(this) }}"
           
@@ -86,7 +87,7 @@ models:
         +unique_key: 'shipment_id'
         +on_schema_change: "sync_all_columns"
         dev:
-          +materialized: table
+          +materialized: view  # Use views for cost optimization
           +full_refresh: true
         prod:
           +post-hook: 
@@ -102,7 +103,7 @@ models:
         +materialized: table
         +tags: ["ml", "features"]
         dev:
-          +materialized: view
+          +materialized: view  # Use views for cost optimization
         prod:
           +post-hook: "{{ update_feature_store_metadata(this) }}"
 
