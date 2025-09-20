@@ -254,6 +254,7 @@ class SnowflakeDataLoader:
                 self.cursor.execute(f"USE SCHEMA {schema}")
             else:
                 table = table_name
+                schema = self.connection_params['schema']
             
             # Create table if it doesn't exist
             if if_exists == 'replace':
@@ -266,7 +267,7 @@ class SnowflakeDataLoader:
                 df, 
                 table_name=table,
                 database=self.connection_params['database'],
-                schema=self.connection_params['schema'],
+                schema=schema,
                 auto_create_table=True
             )
             

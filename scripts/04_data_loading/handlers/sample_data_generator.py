@@ -381,8 +381,11 @@ class SampleDataGenerator:
         
         return pd.DataFrame(data)
     
-    def generate_all_sample_data(self, count: int = 1000, specific_table: Optional[str] = None):
+    def generate_all_sample_data(self, count: int = 10000, specific_table: Optional[str] = None):
         """Generate sample data for all tables or specific table"""
+        
+        # Ensure we're loading into RAW schema
+        os.environ['SF_SCHEMA'] = 'RAW'
         
         if specific_table:
             # Generate data for specific table
@@ -417,15 +420,15 @@ class SampleDataGenerator:
             # Generate data for all tables
             logger.info("Generating sample data for all tables")
             
-            # Generate in dependency order
+            # Generate in dependency order with realistic counts
             tables_data = [
-                ('customers', self.generate_customers(count)),
-                ('vehicles', self.generate_vehicles(count)),
-                ('shipments', self.generate_shipments(count)),
-                ('weather', self.generate_weather_data(count)),
-                ('traffic', self.generate_traffic_data(count)),
-                ('maintenance', self.generate_maintenance_data(count)),
-                ('telematics', self.generate_telematics_data(count))
+                ('customers', self.generate_customers(min(count, 500))),  # 500 customers max
+                ('vehicles', self.generate_vehicles(min(count, 200))),    # 200 vehicles max
+                ('shipments', self.generate_shipments(count)),            # Full count for shipments
+                ('weather', self.generate_weather_data(min(count, 1000))), # 1000 weather records max
+                ('traffic', self.generate_traffic_data(min(count, 1000))), # 1000 traffic records max
+                ('maintenance', self.generate_maintenance_data(min(count, 500))), # 500 maintenance records max
+                ('telematics', self.generate_telematics_data(count * 10)) # 10x more telematics data
             ]
             
             for table_name, df in tables_data:
@@ -445,7 +448,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description='Sample Data Generator')
-    parser.add_argument('--count', type=int, default=1000, help='Number of records to generate')
+    parser.add_argument('--count', type=int, default=10000, help='Number of records to generate')
     parser.add_argument('--table', help='Specific table to generate data for')
     
     args = parser.parse_args()
