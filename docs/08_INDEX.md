@@ -17,6 +17,11 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 ## Data Generation
 - [generate_sample_data.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/data/generate_sample_data.py)
 
+## Fivetran Monitoring
+- [connector_health_check.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/fivetran/monitoring/connector_health_check.sql)
+- [data_quality_alerts.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/fivetran/monitoring/data_quality_alerts.sql)
+- [sync_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/fivetran/monitoring/sync_monitoring.sql)
+
 ## dbt Configuration
 - [dbt_project.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/dbt_project.yml)
 - [exposures.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/exposures.yml)
@@ -98,6 +103,10 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [vehicles_snapshot.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/snapshots/vehicles_snapshot.sql)
 - [routes_snapshot.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/snapshots/routes_snapshot.sql)
 - [locations_snapshot.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/snapshots/locations_snapshot.sql)
+
+## Scripts
+- [configure_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/configure_environment.sh)
+- [deploy_dbt_models.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/deploy_dbt_models.sh)
 
 ## dbt Business Rules Tests
 - [test_analytics_view_consistency.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_analytics_view_consistency.sql)

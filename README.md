@@ -108,9 +108,11 @@ logistics-analytics-platform/
 │   └── ml_objects/                              # ML-specific infrastructure
 ├── 📁 data/                                     # Sample data generation
 │   └── generate_sample_data.py                  # Python script for test data
+├── 📁 fivetran/                                 # Fivetran monitoring and management
+│   └── monitoring/                              # Fivetran connector monitoring (3 files)
 ├── 📁 scripts/                                  # Utility scripts
 │   ├── setup/                                   # Environment setup scripts
-│   └── monitoring/                              # Monitoring and alerting scripts
+│   └── deployment/                              # Deployment scripts
 └── 📁 .github/workflows/                        # CI/CD pipelines
     ├── dbt_ci_cd.yml                           # Main dbt CI/CD pipeline
     ├── dbt-docs.yml                            # Documentation generation

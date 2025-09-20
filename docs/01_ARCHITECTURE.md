@@ -153,6 +153,11 @@ logistics-analytics-platform/
 │   └── dbt.yml                                  # dbt workflow configuration
 ├── 📁 data/                                      # Sample data generation
 │   └── generate_sample_data.py                  # Python script for test data
+├── 📁 fivetran/                                  # Fivetran monitoring and management
+│   └── 📁 monitoring/                           # Fivetran connector monitoring (3 files)
+│       ├── connector_health_check.sql
+│       ├── data_quality_alerts.sql
+│       └── sync_monitoring.sql
 ├── 📁 dbt/                                       # dbt project root
 │   ├── 📄 dbt_project.yml                       # Enhanced multi-environment configuration
 │   ├── 📄 packages.yml                          # Package dependencies (dbt_utils, dbt_expectations)
@@ -184,8 +189,9 @@ logistics-analytics-platform/
 │   │   │   │   ├── tbl_dim_route.sql
 │   │   │   │   ├── tbl_dim_traffic_conditions.sql
 │   │   │   │   ├── tbl_dim_vehicle.sql
-│   │   │   │   ├── schema.yml
-│   │   │   │   └── tbl_dim_weather.sql
+│   │   │   │   ├── tbl_dim_vehicle_maintenance.sql
+│   │   │   │   ├── tbl_dim_weather.sql
+│   │   │   │   └── schema.yml
 │   │   │   ├── 📁 facts/                        # Fact tables (5 models)
 │   │   │   │   ├── tbl_fact_route_conditions.sql
 │   │   │   │   ├── tbl_fact_route_performance.sql
@@ -226,23 +232,28 @@ logistics-analytics-platform/
 │   │   ├── vehicles_snapshot.sql
 │   │   ├── routes_snapshot.sql
 │   │   └── locations_snapshot.sql
-│   ├── 📁 tests/                                # Data quality tests (16+ tests)
-│   │   ├── 📁 business_rules/                   # Business logic validation
+│   ├── 📁 tests/                                # Data quality tests (20+ tests)
+│   │   ├── 📁 business_rules/                   # Business logic validation (8 tests)
+│   │   │   ├── test_analytics_view_consistency.sql
 │   │   │   ├── test_customer_tier_validation.sql
-│   │   │   ├── test_delivery_time_reasonableness.sql
-│   │   │   ├── test_fuel_efficiency_reasonable.sql
+│   │   │   ├── test_kpi_calculations.sql
 │   │   │   ├── test_maintenance_intervals.sql
-│   │   │   ├── test_route_distance_positive.sql
+│   │   │   ├── test_maintenance_schedule_compliance.sql
+│   │   │   ├── test_route_efficiency_bounds.sql
+│   │   │   ├── test_seasonal_demand_patterns.sql
 │   │   │   └── test_shipment_status_logic.sql
-│   │   ├── 📁 data_quality/                     # Data quality checks
-│   │   │   ├── test_foriegn_key_constraints.sql
+│   │   ├── 📁 data_quality/                     # Data quality checks (7 tests)
+│   │   │   ├── test_cost_reasonableness.sql
+│   │   │   ├── test_data_freshness_monitoring.sql
+│   │   │   ├── test_delivery_time_realistic.sql
+│   │   │   ├── test_fuel_efficiency_reasonable.sql
 │   │   │   ├── test_ml_feature_store_quality.sql
-│   │   │   └── test_analytics_view_consistency.sql
-│   │   └── 📁 referential_integrity/            # Relationship validation
-│   │       ├── test_customer_dimension_relationships.sql
+│   │   │   ├── test_referential_integrity_shipments.sql
+│   │   │   ├── test_route_distance_positive.sql
+│   │   │   └── test_vehicle_capacity_not_exceeded.sql
+│   │   └── 📁 referential_integrity/            # Relationship validation (2 tests)
 │   │       ├── test_fact_dimension_relationships.sql
-│   │       ├── test_vehicle_dimension_relationships.sql
-│   │       └── test_route_dimension_relationships.sql
+│   │       └── test_foreign_key_constraints.sql
 ├── 📁 snowflake/                                # Snowflake-specific objects
 │   ├── 📁 optimization/                         # Performance optimization (5 files)
 │   │   ├── automated_tasks.sql
@@ -270,13 +281,21 @@ logistics-analytics-platform/
 │   │   ├── real_time_kpis.sql
 │   │   └── task_management.sql
 │   ├── 📁 tables/                               # ML-optimized table definitions
-│   │   ├── 📁 dimensions/                       # Dimension tables (aligned with dbt)
+│   │   ├── 📁 dimensions/                       # Dimension tables (8 models)
 │   │   │   ├── tbl_dim_customer.sql
+│   │   │   ├── tbl_dim_date.sql
+│   │   │   ├── tbl_dim_location.sql
+│   │   │   ├── tbl_dim_route.sql
+│   │   │   ├── tbl_dim_traffic_conditions.sql
 │   │   │   ├── tbl_dim_vehicle.sql
-│   │   │   └── [other dimensions...]
-│   │   └── 📁 facts/                            # Fact tables (aligned with dbt)
+│   │   │   ├── tbl_dim_vehicle_maintenance.sql
+│   │   │   └── tbl_dim_weather.sql
+│   │   └── 📁 facts/                            # Fact tables (5 models)
+│   │       ├── tbl_fact_route_conditions.sql
+│   │       ├── tbl_fact_route_performance.sql
 │   │       ├── tbl_fact_shipments.sql
-│   │       └── [other facts...]
+│   │       ├── tbl_fact_vehicle_telemetry.sql
+│   │       └── tbl_fact_vehicle_utilization.sql
 │   ├── 📁 views/                                # Business intelligence views
 │   │   ├── 📁 cost_optimization/                # Cost optimization views (4 models)
 │   │   │   ├── vw_monthly_cost_forecast.sql
@@ -292,20 +311,16 @@ logistics-analytics-platform/
 │   └── 📁 ml_objects/                           # ML-specific infrastructure
 │       ├── 📁 model_registry/                   # ML model lifecycle management
 │       │   └── tbl_ml_model_registry.sql
-│       ├── 📁 serving_views/                    # Real-time ML serving
+│       ├── 📁 serving_views/                    # Real-time ML serving (2 models)
 │       │   ├── vw_ml_real_time_features.sql
 │       │   └── vw_ml_real_time_maintenance.sql
 │       └── 📁 monitoring/                       # ML monitoring & observability
 │           └── vw_ml_feature_monitoring.sql
 └── 📁 scripts/                                  # Utility scripts
     ├── 📁 setup/                                # Environment setup scripts
-    │   ├── configure_environment.sh
-    │   ├── setup_dev_environment.sh
-    │   └── setup_prod_environment.sh
-    └── 📁 monitoring/                           # Monitoring and alerting scripts
-        ├── data_quality_monitor.py
-        ├── performance_monitor.py
-        └── cost_monitor.py
+    │   └── configure_environment.sh
+    └── 📁 deployment/                           # Deployment scripts
+        └── deploy_dbt_models.sh
 ```
 
 ## Key Technical Achievements
