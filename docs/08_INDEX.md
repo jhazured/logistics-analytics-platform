@@ -112,32 +112,75 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [locations_snapshot.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/snapshots/locations_snapshot.sql)
 
 ## Scripts
-### Setup Scripts
-- [01_setup_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/01_setup_environment.sh)
-- [02_setup_snowflake.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/02_setup_snowflake.sh)
-- [configure_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/configure_environment.sh)
+### 01_setup - Infrastructure Setup
+- [configure_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/handlers/configure_environment.sh)
+- [01_database_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/01_database_setup.sql)
+- [02_schema_creation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/02_schema_creation.sql)
+- [03_warehouse_configuration.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/03_warehouse_configuration.sql)
+- [04_user_roles_permissions.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/04_user_roles_permissions.sql)
+- [05_resource_monitors.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/05_resource_monitors.sql)
 
-### Deployment Scripts
-- [03_generate_data.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/03_generate_data.sh)
-- [04_load_raw_data.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/04_load_raw_data.sh)
-- [05_build_dbt_models.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/05_build_dbt_models.sh)
-- [06_deploy_snowflake_objects.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/06_deploy_snowflake_objects.sh)
-- [07_run_final_tests.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/07_run_final_tests.sh)
-- [deploy_all.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/deploy_all.sh)
+### 02_deployment - Deployment Orchestration
+- [deploy_all.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/handlers/deploy_all.sh)
+- [00_build_and_run_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/tasks/00_build_and_run_setup.sql)
+- [00_complete_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/tasks/00_complete_setup.sql)
+- [99_verify_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/tasks/99_verify_setup.sql)
 
-### Monitoring Scripts
-- [generate_quality_report.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/monitoring/generate_quality_report.py)
+### 03_monitoring - Monitoring and Alerts
+- [setup_alert_system.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/handlers/setup_alert_system.sh)
+- [generate_quality_report.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/handlers/generate_quality_report.py)
+- [01_create_alert_tables.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/01_create_alert_tables.sql)
+- [02_create_monitoring_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/02_create_monitoring_tasks.sql)
+- [03_setup_email_alerting.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/03_setup_email_alerting.sql)
+- [04_email_alerting_system.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/04_email_alerting_system.sql)
+- [05_real_time_kpis.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/05_real_time_kpis.sql)
+- [06_alert_system.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/06_alert_system.sql)
+- [07_emergency_procedures.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/07_emergency_procedures.sql)
+- [99_verify_alert_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/03_monitoring/tasks/99_verify_alert_setup.sql)
 
-### Automation Framework
-- [auto_deployment.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/auto_deployment.py)
-- [data_quality_monitor.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/data_quality_monitor.py)
-- [performance_optimizer.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/performance_optimizer.py)
-- [ml_lifecycle_manager.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/ml_lifecycle_manager.py)
-- [master_orchestrator.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/master_orchestrator.py)
-- [automation_dashboard.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/automation_dashboard.py)
+### 04_performance - Performance Optimization
+- [optimize_performance.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/04_performance/handlers/optimize_performance.sh)
+- [01_cost_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/04_performance/tasks/01_cost_monitoring.sql)
+- [02_predictive_cost_optimization.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/04_performance/tasks/02_predictive_cost_optimization.sql)
+- [03_automated_query_optimization.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/04_performance/tasks/03_automated_query_optimization.sql)
+- [04_performance_tuning.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/04_performance/tasks/04_performance_tuning.sql)
+- [05_clustering_keys.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/04_performance/tasks/05_clustering_keys.sql)
+- [06_automated_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/04_performance/tasks/06_automated_tasks.sql)
+
+### 05_security - Security and Audit
+- [setup_audit_logging.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/handlers/setup_audit_logging.sh)
+- [01_configure_account_audit.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/01_configure_account_audit.sql)
+- [02_create_audit_infrastructure.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/02_create_audit_infrastructure.sql)
+- [03_create_audit_tables.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/03_create_audit_tables.sql)
+- [04_setup_audit_policies.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/04_setup_audit_policies.sql)
+- [05_audit_logging.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/05_audit_logging.sql)
+- [06_data_classification.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/06_data_classification.sql)
+- [07_data_masking_policies.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/07_data_masking_policies.sql)
+- [08_row_level_security.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/08_row_level_security.sql)
+- [99_verify_audit_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/05_security/tasks/99_verify_audit_setup.sql)
+
+### 06_governance - Data Governance
+- [setup_governance.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/06_governance/handlers/setup_governance.sh)
+- [01_advanced_data_lineage.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/06_governance/tasks/01_advanced_data_lineage.sql)
+
+### 07_streaming - Real-time Streaming
+- [deploy_streams_and_tasks.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/07_streaming/handlers/deploy_streams_and_tasks.sh)
+- [01_create_streams.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/07_streaming/tasks/01_create_streams.sql)
+- [02_create_monitoring_tables.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/07_streaming/tasks/02_create_monitoring_tables.sql)
+- [03_create_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/07_streaming/tasks/03_create_tasks.sql)
+- [04_task_management.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/07_streaming/tasks/04_task_management.sql)
+- [99_verify_deployment.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/07_streaming/tasks/99_verify_deployment.sql)
+
+### 08_automation - Automation Framework
+- [auto_deployment.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/08_automation/handlers/auto_deployment.py)
+- [data_quality_monitor.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/08_automation/handlers/data_quality_monitor.py)
+- [performance_optimizer.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/08_automation/handlers/performance_optimizer.py)
+- [ml_lifecycle_manager.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/08_automation/handlers/ml_lifecycle_manager.py)
+- [master_orchestrator.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/08_automation/handlers/master_orchestrator.py)
+- [automation_dashboard.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/08_automation/handlers/automation_dashboard.py)
 
 ### Automation Templates
-- [automation_dashboard.html](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/templates/automation_dashboard.html)
+- [automation_dashboard.html](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/08_automation/tasks/templates/automation_dashboard.html)
 
 ## Documentation
 - [00_README.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/00_README.md)

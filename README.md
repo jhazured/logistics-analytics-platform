@@ -144,48 +144,87 @@ logistics-analytics-platform/
 │   └── generate_sample_data.py                  # Python script for test data
 ├── 📁 fivetran/                                 # Fivetran monitoring and management
 │   └── monitoring/                              # Fivetran connector monitoring (3 files)
-├── 📁 scripts/                                  # Operational scripts
-│   ├── setup/                                   # Environment setup scripts
-│   │   ├── 01_setup_environment.sh              # Environment setup
-│   │   ├── 02_setup_snowflake.sh                # Snowflake setup
-│   │   ├── configure_environment.sh             # Environment configuration
-│   │   ├── 00_build_and_run_setup.sql           # Complete build-and-run setup
-│   │   ├── 00_complete_setup.sql                # Complete setup orchestration
-│   │   ├── 01_database_setup.sql                # Database creation
-│   │   ├── 02_schema_creation.sql               # Schema creation
-│   │   ├── 03_warehouse_configuration.sql       # Warehouse configuration
-│   │   ├── 04_user_roles_permissions.sql        # Roles and permissions
-│   │   ├── 05_resource_monitors.sql             # Resource monitors
-│   │   └── 99_verify_setup.sql                  # Setup verification
-│   ├── deployment/                              # Deployment orchestration
-│   │   ├── 03_generate_data.sh                  # Sample data generation
-│   │   ├── 04_load_raw_data.sh                  # Load raw data to Snowflake
-│   │   ├── 05_build_dbt_models.sh               # Build dbt models
-│   │   ├── 06_deploy_snowflake_objects.sh       # Deploy Snowflake objects
-│   │   ├── 07_run_final_tests.sh                # Run tests and reports
-│   │   └── deploy_all.sh                        # Master orchestration script
-│   ├── monitoring/                              # Monitoring and quality scripts
-│   │   ├── generate_quality_report.py           # Quality report generation
-│   │   ├── alerting/                            # Alerting scripts
-│   │   ├── emergency/                           # Emergency procedures
-│   │   └── real_time/                           # Real-time monitoring
-│   ├── performance/                             # Performance optimization scripts
-│   │   ├── cost_optimization/                   # Cost optimization
-│   │   ├── query_optimization/                  # Query optimization
-│   │   └── table_optimization/                  # Table optimization
-│   ├── security/                                # Security and governance scripts
-│   ├── governance/                              # Advanced data governance scripts
-│   ├── streaming/                               # Stream processing scripts
-│   │   ├── streams/                             # Stream creation
-│   │   └── tasks/                               # Task management
-│   └── automation/                              # Automation framework (6 files)
-│       ├── auto_deployment.py                   # Automated deployment pipeline
-│       ├── data_quality_monitor.py              # Data quality monitoring
-│       ├── performance_optimizer.py             # Performance optimization
-│       ├── ml_lifecycle_manager.py              # ML lifecycle management
-│       ├── master_orchestrator.py               # Master automation orchestrator
-│       ├── automation_dashboard.py              # Web dashboard
-│       └── templates/                           # Dashboard templates
+├── 📁 scripts/                                  # Operational scripts (numbered for logical sequence)
+│   ├── 01_setup/                                # Infrastructure setup and configuration
+│   │   ├── handlers/                            # Shell script handlers
+│   │   │   └── configure_environment.sh          # Environment configuration (dev/staging/prod)
+│   │   └── tasks/                               # SQL setup tasks
+│   │       ├── 01_database_setup.sql             # Database creation
+│   │       ├── 02_schema_creation.sql            # Schema creation
+│   │       ├── 03_warehouse_configuration.sql    # Warehouse configuration
+│   │       ├── 04_user_roles_permissions.sql     # Roles and permissions
+│   │       └── 05_resource_monitors.sql          # Resource monitors
+│   ├── 02_deployment/                           # Complete deployment orchestration (Ansible-like structure)
+│   │   ├── tasks/                               # SQL deployment tasks
+│   │   │   ├── 00_build_and_run_setup.sql       # Complete build-and-run setup
+│   │   │   ├── 00_complete_setup.sql            # Complete setup orchestration
+│   │   │   └── 99_verify_setup.sql              # Setup verification
+│   │   └── handlers/                            # Single deployment handler
+│   │       └── deploy_all.sh                    # Complete deployment orchestration
+│   ├── 03_monitoring/                           # Monitoring and quality scripts (Ansible-like structure)
+│   │   ├── tasks/                               # SQL monitoring tasks
+│   │   │   ├── 01_create_alert_tables.sql       # Alert table creation
+│   │   │   ├── 02_create_monitoring_tasks.sql   # Monitoring task creation
+│   │   │   ├── 03_setup_email_alerting.sql      # Email alerting setup
+│   │   │   ├── 04_email_alerting_system.sql     # Email alerting configuration
+│   │   │   ├── 05_real_time_kpis.sql            # Real-time KPI monitoring
+│   │   │   ├── 06_alert_system.sql              # Alert system setup
+│   │   │   ├── 07_emergency_procedures.sql      # Emergency procedures
+│   │   │   └── 99_verify_alert_setup.sql        # Alert system verification
+│   │   ├── handlers/                            # Shell and Python monitoring handlers
+│   │   │   ├── setup_alert_system.sh            # Alert system deployment script
+│   │   │   └── generate_quality_report.py       # Quality report generation
+│   │   └── reports/                             # Generated monitoring reports
+│   │       ├── quality_report.html              # HTML quality report
+│   │       └── quality_report.json              # JSON quality report
+│   ├── 04_performance/                          # Performance optimization scripts (Ansible-like structure)
+│   │   ├── tasks/                               # SQL performance tasks
+│   │   │   ├── 01_cost_monitoring.sql           # Cost monitoring setup
+│   │   │   ├── 02_predictive_cost_optimization.sql # Predictive cost optimization
+│   │   │   ├── 03_automated_query_optimization.sql # Automated query optimization
+│   │   │   ├── 04_performance_tuning.sql        # Performance tuning procedures
+│   │   │   ├── 05_clustering_keys.sql           # Clustering key optimization
+│   │   │   └── 06_automated_tasks.sql           # Automated task management
+│   │   └── handlers/                            # Shell script handlers
+│   │       └── optimize_performance.sh          # Performance optimization orchestration
+│   ├── 05_security/                             # Security and audit scripts (Ansible-like structure)
+│   │   ├── tasks/                               # SQL security tasks
+│   │   │   ├── 01_configure_account_audit.sql   # Account-level audit configuration
+│   │   │   ├── 02_create_audit_infrastructure.sql # Audit database and schema creation
+│   │   │   ├── 03_create_audit_tables.sql       # Audit table creation
+│   │   │   ├── 04_setup_audit_policies.sql      # Audit policy setup
+│   │   │   ├── 05_audit_logging.sql             # Audit logging setup
+│   │   │   ├── 06_data_classification.sql       # Data classification policies
+│   │   │   ├── 07_data_masking_policies.sql     # Data masking policies
+│   │   │   ├── 08_row_level_security.sql        # Row-level security setup
+│   │   │   └── 99_verify_audit_setup.sql        # Audit setup verification
+│   │   └── handlers/                            # Shell security handlers
+│   │       └── setup_audit_logging.sh           # Audit logging deployment script
+│   ├── 06_governance/                           # Advanced data governance scripts (Ansible-like structure)
+│   │   ├── tasks/                               # SQL governance tasks
+│   │   │   └── 01_advanced_data_lineage.sql     # Advanced data lineage setup
+│   │   └── handlers/                            # Shell governance handlers
+│   │       └── setup_governance.sh              # Governance setup orchestration
+│   ├── 07_streaming/                            # Stream processing scripts (Ansible-like structure)
+│   │   ├── tasks/                               # SQL streaming tasks
+│   │   │   ├── 01_create_streams.sql            # Stream creation
+│   │   │   ├── 02_create_monitoring_tables.sql  # Monitoring table creation
+│   │   │   ├── 03_create_tasks.sql              # Task creation
+│   │   │   ├── 04_task_management.sql           # Task management procedures
+│   │   │   └── 99_verify_deployment.sql         # Deployment verification
+│   │   └── handlers/                            # Shell streaming handlers
+│   │       └── deploy_streams_and_tasks.sh      # Stream and task deployment script
+│   └── 08_automation/                           # Automation framework (Python scripts)
+│       ├── handlers/                            # Python automation handlers
+│       │   ├── auto_deployment.py               # Automated deployment pipeline
+│       │   ├── data_quality_monitor.py          # Data quality monitoring
+│       │   ├── performance_optimizer.py         # Performance optimization
+│       │   ├── ml_lifecycle_manager.py          # ML lifecycle management
+│       │   ├── master_orchestrator.py           # Master automation orchestrator
+│       │   └── automation_dashboard.py          # Web dashboard
+│       └── tasks/                               # Automation templates
+│           └── templates/                       # Dashboard templates
+│               └── automation_dashboard.html    # HTML dashboard template
 └── 📁 .github/workflows/                        # CI/CD pipelines (5 files)
     ├── dbt_ci_cd.yml                           # Main dbt CI/CD pipeline
     ├── dbt-docs.yml                            # Documentation generation

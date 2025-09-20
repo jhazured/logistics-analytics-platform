@@ -1,0 +1,107 @@
+#!/bin/bash
+
+# Snowflake Audit Logging Setup Script
+# This script sets up comprehensive audit logging for the logistics analytics platform
+
+set -e  # Exit on any error
+
+# Configuration
+SNOWFLAKE_ACCOUNT="${SNOWFLAKE_ACCOUNT:-}"
+SNOWFLAKE_USER="${SNOWFLAKE_USER:-}"
+SNOWFLAKE_PASSWORD="${SNOWFLAKE_PASSWORD:-}"
+SNOWFLAKE_WAREHOUSE="${SNOWFLAKE_WAREHOUSE:-COMPUTE_WH}"
+SNOWFLAKE_DATABASE="${SNOWFLAKE_DATABASE:-AUDIT_DB}"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Logging function
+log() {
+    echo -e "${GREEN}[$(date +'%Y-%m-%d %H:%M:%S')] $1${NC}"
+}
+
+error() {
+    echo -e "${RED}[$(date +'%Y-%m-%d %H:%M:%S')] ERROR: $1${NC}"
+    exit 1
+}
+
+warn() {
+    echo -e "${YELLOW}[$(date +'%Y-%m-%d %H:%M:%S')] WARNING: $1${NC}"
+}
+
+# Check if required environment variables are set
+check_env() {
+    if [[ -z "$SNOWFLAKE_ACCOUNT" || -z "$SNOWFLAKE_USER" || -z "$SNOWFLAKE_PASSWORD" ]]; then
+        error "Required Snowflake environment variables not set. Please set SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, and SNOWFLAKE_PASSWORD"
+    fi
+}
+
+# Execute SQL file
+execute_sql() {
+    local sql_file="$1"
+    local description="$2"
+    
+    log "Executing: $description"
+    
+    if [[ ! -f "$sql_file" ]]; then
+        error "SQL file not found: $sql_file"
+    fi
+    
+    # Execute SQL using snowsql or snowflake CLI
+    if command -v snowsql &> /dev/null; then
+        snowsql -a "$SNOWFLAKE_ACCOUNT" -u "$SNOWFLAKE_USER" -p "$SNOWFLAKE_PASSWORD" -w "$SNOWFLAKE_WAREHOUSE" -d "$SNOWFLAKE_DATABASE" -f "$sql_file"
+    elif command -v snowflake &> /dev/null; then
+        snowflake -a "$SNOWFLAKE_ACCOUNT" -u "$SNOWFLAKE_USER" -p "$SNOWFLAKE_PASSWORD" -w "$SNOWFLAKE_WAREHOUSE" -d "$SNOWFLAKE_DATABASE" -f "$sql_file"
+    else
+        error "Neither snowsql nor snowflake CLI found. Please install one of them."
+    fi
+    
+    if [[ $? -eq 0 ]]; then
+        log "Successfully executed: $description"
+    else
+        error "Failed to execute: $description"
+    fi
+}
+
+# Main setup function
+setup_audit_logging() {
+    log "Starting audit logging setup..."
+    
+    # Step 1: Configure account-level settings
+    log "Step 1: Configuring account-level audit settings..."
+    execute_sql "tasks/01_configure_account_audit.sql" "Configure account-level audit settings"
+    
+    # Step 2: Create audit database and schema
+    log "Step 2: Creating audit database and schema..."
+    execute_sql "tasks/02_create_audit_infrastructure.sql" "Create audit database and schema"
+    
+    # Step 3: Create audit tables
+    log "Step 3: Creating audit tables..."
+    execute_sql "tasks/03_create_audit_tables.sql" "Create audit tables"
+    
+    # Step 4: Set up audit policies
+    log "Step 4: Setting up audit policies..."
+    execute_sql "tasks/04_setup_audit_policies.sql" "Set up audit policies"
+    
+    # Step 5: Verify setup
+    log "Step 5: Verifying audit logging setup..."
+    execute_sql "tasks/99_verify_audit_setup.sql" "Verify audit logging setup"
+    
+    log "Audit logging setup completed successfully!"
+}
+
+# Main execution
+main() {
+    log "=== Snowflake Audit Logging Setup Script ==="
+    
+    check_env
+    setup_audit_logging
+    
+    log "=== Audit logging setup completed successfully ==="
+}
+
+# Run main function
+main "$@"
