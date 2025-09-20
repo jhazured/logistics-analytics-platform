@@ -28,6 +28,21 @@ venv/
 *.swo
 *~
 
+# Hidden files and directories
+.*/
+.*
+!.gitignore
+!.env.example
+!.sqlfluff
+
+# Common hidden files
+.htaccess
+.htpasswd
+.env.local
+.env.development
+.env.test
+.env.production
+
 # Temporary files
 *.tmp
 *.temp
