@@ -10,7 +10,7 @@
 
 WITH model_execution_simulation AS (
     SELECT 
-        'view_haul_segmentation' AS model_name,
+        'ml_haul_segmentation' AS model_name,
         'analytics.ml_features' AS schema_name,
         'table' AS materialization,
         'success' AS status,
@@ -22,7 +22,7 @@ WITH model_execution_simulation AS (
     UNION ALL
     
     SELECT 
-        'view_customer_behavior_segments' AS model_name,
+        'ml_customer_behavior_segments' AS model_name,
         'analytics.ml_features' AS schema_name,
         'table' AS materialization,
         'success' AS status,
@@ -34,7 +34,7 @@ WITH model_execution_simulation AS (
     UNION ALL
     
     SELECT 
-        'view_route_optimization_features' AS model_name,
+        'ml_consolidated_feature_store' AS model_name,
         'analytics.ml_features' AS schema_name,
         'table' AS materialization,
         'success' AS status,
@@ -46,9 +46,9 @@ WITH model_execution_simulation AS (
     UNION ALL
     
     SELECT 
-        'view_operational_performance_rolling' AS model_name,
+        'ml_rolling_analytics' AS model_name,
         'analytics.rolling_analytics' AS schema_name,
-        'table' AS materialization,
+        'view' AS materialization,
         'success' AS status,
         67.8 AS execution_time_seconds,
         89000 AS rows_affected,
@@ -58,7 +58,7 @@ WITH model_execution_simulation AS (
     UNION ALL
     
     SELECT 
-        'view_performance_dashboard' AS model_name,
+        'view_consolidated_dashboard' AS model_name,
         'analytics.business_intelligence' AS schema_name,
         'view' AS materialization,
         'success' AS status,

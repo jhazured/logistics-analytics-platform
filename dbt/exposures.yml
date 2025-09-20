@@ -8,8 +8,7 @@ exposures:
       name: Analytics Team
       email: analytics@example.com
     depends_on:
-      - ref('performance_dashboard')
-      - ref('executive_dashboard_trending')
+      - ref('view_consolidated_dashboard')
     description: Executive KPIs and YoY trends
 
   - name: ml_feature_store
@@ -19,9 +18,9 @@ exposures:
       name: Data Science
       email: ds@example.com
     depends_on:
-      - ref('ml_feature_store')
-      - ref('ml_route_optimization_features')
-      - ref('ml_predictive_maintenance_features')
+      - ref('ml_consolidated_feature_store')
+      - ref('ml_rolling_analytics')
+      - ref('ml_maintenance_features')
     description: Central feature store powering ML models
 
   - name: data_quality_monitoring

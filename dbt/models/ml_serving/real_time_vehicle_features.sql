@@ -22,7 +22,7 @@ WITH latest_vehicle_features AS (
             PARTITION BY vehicle_id 
             ORDER BY feature_date DESC, feature_created_at DESC
         ) as rn
-    FROM {{ ref('ml_feature_store') }}
+    FROM {{ ref('ml_consolidated_feature_store') }}
     WHERE feature_date >= CURRENT_DATE() - 3
 )
 SELECT 

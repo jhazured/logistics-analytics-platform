@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: consolidated_dashboard
+  - name: view_consolidated_dashboard
     description: |
       Comprehensive business intelligence dashboard combining performance and executive analytics:
       - Operational metrics (on-time delivery, route efficiency, capacity utilization)
@@ -80,7 +80,7 @@ models:
           - accepted_values:
               values: ['performance_alert', 'satisfaction_alert', 'revenue_alert', 'normal']
 
-  - name: sustainability_metrics
+  - name: view_sustainability_metrics
     description: |
       Environmental impact and sustainability tracking:
       - Carbon emissions tracking

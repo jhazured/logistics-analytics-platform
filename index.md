@@ -35,11 +35,11 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [weather_impact_calculations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/weather_impact_calculations.sql)
 
 ## dbt Analytics Models
-- [ai_recommendations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/ai_recommendations.sql)
-- [consolidated_dashboard.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/consolidated_dashboard.sql)
-- [data_freshness_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/data_freshness_monitoring.sql)
+- [view_ai_recommendations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/view_ai_recommendations.sql)
+- [view_consolidated_dashboard.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/view_consolidated_dashboard.sql)
+- [view_data_freshness_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/view_data_freshness_monitoring.sql)
 - [schema.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/schema.yml)
-- [sustainability_metrics.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/sustainability_metrics.sql)
+- [view_sustainability_metrics.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/view_sustainability_metrics.sql)
 
 ## dbt Dimension Models
 - [dim_customer.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/dimensions/dim_customer.sql)
@@ -186,20 +186,28 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [view_warehouse_cost_analysis.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/cost_optimization/view_warehouse_cost_analysis.sql)
 
 ## Snowflake Views - ML Features
-- [view_customer_behavior_segments.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/ml_features/view_customer_behavior_segments.sql)
-- [view_haul_segmentation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/ml_features/view_haul_segmentation.sql)
-- [view_ml_feature_store.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/ml_features/view_ml_feature_store.sql)
-- [view_predictive_maintenance_features.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/ml_features/view_predictive_maintenance_features.sql)
-- [view_route_optimization_features.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/ml_features/view_route_optimization_features.sql)
+*Note: ML feature views have been consolidated into dbt models for better maintainability and consistency.*
 
 ## Snowflake Views - Monitoring
-- [view_data_freshness_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/monitoring/view_data_freshness_monitoring.sql)
 - [view_data_quality_summary.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/monitoring/view_data_quality_summary.sql)
 - [view_dbt_run_results.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/monitoring/view_dbt_run_results.sql)
 - [view_fivetran_sync_status.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/monitoring/view_fivetran_sync_status.sql)
 
 ## Snowflake Views - Rolling Analytics
-- [view_rolling_analytics.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/rolling_analytics/view_rolling_analytics.sql)
+*Note: Rolling analytics views have been consolidated into dbt models for better maintainability and consistency.*
+
+## Snowflake ML Objects - Feature Stores
+*Note: ML feature store tables have been consolidated into dbt models for better maintainability and consistency.*
+
+## Snowflake ML Objects - Model Registry
+- [tbl_ml_model_registry.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/ml_objects/model_registry/tbl_ml_model_registry.sql)
+
+## Snowflake ML Objects - Serving Views
+- [view_ml_real_time_features.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/ml_objects/serving_views/view_ml_real_time_features.sql)
+- [view_ml_real_time_maintenance.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/ml_objects/serving_views/view_ml_real_time_maintenance.sql)
+
+## Snowflake ML Objects - Monitoring
+- [view_ml_feature_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/ml_objects/monitoring/view_ml_feature_monitoring.sql)
 
 ## Source Database
 - [copy_into.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/source-database/copy_into.sql)

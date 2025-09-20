@@ -112,10 +112,10 @@ logistics-analytics-platform/
 │   ├── 📁 models/                               # dbt models (40+ models, 17+ tests)
 │   │   ├── 📁 marts/                            # Business logic layer
 │   │   │   ├── 📁 analytics/                    # Advanced analytics views (4 models)
-│   │   │   │   ├── ai_recommendations.sql
-│   │   │   │   ├── consolidated_dashboard.sql
-│   │   │   │   ├── data_freshness_monitoring.sql
-│   │   │   │   ├── sustainability_metrics.sql
+│   │   │   │   ├── view_ai_recommendations.sql
+│   │   │   │   ├── view_consolidated_dashboard.sql
+│   │   │   │   ├── view_data_freshness_monitoring.sql
+│   │   │   │   ├── view_sustainability_metrics.sql
 │   │   │   │   └── schema.yml
 │   │   │   ├── 📁 dimensions/                   # Dimension tables (8 models)
 │   │   │   │   ├── dim_date.sql
@@ -222,30 +222,21 @@ logistics-analytics-platform/
 │   │   │   ├── view_query_cost_analysis.sql
 │   │   │   ├── view_resource_monitor_usage.sql
 │   │   │   └── view_warehouse_cost_analysis.sql
-│   │   ├── 📁 ml_features/                      # ML feature views (5 models)
-│   │   │   ├── view_customer_behavior_segments.sql
-│   │   │   ├── view_haul_segmentation.sql
-│   │   │   ├── view_ml_feature_store.sql
-│   │   │   ├── view_predictive_maintenance_features.sql
-│   │   │   └── view_route_optimization_features.sql
-│   │   ├── 📁 monitoring/                       # Monitoring views (4 models)
-│   │   │   ├── view_data_freshness_monitoring.sql
+│   │   ├── 📁 ml_features/                      # ML feature views (0 models - consolidated into dbt)
+│   │   ├── 📁 monitoring/                       # Monitoring views (3 models)
 │   │   │   ├── view_data_quality_summary.sql
 │   │   │   ├── view_dbt_run_results.sql
 │   │   │   └── view_fivetran_sync_status.sql
-│   │   └── 📁 rolling_analytics/                # Rolling analytics views (1 model)
-│   │       └── view_rolling_analytics.sql
+│   │   └── 📁 rolling_analytics/                # Rolling analytics views (0 models - consolidated into dbt)
 │   └── 📁 ml_objects/                           # ML-specific infrastructure
-│       ├── 📁 feature_stores/                   # ML feature store tables
-│       │   ├── ml_feature_store.sql
-│       │   └── ml_maintenance_features.sql
+│       ├── 📁 feature_stores/                   # ML feature store tables (0 models - consolidated into dbt)
 │       ├── 📁 model_registry/                   # ML model lifecycle management
-│       │   └── ml_model_registry.sql
+│       │   └── tbl_ml_model_registry.sql
 │       ├── 📁 serving_views/                    # Real-time ML serving
-│       │   ├── real_time_features.sql
-│       │   └── real_time_maintenance_features.sql
+│       │   ├── view_ml_real_time_features.sql
+│       │   └── view_ml_real_time_maintenance.sql
 │       └── 📁 monitoring/                       # ML monitoring & observability
-│           └── ml_feature_monitoring.sql
+│           └── view_ml_feature_monitoring.sql
 └── 📁 source-database/                          # Legacy data migration
 ```
 
@@ -450,12 +441,10 @@ WHERE customer_id = ? AND vehicle_id = ?;
    @snowflake/optimization/automated_tasks.sql
    
    -- Deploy ML infrastructure
-   @snowflake/ml_objects/feature_stores/ml_feature_store.sql
-   @snowflake/ml_objects/feature_stores/ml_maintenance_features.sql
-   @snowflake/ml_objects/model_registry/ml_model_registry.sql
-   @snowflake/ml_objects/serving_views/real_time_features.sql
-   @snowflake/ml_objects/serving_views/real_time_maintenance_features.sql
-   @snowflake/ml_objects/monitoring/ml_feature_monitoring.sql
+   @snowflake/ml_objects/model_registry/tbl_ml_model_registry.sql
+   @snowflake/ml_objects/serving_views/view_ml_real_time_features.sql
+   @snowflake/ml_objects/serving_views/view_ml_real_time_maintenance.sql
+   @snowflake/ml_objects/monitoring/view_ml_feature_monitoring.sql
    ```
 
 5. **Deploy dbt Models**
