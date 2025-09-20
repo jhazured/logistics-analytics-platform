@@ -104,6 +104,7 @@ logistics-analytics-platform/
 │   │   │   ├── dimensions/                       # Dimension tables (8 models)
 │   │   │   ├── facts/                           # Fact tables (5 models)
 │   │   │   └── ml_features/                     # ML feature engineering (5 models)
+│   │   ├── ml_models/                            # ML model training pipeline (2 files)
 │   │   ├── ml_serving/                          # Real-time ML serving (2 models)
 │   │   ├── raw/                                 # Incremental source definitions (7 models)
 │   │   └── staging/                             # Data cleaning layer (9 models)
@@ -111,10 +112,12 @@ logistics-analytics-platform/
 │   ├── tests/                                   # Data quality tests (16+ tests)
 │   └── snapshots/                               # Change data capture (4 models)
 ├── 📁 snowflake/                                # Snowflake-specific objects
-│   ├── optimization/                            # Performance optimization (5 files)
+│   ├── governance/                              # Advanced data governance (1 file)
+│   ├── monitoring/                              # Monitoring & alerting (5 files)
+│   ├── performance/                             # Performance optimization (6 files)
 │   ├── security/                                # Security and governance (4 files)
 │   ├── setup/                                   # Environment setup (5 files)
-│   ├── streaming/                               # Real-time processing (7 files)
+│   ├── streaming/                               # Stream processing (4 files)
 │   ├── tables/                                  # ML-optimized table definitions
 │   ├── views/                                   # Business intelligence views
 │   └── ml_objects/                              # ML-specific infrastructure
@@ -125,10 +128,11 @@ logistics-analytics-platform/
 ├── 📁 scripts/                                  # Utility scripts
 │   ├── setup/                                   # Environment setup scripts
 │   └── deployment/                              # Deployment scripts
-└── 📁 .github/workflows/                        # CI/CD pipelines
+└── 📁 .github/workflows/                        # CI/CD pipelines (4 files)
     ├── dbt_ci_cd.yml                           # Main dbt CI/CD pipeline
     ├── dbt-docs.yml                            # Documentation generation
-    └── dbt.yml                                 # dbt workflow configuration
+    ├── dbt.yml                                 # dbt workflow configuration
+    └── ml_training.yml                         # ML model training pipeline
 ```
 
 ## 🚀 Getting Started

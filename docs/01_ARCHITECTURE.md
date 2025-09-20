@@ -256,16 +256,26 @@ logistics-analytics-platform/
 │   │       ├── test_fact_dimension_relationships.sql
 │   │       └── test_foreign_key_constraints.sql
 ├── 📁 snowflake/                                # Snowflake-specific objects
-│   ├── 📁 optimization/                         # Performance optimization (7 files)
-│   │   ├── automated_tasks.sql
-│   │   ├── clustering_keys.sql
-│   │   ├── cost_monitoring.sql
-│   │   ├── emergency_procedures.sql
-│   │   ├── performance_tuning.sql
-│   │   ├── predictive_cost_optimization.sql
-│   │   └── automated_query_optimization.sql
 │   ├── 📁 governance/                           # Advanced data governance (1 file)
 │   │   └── advanced_data_lineage.sql
+│   ├── 📁 monitoring/                           # Monitoring & alerting (5 files)
+│   │   ├── alerting/
+│   │   │   ├── alert_system.sql
+│   │   │   └── email_alerting_system.sql
+│   │   ├── emergency/
+│   │   │   └── emergency_procedures.sql
+│   │   └── real_time/
+│   │       └── real_time_kpis.sql
+│   ├── 📁 performance/                          # Performance optimization (6 files)
+│   │   ├── cost_optimization/
+│   │   │   ├── cost_monitoring.sql
+│   │   │   └── predictive_cost_optimization.sql
+│   │   ├── query_optimization/
+│   │   │   ├── automated_query_optimization.sql
+│   │   │   └── performance_tuning.sql
+│   │   └── table_optimization/
+│   │       ├── automated_tasks.sql
+│   │       └── clustering_keys.sql
 │   ├── 📁 security/                             # Security and governance (4 files)
 │   │   ├── audit_logging.sql
 │   │   ├── data_classification.sql
@@ -277,14 +287,13 @@ logistics-analytics-platform/
 │   │   ├── 03_warehouse_configuration.sql
 │   │   ├── 04_user_roles_permissions.sql
 │   │   └── 05_resource_monitors.sql
-│   ├── 📁 streaming/                            # Real-time processing (7 files)
-│   │   ├── alert_system.sql
-│   │   ├── create_streams.sql
-│   │   ├── create_tasks.sql
-│   │   ├── deploy_streams_and_tasks.sql
-│   │   ├── email_alerting_system.sql
-│   │   ├── real_time_kpis.sql
-│   │   └── task_management.sql
+│   ├── 📁 streaming/                            # Stream processing (4 files)
+│   │   ├── streams/
+│   │   │   └── create_streams.sql
+│   │   └── tasks/
+│   │       ├── create_tasks.sql
+│   │       ├── deploy_streams_and_tasks.sql
+│   │       └── task_management.sql
 │   ├── 📁 tables/                               # ML-optimized table definitions
 │   │   ├── 📁 dimensions/                       # Dimension tables (8 models)
 │   │   │   ├── tbl_dim_customer.sql
