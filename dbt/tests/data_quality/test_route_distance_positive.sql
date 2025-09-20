@@ -6,31 +6,31 @@ WITH route_distance_validation AS (
         route_id,
         origin_location_id,
         destination_location_id,
-        distance_miles,
+        distance_km,
         estimated_travel_time_hours,
         route_type,
         
         -- Check for negative distances
         CASE 
-            WHEN distance_miles < 0 THEN 1 
+            WHEN distance_km < 0 THEN 1 
             ELSE 0 
         END as negative_distance,
         
         -- Check for zero distances
         CASE 
-            WHEN distance_miles = 0 THEN 1 
+            WHEN distance_km = 0 THEN 1 
             ELSE 0 
         END as zero_distance,
         
         -- Check for extremely long distances (possible data error)
         CASE 
-            WHEN distance_miles > 5000 THEN 1 
+            WHEN distance_km > 8000 THEN 1 
             ELSE 0 
         END as extremely_long_distance,
         
         -- Check for missing distances
         CASE 
-            WHEN distance_miles IS NULL THEN 1 
+            WHEN distance_km IS NULL THEN 1 
             ELSE 0 
         END as missing_distance,
         
@@ -54,15 +54,15 @@ WITH route_distance_validation AS (
         
         -- Calculate expected travel time based on distance and route type
         CASE 
-            WHEN route_type = 'HIGHWAY' THEN distance_miles / 60.0
-            WHEN route_type = 'URBAN' THEN distance_miles / 25.0
-            WHEN route_type = 'RURAL' THEN distance_miles / 40.0
-            ELSE distance_miles / 35.0
+            WHEN route_type = 'HIGHWAY' THEN distance_km / 100.0
+            WHEN route_type = 'URBAN' THEN distance_km / 40.0
+            WHEN route_type = 'RURAL' THEN distance_km / 65.0
+            ELSE distance_km / 55.0
         END as expected_travel_time,
         
         -- Check if actual travel time is reasonable compared to expected
         CASE 
-            WHEN ABS(estimated_travel_time_hours - (distance_miles / 35.0)) > distance_miles / 35.0 * 0.5 THEN 1 
+            WHEN ABS(estimated_travel_time_hours - (distance_km / 55.0)) > distance_km / 55.0 * 0.5 THEN 1 
             ELSE 0 
         END as unreasonable_travel_time
         
@@ -74,7 +74,7 @@ SELECT
     route_id,
     origin_location_id,
     destination_location_id,
-    distance_miles,
+    distance_km,
     estimated_travel_time_hours,
     route_type,
     expected_travel_time,

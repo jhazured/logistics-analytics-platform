@@ -10,8 +10,7 @@ WITH customer_segmentation AS (
         DATEDIFF('day', customer_since_date, CURRENT_DATE()) as customer_tenure_days,
         CASE 
             WHEN customer_since_date IS NULL THEN 'UNKNOWN'
-            WHEN credit_limit_usd >= 1000000 AND DATEDIFF('day', customer_since_date, CURRENT_DATE()) >= 365 THEN 'PREMIUM'
-            WHEN credit_limit_usd >= 1000000 AND DATEDIFF('day', customer_since_date, CURRENT_DATE()) < 365 THEN 'PREMIUM_NEW'
+            WHEN credit_limit_usd >= 1000000 THEN 'PREMIUM'
             WHEN credit_limit_usd >= 100000 THEN 'STANDARD'
             WHEN credit_limit_usd >= 10000 THEN 'BASIC'
             ELSE 'BASIC'
