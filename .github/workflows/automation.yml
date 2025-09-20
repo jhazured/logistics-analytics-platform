@@ -1,0 +1,339 @@
+name: 🤖 Automation Pipeline
+
+on:
+  schedule:
+    # Run automation checks every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      automation_type:
+        description: 'Type of automation to run'
+        required: true
+        default: 'health_check'
+        type: choice
+        options:
+          - health_check
+          - deploy
+          - report
+          - parallel
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'prod'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      automation_scripts:
+        description: 'Specific automation scripts (comma-separated)'
+        required: false
+        default: 'data_quality,performance,ml_lifecycle'
+        type: string
+
+env:
+  DBT_PROFILES_DIR: ./dbt
+  DBT_PROJECT_DIR: ./dbt
+
+jobs:
+  # Health Check Job
+  health_check:
+    name: 🏥 Health Check
+    runs-on: ubuntu-latest
+    if: github.event.inputs.automation_type == 'health_check' || github.event.inputs.automation_type == '' || github.event_name == 'schedule'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pandas numpy scikit-learn joblib
+          pip install snowflake-connector-python snowflake-snowpark-python
+          pip install dbt-snowflake schedule
+
+      - name: 🔐 Set up Snowflake credentials
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          echo "Snowflake credentials configured"
+
+      - name: 🏥 Run Health Check
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          python scripts/automation/master_orchestrator.py \
+            --environment ${{ github.event.inputs.environment || 'prod' }} \
+            --action health_check
+
+      - name: 📊 Upload Health Check Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: health-check-results
+          path: logs/
+
+  # Data Quality Monitoring Job
+  data_quality_monitoring:
+    name: 🔍 Data Quality Monitoring
+    runs-on: ubuntu-latest
+    if: github.event.inputs.automation_type == 'parallel' || github.event_name == 'schedule'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pandas numpy
+          pip install snowflake-connector-python snowflake-snowpark-python
+          pip install schedule
+
+      - name: 🔍 Run Data Quality Monitoring
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          python scripts/automation/data_quality_monitor.py \
+            --environment ${{ github.event.inputs.environment || 'prod' }} \
+            --once
+
+      - name: 📊 Upload Data Quality Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: data-quality-results
+          path: logs/
+
+  # Performance Optimization Job
+  performance_optimization:
+    name: ⚡ Performance Optimization
+    runs-on: ubuntu-latest
+    if: github.event.inputs.automation_type == 'parallel' || github.event_name == 'schedule'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pandas numpy
+          pip install snowflake-connector-python snowflake-snowpark-python
+          pip install schedule
+
+      - name: ⚡ Run Performance Optimization
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          python scripts/automation/performance_optimizer.py \
+            --environment ${{ github.event.inputs.environment || 'prod' }} \
+            --once
+
+      - name: 📊 Upload Performance Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: performance-results
+          path: logs/
+
+  # ML Lifecycle Management Job
+  ml_lifecycle_management:
+    name: 🤖 ML Lifecycle Management
+    runs-on: ubuntu-latest
+    if: github.event.inputs.automation_type == 'parallel' || github.event_name == 'schedule'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pandas numpy scikit-learn joblib
+          pip install snowflake-connector-python snowflake-snowpark-python
+          pip install schedule
+
+      - name: 🤖 Run ML Lifecycle Management
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          python scripts/automation/ml_lifecycle_manager.py \
+            --environment ${{ github.event.inputs.environment || 'prod' }} \
+            --once
+
+      - name: 📊 Upload ML Lifecycle Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: ml-lifecycle-results
+          path: logs/
+
+  # Automated Deployment Job
+  auto_deployment:
+    name: 🚀 Automated Deployment
+    runs-on: ubuntu-latest
+    if: github.event.inputs.automation_type == 'deploy'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pandas numpy scikit-learn joblib
+          pip install snowflake-connector-python snowflake-snowpark-python
+          pip install dbt-snowflake
+
+      - name: 🚀 Run Automated Deployment
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          python scripts/automation/auto_deployment.py \
+            --environment ${{ github.event.inputs.environment || 'prod' }}
+
+      - name: 📊 Upload Deployment Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: deployment-results
+          path: logs/
+
+  # Parallel Automation Job
+  parallel_automation:
+    name: 🔄 Parallel Automation
+    runs-on: ubuntu-latest
+    if: github.event.inputs.automation_type == 'parallel'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pandas numpy scikit-learn joblib
+          pip install snowflake-connector-python snowflake-snowpark-python
+          pip install dbt-snowflake schedule
+
+      - name: 🔄 Run Parallel Automation
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          python scripts/automation/master_orchestrator.py \
+            --environment ${{ github.event.inputs.environment || 'prod' }} \
+            --action parallel \
+            --automation ${{ github.event.inputs.automation_scripts || 'data_quality,performance,ml_lifecycle' }}
+
+      - name: 📊 Upload Parallel Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: parallel-automation-results
+          path: logs/
+
+  # Automation Report Job
+  automation_report:
+    name: 📊 Automation Report
+    runs-on: ubuntu-latest
+    if: github.event.inputs.automation_type == 'report' || github.event_name == 'schedule'
+    needs: [health_check, data_quality_monitoring, performance_optimization, ml_lifecycle_management]
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pandas numpy scikit-learn joblib
+          pip install snowflake-connector-python snowflake-snowpark-python
+          pip install dbt-snowflake schedule
+
+      - name: 📊 Generate Automation Report
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: |
+          python scripts/automation/master_orchestrator.py \
+            --environment ${{ github.event.inputs.environment || 'prod' }} \
+            --action report
+
+      - name: 📊 Upload Automation Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: automation-report
+          path: logs/
+
+  # Notification Job
+  send_notifications:
+    name: 📧 Send Notifications
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [health_check, data_quality_monitoring, performance_optimization, ml_lifecycle_management, automation_report]
+    
+    steps:
+      - name: 📧 Send Success Notification
+        if: ${{ needs.health_check.result == 'success' && needs.data_quality_monitoring.result == 'success' && needs.performance_optimization.result == 'success' && needs.ml_lifecycle_management.result == 'success' }}
+        run: |
+          echo "✅ All automation tasks completed successfully"
+          # Implement email notification here
+
+      - name: 📧 Send Failure Notification
+        if: ${{ needs.health_check.result == 'failure' || needs.data_quality_monitoring.result == 'failure' || needs.performance_optimization.result == 'failure' || needs.ml_lifecycle_management.result == 'failure' }}
+        run: |
+          echo "❌ Some automation tasks failed"
+          # Implement email notification here

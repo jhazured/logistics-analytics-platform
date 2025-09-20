@@ -57,6 +57,7 @@ This repository contains a **production-ready ML data product** for logistics an
 - **Advanced Analytics**: 22+ analytical views with rolling time windows
 - **Enterprise Security**: Role-based access control and data masking
 - **CI/CD Pipeline**: Automated testing, deployment, and monitoring
+- **Comprehensive Automation**: Data quality monitoring, performance optimization, ML lifecycle management
 
 ## 📊 Business Impact
 
@@ -127,12 +128,21 @@ logistics-analytics-platform/
 │   └── monitoring/                              # Fivetran connector monitoring (3 files)
 ├── 📁 scripts/                                  # Utility scripts
 │   ├── setup/                                   # Environment setup scripts
-│   └── deployment/                              # Deployment scripts
-└── 📁 .github/workflows/                        # CI/CD pipelines (4 files)
+│   ├── deployment/                              # Deployment scripts
+│   └── automation/                              # Automation framework (6 files)
+│       ├── auto_deployment.py                   # Automated deployment pipeline
+│       ├── data_quality_monitor.py              # Data quality monitoring
+│       ├── performance_optimizer.py             # Performance optimization
+│       ├── ml_lifecycle_manager.py              # ML lifecycle management
+│       ├── master_orchestrator.py               # Master automation orchestrator
+│       ├── automation_dashboard.py              # Web dashboard
+│       └── templates/                           # Dashboard templates
+└── 📁 .github/workflows/                        # CI/CD pipelines (5 files)
     ├── dbt_ci_cd.yml                           # Main dbt CI/CD pipeline
     ├── dbt-docs.yml                            # Documentation generation
     ├── dbt.yml                                 # dbt workflow configuration
-    └── ml_training.yml                         # ML model training pipeline
+    ├── ml_training.yml                         # ML model training pipeline
+    └── automation.yml                          # Automation pipeline
 ```
 
 ## 🚀 Getting Started
