@@ -8,7 +8,7 @@ exposures:
       name: Analytics Team
       email: analytics@example.com
     depends_on:
-      - ref('view_consolidated_dashboard')
+      - ref('vw_consolidated_dashboard')
     description: Executive KPIs and YoY trends
 
   - name: ml_feature_store
@@ -18,9 +18,9 @@ exposures:
       name: Data Science
       email: ds@example.com
     depends_on:
-      - ref('ml_consolidated_feature_store')
-      - ref('ml_rolling_analytics')
-      - ref('ml_maintenance_features')
+      - ref('tbl_ml_consolidated_feature_store')
+      - ref('tbl_ml_rolling_analytics')
+      - ref('tbl_ml_maintenance_features')
     description: Central feature store powering ML models
 
   - name: data_quality_monitoring
@@ -30,8 +30,8 @@ exposures:
       name: Data Platform
       email: platform@example.com
     depends_on:
-      - ref('view_data_quality_summary')
-      - ref('view_dbt_run_results')
-      - ref('view_fivetran_sync_status')
+      - ref('vw_data_quality_summary')
+      - ref('vw_dbt_run_results')
+      - ref('vw_fivetran_sync_status')
     description: Operational data quality and pipeline health
 

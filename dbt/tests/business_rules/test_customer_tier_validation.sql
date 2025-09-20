@@ -18,7 +18,7 @@ WITH customer_segmentation AS (
             WHEN credit_limit_usd >= 10000 THEN 'BASIC'
             ELSE 'BASIC'
         END as expected_tier
-    FROM {{ ref('dim_customer') }}
+    FROM {{ ref('tbl_dim_customer') }}
     WHERE is_active = true
 ),
 
@@ -27,7 +27,7 @@ annual_metrics AS (
         customer_id,
         SUM(revenue) as total_revenue_12m,
         COUNT(*) as total_shipments_12m
-    FROM {{ ref('fact_shipments') }}
+    FROM {{ ref('tbl_fact_shipments') }}
     WHERE shipment_date >= DATEADD('month', -12, CURRENT_DATE())
     GROUP BY customer_id
 ),

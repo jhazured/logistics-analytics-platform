@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: dim_date
+  - name: tbl_dim_date
     description: |
       Calendar dimension providing date-related attributes for time-based analysis:
       - Standard date attributes (year, month, day, quarter)
@@ -66,7 +66,7 @@ models:
           - accepted_values:
               values: [true, false]
 
-  - name: dim_customer
+  - name: tbl_dim_customer
     description: |
       Customer dimension containing all customer master data including:
       - Basic customer information (name, contact details)
@@ -129,7 +129,7 @@ models:
       - name: special_handling_requirements
         description: "Any special handling instructions or requirements"
 
-  - name: dim_vehicle
+  - name: tbl_dim_vehicle
     description: |
       Vehicle dimension containing comprehensive vehicle information:
       - Vehicle specifications (make, model, year, capacity)
@@ -198,7 +198,7 @@ models:
           - accepted_values:
               values: ['ACTIVE', 'MAINTENANCE', 'RETIRED', 'OUT_OF_SERVICE']
 
-  - name: dim_location
+  - name: tbl_dim_location
     description: |
       Location dimension derived from routes (origin/destination IDs):
       - Geographic coordinates and address information
@@ -260,7 +260,7 @@ models:
       - name: delivery_zone
         description: "Delivery zone identifier"
 
-  - name: dim_route
+  - name: tbl_dim_route
     description: |
       Route dimension derived from shipments:
       - Origin and destination location pairs
@@ -314,7 +314,7 @@ models:
           - accepted_values:
               values: [true, false]
 
-  - name: dim_weather
+  - name: tbl_dim_weather
     description: |
       Weather dimension containing weather conditions by location and time:
       - Temperature, precipitation, and visibility data
@@ -374,7 +374,7 @@ models:
               min_value: 0
               max_value: 100
 
-  - name: dim_traffic_conditions
+  - name: tbl_dim_traffic_conditions
     description: |
       Traffic conditions dimension containing traffic patterns and congestion data:
       - Traffic volume and congestion levels
@@ -432,7 +432,7 @@ models:
           - accepted_values:
               values: [true, false]
 
-  - name: dim_vehicle_maintenance
+  - name: tbl_dim_vehicle_maintenance
     description: |
       Vehicle maintenance dimension containing maintenance schedules and history:
       - Maintenance schedules and intervals

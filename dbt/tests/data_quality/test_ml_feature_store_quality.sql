@@ -51,7 +51,7 @@ WITH ml_feature_validation AS (
         feature_hash,
         feature_created_at
         
-    FROM {{ ref('ml_consolidated_feature_store') }}
+    FROM {{ ref('tbl_ml_consolidated_feature_store') }}
     WHERE shipment_date >= DATEADD('day', -90, CURRENT_DATE())
 ),
 feature_quality_checks AS (

@@ -9,7 +9,7 @@
   )
 }}
 
-select * from {{ ref('dim_customer') }}
+select * from {{ ref('tbl_dim_customer') }}
 
 {% endsnapshot %}
 

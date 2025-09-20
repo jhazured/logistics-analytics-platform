@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fact_shipments
+  - name: tbl_fact_shipments
     description: |
       Core shipment fact table containing transactional shipment data:
       - Shipment identifiers and foreign keys to dimensions
@@ -138,7 +138,7 @@ models:
               min_value: 0
               max_value: 1440
 
-  - name: fact_vehicle_telemetry
+  - name: tbl_fact_vehicle_telemetry
     description: |
       Vehicle telemetry fact table containing IoT sensor data:
       - Real-time vehicle performance metrics
@@ -252,7 +252,7 @@ models:
           - accepted_values:
               values: ['INFO', 'WARNING', 'CRITICAL']
 
-  - name: fact_route_performance
+  - name: tbl_fact_route_performance
     description: |
       Route performance fact table containing aggregated route metrics:
       - Daily route performance summaries
@@ -374,7 +374,7 @@ models:
               min_value: 0
               max_value: 100
 
-  - name: fact_route_conditions
+  - name: tbl_fact_route_conditions
     description: |
       Route conditions fact table containing route performance data with weather and traffic impacts:
       - Weather impact on route performance
@@ -456,7 +456,7 @@ models:
           - accepted_values:
               values: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
 
-  - name: fact_vehicle_utilization
+  - name: tbl_fact_vehicle_utilization
     description: |
       Vehicle utilization fact table containing vehicle usage, efficiency, and capacity utilization metrics:
       - Vehicle capacity utilization rates

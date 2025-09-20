@@ -9,7 +9,7 @@
   )
 }}
 
-select * from {{ ref('dim_vehicle') }}
+select * from {{ ref('tbl_dim_vehicle') }}
 
 {% endsnapshot %}
 

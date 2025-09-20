@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: view_consolidated_dashboard
+  - name: vw_consolidated_dashboard
     description: |
       Comprehensive business intelligence dashboard combining performance and executive analytics:
       - Operational metrics (on-time delivery, route efficiency, capacity utilization)
@@ -80,7 +80,7 @@ models:
           - accepted_values:
               values: ['performance_alert', 'satisfaction_alert', 'revenue_alert', 'normal']
 
-  - name: view_sustainability_metrics
+  - name: vw_sustainability_metrics
     description: |
       Environmental impact and sustainability tracking:
       - Carbon emissions tracking
@@ -125,7 +125,7 @@ models:
               min_value: 0
               max_value: 100
 
-  - name: view_data_lineage
+  - name: vw_data_lineage
     description: |
       Data lineage tracking for the logistics analytics platform:
       - Model dependencies and relationships
@@ -170,7 +170,7 @@ models:
       - name: columns
         description: "Comma-separated list of column names"
 
-  - name: view_data_quality_sla
+  - name: vw_data_quality_sla
     description: |
       Data Quality SLA monitoring and compliance tracking:
       - Data freshness SLA compliance

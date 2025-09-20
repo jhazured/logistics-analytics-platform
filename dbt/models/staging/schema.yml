@@ -11,7 +11,7 @@ sources:
     loaded_at_field: _loaded_at
     
     tables:
-      - name: shipments
+      - name: tbl_raw_azure_shipments
         description: "Raw shipment data from TMS system"
         columns:
           - name: shipment_id
@@ -24,7 +24,7 @@ sources:
             tests:
               - not_null
               - relationships:
-                  to: source('raw_logistics', 'customers')
+                  to: source('raw_logistics', 'tbl_raw_azure_customers')
                   field: customer_id
           - name: origin_location_id
             description: "Pickup location identifier"
@@ -63,7 +63,7 @@ sources:
                   values: ['PENDING', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED', 'DELAYED']
 
 models:
-  - name: stg_shipments
+  - name: tbl_stg_shipments
     description: "Cleaned and standardized shipment data"
     columns:
       - name: shipment_id
@@ -76,7 +76,7 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_customer')
+              to: ref('tbl_dim_customer')
               field: customer_id
       - name: shipment_date
         description: "Date when shipment was created"
