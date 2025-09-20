@@ -1,15 +1,20 @@
 {{ config(
-    materialized='table',
+    materialized='incremental',
+    unique_key='utilization_id',
+    on_schema_change='sync_all_columns',
     tags=['marts', 'facts', 'vehicle_utilization', 'load_second']
 ) }}
 
 with t as (
   select * from {{ ref('tbl_fact_vehicle_telemetry') }}
+  {% if is_incremental() %}
+    where timestamp > (select coalesce(max(to_date(cast(date_key as string), 'YYYYMMDD')), '1900-01-01') from {{ this }})
+  {% endif %}
 ), d as (
   select date_key, date from {{ ref('tbl_dim_date') }}
 )
 select
-  {{ dbt_utils.generate_surrogate_key(['vehicle_id','d.date_key']) }} as utilization_id,
+  concat(vehicle_id, '_', cast(d.date_key as string)) as utilization_id,
   vehicle_id,
   d.date_key,
   sum(coalesce(speed_kmh,0)) as total_distance_km, -- proxy; replace with derived distance if available

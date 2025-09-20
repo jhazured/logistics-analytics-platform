@@ -23,13 +23,13 @@ with s as (
     route_efficiency_score
   from {{ ref('tbl_fact_shipments') }}
   {% if is_incremental() %}
-    where shipment_date > (select coalesce(max(performance_date), '1900-01-01') from {{ this }})
+    where shipment_date > (select coalesce(max(to_date(cast(date_key as string), 'YYYYMMDD')), '1900-01-01') from {{ this }})
   {% endif %}
 ), d as (
   select date_key, date from {{ ref('tbl_dim_date') }}
 )
 select
-  {{ dbt_utils.generate_surrogate_key(['route_id','d.date_key']) }} as performance_id,
+  concat(route_id, '_', cast(d.date_key as string)) as performance_id,
   route_id,
   d.date_key,
   null as vehicle_id,
