@@ -124,3 +124,88 @@ models:
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100
+
+  - name: view_data_lineage
+    description: |
+      Data lineage tracking for the logistics analytics platform:
+      - Model dependencies and relationships
+      - Column-level lineage tracking
+      - Data flow from raw to marts
+      - Ingestion method and source system tracking
+    meta:
+      owner: "data-engineering"
+      refresh_frequency: "daily"
+    columns:
+      - name: layer
+        description: "Data layer (RAW, STAGING, MARTS)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['RAW', 'STAGING', 'MARTS']
+      - name: table_name
+        description: "Name of the table or model"
+        tests:
+          - not_null
+      - name: source_system
+        description: "Source system or transformation tool"
+        tests:
+          - not_null
+      - name: ingestion_method
+        description: "Method used for data ingestion or transformation"
+        tests:
+          - not_null
+      - name: last_updated
+        description: "Last update timestamp"
+        tests:
+          - not_null
+      - name: materialization
+        description: "dbt materialization type"
+      - name: tags
+        description: "dbt tags associated with the model"
+      - name: column_count
+        description: "Number of columns in the table"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+      - name: columns
+        description: "Comma-separated list of column names"
+
+  - name: view_data_quality_sla
+    description: |
+      Data Quality SLA monitoring and compliance tracking:
+      - Data freshness SLA compliance
+      - Completeness SLA compliance
+      - Accuracy SLA compliance
+      - Consistency SLA compliance
+    meta:
+      owner: "data-engineering"
+      refresh_frequency: "hourly"
+    columns:
+      - name: sla_type
+        description: "Type of SLA being measured"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['data_freshness', 'completeness', 'accuracy', 'consistency']
+      - name: table_name
+        description: "Table or system being monitored"
+        tests:
+          - not_null
+      - name: sla_status
+        description: "SLA status (EXCELLENT, GOOD, ACCEPTABLE, POOR)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['EXCELLENT', 'GOOD', 'ACCEPTABLE', 'POOR']
+      - name: sla_result
+        description: "SLA result (PASS, FAIL)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PASS', 'FAIL']
+      - name: sla_threshold_hours
+        description: "SLA threshold in hours or percentage"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0

@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW vw_data_quality_summary AS
+CREATE OR REPLACE VIEW view_data_quality_summary AS
 SELECT 
     'dim_date' as table_name,
     COUNT(*) as row_count,

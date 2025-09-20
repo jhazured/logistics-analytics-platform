@@ -37,13 +37,13 @@ models:
           - relationships:
               to: ref('dim_route')
               field: route_id
-      - name: shipment_date_id
+      - name: date_key
         description: "Foreign key to date dimension for shipment date"
         tests:
           - not_null
           - relationships:
               to: ref('dim_date')
-              field: date_id
+              field: date_key
       - name: actual_distance_miles
         description: "Actual distance traveled for shipment"
         tests:

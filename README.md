@@ -111,11 +111,13 @@ logistics-analytics-platform/
 │   │   └── rolling_windows.sql                  # Rolling window analytics
 │   ├── 📁 models/                               # dbt models (40+ models, 17+ tests)
 │   │   ├── 📁 marts/                            # Business logic layer
-│   │   │   ├── 📁 analytics/                    # Advanced analytics views (4 models)
+│   │   │   ├── 📁 analytics/                    # Advanced analytics views (7 models)
 │   │   │   │   ├── view_ai_recommendations.sql
 │   │   │   │   ├── view_consolidated_dashboard.sql
 │   │   │   │   ├── view_data_freshness_monitoring.sql
 │   │   │   │   ├── view_sustainability_metrics.sql
+│   │   │   │   ├── view_data_lineage.sql
+│   │   │   │   ├── view_data_quality_sla.sql
 │   │   │   │   └── schema.yml
 │   │   │   ├── 📁 dimensions/                   # Dimension tables (8 models)
 │   │   │   │   ├── dim_date.sql
@@ -395,7 +397,7 @@ WHERE customer_id = ? AND vehicle_id = ?;
 ### 🚀 DevOps & Automation
 - **CI/CD Pipeline**: Multi-environment pipeline with automated testing, SQL linting, and deployment workflows
 - **Multi-environment Support**: Dev/staging/prod configurations with environment-specific materialization strategies
-- **Automated Testing**: 207+ dbt tests with business rules, data quality, and referential integrity validation
+- **Automated Testing**: 16+ dbt tests with business rules, data quality, and referential integrity validation
 - **Deployment Automation**: Scripts for environment configuration and dbt model deployment
 - **Monitoring & Alerting**: Automated notifications for deployment success/failure and data quality issues
 
@@ -517,7 +519,7 @@ snowsql -f snowflake/streaming/deploy_streams_and_tasks.sql
 ## Data Quality & Testing
 
 ### Comprehensive Testing Framework
-- **207+ dbt tests** covering business rules, data quality, and referential integrity
+- **16+ dbt tests** covering business rules, data quality, and referential integrity
 - **Automated monitoring** with real-time alerts and dashboards
 - **CI/CD validation** ensuring code quality and deployment safety
 - **Performance monitoring** with query optimization recommendations
@@ -615,7 +617,7 @@ This project demonstrates proficiency in:
 - **Performance Optimization**: Environment-specific configurations and warehouse sizing
 
 ### 🧪 **Data Quality & Testing**
-- **207+ dbt Tests**: Comprehensive testing framework with business rules, data quality, and referential integrity
+- **16+ dbt Tests**: Comprehensive testing framework with business rules, data quality, and referential integrity
 - **Automated Monitoring**: Real-time alerting and data quality validation
 - **CI/CD Integration**: Automated testing in deployment pipelines
 
