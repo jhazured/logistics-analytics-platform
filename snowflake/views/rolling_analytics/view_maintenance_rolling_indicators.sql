@@ -18,7 +18,8 @@ vehicle_data AS (
     SELECT 
         vehicle_id,
         vehicle_number,
-        make_model,
+        make,
+        model,
         model_year,
         current_mileage,
         maintenance_interval_miles,
@@ -30,7 +31,8 @@ maintenance_metrics AS (
     SELECT 
         m.vehicle_id,
         v.vehicle_number,
-        v.make_model,
+        v.make,
+        v.model,
         v.model_year,
         v.current_mileage,
         v.maintenance_interval_miles,
@@ -43,8 +45,8 @@ maintenance_metrics AS (
         m.maintenance_status,
         -- Calculate days since last maintenance
         DATEDIFF(day, LAG(m.maintenance_date) OVER (PARTITION BY m.vehicle_id ORDER BY m.maintenance_date), m.maintenance_date) as days_since_previous_maintenance,
-        -- Calculate miles since last maintenance
-        m.maintenance_mileage - LAG(m.maintenance_mileage) OVER (PARTITION BY m.vehicle_id ORDER BY m.maintenance_date) as miles_since_previous_maintenance
+        -- Calculate miles since last maintenance (using current mileage as proxy)
+        v.current_mileage - LAG(v.current_mileage) OVER (PARTITION BY m.vehicle_id ORDER BY m.maintenance_date) as miles_since_previous_maintenance
     FROM maintenance_data m
     JOIN vehicle_data v ON m.vehicle_id = v.vehicle_id
 ),
@@ -53,7 +55,8 @@ rolling_maintenance AS (
     SELECT 
         vehicle_id,
         vehicle_number,
-        make_model,
+        make,
+        model,
         model_year,
         current_mileage,
         maintenance_interval_miles,
@@ -148,7 +151,8 @@ rolling_maintenance AS (
 SELECT 
     vehicle_id,
     vehicle_number,
-    make_model,
+    make,
+    model,
     model_year,
     current_mileage,
     maintenance_interval_miles,

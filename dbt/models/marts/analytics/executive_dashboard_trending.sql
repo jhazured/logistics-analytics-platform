@@ -36,7 +36,7 @@ WITH daily_kpis AS (
         SUM(fs.distance_km) / NULLIF(SUM(fs.actual_duration_minutes), 0) * 60 AS daily_avg_speed
         
     FROM {{ ref('fact_shipments') }} fs
-    JOIN {{ ref('dim_date') }} dd ON fs.date_key = dd.date_key
+    JOIN {{ ref('dim_date') }} dd ON to_date(fs.shipment_date) = dd.date
     JOIN {{ ref('dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
     WHERE fs.shipment_date >= CURRENT_DATE() - 365
         AND fs.is_delivered = TRUE
@@ -104,9 +104,21 @@ SELECT
     ROUND((daily_revenue - revenue_same_date_last_year) / NULLIF(revenue_same_date_last_year, 0) * 100, 1) AS revenue_yoy_change_percent,
     
     -- Trend classification
-    {{ calculate_trend('deliveries_7d_avg', 'deliveries_30d_avg') }} AS volume_trend,
-    {{ calculate_trend('on_time_rate_7d_avg', 'on_time_rate_30d_avg') }} AS performance_trend,
-    {{ calculate_trend('revenue_7d_avg', 'revenue_30d_avg') }} AS revenue_trend,
+    CASE 
+        WHEN deliveries_7d_avg > deliveries_30d_avg * 1.05 THEN 'increasing'
+        WHEN deliveries_7d_avg < deliveries_30d_avg * 0.95 THEN 'decreasing'
+        ELSE 'stable'
+    END AS volume_trend,
+    CASE 
+        WHEN on_time_rate_7d_avg > on_time_rate_30d_avg * 1.02 THEN 'improving'
+        WHEN on_time_rate_7d_avg < on_time_rate_30d_avg * 0.98 THEN 'declining'
+        ELSE 'stable'
+    END AS performance_trend,
+    CASE 
+        WHEN revenue_7d_avg > revenue_30d_avg * 1.05 THEN 'growing'
+        WHEN revenue_7d_avg < revenue_30d_avg * 0.95 THEN 'declining'
+        ELSE 'stable'
+    END AS revenue_trend,
     
     -- Performance vs benchmarks
     CASE 

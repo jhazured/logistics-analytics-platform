@@ -58,7 +58,7 @@ WITH current_period AS (
     JOIN {{ ref('dim_customer') }} dc ON fs.customer_id = dc.customer_id
     JOIN {{ ref('dim_route') }} dr ON fs.route_id = dr.route_id
     JOIN {{ ref('dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
-    JOIN {{ ref('dim_date') }} dd ON fs.date_key = dd.date_key
+    JOIN {{ ref('dim_date') }} dd ON to_date(fs.shipment_date) = dd.date
     WHERE fs.shipment_date >= CURRENT_DATE() - 90  -- Last 90 days
     GROUP BY 1,2,3,4,5,6,7,8,9
 )
@@ -107,7 +107,11 @@ SELECT
     ROUND(urgent_on_time_rate * 100, 1) AS urgent_on_time_percentage,
     
     -- Calculated performance scores
-    {{ calculate_performance_score('on_time_rate', 'avg_capacity_utilization', 'avg_customer_satisfaction') }} AS overall_performance_score,
+    ROUND(
+        (on_time_rate * 0.4) + 
+        (avg_capacity_utilization * 0.3) + 
+        (avg_customer_satisfaction / 10.0 * 0.3), 2
+    ) AS overall_performance_score,
     
     -- Productivity metrics
     ROUND(delivery_count / NULLIF(active_vehicles, 0), 1) AS deliveries_per_vehicle,
