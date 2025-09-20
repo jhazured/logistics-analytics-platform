@@ -78,9 +78,8 @@ logistics-analytics-platform/
 ├── 📄 requirements.txt                           # Python dependencies
 ├── 📁 .github/workflows/                         # CI/CD pipelines
 │   ├── dbt_ci_cd.yml                            # Main dbt CI/CD pipeline
-│   ├── data_quality_checks.yml                  # Automated data quality monitoring
 │   ├── dbt-docs.yml                             # Documentation generation
-│   └── deployment_pipeline.yml                  # Production deployment workflow
+│   └── dbt.yml                                  # dbt workflow configuration
 ├── 📁 data/                                      # Sample data generation
 │   └── generate_sample_data.py                  # Python script for test data
 ├── 📁 dbt/                                       # dbt project root
@@ -88,7 +87,6 @@ logistics-analytics-platform/
 │   ├── 📄 packages.yml                          # Package dependencies (dbt_utils, dbt_expectations)
 │   ├── 📄 profiles.yml                          # Multi-environment Snowflake profiles
 │   ├── 📄 exposures.yml                         # dbt exposures for downstream tools
-│   ├── 📁 analyses/                             # Ad-hoc analysis queries
 │   ├── 📁 macros/                               # Enhanced reusable macros
 │   │   ├── stream_processing.sql                # Stream processing utilities
 │   │   ├── cost_calculations.sql                # Business cost calculations

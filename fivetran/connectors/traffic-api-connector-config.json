@@ -1,0 +1,50 @@
+{
+  "connector_id": "traffic_api_connector",
+  "connector_name": "Traffic API Connector",
+  "connector_type": "rest_api",
+  "status": "active",
+  "paused": false,
+  "sync_frequency": 1800,
+  "config": {
+    "api_url": "https://api.traffic-data.com/v1",
+    "api_key": "encrypted_api_key",
+    "authentication_type": "bearer_token",
+    "schema_prefix": "traffic_",
+    "endpoints": [
+      {
+        "name": "traffic_conditions",
+        "path": "/traffic/conditions",
+        "method": "GET",
+        "parameters": {
+          "region": "all",
+          "format": "json"
+        }
+      },
+      {
+        "name": "congestion_data",
+        "path": "/traffic/congestion",
+        "method": "GET",
+        "parameters": {
+          "time_range": "1h",
+          "format": "json"
+        }
+      }
+    ],
+    "sync_mode": "incremental",
+    "incremental_columns": {
+      "traffic_conditions": "timestamp",
+      "congestion_data": "timestamp"
+    }
+  },
+  "destination_config": {
+    "schema": "raw",
+    "table_prefix": "traffic_",
+    "case_sensitive": false
+  },
+  "monitoring": {
+    "alerts_enabled": true,
+    "alert_emails": ["traffic-team@company.com"],
+    "health_check_frequency": 3600,
+    "api_rate_limit": 1000
+  }
+}

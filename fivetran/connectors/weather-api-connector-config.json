@@ -1,0 +1,62 @@
+{
+  "connector_id": "weather_api_connector",
+  "connector_name": "Weather API Connector",
+  "connector_type": "rest_api",
+  "status": "active",
+  "paused": false,
+  "sync_frequency": 3600,
+  "config": {
+    "api_url": "https://api.weather-data.com/v1",
+    "api_key": "encrypted_api_key",
+    "authentication_type": "api_key",
+    "schema_prefix": "weather_",
+    "endpoints": [
+      {
+        "name": "current_weather",
+        "path": "/weather/current",
+        "method": "GET",
+        "parameters": {
+          "units": "metric",
+          "format": "json"
+        }
+      },
+      {
+        "name": "forecast_weather",
+        "path": "/weather/forecast",
+        "method": "GET",
+        "parameters": {
+          "days": 5,
+          "units": "metric",
+          "format": "json"
+        }
+      },
+      {
+        "name": "historical_weather",
+        "path": "/weather/historical",
+        "method": "GET",
+        "parameters": {
+          "days": 30,
+          "units": "metric",
+          "format": "json"
+        }
+      }
+    ],
+    "sync_mode": "incremental",
+    "incremental_columns": {
+      "current_weather": "timestamp",
+      "forecast_weather": "timestamp",
+      "historical_weather": "timestamp"
+    }
+  },
+  "destination_config": {
+    "schema": "raw",
+    "table_prefix": "weather_",
+    "case_sensitive": false
+  },
+  "monitoring": {
+    "alerts_enabled": true,
+    "alert_emails": ["weather-team@company.com"],
+    "health_check_frequency": 7200,
+    "api_rate_limit": 500
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "connector_id": "telematics_webhook_connector",
+  "connector_name": "Vehicle Telematics Webhook Connector",
+  "connector_type": "webhook",
+  "status": "active",
+  "paused": false,
+  "sync_frequency": 300,
+  "config": {
+    "webhook_url": "https://api.fivetran.com/v1/webhooks/telematics",
+    "webhook_secret": "encrypted_webhook_secret",
+    "http_method": "POST",
+    "content_type": "application/json",
+    "schema_prefix": "telematics_",
+    "tables": [
+      "vehicle_telemetry",
+      "engine_diagnostics",
+      "fuel_consumption",
+      "driver_behavior",
+      "maintenance_alerts"
+    ],
+    "sync_mode": "real_time",
+    "data_validation": {
+      "enabled": true,
+      "required_fields": [
+        "vehicle_id",
+        "timestamp",
+        "latitude",
+        "longitude",
+        "speed_kmh",
+        "fuel_level_percent"
+      ]
+    }
+  },
+  "destination_config": {
+    "schema": "raw",
+    "table_prefix": "telematics_",
+    "case_sensitive": false
+  },
+  "monitoring": {
+    "alerts_enabled": true,
+    "alert_emails": ["telematics-team@company.com"],
+    "health_check_frequency": 300,
+    "data_freshness_threshold": 600
+  }
+}

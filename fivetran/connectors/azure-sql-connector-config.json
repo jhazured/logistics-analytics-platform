@@ -1,0 +1,44 @@
+{
+  "connector_id": "azure_sql_connector",
+  "connector_name": "Azure SQL Database Connector",
+  "connector_type": "azure_sql",
+  "status": "active",
+  "paused": false,
+  "sync_frequency": 3600,
+  "config": {
+    "host": "your-azure-sql-server.database.windows.net",
+    "port": 1433,
+    "database": "logistics_db",
+    "username": "fivetran_user",
+    "password": "encrypted_password",
+    "ssl": true,
+    "schema_prefix": "azure_sql_",
+    "tables": [
+      "customers",
+      "vehicles", 
+      "shipments",
+      "maintenance_records",
+      "routes",
+      "locations"
+    ],
+    "sync_mode": "incremental",
+    "incremental_columns": {
+      "customers": "updated_at",
+      "vehicles": "updated_at",
+      "shipments": "updated_at",
+      "maintenance_records": "updated_at",
+      "routes": "updated_at",
+      "locations": "updated_at"
+    }
+  },
+  "destination_config": {
+    "schema": "raw",
+    "table_prefix": "azure_",
+    "case_sensitive": false
+  },
+  "monitoring": {
+    "alerts_enabled": true,
+    "alert_emails": ["data-team@company.com"],
+    "health_check_frequency": 1800
+  }
+}
