@@ -1,70 +1,84 @@
 version: 2
 
 models:
-  - name: performance_dashboard
+  - name: consolidated_dashboard
     description: |
-      Executive performance dashboard providing key logistics KPIs:
-      - Operational metrics (on-time delivery, route efficiency)
-      - Financial performance (costs, revenue, margins)  
-      - Customer satisfaction indicators
-      - Trend analysis and period-over-period comparisons
+      Comprehensive business intelligence dashboard combining performance and executive analytics:
+      - Operational metrics (on-time delivery, route efficiency, capacity utilization)
+      - Financial performance (costs, revenue, margins, profitability trends)
+      - Customer satisfaction indicators and service level metrics
+      - Rolling analytics (7d, 30d, 90d) and trend analysis
+      - Week-over-week and year-over-year comparisons
+      - Performance ratings and alert indicators
     meta:
       owner: "analytics-team"
       refresh_frequency: "every 4 hours"
       business_users: ["operations", "finance", "executive"]
     columns:
-      - name: metric_date
+      - name: shipment_date
         description: "Date for the metrics calculation"
         tests:
           - not_null
-      - name: total_shipments
-        description: "Total number of shipments for the period"
+      - name: daily_deliveries
+        description: "Total number of deliveries for the day"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-      - name: on_time_delivery_rate
+      - name: on_time_percentage
         description: "Percentage of shipments delivered on time"
         tests:
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100
-      - name: avg_delivery_time_hours
-        description: "Average delivery time in hours"
+      - name: satisfaction_score
+        description: "Average customer satisfaction score"
         tests:
           - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 168  # 1 week max average
-      - name: total_revenue_usd
-        description: "Total revenue for the period"
-        tests:
-          - not_null
-          - dbt_utils.accepted_range:
-              min_value: 0
-      - name: total_cost_usd
-        description: "Total operational costs for the period"
+              min_value: 1
+              max_value: 10
+      - name: revenue
+        description: "Total revenue for the day"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
-      - name: profit_margin_pct
+      - name: profit
+        description: "Total profit for the day"
+        tests:
+          - not_null
+      - name: profit_margin_percentage
         description: "Overall profit margin percentage"
         tests:
           - dbt_utils.accepted_range:
               min_value: -50
               max_value: 50
-      - name: avg_route_efficiency_score
-        description: "Average route efficiency score"
+      - name: overall_performance_score
+        description: "Composite performance score (0-100)"
         tests:
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100
-      - name: customer_satisfaction_score
-        description: "Aggregated customer satisfaction score"
+      - name: volume_trend
+        description: "Volume trend classification (increasing/decreasing/stable)"
         tests:
-          - dbt_utils.accepted_range:
-              min_value: 1
-              max_value: 10
+          - accepted_values:
+              values: ['increasing', 'decreasing', 'stable']
+      - name: performance_trend
+        description: "Performance trend classification (improving/declining/stable)"
+        tests:
+          - accepted_values:
+              values: ['improving', 'declining', 'stable']
+      - name: revenue_trend
+        description: "Revenue trend classification (growing/declining/stable)"
+        tests:
+          - accepted_values:
+              values: ['growing', 'declining', 'stable']
+      - name: alert_status
+        description: "Alert status for performance issues"
+        tests:
+          - accepted_values:
+              values: ['performance_alert', 'satisfaction_alert', 'revenue_alert', 'normal']
 
   - name: sustainability_metrics
     description: |

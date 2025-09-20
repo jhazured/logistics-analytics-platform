@@ -36,9 +36,8 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 
 ## dbt Analytics Models
 - [ai_recommendations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/ai_recommendations.sql)
+- [consolidated_dashboard.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/consolidated_dashboard.sql)
 - [data_freshness_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/data_freshness_monitoring.sql)
-- [executive_dashboard_trending.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/executive_dashboard_trending.sql)
-- [performance_dashboard.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/performance_dashboard.sql)
 - [schema.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/schema.yml)
 - [sustainability_metrics.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/analytics/sustainability_metrics.sql)
 

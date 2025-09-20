@@ -111,11 +111,10 @@ logistics-analytics-platform/
 │   │   └── predictive_maintenance.sql           # Maintenance predictions
 │   ├── 📁 models/                               # dbt models (207+ tests)
 │   │   ├── 📁 marts/                            # Business logic layer
-│   │   │   ├── 📁 analytics/                    # Advanced analytics views (5 models)
+│   │   │   ├── 📁 analytics/                    # Advanced analytics views (4 models)
 │   │   │   │   ├── ai_recommendations.sql
+│   │   │   │   ├── consolidated_dashboard.sql
 │   │   │   │   ├── data_freshness_monitoring.sql
-│   │   │   │   ├── executive_dashboard_trending.sql
-│   │   │   │   ├── performance_dashboard.sql
 │   │   │   │   ├── sustainability_metrics.sql
 │   │   │   │   └── schema.yml
 │   │   │   ├── 📁 dimensions/                   # Dimension tables (8 models)
