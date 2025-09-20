@@ -32,7 +32,7 @@ Before setting up the platform, ensure you have:
 4. **Environment Setup**
    ```bash
    # Configure environment
-   ./scripts/setup/configure_environment.sh dev
+   ./scripts/01_setup/handlers/configure_environment.sh dev
    
    # Install dependencies
    pip install -r requirements.txt
@@ -41,7 +41,24 @@ Before setting up the platform, ensure you have:
    dbt deps
    ```
 
-5. **Setup Automation Framework**
+5. **Parameterized SQL Setup (Alternative)**
+   ```bash
+   # Set environment variables
+   export SF_ACCOUNT="your-account.snowflakecomputing.com"
+   export SF_USER="your-username"
+   export SF_PASSWORD="your-password"
+   export SF_ROLE="ACCOUNTADMIN"
+   export SF_WAREHOUSE="COMPUTE_WH_XS"
+   export SF_DATABASE="LOGISTICS_DW_DEV"  # Can be changed to any database
+   export SF_SCHEMA="ANALYTICS"
+   
+   # Execute parameterized setup scripts
+   python3 scripts/01_setup/handlers/execute_sql_python.py scripts/01_setup/tasks/01_database_setup.sql
+   python3 scripts/01_setup/handlers/execute_sql_python.py scripts/01_setup/tasks/02_schema_creation.sql
+   python3 scripts/01_setup/handlers/execute_sql_python.py scripts/01_setup/tasks/04_user_roles_permissions.sql
+   ```
+
+6. **Setup Automation Framework**
    ```bash
    # Install automation dependencies
    pip install pandas numpy scikit-learn joblib

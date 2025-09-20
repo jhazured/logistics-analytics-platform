@@ -114,6 +114,8 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 ## Scripts
 ### 01_setup - Infrastructure Setup
 - [configure_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/handlers/configure_environment.sh)
+- [execute_sql.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/handlers/execute_sql.sh)
+- [execute_sql_python.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/handlers/execute_sql_python.py)
 - [01_database_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/01_database_setup.sql)
 - [02_schema_creation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/02_schema_creation.sql)
 - [03_warehouse_configuration.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/01_setup/tasks/03_warehouse_configuration.sql)
@@ -122,8 +124,7 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 
 ### 02_deployment - Deployment Orchestration
 - [deploy_all.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/handlers/deploy_all.sh)
-- [00_build_and_run_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/tasks/00_build_and_run_setup.sql)
-- [00_complete_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/tasks/00_complete_setup.sql)
+- [01_complete_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/tasks/01_complete_setup.sql)
 - [99_verify_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/02_deployment/tasks/99_verify_setup.sql)
 
 ### 03_monitoring - Monitoring and Alerts
@@ -197,7 +198,8 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [11_OPERATIONAL_RUNBOOKS.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/11_OPERATIONAL_RUNBOOKS.md)
 - [12_TROUBLESHOOTING_GUIDES.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/12_TROUBLESHOOTING_GUIDES.md)
 - [13_SCHEMA_MAPPING.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/13_SCHEMA_MAPPING.md)
-- [DEPLOYMENT_GUIDE.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/DEPLOYMENT_GUIDE.md)
+- [14_DEPLOYMENT_GUIDE.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/14_DEPLOYMENT_GUIDE.md)
+- [15_PARAMETERIZATION_GUIDE.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/15_PARAMETERIZATION_GUIDE.md)
 
 ## dbt Business Rules Tests
 - [test_analytics_view_consistency.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_analytics_view_consistency.sql)

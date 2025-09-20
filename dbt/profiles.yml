@@ -7,10 +7,10 @@ logistics_analytics:
       user: "{{ env_var('SF_USER') }}"
       password: "{{ env_var('SF_PASSWORD') }}"
       role: "{{ env_var('SF_ROLE', 'DBT_DEV_ROLE') }}"
-      database: LOGISTICS_DW_DEV
-      warehouse: COMPUTE_WH_XS
-      schema: ANALYTICS
-      threads: 4
+      database: "{{ env_var('SF_DATABASE', 'LOGISTICS_DW_DEV') }}"
+      warehouse: "{{ env_var('SF_WAREHOUSE', 'COMPUTE_WH_XS') }}"
+      schema: "{{ env_var('SF_SCHEMA', 'ANALYTICS') }}"
+      threads: "{{ env_var('DBT_THREADS', 4) | int }}"
       keepalive: false
       query_tag: dbt_dev
 
@@ -20,10 +20,10 @@ logistics_analytics:
       user: "{{ env_var('SF_USER') }}"
       password: "{{ env_var('SF_PASSWORD') }}"
       role: "{{ env_var('SF_ROLE', 'DBT_STAGING_ROLE') }}"
-      database: LOGISTICS_DW_STAGING
-      warehouse: COMPUTE_WH_SMALL
-      schema: ANALYTICS
-      threads: 8
+      database: "{{ env_var('SF_DATABASE', 'LOGISTICS_DW_DEV') }}"
+      warehouse: "{{ env_var('SF_WAREHOUSE', 'COMPUTE_WH_SMALL') }}"
+      schema: "{{ env_var('SF_SCHEMA', 'ANALYTICS') }}"
+      threads: "{{ env_var('DBT_THREADS', '8') }}"
       keepalive: false
       query_tag: dbt_staging
 
@@ -33,10 +33,10 @@ logistics_analytics:
       user: "{{ env_var('SF_USER') }}"
       password: "{{ env_var('SF_PASSWORD') }}"
       role: "{{ env_var('SF_ROLE', 'DBT_PROD_ROLE') }}"
-      database: LOGISTICS_DW_PROD
-      warehouse: COMPUTE_WH_MEDIUM
-      schema: ANALYTICS
-      threads: 12
+      database: "{{ env_var('SF_DATABASE', 'LOGISTICS_DW_DEV') }}"
+      warehouse: "{{ env_var('SF_WAREHOUSE', 'COMPUTE_WH_MEDIUM') }}"
+      schema: "{{ env_var('SF_SCHEMA', 'ANALYTICS') }}"
+      threads: "{{ env_var('DBT_THREADS', '12') }}"
       keepalive: false
       query_tag: dbt_prod
 
@@ -46,9 +46,9 @@ logistics_analytics:
       user: "{{ env_var('SF_USER') }}"
       password: "{{ env_var('SF_PASSWORD') }}"
       role: "{{ env_var('SF_ROLE', 'DBT_DEV_ROLE') }}"
-      database: LOGISTICS_DW_DEV
-      warehouse: COMPUTE_WH_XS
-      schema: ANALYTICS
-      threads: 2
+      database: "{{ env_var('SF_DATABASE', 'LOGISTICS_DW_DEV') }}"
+      warehouse: "{{ env_var('SF_WAREHOUSE', 'COMPUTE_WH_XS') }}"
+      schema: "{{ env_var('SF_SCHEMA', 'ANALYTICS') }}"
+      threads: "{{ env_var('DBT_THREADS', '2') }}"
       keepalive: false
       query_tag: dbt_ci

@@ -2,9 +2,19 @@
 
 This document provides comprehensive mapping of all objects to their respective schemas across different environments and layers.
 
+> **🔧 Parameterized Configuration**: All database and schema references are now parameterized using environment variables. You can deploy to any database name by setting the `SF_DATABASE` environment variable.
+
 ## Environment Schema Structure
 
-### Production Environment (`LOGISTICS_DW_PROD`)
+### Default Environment (Configurable via `SF_DATABASE`)
+
+The platform now supports flexible database naming through environment variables:
+
+```bash
+# Default configuration
+export SF_DATABASE="LOGISTICS_DW_DEV"    # Can be any database name
+export SF_SCHEMA="ANALYTICS"             # Default schema for dbt operations
+```
 
 | Schema | Purpose | Objects | Access Level |
 |--------|---------|---------|--------------|
@@ -20,27 +30,31 @@ This document provides comprehensive mapping of all objects to their respective 
 | **PERFORMANCE** | Performance optimization | 6 performance views | DATA_ENGINEER |
 | **SECURITY** | Security and access control | 4 security objects | SECURITY_ADMIN |
 
-### Development Environment (`LOGISTICS_DW_DEV`)
+### Environment-Specific Examples
 
-| Schema | Purpose | Objects | Access Level |
-|--------|---------|---------|--------------|
-| **RAW** | Raw data ingestion (dev) | 7 raw tables | DATA_ENGINEER |
-| **STAGING** | Data cleaning (dev) | 9 staging tables | DATA_ENGINEER |
-| **MARTS** | Business logic (dev) | 18 marts objects | DATA_ANALYST |
-| **ML_FEATURES** | ML features (dev) | 5 ML feature tables | ML_ENGINEER |
-| **ANALYTICS** | Analytics views (dev) | 7 analytics views | DATA_ANALYST |
-| **MONITORING** | Monitoring (dev) | 5 monitoring views | DATA_ENGINEER |
+#### Development Environment
+```bash
+export SF_DATABASE="LOGISTICS_DW_DEV"
+export SF_SCHEMA="ANALYTICS"
+```
 
-### Staging Environment (`LOGISTICS_DW_STAGING`)
+#### Staging Environment
+```bash
+export SF_DATABASE="LOGISTICS_DW_STAGING"
+export SF_SCHEMA="ANALYTICS"
+```
 
-| Schema | Purpose | Objects | Access Level |
-|--------|---------|---------|--------------|
-| **RAW** | Raw data ingestion (staging) | 7 raw tables | DATA_ENGINEER |
-| **STAGING** | Data cleaning (staging) | 9 staging tables | DATA_ENGINEER |
-| **MARTS** | Business logic (staging) | 18 marts objects | DATA_ANALYST |
-| **ML_FEATURES** | ML features (staging) | 5 ML feature tables | ML_ENGINEER |
-| **ANALYTICS** | Analytics views (staging) | 7 analytics views | DATA_ANALYST |
-| **MONITORING** | Monitoring (staging) | 5 monitoring views | DATA_ENGINEER |
+#### Production Environment
+```bash
+export SF_DATABASE="LOGISTICS_DW_PROD"
+export SF_SCHEMA="ANALYTICS"
+```
+
+#### Custom Environment
+```bash
+export SF_DATABASE="MY_CUSTOM_DB"
+export SF_SCHEMA="ANALYTICS"
+```
 
 ## Object-to-Schema Mapping
 

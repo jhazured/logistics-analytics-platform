@@ -24,7 +24,32 @@ cp .env.example .env
 ./deploy.sh
 ```
 
-### **Option 2: Manual dbt Deployment**
+### **Option 2: Parameterized SQL Setup**
+```bash
+# Clone repository
+git clone https://github.com/jhazured/logistics-analytics-platform.git
+cd logistics-analytics-platform
+
+# Set environment variables for your target database
+export SF_ACCOUNT="your-account.snowflakecomputing.com"
+export SF_USER="your-username"
+export SF_PASSWORD="your-password"
+export SF_ROLE="ACCOUNTADMIN"
+export SF_WAREHOUSE="COMPUTE_WH_XS"
+export SF_DATABASE="LOGISTICS_DW_DEV"  # Can be changed to any database name
+export SF_SCHEMA="ANALYTICS"
+
+# Execute parameterized setup scripts
+python3 scripts/01_setup/handlers/execute_sql_python.py scripts/01_setup/tasks/01_database_setup.sql
+python3 scripts/01_setup/handlers/execute_sql_python.py scripts/01_setup/tasks/02_schema_creation.sql
+python3 scripts/01_setup/handlers/execute_sql_python.py scripts/01_setup/tasks/04_user_roles_permissions.sql
+
+# Run dbt models
+dbt run --full-refresh --select tag:raw
+dbt run --select tag:incremental
+```
+
+### **Option 3: Manual dbt Deployment**
 ```bash
 # Clone repository
 git clone https://github.com/jhazured/logistics-analytics-platform.git
@@ -40,6 +65,8 @@ dbt run --select tag:incremental
 > **💡 Cost Optimization**: This project uses incremental loading to minimize Fivetran costs by 70-90%. See [docs/07_INCREMENTAL_LOADING_STRATEGY.md](docs/07_INCREMENTAL_LOADING_STRATEGY.md) for details.
 > 
 > **🚀 New Deployment System**: Use `./deploy.sh` for complete automated deployment with 7-phase orchestration. See [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) for details.
+> 
+> **🔧 Parameterized Configuration**: All SQL scripts and dbt configurations are fully parameterized using environment variables, making it easy to deploy across different environments (dev/staging/prod) without code changes.
 
 ## 📚 Documentation
 
@@ -147,17 +174,18 @@ logistics-analytics-platform/
 ├── 📁 scripts/                                  # Operational scripts (numbered for logical sequence)
 │   ├── 01_setup/                                # Infrastructure setup and configuration
 │   │   ├── handlers/                            # Shell script handlers
-│   │   │   └── configure_environment.sh          # Environment configuration (dev/staging/prod)
-│   │   └── tasks/                               # SQL setup tasks
-│   │       ├── 01_database_setup.sql             # Database creation
-│   │       ├── 02_schema_creation.sql            # Schema creation
+│   │   │   ├── configure_environment.sh          # Environment configuration (dev/staging/prod)
+│   │   │   ├── execute_sql.sh                   # Parameterized SQL execution wrapper
+│   │   │   └── execute_sql_python.py            # Python SQL executor with variable substitution
+│   │   └── tasks/                               # Parameterized SQL setup tasks
+│   │       ├── 01_database_setup.sql             # Database creation (parameterized)
+│   │       ├── 02_schema_creation.sql            # Schema creation (parameterized)
 │   │       ├── 03_warehouse_configuration.sql    # Warehouse configuration
-│   │       ├── 04_user_roles_permissions.sql     # Roles and permissions
+│   │       ├── 04_user_roles_permissions.sql     # Roles and permissions (parameterized)
 │   │       └── 05_resource_monitors.sql          # Resource monitors
 │   ├── 02_deployment/                           # Complete deployment orchestration (Ansible-like structure)
 │   │   ├── tasks/                               # SQL deployment tasks
-│   │   │   ├── 00_build_and_run_setup.sql       # Complete build-and-run setup
-│   │   │   ├── 00_complete_setup.sql            # Complete setup orchestration
+│   │   │   ├── 01_complete_setup.sql            # Unified setup (configurable via environment variables)
 │   │   │   └── 99_verify_setup.sql              # Setup verification
 │   │   └── handlers/                            # Single deployment handler
 │   │       └── deploy_all.sh                    # Complete deployment orchestration

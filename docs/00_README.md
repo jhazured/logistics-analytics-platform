@@ -23,10 +23,20 @@ This documentation is organized into focused topics for easy navigation:
 - **Prerequisites**: Required tools and accounts
 - **Quick Start**: Step-by-step setup guide
 - **Environment Configuration**: Development, staging, and production setup
+- **Parameterized SQL Setup**: Flexible deployment using environment variables
 - **Snowflake Setup**: Database, schema, and warehouse configuration
 - **Fivetran Integration**: Data source configuration and incremental loading
 - **CI/CD Setup**: GitHub Actions and deployment automation
 - **Troubleshooting**: Common issues and solutions
+
+### 🔧 [Parameterization Guide](15_PARAMETERIZATION_GUIDE.md)
+- **Environment Variables**: Complete list of configurable parameters
+- **Flexible Deployment**: Deploy to any database name without code changes
+- **Environment Management**: Easy switching between dev/staging/prod
+- **CI/CD Integration**: Environment variable overrides for deployment pipelines
+- **Usage Examples**: Step-by-step parameterized setup examples
+- **Best Practices**: Security, validation, and maintenance guidelines
+- **Troubleshooting**: Common parameterization issues and solutions
 
 ### 🤖 [ML/AI Engineer Guide](03_ML_GUIDE.md)
 - **ML Data Product Benefits**: Feature engineering, model development, and production deployment

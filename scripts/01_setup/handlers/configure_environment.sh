@@ -15,6 +15,7 @@ if [[ -f ".env" ]]; then
 fi
 
 # Environment-specific variables (override defaults from .env if needed)
+# Default database is LOGISTICS_DW_DEV for all environments (can be overridden)
 case $ENVIRONMENT in
   dev)
     export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_DEV}"
@@ -22,20 +23,23 @@ case $ENVIRONMENT in
     export SF_SCHEMA="${SF_SCHEMA:-ANALYTICS}"
     export SF_ROLE="${SF_ROLE:-DBT_DEV_ROLE}"
     export DBT_THREADS="${DBT_THREADS:-4}"
+    export DBT_TARGET="${DBT_TARGET:-dev}"
     ;;
   staging)
-    export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_STAGING}"
+    export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_DEV}"
     export SF_WAREHOUSE="${SF_WAREHOUSE:-COMPUTE_WH_SMALL}"
     export SF_SCHEMA="${SF_SCHEMA:-ANALYTICS}"  
     export SF_ROLE="${SF_ROLE:-DBT_STAGING_ROLE}"
     export DBT_THREADS="${DBT_THREADS:-8}"
+    export DBT_TARGET="${DBT_TARGET:-staging}"
     ;;
   prod)
-    export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_PROD}"
+    export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_DEV}"
     export SF_WAREHOUSE="${SF_WAREHOUSE:-COMPUTE_WH_MEDIUM}"
     export SF_SCHEMA="${SF_SCHEMA:-ANALYTICS}"
     export SF_ROLE="${SF_ROLE:-DBT_PROD_ROLE}" 
     export DBT_THREADS="${DBT_THREADS:-12}"
+    export DBT_TARGET="${DBT_TARGET:-prod}"
     ;;
   *)
     echo "❌ Invalid environment. Use: dev, staging, or prod"

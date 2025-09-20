@@ -176,7 +176,7 @@ setup_snowflake_infrastructure() {
         "../01_setup/tasks/03_warehouse_configuration.sql:Warehouse configuration"
         "../01_setup/tasks/04_user_roles_permissions.sql:Roles and permissions"
         "../01_setup/tasks/05_resource_monitors.sql:Resource monitors"
-        "tasks/00_build_and_run_setup.sql:Complete build-and-run setup"
+        "tasks/01_complete_setup.sql:Complete unified setup (configurable via environment variables)"
         "tasks/99_verify_setup.sql:Setup verification"
     )
     

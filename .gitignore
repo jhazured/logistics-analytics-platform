@@ -37,10 +37,7 @@ venv/
 # Common hidden files
 .htaccess
 .htpasswd
-.env.local
-.env.development
-.env.test
-.env.production
+
 
 # Temporary files
 *.tmp

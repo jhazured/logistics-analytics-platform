@@ -26,11 +26,16 @@ vars:
   data_freshness_hours: 6
   critical_freshness_hours: 2
   
-  # Database and schema variables
-  raw_database: 'LOGISTICS_DW_PROD'
-  staging_database: 'LOGISTICS_DW_PROD'
-  marts_database: 'LOGISTICS_DW_PROD'
-  analytics_database: 'LOGISTICS_DW_PROD'
+  # Database and schema variables (can be overridden by environment variables)
+  raw_database: 'LOGISTICS_DW_DEV'
+  staging_database: 'LOGISTICS_DW_DEV'
+  marts_database: 'LOGISTICS_DW_DEV'
+  analytics_database: 'LOGISTICS_DW_DEV'
+  
+  # Environment-specific database configuration
+  dev_database: 'LOGISTICS_DW_DEV'
+  staging_database_env: 'LOGISTICS_DW_DEV'
+  prod_database: 'LOGISTICS_DW_DEV'
   
   # Development environment (optimized for build-and-run)
   dev:

@@ -1,26 +1,24 @@
 -- =====================================================
 -- Database Setup for Logistics Analytics Platform
 -- =====================================================
+-- This script creates databases based on environment variables
+-- Usage: Set SF_DATABASE environment variable before running
+-- Example: export SF_DATABASE="LOGISTICS_DW_DEV" && snowsql -f 01_database_setup.sql
 
--- Create databases for all environments
-CREATE DATABASE IF NOT EXISTS LOGISTICS_DW_PROD;
-CREATE DATABASE IF NOT EXISTS LOGISTICS_DW_DEV;
-CREATE DATABASE IF NOT EXISTS LOGISTICS_DW_STAGING;
+-- Get database name from environment variable or use default
+SET DATABASE_NAME = IFNULL($SF_DATABASE, 'LOGISTICS_DW_DEV');
+
+-- Create database
+CREATE DATABASE IF NOT EXISTS IDENTIFIER($DATABASE_NAME);
 
 -- Set default database
-USE DATABASE LOGISTICS_DW_PROD;
+USE DATABASE IDENTIFIER($DATABASE_NAME);
 
 -- Grant usage to admin role
-GRANT USAGE ON DATABASE LOGISTICS_DW_PROD TO ROLE ACCOUNTADMIN;
-GRANT USAGE ON DATABASE LOGISTICS_DW_DEV TO ROLE ACCOUNTADMIN;
-GRANT USAGE ON DATABASE LOGISTICS_DW_STAGING TO ROLE ACCOUNTADMIN;
+GRANT USAGE ON DATABASE IDENTIFIER($DATABASE_NAME) TO ROLE ACCOUNTADMIN;
 
 -- Set database properties
-ALTER DATABASE LOGISTICS_DW_PROD SET DATA_RETENTION_TIME_IN_DAYS = 7;
-ALTER DATABASE LOGISTICS_DW_DEV SET DATA_RETENTION_TIME_IN_DAYS = 1;
-ALTER DATABASE LOGISTICS_DW_STAGING SET DATA_RETENTION_TIME_IN_DAYS = 3;
+ALTER DATABASE IDENTIFIER($DATABASE_NAME) SET DATA_RETENTION_TIME_IN_DAYS = 7;
 
 -- Create comment
-COMMENT ON DATABASE LOGISTICS_DW_PROD IS 'Production database for logistics analytics platform';
-COMMENT ON DATABASE LOGISTICS_DW_DEV IS 'Development database for logistics analytics platform';
-COMMENT ON DATABASE LOGISTICS_DW_STAGING IS 'Staging database for logistics analytics platform';
+COMMENT ON DATABASE IDENTIFIER($DATABASE_NAME) IS 'Database for logistics analytics platform - Environment: ' || $DATABASE_NAME;
