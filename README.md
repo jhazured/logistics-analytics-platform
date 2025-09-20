@@ -47,8 +47,12 @@ This repository contains a **production-ready ML data product** for logistics an
 ## 🎯 Key Features
 
 - **ML-Optimized Architecture**: Hybrid dbt + Snowflake design for ML training and inference
-- **Feature Store**: Centralized ML feature repository with versioning
-- **Real-time ML Serving**: Low-latency feature serving for ML inference
+- **Production ML Models**: Actual trained models for route optimization and predictive maintenance
+- **Feature Store**: Centralized ML feature repository with versioning and real-time serving
+- **Model Registry**: Complete ML model lifecycle management with performance tracking
+- **Real-time ML Serving**: Low-latency feature serving for ML inference workloads
+- **Advanced Data Governance**: Automated lineage with business impact analysis
+- **Predictive FinOps**: ML-driven cost optimization with automated recommendations
 - **Cost Optimization**: 70-90% reduction in Fivetran costs through incremental loading
 - **Advanced Analytics**: 22+ analytical views with rolling time windows
 - **Enterprise Security**: Role-based access control and data masking

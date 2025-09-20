@@ -150,7 +150,8 @@ logistics-analytics-platform/
 ├── 📁 .github/workflows/                         # CI/CD pipelines
 │   ├── dbt_ci_cd.yml                            # Main dbt CI/CD pipeline
 │   ├── dbt-docs.yml                             # Documentation generation
-│   └── dbt.yml                                  # dbt workflow configuration
+│   ├── dbt.yml                                  # dbt workflow configuration
+│   └── ml_training.yml                          # ML model training pipeline
 ├── 📁 data/                                      # Sample data generation
 │   └── generate_sample_data.py                  # Python script for test data
 ├── 📁 fivetran/                                  # Fivetran monitoring and management
@@ -255,12 +256,16 @@ logistics-analytics-platform/
 │   │       ├── test_fact_dimension_relationships.sql
 │   │       └── test_foreign_key_constraints.sql
 ├── 📁 snowflake/                                # Snowflake-specific objects
-│   ├── 📁 optimization/                         # Performance optimization (5 files)
+│   ├── 📁 optimization/                         # Performance optimization (7 files)
 │   │   ├── automated_tasks.sql
 │   │   ├── clustering_keys.sql
 │   │   ├── cost_monitoring.sql
 │   │   ├── emergency_procedures.sql
-│   │   └── performance_tuning.sql
+│   │   ├── performance_tuning.sql
+│   │   ├── predictive_cost_optimization.sql
+│   │   └── automated_query_optimization.sql
+│   ├── 📁 governance/                           # Advanced data governance (1 file)
+│   │   └── advanced_data_lineage.sql
 │   ├── 📁 security/                             # Security and governance (4 files)
 │   │   ├── audit_logging.sql
 │   │   ├── data_classification.sql
@@ -316,6 +321,9 @@ logistics-analytics-platform/
 │       │   └── vw_ml_real_time_maintenance.sql
 │       └── 📁 monitoring/                       # ML monitoring & observability
 │           └── vw_ml_feature_monitoring.sql
+├── 📁 dbt/models/ml_models/                     # ML model training pipeline (2 files)
+│   ├── train_route_optimization_model.py
+│   └── train_predictive_maintenance_model.py
 └── 📁 scripts/                                  # Utility scripts
     ├── 📁 setup/                                # Environment setup scripts
     │   └── configure_environment.sh
