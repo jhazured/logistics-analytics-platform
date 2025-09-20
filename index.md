@@ -61,16 +61,11 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [schema.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/facts/schema.yml)
 
 ## dbt ML Features
-- [ml_customer_behavior_rolling.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_customer_behavior_rolling.sql)
+- [ml_consolidated_feature_store.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_consolidated_feature_store.sql)
+- [ml_rolling_analytics.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_rolling_analytics.sql)
+- [ml_maintenance_features.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_maintenance_features.sql)
 - [ml_customer_behavior_segments.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_customer_behavior_segments.sql)
-- [ml_feature_store.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_feature_store.sql)
 - [ml_haul_segmentation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_haul_segmentation.sql)
-- [ml_maintenance_rolling_indicators.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_maintenance_rolling_indicators.sql)
-- [ml_operational_performance_rolling.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_operational_performance_rolling.sql)
-- [ml_predictive_maintenance_features.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_predictive_maintenance_features.sql)
-- [ml_real_time_scoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_real_time_scoring.sql)
-- [ml_route_optimization_features.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_route_optimization_features.sql)
-- [ml_route_performance_rolling.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/marts/ml_features/ml_route_performance_rolling.sql)
 
 ## dbt Raw Models
 - [_sources.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/models/raw/_sources.yml)
@@ -98,8 +93,8 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [vehicles_snapshot.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/snapshots/vehicles_snapshot.sql)
 
 ## dbt Business Rules Tests
-- [test_customer_segmentation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_customer_segmentation.sql)
-- [test_customer_tier_consistency.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_customer_tier_consistency.sql)
+- [test_analytics_view_consistency.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_analytics_view_consistency.sql)
+- [test_customer_tier_validation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_customer_tier_validation.sql)
 - [test_kpi_calculations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_kpi_calculations.sql)
 - [test_maintenance_intervals.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_maintenance_intervals.sql)
 - [test_maintenance_schedule_compliance.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_maintenance_schedule_compliance.sql)
@@ -204,11 +199,7 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [view_fivetran_sync_status.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/monitoring/view_fivetran_sync_status.sql)
 
 ## Snowflake Views - Rolling Analytics
-- [view_customer_behavior_rolling.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/rolling_analytics/view_customer_behavior_rolling.sql)
-- [view_customer_behaviour_rolling.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/rolling_analytics/view_customer_behaviour_rolling.sql)
-- [view_maintenance_rolling_indicators.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/rolling_analytics/view_maintenance_rolling_indicators.sql)
-- [view_operational_performance_rolling.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/rolling_analytics/view_operational_performance_rolling.sql)
-- [view_route_performance_rolling.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/rolling_analytics/view_route_performance_rolling.sql)
+- [view_rolling_analytics.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/views/rolling_analytics/view_rolling_analytics.sql)
 
 ## Source Database
 - [copy_into.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/source-database/copy_into.sql)

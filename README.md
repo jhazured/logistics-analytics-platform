@@ -109,7 +109,7 @@ logistics-analytics-platform/
 │   │   ├── logistics_calculations.sql           # Logistics-specific calculations
 │   │   ├── rolling_windows.sql                  # Rolling window analytics
 │   │   └── predictive_maintenance.sql           # Maintenance predictions
-│   ├── 📁 models/                               # dbt models (207+ tests)
+│   ├── 📁 models/                               # dbt models (40+ models, 17+ tests)
 │   │   ├── 📁 marts/                            # Business logic layer
 │   │   │   ├── 📁 analytics/                    # Advanced analytics views (4 models)
 │   │   │   │   ├── ai_recommendations.sql
@@ -134,21 +134,17 @@ logistics-analytics-platform/
 │   │   │   │   ├── fact_route_conditions.sql
 │   │   │   │   ├── fact_vehicle_utilization.sql
 │   │   │   │   └── schema.yml
-│   │   │   └── 📁 ml_features/                  # ML feature engineering (10 models)
-│   │   │       ├── ml_feature_store.sql
-│   │   │       ├── ml_customer_behavior_rolling.sql
+│   │   │   └── 📁 ml_features/                  # ML feature engineering (5 models)
+│   │   │       ├── ml_consolidated_feature_store.sql
+│   │   │       ├── ml_rolling_analytics.sql
+│   │   │       ├── ml_maintenance_features.sql
 │   │   │       ├── ml_customer_behavior_segments.sql
-│   │   │       ├── ml_haul_segmentation.sql
-│   │   │       ├── ml_maintenance_rolling_indicators.sql
-│   │   │       ├── ml_operational_performance_rolling.sql
-│   │   │       ├── ml_predictive_maintenance_features.sql
-│   │   │       ├── ml_real_time_scoring.sql
-│   │   │       ├── ml_route_optimization_features.sql
-│   │   │       └── ml_route_performance_rolling.sql
+│   │   │       └── ml_haul_segmentation.sql
 │   │   └── 📁 ml_serving/                       # Real-time ML serving models
 │   │       ├── real_time_customer_features.sql
 │   │       └── real_time_vehicle_features.sql
-│   │   ├── 📁 raw/                              # Source definitions (7 models)
+│   │   ├── 📁 raw/                              # Source definitions (8 models)
+│   │   │   ├── _sources.yml
 │   │   │   ├── raw_azure_customers.sql
 │   │   │   ├── raw_azure_shipments.sql
 │   │   │   ├── raw_azure_vehicles.sql
@@ -156,21 +152,37 @@ logistics-analytics-platform/
 │   │   │   ├── raw_weather_data.sql
 │   │   │   ├── raw_traffic_data.sql
 │   │   │   └── raw_telematics_data.sql
-│   │   └── 📁 staging/                          # Data cleaning layer
+│   │   └── 📁 staging/                          # Data cleaning layer (9 models)
+│   │       ├── stg_customers.sql
+│   │       ├── stg_maintenance_logs.sql
+│   │       ├── stg_routes.sql
 │   │       ├── stg_shipments.sql
+│   │       ├── stg_traffic_conditions.sql
 │   │       ├── stg_vehicle_telemetry.sql
+│   │       ├── stg_vehicles.sql
+│   │       ├── stg_weather_conditions.sql
 │   │       └── schema.yml
 │   ├── 📁 snapshots/                            # SCD2 snapshots
-│   └── 📁 tests/                                # Comprehensive testing suite (15+ tests)
-│       ├── 📁 business_rules/                   # Business logic validation (4 tests)
-│       │   ├── test_customer_segmentation.sql
+│   └── 📁 tests/                                # Comprehensive testing suite (16+ tests)
+│       ├── 📁 business_rules/                   # Business logic validation (8 tests)
+│       │   ├── test_analytics_view_consistency.sql
+│       │   ├── test_customer_tier_validation.sql
 │       │   ├── test_kpi_calculations.sql
 │       │   ├── test_maintenance_intervals.sql
+│       │   ├── test_maintenance_schedule_compliance.sql
+│       │   ├── test_route_efficiency_bounds.sql
+│       │   ├── test_seasonal_demand_patterns.sql
 │       │   └── test_shipment_status_logic.sql
-│       ├── 📁 data_quality/                     # Data quality checks (2 tests)
+│       ├── 📁 data_quality/                     # Data quality checks (8 tests)
+│       │   ├── test_cost_reasonableness.sql
+│       │   ├── test_data_freshness_monitoring.sql
+│       │   ├── test_delivery_time_realistic.sql
 │       │   ├── test_fuel_efficiency_reasonable.sql
-│       │   └── test_route_distance_positive.sql
-│       └── 📁 referential_integrity/            # FK relationship validation (1 test)
+│       │   ├── test_ml_feature_store_quality.sql
+│       │   ├── test_referential_integrity_shipments.sql
+│       │   ├── test_route_distance_positive.sql
+│       │   └── test_vehicle_capacity_not_exceeded.sql
+│       └── 📁 referential_integrity/            # FK relationship validation
 │           └── test_foreign_key_constraints.sql
 ├── 📁 fivetran/                                 # Data ingestion configuration
 │   ├── 📁 connectors/                           # Fivetran connector configs
@@ -204,23 +216,25 @@ logistics-analytics-platform/
 │   │       ├── fact_shipments.sql
 │   │       └── [other facts...]
 │   ├── 📁 views/                                # Business intelligence views
-│   │   ├── 📁 cost_optimization/                # Cost optimization views
-│   │   ├── 📁 ml_features/                      # ML feature views
+│   │   ├── 📁 business_intelligence/            # Business intelligence views (empty)
+│   │   ├── 📁 cost_optimization/                # Cost optimization views (4 models)
+│   │   │   ├── view_monthly_cost_forecast.sql
+│   │   │   ├── view_query_cost_analysis.sql
+│   │   │   ├── view_resource_monitor_usage.sql
+│   │   │   └── view_warehouse_cost_analysis.sql
+│   │   ├── 📁 ml_features/                      # ML feature views (5 models)
 │   │   │   ├── view_customer_behavior_segments.sql
 │   │   │   ├── view_haul_segmentation.sql
 │   │   │   ├── view_ml_feature_store.sql
 │   │   │   ├── view_predictive_maintenance_features.sql
 │   │   │   └── view_route_optimization_features.sql
-│   │   ├── 📁 monitoring/                       # Monitoring views
+│   │   ├── 📁 monitoring/                       # Monitoring views (4 models)
 │   │   │   ├── view_data_freshness_monitoring.sql
 │   │   │   ├── view_data_quality_summary.sql
 │   │   │   ├── view_dbt_run_results.sql
 │   │   │   └── view_fivetran_sync_status.sql
-│   │   └── 📁 rolling_analytics/                # Rolling analytics views
-│   │       ├── view_customer_behaviour_rolling.sql
-│   │       ├── view_maintenance_rolling_indicators.sql
-│   │       ├── view_operational_performance_rolling.sql
-│   │       └── view_route_performance_rolling.sql
+│   │   └── 📁 rolling_analytics/                # Rolling analytics views (1 model)
+│   │       └── view_rolling_analytics.sql
 │   └── 📁 ml_objects/                           # ML-specific infrastructure
 │       ├── 📁 feature_stores/                   # ML feature store tables
 │       │   ├── ml_feature_store.sql
@@ -258,19 +272,14 @@ The platform implements a **star schema** design optimized for analytical querie
 - **fact_route_conditions**: Route performance data with weather and traffic impacts
 - **fact_vehicle_utilization**: Vehicle usage, efficiency, and capacity utilization metrics
 
-### Machine Learning Data Product (10+ ML models)
+### Machine Learning Data Product (5 ML models)
 
 #### ML Feature Engineering (dbt Models)
-- **ml_feature_store**: Centralized feature repository with customer, vehicle, route, and shipment features
-- **ml_customer_behavior_rolling**: Rolling customer analytics with 7d/30d/90d windows
+- **ml_consolidated_feature_store**: Unified feature repository with customer, vehicle, route, and shipment features
+- **ml_rolling_analytics**: Consolidated rolling analytics for customer, vehicle, and route performance
+- **ml_maintenance_features**: Comprehensive maintenance features with predictive indicators
 - **ml_customer_behavior_segments**: Dynamic customer segmentation based on behavior patterns
 - **ml_haul_segmentation**: Shipment segmentation for optimization
-- **ml_maintenance_rolling_indicators**: Predictive maintenance features with rolling metrics
-- **ml_operational_performance_rolling**: Operational performance with time-series features
-- **ml_predictive_maintenance_features**: Vehicle maintenance prediction with risk scoring
-- **ml_real_time_scoring**: Real-time scoring features for ML inference
-- **ml_route_optimization_features**: Route optimization features for ML models
-- **ml_route_performance_rolling**: Route performance with rolling analytics
 
 #### ML-Optimized Infrastructure (Snowflake)
 - **ML_FEATURES.FEATURE_STORE**: Clustered feature store table for ML training
@@ -286,7 +295,7 @@ The platform implements a **star schema** design optimized for analytical querie
 This platform is specifically designed as a **data product for AI engineers** to build machine learning models. Here's what makes it ML-ready:
 
 #### **Feature Engineering**
-- ✅ **10+ ML Models**: Comprehensive feature engineering for all business domains
+- ✅ **10 ML Models**: Comprehensive feature engineering for all business domains
 - ✅ **Version Control**: dbt ensures reproducible feature transformations
 - ✅ **Feature Store**: Centralized repository with versioning and lineage
 - ✅ **Real-time Features**: Low-latency feature serving for inference
