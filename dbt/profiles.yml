@@ -39,3 +39,16 @@ logistics_analytics:
       threads: 12
       keepalive: false
       query_tag: dbt_prod
+
+    ci:
+      type: snowflake
+      account: "{{ env_var('SF_ACCOUNT') }}"
+      user: "{{ env_var('SF_USER') }}"
+      password: "{{ env_var('SF_PASSWORD') }}"
+      role: "{{ env_var('SF_ROLE', 'DBT_DEV_ROLE') }}"
+      database: LOGISTICS_DW_DEV
+      warehouse: COMPUTE_WH_XS
+      schema: ANALYTICS
+      threads: 2
+      keepalive: false
+      query_tag: dbt_ci

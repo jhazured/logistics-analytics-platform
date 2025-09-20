@@ -100,6 +100,8 @@ logistics-analytics-platform/
 │   ├── 12_TROUBLESHOOTING_GUIDES.md              # Troubleshooting procedures
 │   └── 13_SCHEMA_MAPPING.md                      # Schema mapping and dependencies
 ├── 📁 dbt/                                       # dbt project (43+ models)
+│   ├── .sqlfluff                                 # SQL linting configuration
+│   ├── packages.yml                              # dbt packages configuration
 │   ├── models/                                   # dbt models organized by layer
 │   │   ├── marts/                                # Business logic layer
 │   │   │   ├── analytics/                        # Analytics views (7 models)
@@ -137,6 +139,7 @@ logistics-analytics-platform/
 ├── 📁 scripts/                                  # Utility scripts
 │   ├── setup/                                   # Environment setup scripts
 │   ├── deployment/                              # Deployment scripts
+│   ├── monitoring/                              # Monitoring and quality scripts
 │   └── automation/                              # Automation framework (6 files)
 │       ├── auto_deployment.py                   # Automated deployment pipeline
 │       ├── data_quality_monitor.py              # Data quality monitoring

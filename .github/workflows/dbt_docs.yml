@@ -30,12 +30,17 @@ jobs:
           cd dbt && dbt deps
 
       - name: 📊 Generate documentation
+        if: ${{ secrets.SF_ACCOUNT != '' }}
         run: |
           cd dbt && dbt docs generate --target prod
         env:
           SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
           SF_USER: ${{ secrets.SF_PROD_USER }}
           SF_PASSWORD: ${{ secrets.SF_PROD_PASSWORD }}
+          SF_ROLE: ${{ secrets.SF_PROD_ROLE || 'DBT_PROD_ROLE' }}
+          SF_DATABASE: ${{ secrets.SF_PROD_DATABASE || 'LOGISTICS_DW_PROD' }}
+          SF_WAREHOUSE: ${{ secrets.SF_PROD_WAREHOUSE || 'COMPUTE_WH_MEDIUM' }}
+          SF_SCHEMA: ${{ secrets.SF_PROD_SCHEMA || 'ANALYTICS' }}
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

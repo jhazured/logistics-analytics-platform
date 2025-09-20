@@ -29,6 +29,7 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [exposures.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/exposures.yml)
 - [packages.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/packages.yml)
 - [profiles.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/profiles.yml)
+- [.sqlfluff](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/.sqlfluff)
 
 ## dbt Macros
 - [aggregations.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/macros/aggregations.sql)
@@ -116,6 +117,9 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 
 ### Deployment Scripts
 - [deploy_dbt_models.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/deploy_dbt_models.sh)
+
+### Monitoring Scripts
+- [generate_quality_report.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/monitoring/generate_quality_report.py)
 
 ### Automation Framework
 - [auto_deployment.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/auto_deployment.py)
