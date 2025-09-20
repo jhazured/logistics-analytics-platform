@@ -221,9 +221,11 @@ logistics-analytics-platform/
 │   │       ├── tbl_stg_vehicles.sql
 │   │       ├── tbl_stg_weather_conditions.sql
 │   │       └── schema.yml
-│   ├── 📁 snapshots/                            # Change data capture (2 models)
+│   ├── 📁 snapshots/                            # Change data capture (4 models)
 │   │   ├── customers_snapshot.sql
-│   │   └── vehicles_snapshot.sql
+│   │   ├── vehicles_snapshot.sql
+│   │   ├── routes_snapshot.sql
+│   │   └── locations_snapshot.sql
 │   ├── 📁 tests/                                # Data quality tests (16+ tests)
 │   │   ├── 📁 business_rules/                   # Business logic validation
 │   │   │   ├── test_customer_tier_validation.sql

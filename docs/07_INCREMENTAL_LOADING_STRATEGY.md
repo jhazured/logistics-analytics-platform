@@ -69,6 +69,8 @@ Each raw model uses the following incremental logic:
 #### Change Detection Snapshots
 - `customers_snapshot` - Tracks customer dimension changes
 - `vehicles_snapshot` - Tracks vehicle dimension changes
+- `routes_snapshot` - Tracks route definition and optimization parameter changes
+- `locations_snapshot` - Tracks location details and service area changes
 
 #### Snapshot Configuration
 ```sql

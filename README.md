@@ -97,7 +97,7 @@ logistics-analytics-platform/
 │   │   └── staging/                             # Data cleaning layer (9 models)
 │   ├── macros/                                  # Reusable macros (8 files)
 │   ├── tests/                                   # Data quality tests (16+ tests)
-│   └── snapshots/                               # Change data capture (2 models)
+│   └── snapshots/                               # Change data capture (4 models)
 ├── 📁 snowflake/                                # Snowflake-specific objects
 │   ├── optimization/                            # Performance optimization (5 files)
 │   ├── security/                                # Security and governance (4 files)
