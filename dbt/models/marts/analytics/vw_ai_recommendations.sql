@@ -58,7 +58,7 @@ vehicle_utilization_analysis AS (
     JOIN {{ ref('tbl_fact_shipments') }} fs ON dv.vehicle_id = fs.vehicle_id
     WHERE fs.shipment_date >= CURRENT_DATE() - 30
         AND dv.vehicle_status = 'ACTIVE'
-    GROUP BY 1,2,3,4,5,6,7,8,9
+    GROUP BY dv.vehicle_id, dv.vehicle_type, dv.capacity_kg, dv.current_mileage, dv.last_maintenance_date, dv.next_maintenance_date
 ),
 
 customer_insights AS (

@@ -24,7 +24,7 @@ WITH data_freshness_sla AS (
     FROM (
         SELECT 
             table_name,
-            DATEDIFF('hour', MAX(last_updated), CURRENT_TIMESTAMP()) as hours_since_last_update,
+            DATEDIFF('hour', MAX(latest_update), CURRENT_TIMESTAMP()) as hours_since_last_update,
             CASE 
                 WHEN table_name IN ('fact_shipments', 'fact_vehicle_telemetry') THEN 2
                 WHEN table_name LIKE 'dim_%' THEN 24
