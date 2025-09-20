@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    tags=['marts', 'facts', 'vehicle_utilization', 'load_second']
+) }}
+
 with t as (
   select * from {{ ref('tbl_fact_vehicle_telemetry') }}
 ), d as (

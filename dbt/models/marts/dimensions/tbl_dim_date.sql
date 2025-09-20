@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    tags=['marts', 'dimensions', 'date', 'load_first']
+) }}
+
 with dates as (
   {{ dbt_utils.date_spine(
        datepart="day",

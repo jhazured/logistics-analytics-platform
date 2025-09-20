@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    tags=['marts', 'facts', 'route_conditions', 'load_second']
+) }}
+
 with s as (
   select route_id, shipment_date, origin_location_id from {{ ref('tbl_fact_shipments') }}
 ), d as (

@@ -4,8 +4,8 @@
 
 {{ config(
     materialized='incremental',
-    unique_key='customer_id',
-    merge_update_columns=['customer_name', 'customer_type', 'industry_code', 'credit_limit', 'payment_terms', 'customer_since', 'status', 'billing_address', 'shipping_address', 'contact_email', 'contact_phone', 'account_manager', 'created_at', 'updated_at', '_loaded_at'],
+    unique_key='"customer_id"',
+    merge_update_columns=['"customer_name"', '"customer_type"', '"industry_code"', '"credit_limit"', '"payment_terms"', '"customer_since"', '"status"', '"billing_address"', '"shipping_address"', '"contact_email"', '"contact_phone"', '"account_manager"', '"created_at"', '"updated_at"', '"_loaded_at"'],
     tags=['raw', 'customers', 'azure', 'incremental']
 ) }}
 

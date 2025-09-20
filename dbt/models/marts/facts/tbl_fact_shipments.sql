@@ -1,7 +1,8 @@
 {{ config(
     materialized='incremental',
     unique_key='shipment_id',
-    on_schema_change='sync_all_columns'
+    on_schema_change='sync_all_columns',
+    tags=['marts', 'facts', 'shipments', 'load_second']
 ) }}
 
 with s as (

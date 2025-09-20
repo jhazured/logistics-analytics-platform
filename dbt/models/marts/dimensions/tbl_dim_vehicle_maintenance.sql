@@ -1,7 +1,10 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='table',
+    tags=['marts', 'dimensions', 'maintenance', 'load_first']
+) }}
 
 with maintenance_data as (
-    select * from {{ source('raw_logistics', 'MAINTENANCE') }}
+    select * from {{ ref('tbl_stg_maintenance_logs') }}
 ),
 
 vehicles as (
@@ -16,10 +19,9 @@ maintenance_enhanced as (
         m.maintenance_date,
         m.maintenance_mileage,
         m.maintenance_cost_usd,
-        m.maintenance_duration_hours,
         m.description,
-        m.parts_replaced,
-        m.labor_hours,
+        m.parts_cost,
+        m.labor_cost,
         -- Calculate next maintenance due date
         case 
             when m.maintenance_type = 'ROUTINE' then dateadd(day, 90, m.maintenance_date)
@@ -54,8 +56,8 @@ maintenance_enhanced as (
             when m.maintenance_mileage > 0 then m.maintenance_cost_usd / m.maintenance_mileage
             else 0
         end as cost_per_mile,
-        m.created_at,
-        m.updated_at
+        m._ingested_at as created_at,
+        m._ingested_at as updated_at
     from maintenance_data m
 )
 

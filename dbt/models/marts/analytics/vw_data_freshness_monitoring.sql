@@ -5,7 +5,7 @@
 -- Data Freshness Monitoring
 {{ config(
     materialized='view',
-    tags=['monitoring', 'quality', 'freshness']
+    tags=['marts', 'analytics', 'monitoring', 'quality', 'freshness', 'load_third']
 ) }}
 
 WITH source_freshness AS (

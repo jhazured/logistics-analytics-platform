@@ -1,7 +1,8 @@
 {{ config(
     materialized='incremental',
     unique_key='performance_id',
-    on_schema_change='sync_all_columns'
+    on_schema_change='sync_all_columns',
+    tags=['marts', 'facts', 'route_performance', 'load_second']
 ) }}
 
 with s as (

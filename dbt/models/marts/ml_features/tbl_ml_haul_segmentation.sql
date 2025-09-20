@@ -6,7 +6,7 @@
 -- File: models/analytics/ml_features/view_haul_segmentation.sql
 {{ config(
     materialized='table',
-    tags=['ml', 'features', 'segmentation']
+    tags=['marts', 'ml_features', 'ml', 'features', 'segmentation', 'load_third']
 ) }}
 
 WITH shipment_base AS (

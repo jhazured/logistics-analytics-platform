@@ -2,7 +2,7 @@
 -- File: models/analytics/ml_features/view_customer_behavior_segments.sql
 {{ config(
     materialized='table',
-    tags=['ml', 'features', 'customer']
+    tags=['marts', 'ml_features', 'ml', 'features', 'customer', 'load_third']
 ) }}
 
 WITH customer_metrics AS (

@@ -5,7 +5,7 @@
 -- AI Recommendations
 {{ config(
     materialized='view',
-    tags=['bi', 'ai', 'recommendations']
+    tags=['marts', 'analytics', 'bi', 'ai', 'recommendations', 'load_third']
 ) }}
 
 WITH route_performance_analysis AS (

@@ -2,7 +2,7 @@
 
 {{ config(
     materialized='view',
-    tags=['analytics', 'lineage', 'metadata']
+    tags=['marts', 'analytics', 'lineage', 'metadata', 'load_third']
 ) }}
 
 WITH model_dependencies AS (

@@ -1,7 +1,10 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='table',
+    tags=['marts', 'dimensions', 'traffic', 'load_first']
+) }}
 
 with traffic_data as (
-    select * from {{ source('raw_logistics', 'TRAFFIC') }}
+    select * from {{ ref('tbl_stg_traffic_conditions') }}
 ),
 
 routes as (
@@ -11,35 +14,35 @@ routes as (
 traffic_enhanced as (
     select
         {{ dbt_utils.generate_surrogate_key(['traffic_id']) }} as traffic_id,
-        t.route_id,
-        t.traffic_date,
-        t.time_of_day,
-        t.traffic_volume,
-        t.congestion_level,
+        t.location_id as route_id,  -- Map location_id to route_id for consistency
+        t.date as traffic_date,
+        t.hour as time_of_day,
+        t.congestion_delay_minutes as traffic_volume,
+        t.traffic_level as congestion_level,
         t.average_speed_kmh,
         t.average_speed_kmh * 0.621371 as average_speed_mph,
         -- Calculate delay factor based on congestion and speed
         case 
-            when t.congestion_level < 20 then 1.0
-            when t.congestion_level < 40 then 1.2
-            when t.congestion_level < 60 then 1.5
-            when t.congestion_level < 80 then 2.0
+            when t.congestion_delay_minutes < 5 then 1.0
+            when t.congestion_delay_minutes < 15 then 1.2
+            when t.congestion_delay_minutes < 30 then 1.5
+            when t.congestion_delay_minutes < 60 then 2.0
             else 2.5
         end as delay_factor,
         -- Determine if this is peak hours
         case 
-            when t.time_of_day in ('MORNING_RUSH', 'EVENING_RUSH') then true
+            when t.hour between 7 and 9 or t.hour between 17 and 19 then true
             else false
         end as is_peak_hours,
         -- Traffic severity classification
         case 
-            when t.congestion_level < 30 and t.average_speed_kmh > 50 then 'LOW'
-            when t.congestion_level < 60 and t.average_speed_kmh > 30 then 'MEDIUM'
-            when t.congestion_level < 80 and t.average_speed_kmh > 20 then 'HIGH'
+            when t.congestion_delay_minutes < 5 and t.average_speed_kmh > 50 then 'LOW'
+            when t.congestion_delay_minutes < 15 and t.average_speed_kmh > 30 then 'MEDIUM'
+            when t.congestion_delay_minutes < 30 and t.average_speed_kmh > 20 then 'HIGH'
             else 'CRITICAL'
         end as traffic_severity,
-        t.created_at,
-        t.updated_at
+        t._ingested_at as created_at,
+        t._ingested_at as updated_at
     from traffic_data t
 )
 

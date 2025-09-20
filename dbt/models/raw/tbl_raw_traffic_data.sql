@@ -4,8 +4,8 @@
 
 {{ config(
     materialized='incremental',
-    unique_key='traffic_id',
-    merge_update_columns=['location_id', 'date', 'hour', 'traffic_level', 'average_speed_mph', 'congestion_delay_minutes', 'incident_count', 'road_conditions', 'traffic_volume', 'created_at', '_loaded_at'],
+    unique_key='"traffic_id"',
+    merge_update_columns=['"location_id"', '"date"', '"hour"', '"traffic_level"', '"average_speed_mph"', '"congestion_delay_minutes"', '"incident_count"', '"road_type"', '"weather_impact"', '"created_at"', '"_loaded_at"'],
     tags=['raw', 'traffic', 'external', 'incremental']
 ) }}
 

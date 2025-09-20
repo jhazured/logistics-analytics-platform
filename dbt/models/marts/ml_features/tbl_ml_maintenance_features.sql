@@ -6,7 +6,7 @@
 {{ config(
     materialized='table',
     cluster_by=['vehicle_id', 'feature_date'],
-    tags=['ml', 'maintenance', 'predictive', 'consolidated', 'ml_optimized']
+    tags=['marts', 'ml_features', 'ml', 'maintenance', 'predictive', 'consolidated', 'ml_optimized', 'load_third']
 ) }}
 
 WITH vehicle_telemetry AS (

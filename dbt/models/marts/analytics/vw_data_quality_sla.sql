@@ -2,7 +2,7 @@
 
 {{ config(
     materialized='view',
-    tags=['analytics', 'data_quality', 'sla']
+    tags=['marts', 'analytics', 'data_quality', 'sla', 'load_third']
 ) }}
 
 WITH data_freshness_sla AS (

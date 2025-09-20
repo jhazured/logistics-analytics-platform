@@ -1,4 +1,8 @@
-{{ config(materialized='incremental', unique_key='telemetry_id') }}
+{{ config(
+    materialized='incremental', 
+    unique_key='telemetry_id',
+    tags=['marts', 'facts', 'vehicle_telemetry', 'load_second']
+) }}
 
 with s as (
   select * from {{ ref('tbl_raw_telematics_data') }}

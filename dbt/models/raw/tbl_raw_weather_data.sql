@@ -4,8 +4,8 @@
 
 {{ config(
     materialized='incremental',
-    unique_key='weather_id',
-    merge_update_columns=['location_id', 'date', 'hour', 'temperature_f', 'temperature_c', 'humidity_pct', 'wind_speed_mph', 'wind_direction_degrees', 'precipitation_mm', 'visibility_miles', 'weather_condition', 'weather_description', 'pressure_inhg', 'uv_index', 'sunrise_time', 'sunset_time', 'created_at', '_loaded_at'],
+    unique_key='"weather_id"',
+    merge_update_columns=['"location_id"', '"date"', '"hour"', '"temperature_f"', '"temperature_c"', '"humidity_pct"', '"wind_speed_mph"', '"wind_direction_degrees"', '"precipitation_mm"', '"visibility_miles"', '"weather_condition"', '"weather_description"', '"pressure_inhg"', '"uv_index"', '"sunrise_time"', '"sunset_time"', '"created_at"', '"_loaded_at"'],
     tags=['raw', 'weather', 'external', 'incremental']
 ) }}
 

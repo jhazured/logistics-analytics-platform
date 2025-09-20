@@ -6,7 +6,7 @@
 
 {{ config(
     materialized='view',
-    tags=['bi', 'dashboard', 'consolidated']
+    tags=['marts', 'analytics', 'bi', 'dashboard', 'consolidated', 'load_third']
 ) }}
 
 WITH daily_kpis AS (

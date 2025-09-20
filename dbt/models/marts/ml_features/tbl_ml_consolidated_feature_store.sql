@@ -6,7 +6,7 @@
 {{ config(
     materialized='table',
     cluster_by=['entity_type', 'entity_id', 'feature_date'],
-    tags=['ml', 'features', 'feature_store', 'consolidated', 'ml_optimized']
+    tags=['marts', 'ml_features', 'ml', 'features', 'feature_store', 'consolidated', 'ml_optimized', 'load_third']
 ) }}
 
 WITH customer_features AS (

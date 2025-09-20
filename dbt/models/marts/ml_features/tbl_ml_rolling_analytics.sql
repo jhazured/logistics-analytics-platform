@@ -6,7 +6,7 @@
 {{ config(
     materialized='table',
     cluster_by=['entity_type', 'entity_id', 'feature_date'],
-    tags=['ml', 'analytics', 'rolling', 'consolidated', 'ml_optimized']
+    tags=['marts', 'ml_features', 'ml', 'analytics', 'rolling', 'consolidated', 'ml_optimized', 'load_third']
 ) }}
 
 WITH customer_daily_activity AS (

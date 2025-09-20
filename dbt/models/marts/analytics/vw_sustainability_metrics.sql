@@ -2,7 +2,7 @@
 -- File: models/analytics/monitoring/view_sustainability_metrics.sql
 {{ config(
     materialized='view',
-    tags=['monitoring', 'sustainability', 'esg']
+    tags=['marts', 'analytics', 'monitoring', 'sustainability', 'esg', 'load_third']
 ) }}
 
 WITH vehicle_emissions AS (

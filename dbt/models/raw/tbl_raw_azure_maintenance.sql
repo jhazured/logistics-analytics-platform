@@ -4,8 +4,8 @@
 
 {{ config(
     materialized='incremental',
-    unique_key='maintenance_id',
-    merge_update_columns=['vehicle_id', 'maintenance_type', 'maintenance_date', 'odometer_reading', 'description', 'parts_cost', 'labor_cost', 'total_cost', 'maintenance_provider', 'next_maintenance_due_date', 'next_maintenance_due_mileage', 'maintenance_status', 'created_at', 'updated_at', '_loaded_at'],
+    unique_key='"maintenance_id"',
+    merge_update_columns=['"vehicle_id"', '"maintenance_type"', '"maintenance_date"', '"odometer_reading"', '"description"', '"parts_cost"', '"labor_cost"', '"total_cost"', '"maintenance_provider"', '"next_maintenance_due_date"', '"next_maintenance_due_mileage"', '"maintenance_status"', '"created_at"', '"updated_at"', '"_loaded_at"'],
     tags=['raw', 'maintenance', 'azure', 'incremental']
 ) }}
 

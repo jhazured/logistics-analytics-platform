@@ -7,7 +7,7 @@ with src as (
   select * from {{ source('raw_logistics', 'CUSTOMERS') }}
 )
 select
-  cast("customer_id" as number) as customer_id,
+  cast("customer_id" as varchar) as customer_id,
   coalesce(trim("customer_name"), 'UNKNOWN') as customer_name,
   coalesce(trim("customer_type"), 'UNKNOWN') as segment,  -- Map customer_type to segment
   'AUSTRALIA' as country,  -- Default to Australia since we're generating Australian data
