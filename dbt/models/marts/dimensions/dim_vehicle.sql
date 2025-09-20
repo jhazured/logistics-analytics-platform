@@ -7,9 +7,15 @@ select
   vehicle_type,
   capacity_kg,
   capacity_m3,
-  fuel_efficiency_km_per_l,
+  fuel_efficiency_mpg,  -- Use mpg from staging
   make,
   model,
   model_year,
-  status
+  vehicle_status,  -- Use vehicle_status from staging
+  current_mileage,
+  last_maintenance_date,
+  next_maintenance_date,
+  maintenance_interval_miles,
+  purchase_price,
+  current_value
 from v

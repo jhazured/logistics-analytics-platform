@@ -2,6 +2,7 @@
 """
 Smart Logistics Analytics Platform - Sample Data Generator
 Generates realistic sample datasets for the comprehensive logistics analytics project
+Supports all tables: dimensions, facts, raw data, and real-time processing tables
 """
 
 import pandas as pd
@@ -311,6 +312,20 @@ class LogisticsDataGenerator:
                 
                 is_on_time = random.random() < on_time_prob
                 
+                # Calculate additional fields for the updated schema
+                fuel_cost = round(route['total_distance_km'] * vehicle['fuel_efficiency_l_100km'] * 1.6 / 100, 2)
+                delivery_cost = round(random.uniform(50, 300), 2)
+                revenue = round(random.uniform(100, 800), 2)
+                total_cost = fuel_cost + delivery_cost
+                profit_margin = round((revenue - total_cost) / revenue * 100, 2) if revenue > 0 else 0
+                
+                # Calculate route efficiency score
+                route_efficiency = round(100 - ((actual_time - base_time) / base_time * 100), 1) if base_time > 0 else 50
+                route_efficiency = max(0, min(100, route_efficiency))
+                
+                # Calculate carbon emissions (simplified)
+                carbon_emissions = round(route['total_distance_km'] * 0.2, 2)  # kg CO2 per km
+                
                 shipments.append({
                     'shipment_id': shipment_id,
                     'date_key': int(date.strftime('%Y%m%d')),
@@ -327,15 +342,28 @@ class LogisticsDataGenerator:
                     'distance_km': route['total_distance_km'],
                     'planned_duration_minutes': base_time,
                     'actual_duration_minutes': round(actual_time, 0) if is_on_time else None,
-                    'fuel_cost': round(route['total_distance_km'] * vehicle['fuel_efficiency_l_100km'] * 1.6 / 100, 2),
-                    'delivery_cost': round(random.uniform(50, 300), 2),
-                    'revenue': round(random.uniform(100, 800), 2),
+                    'fuel_cost': fuel_cost,
+                    'delivery_cost': delivery_cost,
+                    'revenue': revenue,
                     'is_on_time': is_on_time,
                     'is_delivered': is_on_time,
-                    'customer_rating': random.randint(7, 10) if is_on_time else random.randint(3, 8),
                     'delivery_status': 'Delivered' if is_on_time else random.choice(['In Transit', 'Delayed', 'Failed']),
                     'priority_level': random.choice(['Standard', 'High', 'Urgent']),
-                    'service_type': customer['service_level']
+                    'service_type': customer['service_level'],
+                    # New calculated fields for updated schema
+                    'actual_distance_miles': round(route['total_distance_km'] * 0.621371, 2),
+                    'planned_distance_miles': round(route['total_distance_km'] * 0.621371, 2),
+                    'actual_delivery_time_hours': round(actual_time / 60, 2) if is_on_time else None,
+                    'estimated_delivery_time_hours': round(base_time / 60, 2),
+                    'fuel_cost_usd': fuel_cost,
+                    'driver_cost_usd': delivery_cost,
+                    'total_cost_usd': total_cost,
+                    'profit_margin_pct': profit_margin,
+                    'on_time_delivery_flag': 1 if is_on_time else 0,
+                    'route_efficiency_score': route_efficiency,
+                    'carbon_emissions_kg': carbon_emissions,
+                    'weather_delay_minutes': round(random.uniform(0, 30), 0) if not is_on_time else 0,
+                    'traffic_delay_minutes': round(random.uniform(0, 20), 0) if not is_on_time else 0
                 })
                 shipment_id += 1
         
@@ -346,7 +374,7 @@ class LogisticsDataGenerator:
         telemetry_data = []
         
         # Generate telemetry for last 90 days
-        dates = pd.date_range(start=self.end_date - timedelta(days=90), end=self.end_date, freq='H')
+        dates = pd.date_range(start=self.end_date - timedelta(days=90), end=self.end_date, freq='h')
         
         for vehicle in vehicles_df[vehicles_df['telematics_enabled']].itertuples():
             for date in dates[::random.randint(1, 4)]:  # Sample some hours
@@ -372,6 +400,491 @@ class LogisticsDataGenerator:
                 })
         
         return pd.DataFrame(telemetry_data)
+    
+    def generate_traffic_conditions_dimension(self):
+        """Generate traffic conditions dimension"""
+        traffic_data = []
+        
+        # Generate traffic data for last 90 days
+        dates = pd.date_range(start=self.end_date - timedelta(days=90), end=self.end_date, freq='h')
+        traffic_id = 1
+        
+        for date in dates:
+            for city_info in self.major_cities:
+                # Traffic patterns based on time of day and day of week
+                hour = date.hour
+                day_of_week = date.weekday()
+                
+                # Peak hours: 7-9 AM and 5-7 PM on weekdays
+                if day_of_week < 5 and (7 <= hour <= 9 or 17 <= hour <= 19):
+                    traffic_level = random.choices(['Heavy', 'Severe'], weights=[0.7, 0.3])[0]
+                    congestion_delay = random.uniform(15, 45)
+                elif day_of_week < 5 and (10 <= hour <= 16):
+                    traffic_level = random.choices(['Light', 'Moderate'], weights=[0.6, 0.4])[0]
+                    congestion_delay = random.uniform(0, 10)
+                else:
+                    traffic_level = random.choices(['Light', 'Moderate'], weights=[0.8, 0.2])[0]
+                    congestion_delay = random.uniform(0, 5)
+                
+                traffic_data.append({
+                    'traffic_id': traffic_id,
+                    'date': date.date(),
+                    'hour_of_day': hour,
+                    'city': city_info['city'],
+                    'traffic_level': traffic_level,
+                    'congestion_delay_minutes': round(congestion_delay, 1),
+                    'average_speed_kmh': round(random.uniform(20, 80), 1),
+                    'incident_count': random.randint(0, 3),
+                    'road_closure_count': random.randint(0, 1),
+                    'weather_impact': random.choice(['None', 'Light', 'Moderate', 'Heavy']),
+                    'is_peak_hours': 1 if (day_of_week < 5 and (7 <= hour <= 9 or 17 <= hour <= 19)) else 0
+                })
+                traffic_id += 1
+        
+        return pd.DataFrame(traffic_data)
+    
+    def generate_vehicle_maintenance_dimension(self, vehicles_df):
+        """Generate vehicle maintenance dimension"""
+        maintenance_data = []
+        maintenance_id = 1
+        
+        for vehicle in vehicles_df.itertuples():
+            # Generate maintenance history for each vehicle
+            num_maintenance_records = random.randint(5, 20)
+            
+            for i in range(num_maintenance_records):
+                maintenance_date = fake.date_between(
+                    start_date=vehicle.purchase_date, 
+                    end_date='today'
+                )
+                
+                maintenance_type = random.choice([
+                    'Routine Service', 'Oil Change', 'Brake Service', 
+                    'Tire Replacement', 'Engine Repair', 'Transmission Service',
+                    'Electrical Repair', 'Body Work', 'Preventive Maintenance'
+                ])
+                
+                # Cost based on maintenance type
+                cost_ranges = {
+                    'Routine Service': (200, 800),
+                    'Oil Change': (50, 150),
+                    'Brake Service': (300, 1200),
+                    'Tire Replacement': (400, 2000),
+                    'Engine Repair': (1000, 8000),
+                    'Transmission Service': (1500, 5000),
+                    'Electrical Repair': (200, 1500),
+                    'Body Work': (500, 3000),
+                    'Preventive Maintenance': (100, 500)
+                }
+                
+                cost_range = cost_ranges.get(maintenance_type, (100, 1000))
+                maintenance_cost = round(random.uniform(*cost_range), 2)
+                
+                maintenance_data.append({
+                    'maintenance_id': maintenance_id,
+                    'vehicle_id': vehicle.vehicle_id,
+                    'maintenance_type': maintenance_type,
+                    'maintenance_date': maintenance_date,
+                    'maintenance_mileage': random.randint(50000, 500000),
+                    'maintenance_cost_usd': maintenance_cost,
+                    'maintenance_duration_hours': round(random.uniform(1, 8), 1),
+                    'next_maintenance_due_date': maintenance_date + timedelta(days=random.randint(30, 180)),
+                    'next_maintenance_due_mileage': random.randint(50000, 500000),
+                    'maintenance_status': random.choice(['Completed', 'In Progress', 'Scheduled']),
+                    'risk_score': random.randint(1, 10),
+                    'parts_replaced': json.dumps([fake.word() for _ in range(random.randint(0, 3))]),
+                    'service_provider': fake.company(),
+                    'warranty_covered': random.choice([True, False])
+                })
+                maintenance_id += 1
+        
+        return pd.DataFrame(maintenance_data)
+    
+    def generate_fact_route_conditions(self, routes_df, weather_df, traffic_df):
+        """Generate route conditions fact table"""
+        route_conditions = []
+        condition_id = 1
+        
+        # Generate route conditions for last 30 days
+        dates = pd.date_range(start=self.end_date - timedelta(days=30), end=self.end_date, freq='D')
+        
+        for date in dates:
+            for route in routes_df[routes_df['is_active']].itertuples():
+                # Get weather and traffic data for this date
+                weather = weather_df[
+                    (weather_df['date'] == date.date()) & 
+                    (weather_df['city'].str.contains(route.route_name.split('-')[0], case=False))
+                ]
+                traffic = traffic_df[
+                    (traffic_df['date'] == date.date()) & 
+                    (traffic_df['city'].str.contains(route.route_name.split('-')[0], case=False))
+                ]
+                
+                if not weather.empty and not traffic.empty:
+                    weather_condition = weather.iloc[0]
+                    traffic_condition = traffic.iloc[0]
+                    
+                    # Calculate route performance impact
+                    weather_impact = weather_condition['weather_severity_score'] / 10
+                    traffic_impact = traffic_condition['congestion_delay_minutes'] / 60
+                    
+                    route_conditions.append({
+                        'condition_id': condition_id,
+                        'route_id': route.route_id,
+                        'date': date.date(),
+                        'weather_condition': weather_condition['condition'],
+                        'temperature_c': weather_condition['temperature_c'],
+                        'precipitation_mm': weather_condition['precipitation_mm'],
+                        'wind_speed_kmh': weather_condition['wind_speed_kmh'],
+                        'visibility_km': weather_condition['visibility_km'],
+                        'traffic_level': traffic_condition['traffic_level'],
+                        'congestion_delay_minutes': traffic_condition['congestion_delay_minutes'],
+                        'average_speed_kmh': traffic_condition['average_speed_kmh'],
+                        'route_performance_score': round(100 - (weather_impact * 30 + traffic_impact * 20), 1),
+                        'safety_risk_score': round(weather_impact * 40 + traffic_impact * 30, 1),
+                        'fuel_efficiency_impact_pct': round((weather_impact + traffic_impact) * 15, 1),
+                        'delivery_delay_risk_pct': round((weather_impact + traffic_impact) * 25, 1)
+                    })
+                    condition_id += 1
+        
+        return pd.DataFrame(route_conditions)
+    
+    def generate_fact_vehicle_utilization(self, vehicles_df, shipments_df):
+        """Generate vehicle utilization fact table"""
+        utilization_data = []
+        utilization_id = 1
+        
+        # Generate daily utilization for last 90 days
+        dates = pd.date_range(start=self.end_date - timedelta(days=90), end=self.end_date, freq='D')
+        
+        for date in dates:
+            for vehicle in vehicles_df[vehicles_df['is_active']].itertuples():
+                # Get shipments for this vehicle on this date
+                vehicle_shipments = shipments_df[
+                    (shipments_df['vehicle_id'] == vehicle.vehicle_id) & 
+                    (shipments_df['shipment_date'] == date.date())
+                ]
+                
+                if not vehicle_shipments.empty:
+                    total_weight = vehicle_shipments['weight_kg'].sum()
+                    total_volume = vehicle_shipments['volume_m3'].sum()
+                    total_distance = vehicle_shipments['distance_km'].sum()
+                    total_revenue = vehicle_shipments['revenue'].sum()
+                    total_cost = vehicle_shipments['fuel_cost'].sum() + vehicle_shipments['delivery_cost'].sum()
+                    
+                    utilization_data.append({
+                        'utilization_id': utilization_id,
+                        'vehicle_id': vehicle.vehicle_id,
+                        'date': date.date(),
+                        'total_shipments': len(vehicle_shipments),
+                        'total_weight_kg': round(total_weight, 1),
+                        'total_volume_m3': round(total_volume, 2),
+                        'total_distance_km': round(total_distance, 1),
+                        'total_revenue': round(total_revenue, 2),
+                        'total_cost': round(total_cost, 2),
+                        'capacity_utilization_pct': round((total_weight / vehicle.capacity_kg) * 100, 1),
+                        'volume_utilization_pct': round((total_volume / (vehicle.capacity_kg / 100)) * 100, 1),
+                        'distance_utilization_km': round(total_distance, 1),
+                        'revenue_per_km': round(total_revenue / max(total_distance, 1), 2),
+                        'cost_per_km': round(total_cost / max(total_distance, 1), 2),
+                        'profit_per_km': round((total_revenue - total_cost) / max(total_distance, 1), 2),
+                        'utilization_score': round(((total_weight / vehicle.capacity_kg) + (total_volume / (vehicle.capacity_kg / 100))) / 2 * 100, 1),
+                        'efficiency_rating': random.choice(['Excellent', 'Good', 'Average', 'Poor']),
+                        'maintenance_required': random.random() > 0.95
+                    })
+                    utilization_id += 1
+        
+        return pd.DataFrame(utilization_data)
+    
+    def generate_raw_azure_tables(self, customers_df, vehicles_df, shipments_df, maintenance_df):
+        """Generate raw Azure SQL tables (source data) matching expected schemas"""
+        raw_data = {}
+        
+        # Raw Azure Customers - Match expected schema from raw_azure_customers.sql
+        raw_data['raw_azure_customers'] = pd.DataFrame({
+            'customer_id': customers_df['customer_id'],
+            'customer_name': customers_df['customer_name'],
+            'customer_type': customers_df['customer_type'],
+            'industry_code': customers_df['industry'].map({
+                'Retail': 'RETAIL',
+                'Manufacturing': 'MFG',
+                'Healthcare': 'HEALTH',
+                'Technology': 'TECH',
+                'Food & Beverage': 'F&B',
+                'Automotive': 'AUTO'
+            }),
+            'credit_limit': customers_df['total_lifetime_value'] * random.uniform(0.5, 2.0),
+            'payment_terms': customers_df['payment_terms'],
+            'customer_since': customers_df['signup_date'],
+            'status': 'ACTIVE',
+            'billing_address': [fake.address() for _ in range(len(customers_df))],
+            'shipping_address': [fake.address() for _ in range(len(customers_df))],
+            'contact_email': [fake.email() for _ in range(len(customers_df))],
+            'contact_phone': [fake.phone_number() for _ in range(len(customers_df))],
+            'account_manager': [fake.name() for _ in range(len(customers_df))],
+            'created_at': [fake.date_time_between(start_date='-3y', end_date='now') for _ in range(len(customers_df))],
+            'updated_at': [fake.date_time_between(start_date='-1y', end_date='now') for _ in range(len(customers_df))],
+            '_loaded_at': [fake.date_time_between(start_date='-1d', end_date='now') for _ in range(len(customers_df))]
+        })
+        
+        # Raw Azure Vehicles - Match expected schema from raw_azure_vehicles.sql
+        raw_data['raw_azure_vehicles'] = pd.DataFrame({
+            'vehicle_id': vehicles_df['vehicle_id'],
+            'vehicle_number': vehicles_df['vehicle_id'],
+            'vehicle_type': vehicles_df['vehicle_type'],
+            'make': vehicles_df['make'],
+            'model': vehicles_df['model'],
+            'model_year': vehicles_df['year'],
+            'capacity_lbs': vehicles_df['capacity_kg'] * 2.20462,
+            'capacity_cubic_feet': vehicles_df['capacity_kg'] * 0.0353147,  # Rough conversion
+            'fuel_type': vehicles_df['fuel_type'],
+            'fuel_efficiency_mpg': 235.214 / vehicles_df['fuel_efficiency_l_100km'],
+            'maintenance_interval_miles': [random.randint(10000, 50000) for _ in range(len(vehicles_df))],
+            'current_mileage': vehicles_df['odometer_km'] * 0.621371,
+            'last_maintenance_date': vehicles_df['last_service_date'],
+            'next_maintenance_date': vehicles_df['next_service_due'],
+            'vehicle_status': vehicles_df['is_active'].map({True: 'ACTIVE', False: 'MAINTENANCE'}),
+            'assigned_driver_id': [fake.name() for _ in range(len(vehicles_df))],
+            'insurance_expiry': [fake.date_between(start_date='today', end_date='+1y') for _ in range(len(vehicles_df))],
+            'registration_expiry': [fake.date_between(start_date='today', end_date='+1y') for _ in range(len(vehicles_df))],
+            'purchase_date': vehicles_df['purchase_date'],
+            'purchase_price': [random.uniform(20000, 150000) for _ in range(len(vehicles_df))],
+            'current_value': [random.uniform(10000, 100000) for _ in range(len(vehicles_df))],
+            'created_at': [fake.date_time_between(start_date='-5y', end_date='now') for _ in range(len(vehicles_df))],
+            'updated_at': [fake.date_time_between(start_date='-1y', end_date='now') for _ in range(len(vehicles_df))],
+            '_loaded_at': [fake.date_time_between(start_date='-1d', end_date='now') for _ in range(len(vehicles_df))]
+        })
+        
+        # Raw Azure Shipments - Match expected schema from raw_azure_shipments.sql
+        raw_data['raw_azure_shipments'] = pd.DataFrame({
+            'shipment_id': shipments_df['shipment_id'],
+            'customer_id': shipments_df['customer_id'],
+            'vehicle_id': shipments_df['vehicle_id'],
+            'driver_id': [fake.name() for _ in range(len(shipments_df))],
+            'origin_location_id': shipments_df['origin_location_id'],
+            'destination_location_id': shipments_df['destination_location_id'],
+            'pickup_date': shipments_df['shipment_date'],
+            'delivery_date': shipments_df['actual_delivery_date'],
+            'requested_delivery_date': shipments_df['planned_delivery_date'],
+            'actual_delivery_date': shipments_df['actual_delivery_date'],
+            'shipment_status': shipments_df['delivery_status'].map({
+                'Delivered': 'DELIVERED',
+                'In Transit': 'IN_TRANSIT',
+                'Pending': 'PENDING',
+                'Cancelled': 'CANCELLED'
+            }),
+            'weight_lbs': shipments_df['weight_kg'] * 2.20462,
+            'volume_cubic_feet': shipments_df['volume_m3'] * 35.3147,
+            'shipment_value': shipments_df['revenue'],
+            'fuel_cost': shipments_df['fuel_cost'],
+            'driver_cost': shipments_df['delivery_cost'],
+            'total_cost': shipments_df['fuel_cost'] + shipments_df['delivery_cost'],
+            'revenue': shipments_df['revenue'],
+            'distance_miles': shipments_df['distance_km'] * 0.621371,
+            'delivery_time_hours': shipments_df['actual_duration_minutes'] / 60.0,
+            'on_time_delivery': shipments_df['is_on_time'],
+            'weather_conditions': [random.choice(['Clear', 'Rain', 'Snow', 'Fog']) for _ in range(len(shipments_df))],
+            'traffic_conditions': [random.choice(['Light', 'Moderate', 'Heavy']) for _ in range(len(shipments_df))],
+            'special_instructions': [fake.sentence() if random.random() > 0.7 else None for _ in range(len(shipments_df))],
+            'created_at': [fake.date_time_between(start_date='-2y', end_date='now') for _ in range(len(shipments_df))],
+            'updated_at': [fake.date_time_between(start_date='-1y', end_date='now') for _ in range(len(shipments_df))],
+            '_loaded_at': [fake.date_time_between(start_date='-1d', end_date='now') for _ in range(len(shipments_df))]
+        })
+        
+        # Raw Azure Maintenance - Match expected schema from raw_azure_maintenance.sql
+        raw_data['raw_azure_maintenance'] = pd.DataFrame({
+            'maintenance_id': maintenance_df['maintenance_id'],
+            'vehicle_id': maintenance_df['vehicle_id'],
+            'maintenance_type': maintenance_df['maintenance_type'],
+            'maintenance_date': maintenance_df['maintenance_date'],
+            'odometer_reading': maintenance_df['maintenance_mileage'],
+            'description': [fake.sentence() for _ in range(len(maintenance_df))],
+            'parts_cost': maintenance_df['maintenance_cost_usd'] * random.uniform(0.3, 0.7),
+            'labor_cost': maintenance_df['maintenance_cost_usd'] * random.uniform(0.3, 0.7),
+            'total_cost': maintenance_df['maintenance_cost_usd'],
+            'maintenance_provider': maintenance_df['service_provider'],
+            'next_maintenance_due_date': maintenance_df['next_maintenance_due_date'],
+            'next_maintenance_due_mileage': maintenance_df['next_maintenance_due_mileage'],
+            'maintenance_status': 'COMPLETED',
+            'created_at': [fake.date_time_between(start_date='-2y', end_date='now') for _ in range(len(maintenance_df))],
+            'updated_at': [fake.date_time_between(start_date='-1y', end_date='now') for _ in range(len(maintenance_df))],
+            '_loaded_at': [fake.date_time_between(start_date='-1d', end_date='now') for _ in range(len(maintenance_df))]
+        })
+        
+        return raw_data
+    
+    def generate_additional_raw_tables(self, vehicles_df, locations_df):
+        """Generate additional raw data tables for telematics, traffic, and weather"""
+        raw_data = {}
+        
+        # Raw Telematics Data
+        telematics_data = []
+        telemetry_id = 1
+        
+        # Generate telematics data for last 7 days
+        dates = pd.date_range(start=self.end_date - timedelta(days=7), end=self.end_date, freq='h')
+        
+        for vehicle in vehicles_df[vehicles_df['telematics_enabled']].itertuples():
+            for date in dates[::random.randint(1, 4)]:  # Sample some hours
+                telematics_data.append({
+                    'telemetry_id': telemetry_id,
+                    'vehicle_id': vehicle.vehicle_id,
+                    'timestamp': date,
+                    'latitude': random.uniform(-45, -10),  # Australia bounds
+                    'longitude': random.uniform(110, 160),
+                    'speed_mph': round(random.uniform(0, 70), 1),  # Convert to mph
+                    'heading_degrees': random.randint(0, 360),
+                    'engine_rpm': random.randint(800, 4000),
+                    'fuel_level_pct': random.randint(10, 100),
+                    'engine_temperature_f': round(random.uniform(180, 220), 1),  # Convert to Fahrenheit
+                    'battery_voltage': round(random.uniform(12.0, 14.5), 1),
+                    'odometer_miles': vehicle.odometer_km * 0.621371,  # Convert to miles
+                    'acceleration_g': round(random.uniform(-0.5, 0.5), 2),
+                    'brake_force': round(random.uniform(0, 100), 1),
+                    'steering_angle': round(random.uniform(-180, 180), 1),
+                    'gps_accuracy_meters': random.randint(1, 10),
+                    'signal_strength': random.randint(1, 5),
+                    'created_at': fake.date_time_between(start_date='-7d', end_date='now'),
+                    '_loaded_at': fake.date_time_between(start_date='-1d', end_date='now')
+                })
+                telemetry_id += 1
+        
+        raw_data['raw_telematics_data'] = pd.DataFrame(telematics_data)
+        
+        # Raw Traffic Data
+        traffic_data = []
+        traffic_id = 1
+        
+        # Generate traffic data for last 30 days
+        dates = pd.date_range(start=self.end_date - timedelta(days=30), end=self.end_date, freq='h')
+        
+        for date in dates:
+            for city_info in self.major_cities:
+                hour = date.hour
+                day_of_week = date.weekday()
+                
+                # Traffic patterns based on time of day and day of week
+                if day_of_week < 5 and (7 <= hour <= 9 or 17 <= hour <= 19):
+                    traffic_level = random.choices(['HEAVY', 'SEVERE'], weights=[0.7, 0.3])[0]
+                    congestion_delay = random.uniform(15, 45)
+                elif day_of_week < 5 and (10 <= hour <= 16):
+                    traffic_level = random.choices(['LIGHT', 'MODERATE'], weights=[0.6, 0.4])[0]
+                    congestion_delay = random.uniform(0, 10)
+                else:
+                    traffic_level = random.choices(['LIGHT', 'MODERATE'], weights=[0.8, 0.2])[0]
+                    congestion_delay = random.uniform(0, 5)
+                
+                traffic_data.append({
+                    'traffic_id': traffic_id,
+                    'location_id': random.randint(1, 240),  # Match location IDs
+                    'date': date.date(),
+                    'hour': hour,
+                    'traffic_level': traffic_level,
+                    'congestion_delay_minutes': round(congestion_delay, 1),
+                    'average_speed_mph': round(random.uniform(20, 80), 1),
+                    'free_flow_speed_mph': round(random.uniform(50, 70), 1),
+                    'travel_time_minutes': round(random.uniform(10, 60), 1),
+                    'free_flow_travel_time_minutes': round(random.uniform(5, 20), 1),
+                    'confidence_score': round(random.uniform(0.7, 1.0), 2),
+                    'road_type': random.choice(['HIGHWAY', 'ARTERIAL', 'LOCAL']),
+                    'incident_count': random.randint(0, 3),
+                    'weather_impact': random.choice(['NONE', 'LIGHT', 'MODERATE', 'HEAVY']),
+                    'created_at': fake.date_time_between(start_date='-30d', end_date='now'),
+                    '_loaded_at': fake.date_time_between(start_date='-1d', end_date='now')
+                })
+                traffic_id += 1
+        
+        raw_data['raw_traffic_data'] = pd.DataFrame(traffic_data)
+        
+        # Raw Weather Data
+        weather_data = []
+        weather_id = 1
+        
+        # Generate weather data for last 30 days
+        dates = pd.date_range(start=self.end_date - timedelta(days=30), end=self.end_date, freq='h')
+        
+        for date in dates:
+            for city_info in self.major_cities:
+                # Seasonal weather patterns for Australia
+                season = self._get_season(date)
+                temp_ranges = {
+                    'Summer': (20, 40),
+                    'Autumn': (15, 30),
+                    'Winter': (5, 20),
+                    'Spring': (10, 25)
+                }
+                
+                temp_range = temp_ranges[season]
+                temperature_c = random.uniform(*temp_range)
+                temperature_f = (temperature_c * 9/5) + 32
+                
+                weather_data.append({
+                    'weather_id': weather_id,
+                    'location_id': random.randint(1, 240),  # Match location IDs
+                    'date': date.date(),
+                    'hour': date.hour,
+                    'temperature_f': round(temperature_f, 1),
+                    'temperature_c': round(temperature_c, 1),
+                    'humidity_pct': random.randint(30, 95),
+                    'wind_speed_mph': round(random.uniform(0, 30), 1),
+                    'wind_direction_degrees': random.randint(0, 360),
+                    'precipitation_mm': round(random.uniform(0, 50) if random.random() > 0.7 else 0, 1),
+                    'visibility_miles': round(random.uniform(5, 50), 1),
+                    'weather_condition': random.choice(['CLEAR', 'PARTLY_CLOUDY', 'CLOUDY', 'LIGHT_RAIN', 'RAIN', 'HEAVY_RAIN', 'STORM', 'FOG']),
+                    'weather_description': random.choice(['Clear skies', 'Partly cloudy', 'Overcast', 'Light rain', 'Heavy rain', 'Thunderstorm', 'Foggy']),
+                    'pressure_inhg': round(random.uniform(29.5, 30.5), 2),
+                    'uv_index': random.randint(0, 11),
+                    'sunrise_time': '06:00:00',
+                    'sunset_time': '18:00:00',
+                    'created_at': fake.date_time_between(start_date='-30d', end_date='now'),
+                    '_loaded_at': fake.date_time_between(start_date='-1d', end_date='now')
+                })
+                weather_id += 1
+        
+        raw_data['raw_weather_data'] = pd.DataFrame(weather_data)
+        
+        return raw_data
+    
+    def generate_real_time_tables(self):
+        """Generate real-time processing tables"""
+        real_time_data = {}
+        
+        # Real-time KPIs
+        kpi_data = []
+        for i in range(100):
+            kpi_data.append({
+                'metric_id': i + 1,
+                'metric_name': random.choice([
+                    'on_time_delivery_rate', 'avg_delivery_time_hours', 
+                    'revenue_per_hour', 'avg_profit_margin', 'avg_route_efficiency'
+                ]),
+                'metric_value': round(random.uniform(0, 100), 2),
+                'dimensions': json.dumps({'timeframe': random.choice(['last_hour', 'current_hour', 'last_24h'])}),
+                'timestamp': fake.date_time_between(start_date='-1h', end_date='now'),
+                'alert_threshold': round(random.uniform(50, 90), 2),
+                'alert_triggered': random.choice([True, False])
+            })
+        real_time_data['real_time_kpis'] = pd.DataFrame(kpi_data)
+        
+        # Real-time Vehicle Alerts
+        alert_data = []
+        for i in range(50):
+            alert_data.append({
+                'alert_id': i + 1,
+                'vehicle_id': f'VH{str(random.randint(1, 200)).zfill(4)}',
+                'alert_type': random.choice([
+                    'ENGINE_OVERHEATING', 'LOW_FUEL', 'SPEEDING', 
+                    'HARSH_BRAKING', 'MAINTENANCE_DUE', 'GPS_SIGNAL_LOST'
+                ]),
+                'severity': random.choice(['INFO', 'WARNING', 'CRITICAL']),
+                'message': fake.sentence(),
+                'timestamp': fake.date_time_between(start_date='-1h', end_date='now'),
+                'resolved': random.choice([True, False]),
+                'resolved_timestamp': fake.date_time_between(start_date='-1h', end_date='now') if random.choice([True, False]) else None
+            })
+        real_time_data['real_time_vehicle_alerts'] = pd.DataFrame(alert_data)
+        
+        return real_time_data
     
     def _is_australian_holiday(self, date):
         """Simple Australian holiday detection"""
@@ -413,38 +926,77 @@ class LogisticsDataGenerator:
         """Generate and save all datasets"""
         os.makedirs(output_dir, exist_ok=True)
         
-        print("Generating dimension tables...")
+        print("🚀 Generating comprehensive logistics analytics datasets...")
+        print("=" * 60)
         
-        # Generate dimensions
+        print("📊 Generating dimension tables...")
+        
+        # Generate all dimensions
         dim_date = self.generate_date_dimension()
         dim_location = self.generate_location_dimension()
         dim_customer = self.generate_customer_dimension()
         dim_vehicle = self.generate_vehicle_dimension()
         dim_route = self.generate_route_dimension()
         dim_weather = self.generate_weather_dimension()
+        dim_traffic_conditions = self.generate_traffic_conditions_dimension()
+        dim_vehicle_maintenance = self.generate_vehicle_maintenance_dimension(dim_vehicle)
         
-        print("Generating fact tables...")
+        print("📈 Generating fact tables...")
         
-        # Generate facts
+        # Generate all facts
         fact_shipments = self.generate_fact_shipments(dim_customer, dim_location, dim_vehicle, dim_route)
         fact_vehicle_telemetry = self.generate_fact_vehicle_telemetry(dim_vehicle)
+        fact_route_conditions = self.generate_fact_route_conditions(dim_route, dim_weather, dim_traffic_conditions)
+        fact_vehicle_utilization = self.generate_fact_vehicle_utilization(dim_vehicle, fact_shipments)
         
-        # Save all datasets
+        print("🗄️ Generating raw source tables...")
+        
+        # Generate raw Azure tables
+        raw_azure_tables = self.generate_raw_azure_tables(dim_customer, dim_vehicle, fact_shipments, dim_vehicle_maintenance)
+        
+        print("📡 Generating additional raw data sources...")
+        
+        # Generate additional raw tables (telematics, traffic, weather)
+        additional_raw_tables = self.generate_additional_raw_tables(dim_vehicle, dim_location)
+        
+        print("⚡ Generating real-time processing tables...")
+        
+        # Generate real-time tables
+        real_time_tables = self.generate_real_time_tables()
+        
+        # Combine all datasets
         datasets = {
+            # Dimension tables
             'dim_date': dim_date,
             'dim_location': dim_location,
             'dim_customer': dim_customer,
             'dim_vehicle': dim_vehicle,
             'dim_route': dim_route,
             'dim_weather': dim_weather,
+            'dim_traffic_conditions': dim_traffic_conditions,
+            'dim_vehicle_maintenance': dim_vehicle_maintenance,
+            
+            # Fact tables
             'fact_shipments': fact_shipments,
-            'fact_vehicle_telemetry': fact_vehicle_telemetry
+            'fact_vehicle_telemetry': fact_vehicle_telemetry,
+            'fact_route_conditions': fact_route_conditions,
+            'fact_vehicle_utilization': fact_vehicle_utilization,
+            
+            # Raw source tables
+            **raw_azure_tables,
+            **additional_raw_tables,
+            
+            # Real-time processing tables
+            **real_time_tables
         }
         
+        print("💾 Saving all datasets...")
+        
+        # Save all datasets
         for name, df in datasets.items():
             filepath = os.path.join(output_dir, f'{name}.csv')
             df.to_csv(filepath, index=False)
-            print(f"✓ Saved {name}: {len(df)} records to {filepath}")
+            print(f"✓ Saved {name}: {len(df):,} records to {filepath}")
         
         # Generate data quality report
         self._generate_data_quality_report(datasets, output_dir)
@@ -472,16 +1024,53 @@ class LogisticsDataGenerator:
         print(report_df.to_string(index=False))
 
 if __name__ == "__main__":
-    print("Smart Logistics Analytics Platform - Sample Data Generator")
-    print("=" * 60)
+    print("🚀 Smart Logistics Analytics Platform - Comprehensive Sample Data Generator")
+    print("=" * 80)
     
     generator = LogisticsDataGenerator()
     datasets = generator.save_datasets()
     
-    print(f"\n✅ Successfully generated {len(datasets)} datasets")
-    print("📊 Datasets are ready for import into Snowflake/dbt development")
-    print("\nNext steps:")
-    print("1. Upload CSV files to Snowflake using Fivetran or COPY INTO commands")
-    print("2. Run dbt models to create the 22 analytical views")
-    print("3. Validate data quality and relationships")
-    print("4. Set up monitoring and alerting")
+    print(f"\n✅ Successfully generated {len(datasets)} comprehensive datasets!")
+    print("📊 All datasets are ready for import into Snowflake/dbt development")
+    
+    print("\n📋 Generated Tables Summary:")
+    print("=" * 50)
+    
+    # Group tables by category
+    dimension_tables = [k for k in datasets.keys() if k.startswith('dim_')]
+    fact_tables = [k for k in datasets.keys() if k.startswith('fact_')]
+    raw_tables = [k for k in datasets.keys() if k.startswith('raw_')]
+    real_time_tables = [k for k in datasets.keys() if k.startswith('real_time_')]
+    
+    print(f"📊 Dimension Tables ({len(dimension_tables)}):")
+    for table in sorted(dimension_tables):
+        print(f"   • {table}: {len(datasets[table]):,} records")
+    
+    print(f"\n📈 Fact Tables ({len(fact_tables)}):")
+    for table in sorted(fact_tables):
+        print(f"   • {table}: {len(datasets[table]):,} records")
+    
+    print(f"\n🗄️ Raw Source Tables ({len(raw_tables)}):")
+    for table in sorted(raw_tables):
+        print(f"   • {table}: {len(datasets[table]):,} records")
+    
+    print(f"\n⚡ Real-time Processing Tables ({len(real_time_tables)}):")
+    for table in sorted(real_time_tables):
+        print(f"   • {table}: {len(datasets[table]):,} records")
+    
+    print(f"\n🎯 Total Records Generated: {sum(len(df) for df in datasets.values()):,}")
+    
+    print("\n🚀 Next Steps:")
+    print("=" * 30)
+    print("1. 📤 Upload CSV files to Snowflake using Fivetran or COPY INTO commands")
+    print("2. 🔄 Run dbt models to create all analytical views and ML features")
+    print("3. ✅ Validate data quality and relationships using dbt tests")
+    print("4. 📊 Set up real-time monitoring and alerting")
+    print("5. 🤖 Deploy ML models using the generated feature store")
+    print("6. 📈 Create dashboards and reports using the analytics models")
+    
+    print(f"\n💡 Pro Tips:")
+    print("   • Use the data quality report to validate data integrity")
+    print("   • Start with dimension tables, then fact tables")
+    print("   • Test real-time processing with the generated streaming data")
+    print("   • Leverage the comprehensive feature store for ML model training")
