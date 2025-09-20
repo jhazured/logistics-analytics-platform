@@ -62,6 +62,33 @@ This documentation is organized into focused topics for easy navigation:
 - **File Index**: Raw GitHub URLs for all project files
 - **Incremental Loading Strategy**: Detailed cost optimization implementation guide
 
+### 📚 [Data Dictionary](09_DATA_DICTIONARY.md)
+- **Business Glossary**: Core business terms and definitions
+- **Technical Specifications**: Data types, constraints, and business rules
+- **Data Lineage**: Source systems and transformation rules
+- **Quality Metrics**: Data quality thresholds and validation rules
+
+### 🔄 [Business Processes](10_BUSINESS_PROCESSES.md)
+- **Order to Delivery**: Complete order fulfillment process
+- **Fleet Management**: Vehicle operations and maintenance
+- **Customer Management**: Relationship management and tier assignment
+- **Route Optimization**: ML-driven route planning and optimization
+- **Predictive Maintenance**: ML-based maintenance scheduling
+
+### 📋 [Operational Runbooks](11_OPERATIONAL_RUNBOOKS.md)
+- **Daily Operations**: Morning and afternoon checklists
+- **Weekly Operations**: Performance reviews and capacity planning
+- **Monthly Operations**: Strategic planning and comprehensive reviews
+- **Incident Response**: P1-P4 incident handling procedures
+- **Data Pipeline Operations**: Pipeline monitoring and maintenance
+
+### 🔧 [Troubleshooting Guides](12_TROUBLESHOOTING_GUIDES.md)
+- **Data Pipeline Issues**: Data freshness, quality, and integrity problems
+- **Performance Issues**: Slow queries, high costs, and resource constraints
+- **ML Model Issues**: Prediction failures, drift detection, and model degradation
+- **Infrastructure Issues**: Warehouse connectivity and authentication problems
+- **Emergency Procedures**: Critical system failure and data loss recovery
+
 ## 🚀 Quick Start
 
 1. **Clone Repository**
@@ -126,7 +153,11 @@ logistics-analytics-platform/
 │   ├── 05_MONITORING.md                          # Monitoring and testing
 │   ├── 06_BUSINESS_IMPACT.md                     # Business value and ROI
 │   ├── 07_INCREMENTAL_LOADING_STRATEGY.md        # Cost optimization guide
-│   └── 08_INDEX.md                               # File index with GitHub URLs
+│   ├── 08_INDEX.md                               # File index with GitHub URLs
+│   ├── 09_DATA_DICTIONARY.md                     # Business definitions and technical specs
+│   ├── 10_BUSINESS_PROCESSES.md                  # Core business processes
+│   ├── 11_OPERATIONAL_RUNBOOKS.md                # Operational procedures
+│   └── 12_TROUBLESHOOTING_GUIDES.md              # Troubleshooting procedures
 ├── 📁 dbt/                                       # dbt project
 ├── 📁 snowflake/                                 # Snowflake objects
 ├── 📁 data/                                      # Sample data generation

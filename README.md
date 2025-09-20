@@ -39,6 +39,10 @@ This repository contains a **production-ready ML data product** for logistics an
 - **[Business Impact & ROI](docs/06_BUSINESS_IMPACT.md)** - Business value and return on investment
 - **[Incremental Loading Strategy](docs/07_INCREMENTAL_LOADING_STRATEGY.md)** - Cost optimization guide
 - **[File Index](docs/08_INDEX.md)** - Raw GitHub URLs for all project files
+- **[Data Dictionary](docs/09_DATA_DICTIONARY.md)** - Business definitions and technical specifications
+- **[Business Processes](docs/10_BUSINESS_PROCESSES.md)** - Core business processes and procedures
+- **[Operational Runbooks](docs/11_OPERATIONAL_RUNBOOKS.md)** - Step-by-step operational procedures
+- **[Troubleshooting Guides](docs/12_TROUBLESHOOTING_GUIDES.md)** - Comprehensive troubleshooting procedures
 
 ## 🎯 Key Features
 
@@ -84,7 +88,11 @@ logistics-analytics-platform/
 │   ├── 05_MONITORING.md                          # Monitoring and testing
 │   ├── 06_BUSINESS_IMPACT.md                     # Business value and ROI
 │   ├── 07_INCREMENTAL_LOADING_STRATEGY.md        # Cost optimization guide
-│   └── 08_INDEX.md                               # File index with GitHub URLs
+│   ├── 08_INDEX.md                               # File index with GitHub URLs
+│   ├── 09_DATA_DICTIONARY.md                     # Business definitions and technical specs
+│   ├── 10_BUSINESS_PROCESSES.md                  # Core business processes
+│   ├── 11_OPERATIONAL_RUNBOOKS.md                # Operational procedures
+│   └── 12_TROUBLESHOOTING_GUIDES.md              # Troubleshooting procedures
 ├── 📁 dbt/                                       # dbt project (43+ models)
 │   ├── models/                                   # dbt models organized by layer
 │   │   ├── marts/                                # Business logic layer
