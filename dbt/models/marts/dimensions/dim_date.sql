@@ -16,5 +16,5 @@ select
   to_char(date_day, 'DY') as day_name,
   extract(dayofweek from date_day) as day_of_week,
   extract(dayofyear from date_day) as day_of_year,
-  case when extract(dayofweek from date_day) in (0, 6) then true else false end as is_weekend
+  case when extract(dayofweek from date_day) in (6, 7) then true else false end as is_weekend
 from dates

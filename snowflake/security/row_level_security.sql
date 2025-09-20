@@ -33,21 +33,12 @@ ADD ROW ACCESS POLICY VEHICLE_FLEET_ACCESS ON (vehicle_id);
 -- Create RLS policy for location data based on service area
 CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.LOCATION_SERVICE_AREA_ACCESS
 AS (location_id IN (
-    SELECT location_id 
-    FROM LOGISTICS_DW_PROD.MARTS.DIM_LOCATION 
-    WHERE service_area IN (
-        SELECT service_area 
-        FROM LOGISTICS_DW_PROD.MARTS.DIM_LOCATION 
-        WHERE location_id IN (
-            SELECT DISTINCT origin_location_id 
-            FROM LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS 
-            WHERE customer_id IN (
-                SELECT customer_id 
-                FROM LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER 
-                WHERE account_manager = CURRENT_USER()
-            )
-        )
-    )
+    SELECT DISTINCT l.location_id 
+    FROM LOGISTICS_DW_PROD.MARTS.DIM_LOCATION l
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS s ON l.location_id = s.origin_location_id
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER c ON s.customer_id = c.customer_id
+    WHERE c.account_manager = CURRENT_USER()
+    OR CURRENT_ROLE() IN ('FLEET_MANAGER', 'OPERATIONS_MANAGER')
 ));
 
 -- Apply the policy to location dimension
@@ -86,25 +77,13 @@ ADD ROW ACCESS POLICY MAINTENANCE_VEHICLE_ACCESS ON (vehicle_id);
 -- Create RLS policy for route data based on service area
 CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.ROUTE_SERVICE_AREA_ACCESS
 AS (route_id IN (
-    SELECT route_id 
-    FROM LOGISTICS_DW_PROD.MARTS.DIM_ROUTE 
-    WHERE origin_location_id IN (
-        SELECT location_id 
-        FROM LOGISTICS_DW_PROD.MARTS.DIM_LOCATION 
-        WHERE service_area IN (
-            SELECT service_area 
-            FROM LOGISTICS_DW_PROD.MARTS.DIM_LOCATION 
-            WHERE location_id IN (
-                SELECT DISTINCT origin_location_id 
-                FROM LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS 
-                WHERE customer_id IN (
-                    SELECT customer_id 
-                    FROM LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER 
-                    WHERE account_manager = CURRENT_USER()
-                )
-            )
-        )
-    )
+    SELECT DISTINCT r.route_id 
+    FROM LOGISTICS_DW_PROD.MARTS.DIM_ROUTE r
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.DIM_LOCATION l ON r.origin_location_id = l.location_id
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS s ON r.route_id = s.route_id
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER c ON s.customer_id = c.customer_id
+    WHERE c.account_manager = CURRENT_USER()
+    OR CURRENT_ROLE() IN ('FLEET_MANAGER', 'OPERATIONS_MANAGER', 'ROUTE_PLANNER')
 ));
 
 -- Apply the policy to route dimension

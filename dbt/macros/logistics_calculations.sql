@@ -99,3 +99,30 @@
     {{ maintenance_cost_per_mile }}
   )
 {% endmacro %}
+
+{% macro calculate_performance_score(on_time_rate, capacity_utilization, customer_satisfaction) %}
+  -- Comprehensive performance score calculation (0-100)
+  (
+    ({{ on_time_rate }} * 0.4) +
+    ({{ capacity_utilization }} * 0.3) +
+    ({{ customer_satisfaction }} / 5.0 * 100 * 0.3)
+  )
+{% endmacro %}
+
+{% macro calculate_sla_compliance_score(planned_delivery_time, actual_delivery_time, sla_hours) %}
+  -- SLA compliance scoring
+  CASE 
+    WHEN {{ actual_delivery_time }} <= {{ planned_delivery_time }} THEN 100
+    WHEN {{ actual_delivery_time }} <= {{ planned_delivery_time }} + {{ sla_hours }} * 60 THEN 
+      100 - (({{ actual_delivery_time }} - {{ planned_delivery_time }}) / ({{ sla_hours }} * 60) * 50)
+    ELSE 0
+  END
+{% endmacro %}
+
+{% macro calculate_revenue_per_mile(revenue, distance_miles) %}
+  -- Revenue efficiency metric
+  CASE 
+    WHEN {{ distance_miles }} > 0 THEN {{ revenue }} / {{ distance_miles }}
+    ELSE 0
+  END
+{% endmacro %}
