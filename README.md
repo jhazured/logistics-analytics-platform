@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repository contains a **production-ready logistics analytics platform** demonstrating modern data engineering practices through a complete migration from legacy Azure SQL database to a modern **Snowflake + dbt + Fivetran** stack. The platform showcases end-to-end data engineering, advanced analytics, MLOps capabilities, and enterprise-grade data governance in the logistics and transportation domain.
+This repository contains a **production-ready ML data product** for logistics analytics, designed specifically for AI engineers to build machine learning models. The platform demonstrates modern data engineering practices through a **hybrid ML-optimized architecture** using **Snowflake + dbt + Fivetran** stack. It showcases end-to-end data engineering, advanced analytics, MLOps capabilities, and enterprise-grade data governance optimized for ML/AI workloads in the logistics and transportation domain.
 
 ### Business Context
 
@@ -26,25 +26,27 @@ In today's competitive logistics landscape, companies need real-time insights in
 - **30%** faster time-to-insight for business stakeholders
 
 ### 🏗️ Technical Features
-- **Cost Optimization**: Intelligent clustering, automated task scheduling, dynamic warehouse sizing
+- **ML-Optimized Architecture**: Hybrid dbt + Snowflake design optimized for ML training and inference
+- **Feature Store**: Centralized ML feature repository with versioning and real-time serving
+- **Model Registry**: Complete ML model lifecycle management with performance tracking
+- **Real-time ML Serving**: Low-latency feature serving for ML inference workloads
 - **Data Quality**: Comprehensive dbt tests, referential integrity checks, data freshness monitoring
 - **Advanced Analytics**: 22+ analytical views, rolling time windows (7d/30d/90d), AI-driven recommendations
-- **MLOps Integration**: Feature store, real-time model scoring, A/B testing framework, model monitoring
 - **Enterprise Security**: Role-based access control, data masking, row-level security
 - **CI/CD Pipeline**: Automated testing, deployment, and monitoring
 
 ## Architecture Overview
 
-### Data Architecture (5-Layer Design)
+### Hybrid ML-Optimized Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   CONSUMPTION   │    │    ANALYTICS    │    │      MART       │
+│   ML SERVING    │    │   ML FEATURES   │    │      MART       │
 │                 │    │                 │    │                 │
-│ • BI Tools      │    │ • ML Features   │    │ • Fact Tables   │
-│ • Dashboards    │◄───│ • Advanced      │◄───│ • Dimensions    │
-│ • APIs          │    │   Analytics     │    │ • Star Schema   │
-│ • Notebooks     │    │ • KPI Views     │    │                 │
+│ • Real-time     │    │ • Feature Store │    │ • Fact Tables   │
+│   Inference     │◄───│ • Model Registry│◄───│ • Dimensions    │
+│ • Low-latency   │    │ • ML Monitoring │    │ • Star Schema   │
+│   Features      │    │ • Versioning    │    │                 │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                                               │
 ┌─────────────────┐    ┌─────────────────┐    │
@@ -57,17 +59,30 @@ In today's competitive logistics landscape, companies need real-time insights in
 └─────────────────┘    └─────────────────┘
 ```
 
+### ML Data Product Layers
+
+| Layer | Technology | Purpose | ML Optimization |
+|-------|------------|---------|-----------------|
+| **ML Serving** | Snowflake Views | Real-time inference | Materialized views with auto-refresh |
+| **ML Features** | Snowflake Tables | Feature storage | Clustered tables for ML queries |
+| **Feature Engineering** | dbt Models | Feature creation | Version-controlled transformations |
+| **Data Mart** | dbt Marts | Business logic | Star schema for analytics |
+| **Staging** | dbt Staging | Data cleaning | Quality validation |
+| **Raw** | Snowflake | Source data | Fivetran ingestion |
+
 ### Technology Stack
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Data Warehouse** | Snowflake | Scalable cloud data warehouse |
-| **Transformation** | dbt | Data modeling and transformation |
-| **Ingestion** | Fivetran | Automated data pipeline |
-| **Orchestration** | GitHub Actions | CI/CD and workflow management |
-| **Monitoring** | Custom Python | Data quality and performance monitoring |
-| **Security** | Snowflake RBAC | Role-based access control and data masking |
-| **Infrastructure** | GitHub Actions | CI/CD and deployment automation |
+| Layer | Technology | Purpose | ML Features |
+|-------|------------|---------|-------------|
+| **Data Warehouse** | Snowflake | Scalable cloud data warehouse | ML-optimized clustering |
+| **Transformation** | dbt | Data modeling and transformation | Feature engineering |
+| **ML Features** | Snowflake Tables | Feature storage | Clustered for ML queries |
+| **ML Serving** | Snowflake Views | Real-time inference | Materialized views |
+| **Model Registry** | Snowflake Tables | Model lifecycle | Performance tracking |
+| **Ingestion** | Fivetran | Automated data pipeline | Real-time data |
+| **Orchestration** | GitHub Actions | CI/CD and workflow management | ML pipeline automation |
+| **Monitoring** | Custom Python | Data quality and performance monitoring | Feature drift detection |
+| **Security** | Snowflake RBAC | Role-based access control and data masking | ML data protection |
 
 ## Project Structure
 
@@ -96,8 +111,12 @@ logistics-analytics-platform/
 │   │   └── predictive_maintenance.sql           # Maintenance predictions
 │   ├── 📁 models/                               # dbt models (207+ tests)
 │   │   ├── 📁 marts/                            # Business logic layer
-│   │   │   ├── 📁 analytics/                    # Advanced analytics views (22+ models)
+│   │   │   ├── 📁 analytics/                    # Advanced analytics views (5 models)
+│   │   │   │   ├── ai_recommendations.sql
+│   │   │   │   ├── data_freshness_monitoring.sql
+│   │   │   │   ├── executive_dashboard_trending.sql
 │   │   │   │   ├── performance_dashboard.sql
+│   │   │   │   ├── sustainability_metrics.sql
 │   │   │   │   └── schema.yml
 │   │   │   ├── 📁 dimensions/                   # Dimension tables (8 models)
 │   │   │   │   ├── dim_date.sql
@@ -116,11 +135,20 @@ logistics-analytics-platform/
 │   │   │   │   ├── fact_route_conditions.sql
 │   │   │   │   ├── fact_vehicle_utilization.sql
 │   │   │   │   └── schema.yml
-│   │   │   └── 📁 ml_features/                  # ML feature store (3 models)
+│   │   │   └── 📁 ml_features/                  # ML feature engineering (10 models)
 │   │   │       ├── ml_feature_store.sql
 │   │   │       ├── ml_customer_behavior_rolling.sql
 │   │   │       ├── ml_customer_behavior_segments.sql
-│   │   │       └── ml_predictive_maintenance_features.sql
+│   │   │       ├── ml_haul_segmentation.sql
+│   │   │       ├── ml_maintenance_rolling_indicators.sql
+│   │   │       ├── ml_operational_performance_rolling.sql
+│   │   │       ├── ml_predictive_maintenance_features.sql
+│   │   │       ├── ml_real_time_scoring.sql
+│   │   │       ├── ml_route_optimization_features.sql
+│   │   │       └── ml_route_performance_rolling.sql
+│   │   └── 📁 ml_serving/                       # Real-time ML serving models
+│   │       ├── real_time_customer_features.sql
+│   │       └── real_time_vehicle_features.sql
 │   │   ├── 📁 raw/                              # Source definitions (7 models)
 │   │   │   ├── raw_azure_customers.sql
 │   │   │   ├── raw_azure_shipments.sql
@@ -168,16 +196,43 @@ logistics-analytics-platform/
 │   │   ├── real_time_kpis.sql                   # Real-time KPI tables
 │   │   ├── task_management.sql                  # Task monitoring and management
 │   │   └── deploy_streams_and_tasks.sql         # Complete deployment script
-│   ├── 📁 tables/                               # DDL definitions
-│   ├── 📁 views/                                # Analytical views
+│   ├── 📁 tables/                               # ML-optimized table definitions
+│   │   ├── 📁 dimensions/                       # Dimension tables (aligned with dbt)
+│   │   │   ├── dim_customer.sql
+│   │   │   ├── dim_vehicle.sql
+│   │   │   └── [other dimensions...]
+│   │   └── 📁 facts/                            # Fact tables (aligned with dbt)
+│   │       ├── fact_shipments.sql
+│   │       └── [other facts...]
+│   ├── 📁 views/                                # Business intelligence views
+│   │   ├── 📁 cost_optimization/                # Cost optimization views
 │   │   ├── 📁 ml_features/                      # ML feature views
-│   │   │   └── view_ml_feature_store.sql
+│   │   │   ├── view_customer_behavior_segments.sql
+│   │   │   ├── view_haul_segmentation.sql
+│   │   │   ├── view_ml_feature_store.sql
+│   │   │   ├── view_predictive_maintenance_features.sql
+│   │   │   └── view_route_optimization_features.sql
+│   │   ├── 📁 monitoring/                       # Monitoring views
+│   │   │   ├── view_data_freshness_monitoring.sql
+│   │   │   ├── view_data_quality_summary.sql
+│   │   │   ├── view_dbt_run_results.sql
+│   │   │   └── view_fivetran_sync_status.sql
 │   │   └── 📁 rolling_analytics/                # Rolling analytics views
-│   │       ├── view_route_performance_rolling.sql
 │   │       ├── view_customer_behaviour_rolling.sql
-│   │       └── view_operational_performance_rolling.sql
-│   └── 📁 monitoring/                           # Monitoring and alerting
-│       └── view_dbt_run_results.sql
+│   │       ├── view_maintenance_rolling_indicators.sql
+│   │       ├── view_operational_performance_rolling.sql
+│   │       └── view_route_performance_rolling.sql
+│   └── 📁 ml_objects/                           # ML-specific infrastructure
+│       ├── 📁 feature_stores/                   # ML feature store tables
+│       │   ├── ml_feature_store.sql
+│       │   └── ml_maintenance_features.sql
+│       ├── 📁 model_registry/                   # ML model lifecycle management
+│       │   └── ml_model_registry.sql
+│       ├── 📁 serving_views/                    # Real-time ML serving
+│       │   ├── real_time_features.sql
+│       │   └── real_time_maintenance_features.sql
+│       └── 📁 monitoring/                       # ML monitoring & observability
+│           └── ml_feature_monitoring.sql
 └── 📁 source-database/                          # Legacy data migration
 ```
 
@@ -204,13 +259,116 @@ The platform implements a **star schema** design optimized for analytical querie
 - **fact_route_conditions**: Route performance data with weather and traffic impacts
 - **fact_vehicle_utilization**: Vehicle usage, efficiency, and capacity utilization metrics
 
-### Machine Learning Features (4 ML models)
+### Machine Learning Data Product (10+ ML models)
 
-#### Feature Store Architecture
+#### ML Feature Engineering (dbt Models)
 - **ml_feature_store**: Centralized feature repository with customer, vehicle, route, and shipment features
 - **ml_customer_behavior_rolling**: Rolling customer analytics with 7d/30d/90d windows
 - **ml_customer_behavior_segments**: Dynamic customer segmentation based on behavior patterns
+- **ml_haul_segmentation**: Shipment segmentation for optimization
+- **ml_maintenance_rolling_indicators**: Predictive maintenance features with rolling metrics
+- **ml_operational_performance_rolling**: Operational performance with time-series features
 - **ml_predictive_maintenance_features**: Vehicle maintenance prediction with risk scoring
+- **ml_real_time_scoring**: Real-time scoring features for ML inference
+- **ml_route_optimization_features**: Route optimization features for ML models
+- **ml_route_performance_rolling**: Route performance with rolling analytics
+
+#### ML-Optimized Infrastructure (Snowflake)
+- **ML_FEATURES.FEATURE_STORE**: Clustered feature store table for ML training
+- **ML_FEATURES.MAINTENANCE_FEATURES**: Predictive maintenance feature table
+- **ML_MODELS.MODEL_REGISTRY**: Complete ML model lifecycle management
+- **ML_SERVING.REAL_TIME_FEATURES**: Low-latency feature serving for inference
+- **ML_MONITORING.FEATURE_MONITORING**: Feature quality and drift monitoring
+
+## For ML/AI Engineers
+
+### 🎯 ML Data Product Benefits
+
+This platform is specifically designed as a **data product for AI engineers** to build machine learning models. Here's what makes it ML-ready:
+
+#### **Feature Engineering**
+- ✅ **10+ ML Models**: Comprehensive feature engineering for all business domains
+- ✅ **Version Control**: dbt ensures reproducible feature transformations
+- ✅ **Feature Store**: Centralized repository with versioning and lineage
+- ✅ **Real-time Features**: Low-latency feature serving for inference
+
+#### **Model Development**
+- ✅ **Training Data**: ML-optimized tables with clustering for fast queries
+- ✅ **Feature Quality**: Automated monitoring and drift detection
+- ✅ **Model Registry**: Complete lifecycle management with performance tracking
+- ✅ **A/B Testing**: Built-in framework for model experimentation
+
+#### **Production Deployment**
+- ✅ **Real-time Serving**: Materialized views with auto-refresh for inference
+- ✅ **Monitoring**: Feature drift and model performance monitoring
+- ✅ **Scalability**: Optimized for concurrent ML workloads
+- ✅ **Reliability**: Built-in data quality and alerting
+
+### 🚀 Quick Start for ML Engineers
+
+#### **1. Access ML Features**
+```sql
+-- Get latest features for training
+SELECT * FROM ML_FEATURES.FEATURE_STORE 
+WHERE is_training_data = TRUE 
+AND feature_date >= CURRENT_DATE() - 30;
+
+-- Get real-time features for inference
+SELECT * FROM ML_SERVING.REAL_TIME_FEATURES 
+WHERE customer_id = ?;
+```
+
+#### **2. Model Training**
+```python
+# Example: Load features for training
+import snowflake.connector
+
+conn = snowflake.connector.connect(
+    user='your_user',
+    password='your_password',
+    account='your_account',
+    warehouse='ML_WH',
+    database='LOGISTICS_ANALYTICS',
+    schema='ML_FEATURES'
+)
+
+# Load training data
+cursor = conn.cursor()
+cursor.execute("""
+    SELECT * FROM FEATURE_STORE 
+    WHERE is_training_data = TRUE
+    AND feature_date >= CURRENT_DATE() - 90
+""")
+training_data = cursor.fetchall()
+```
+
+#### **3. Model Registry**
+```sql
+-- Register your model
+INSERT INTO ML_MODELS.MODEL_REGISTRY (
+    model_id, model_name, model_version, model_type,
+    accuracy_score, deployment_status
+) VALUES (
+    'model_001', 'customer_churn_v1', '1.0', 'classification',
+    0.85, 'DEPLOYED'
+);
+```
+
+#### **4. Real-time Inference**
+```sql
+-- Get features for real-time prediction
+SELECT * FROM ML_SERVING.REAL_TIME_FEATURES 
+WHERE customer_id = ? AND vehicle_id = ?;
+```
+
+### 📊 ML Feature Catalog
+
+| Feature Category | Models | Use Cases |
+|------------------|--------|-----------|
+| **Customer** | 3 models | Churn prediction, segmentation, lifetime value |
+| **Vehicle** | 2 models | Predictive maintenance, optimization |
+| **Route** | 3 models | Optimization, performance prediction |
+| **Operational** | 2 models | Performance monitoring, efficiency |
 
 ## Advanced Features
 
@@ -282,6 +440,14 @@ The platform implements a **star schema** design optimized for analytical querie
    
    -- Run optimization setup
    @snowflake/optimization/automated_tasks.sql
+   
+   -- Deploy ML infrastructure
+   @snowflake/ml_objects/feature_stores/ml_feature_store.sql
+   @snowflake/ml_objects/feature_stores/ml_maintenance_features.sql
+   @snowflake/ml_objects/model_registry/ml_model_registry.sql
+   @snowflake/ml_objects/serving_views/real_time_features.sql
+   @snowflake/ml_objects/serving_views/real_time_maintenance_features.sql
+   @snowflake/ml_objects/monitoring/ml_feature_monitoring.sql
    ```
 
 5. **Deploy dbt Models**
@@ -472,6 +638,10 @@ This project demonstrates proficiency in:
 - **Real-time Analytics**: Live dashboards with operational metrics and alerting
 
 ### 🤖 **MLOps & Advanced Analytics**
-- **Feature Store**: Centralized ML feature repository with versioning
+- **Hybrid ML Architecture**: dbt + Snowflake optimized for ML training and inference
+- **Feature Store**: Centralized ML feature repository with versioning and real-time serving
+- **Model Registry**: Complete ML model lifecycle management with performance tracking
+- **Real-time ML Serving**: Low-latency feature serving for ML inference workloads
+- **ML Monitoring**: Feature drift detection and model performance monitoring
 - **Predictive Maintenance**: Vehicle breakdown prediction with risk scoring
 - **Rolling Analytics**: Time-series analysis with 7d/30d/90d windows
