@@ -4,7 +4,7 @@
 
 -- Macro for calculating on-time rate from boolean column
 {% macro calculate_on_time_rate(boolean_column) %}
-  AVG(CASE WHEN {{ boolean_column }} THEN 1.0 ELSE 0.0 END)
+  AVG(CASE WHEN CAST({{ boolean_column }} AS BOOLEAN) THEN 1.0 ELSE 0.0 END)
 {% endmacro %}
 
 -- Macro for converting customer tier to numeric value
@@ -30,8 +30,8 @@
 -- Macro for safe division with NULLIF
 {% macro safe_divide(numerator, denominator, default_value=0) %}
   CASE 
-    WHEN {{ denominator }} = 0 OR {{ denominator }} IS NULL THEN {{ default_value }}
-    ELSE {{ numerator }} / {{ denominator }}
+    WHEN CAST({{ denominator }} AS FLOAT) = 0 OR {{ denominator }} IS NULL THEN {{ default_value }}
+    ELSE CAST({{ numerator }} AS FLOAT) / CAST({{ denominator }} AS FLOAT)
   END
 {% endmacro %}
 
@@ -47,7 +47,10 @@
 
 -- Macro for calculating speed in km/h
 {% macro calculate_speed_kmh(distance_km, duration_minutes) %}
-  {{ safe_divide(distance_km, duration_minutes / 60.0, 0) }}
+  CASE 
+    WHEN CAST({{ duration_minutes }} AS FLOAT) = 0 OR {{ duration_minutes }} IS NULL THEN 0
+    ELSE CAST({{ distance_km }} AS FLOAT) / (CAST({{ duration_minutes }} AS FLOAT) / 60.0)
+  END
 {% endmacro %}
 
 -- Macro for calculating profit margin

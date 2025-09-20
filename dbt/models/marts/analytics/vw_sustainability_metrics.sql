@@ -36,9 +36,9 @@ WITH vehicle_emissions AS (
         
         COUNT(*) AS daily_deliveries
         
-    FROM {{ ref('fact_shipments') }} fs
-    JOIN {{ ref('dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
-    JOIN {{ ref('dim_location') }} dl_origin ON fs.origin_location_id = dl_origin.location_id
+    FROM {{ ref('tbl_fact_shipments') }} fs
+    JOIN {{ ref('tbl_dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
+    JOIN {{ ref('tbl_dim_location') }} dl_origin ON fs.origin_location_id = dl_origin.location_id
     WHERE fs.shipment_date >= CURRENT_DATE() - 365
         AND fs.is_delivered = TRUE
     GROUP BY 1,2,3,4,5,6,7

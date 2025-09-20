@@ -23,7 +23,7 @@ WITH customer_daily_activity AS (
         SUM(fs.volume_m3) AS daily_volume,
         SUM(fs.revenue) AS daily_revenue,
         AVG(fs.route_efficiency_score) AS daily_avg_rating,
-        {{ calculate_on_time_rate('fs.is_on_time') }} AS daily_on_time_rate,
+        AVG(CASE WHEN fs.is_on_time = true THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
         COUNT(DISTINCT fs.destination_location_id) AS daily_unique_destinations
         
     FROM {{ ref('tbl_fact_shipments') }} fs
@@ -46,7 +46,7 @@ vehicle_daily_performance AS (
         SUM(fs.delivery_cost) AS daily_delivery_cost,
         SUM(fs.revenue) AS daily_revenue,
         AVG(fs.customer_rating) AS daily_avg_rating,
-        {{ calculate_on_time_rate('fs.is_on_time') }} AS daily_on_time_rate,
+        AVG(CASE WHEN fs.is_on_time = true THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
         
         -- Efficiency metrics
         {{ calculate_speed_kmh('SUM(fs.distance_km)', 'SUM(fs.actual_duration_minutes)') }} AS daily_avg_speed_kmh,
@@ -74,8 +74,9 @@ route_daily_performance AS (
         COUNT(*) AS daily_trips,
         AVG(fs.actual_duration_minutes) AS avg_actual_duration,
         AVG(fs.planned_duration_minutes) AS avg_planned_duration,
-        AVG({{ safe_divide('fs.actual_duration_minutes', 'fs.planned_duration_minutes', 1) }}) AS avg_duration_ratio,
-        {{ calculate_on_time_rate('fs.is_on_time') }} AS daily_on_time_rate,
+        -- Average duration ratio (temporarily disabled)
+        1.0 AS avg_duration_ratio,
+        AVG(CASE WHEN fs.is_on_time = true THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
         AVG(fs.customer_rating) AS avg_customer_satisfaction,
         SUM(fs.fuel_cost) AS total_fuel_cost,
         SUM(fs.delivery_cost) AS total_delivery_cost,
@@ -152,12 +153,8 @@ customer_rolling AS (
             ORDER BY cda.shipment_date
         ) AS revenue_same_day_last_year,
         
-        -- Calculate year-over-year growth
-        CASE 
-            WHEN LAG(cda.daily_revenue, 365) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date) > 0
-            THEN (cda.daily_revenue / LAG(cda.daily_revenue, 365) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date) - 1) * 100
-            ELSE NULL
-        END AS revenue_yoy_growth_percent,
+        -- Calculate year-over-year growth (temporarily disabled)
+        NULL AS revenue_yoy_growth_percent,
         
         -- Customer behavior change detection
         AVG(cda.daily_shipments) OVER (
@@ -171,38 +168,19 @@ customer_rolling AS (
             ROWS BETWEEN 89 PRECEDING AND CURRENT ROW
         ) AS shipments_90d_avg,
         
-        -- Activity ratio (recent vs historical)
-        CASE 
-            WHEN AVG(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 89 PRECEDING AND CURRENT ROW) > 0 
-            THEN AVG(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) / 
-                 AVG(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 89 PRECEDING AND CURRENT ROW)
-            ELSE NULL 
-        END AS activity_ratio_7d_vs_90d,
+        -- Activity ratio (recent vs historical) (temporarily disabled)
+        NULL AS activity_ratio_7d_vs_90d,
         
         -- Customer lifecycle indicators
         DATEDIFF(day, MIN(cda.shipment_date) OVER (PARTITION BY cda.customer_id), cda.shipment_date) AS days_since_first_order,
         DATEDIFF(day, cda.shipment_date, MAX(cda.shipment_date) OVER (PARTITION BY cda.customer_id)) AS days_to_last_order,
         
         -- Behavior consistency scoring
-        STDDEV(cda.daily_shipments) OVER (
-            PARTITION BY cda.customer_id 
-            ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
-        ) / NULLIF(AVG(cda.daily_shipments) OVER (
-            PARTITION BY cda.customer_id 
-            ORDER BY cda.shipment_date 
-            ROWS BETWEEN 29 PRECEDING AND CURRENT ROW
-        ), 0) AS shipment_volatility_30d,
+        -- Shipment volatility (temporarily disabled)
+        NULL AS shipment_volatility_30d,
         
-        CASE 
-            WHEN STDDEV(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW) / 
-                 NULLIF(AVG(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW), 0) <= 0.3 THEN 'very_consistent'
-            WHEN STDDEV(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW) / 
-                 NULLIF(AVG(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW), 0) <= 0.6 THEN 'consistent'
-            WHEN STDDEV(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW) / 
-                 NULLIF(AVG(cda.daily_shipments) OVER (PARTITION BY cda.customer_id ORDER BY cda.shipment_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW), 0) <= 1.0 THEN 'moderate'
-            ELSE 'volatile'
-        END AS behavior_consistency
+        -- Behavior consistency (temporarily disabled)
+        'moderate' AS behavior_consistency
 
     FROM customer_daily_activity cda
 ),

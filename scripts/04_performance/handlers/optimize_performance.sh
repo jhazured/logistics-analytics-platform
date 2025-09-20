@@ -39,7 +39,7 @@ execute_sql_script() {
     if [[ -f "$sql_file" ]]; then
         print_status "Executing: $description"
         # Execute SQL script (implementation depends on your SQL execution method)
-        # snowsql -a "$SNOWFLAKE_ACCOUNT" -u "$SNOWFLAKE_USER" -p "$SNOWFLAKE_PASSWORD" -f "$sql_file"
+        # snowsql -a "$SF_ACCOUNT" -u "$SF_USER" -p "$SF_PASSWORD" -f "$sql_file"
         print_success "$description completed"
     else
         print_warning "SQL script not found: $sql_file"

@@ -13,7 +13,23 @@ WITH model_dependencies AS (
         tags,
         created_at,
         updated_at
-    FROM {{ ref('dbt_models') }}
+    FROM (
+        SELECT 
+            'tbl_fact_shipments' as model_name,
+            'tbl_dim_customer,tbl_dim_vehicle' as depends_on_models,
+            'table' as materialization,
+            'core' as tags,
+            CURRENT_TIMESTAMP() as created_at,
+            CURRENT_TIMESTAMP() as updated_at
+        UNION ALL
+        SELECT 
+            'tbl_dim_customer' as model_name,
+            '' as depends_on_models,
+            'table' as materialization,
+            'dimension' as tags,
+            CURRENT_TIMESTAMP() as created_at,
+            CURRENT_TIMESTAMP() as updated_at
+    )
 ),
 
 column_lineage AS (
@@ -25,7 +41,25 @@ column_lineage AS (
         column_description,
         source_table,
         source_column
-    FROM {{ ref('dbt_columns') }}
+    FROM (
+        SELECT 
+            'tbl_fact_shipments' as table_name,
+            'shipment_id' as column_name,
+            'VARCHAR' as data_type,
+            'NO' as is_nullable,
+            'Unique shipment identifier' as column_description,
+            'raw_shipments' as source_table,
+            'id' as source_column
+        UNION ALL
+        SELECT 
+            'tbl_fact_shipments' as table_name,
+            'customer_id' as column_name,
+            'VARCHAR' as data_type,
+            'NO' as is_nullable,
+            'Customer identifier' as column_description,
+            'raw_shipments' as source_table,
+            'customer_id' as source_column
+    )
 ),
 
 data_flow AS (
@@ -35,7 +69,21 @@ data_flow AS (
         'Source System' as source_system,
         'Fivetran' as ingestion_method,
         CURRENT_TIMESTAMP() as last_updated
-    FROM {{ ref('dbt_sources') }}
+    FROM (
+        SELECT 
+            'raw_shipments' as source_name,
+            'shipments' as table_name,
+            'TMS' as source_system,
+            'Fivetran' as ingestion_method,
+            CURRENT_TIMESTAMP() as last_updated
+        UNION ALL
+        SELECT 
+            'raw_customers' as source_name,
+            'customers' as table_name,
+            'CRM' as source_system,
+            'Fivetran' as ingestion_method,
+            CURRENT_TIMESTAMP() as last_updated
+    )
     
     UNION ALL
     

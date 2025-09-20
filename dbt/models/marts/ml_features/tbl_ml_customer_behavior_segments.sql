@@ -53,9 +53,9 @@ WITH customer_metrics AS (
         AVG(CASE WHEN dd.season = 'Winter' THEN 1.0 ELSE 0.0 END) AS winter_activity_rate,
         AVG(CASE WHEN dd.is_weekend THEN 1.0 ELSE 0.0 END) AS weekend_activity_rate
         
-    FROM {{ ref('fact_shipments') }} fs
-    JOIN {{ ref('dim_customer') }} dc ON fs.customer_id = dc.customer_id
-    JOIN {{ ref('dim_date') }} dd ON fs.date_key = dd.date_key
+    FROM {{ ref('tbl_fact_shipments') }} fs
+    JOIN {{ ref('tbl_dim_customer') }} dc ON fs.customer_id = dc.customer_id
+    JOIN {{ ref('tbl_dim_date') }} dd ON fs.date_key = dd.date_key
     WHERE fs.shipment_date >= CURRENT_DATE() - 365  -- Last year
     GROUP BY 1,2,3,4,5,6,7,8,9
 ),

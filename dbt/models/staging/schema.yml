@@ -61,6 +61,149 @@ sources:
             tests:
               - accepted_values:
                   values: ['PENDING', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED', 'DELAYED']
+      
+      - name: maintenance
+        description: "Raw maintenance data from vehicle management system"
+        columns:
+          - name: maintenance_id
+            description: "Unique identifier for each maintenance record"
+            tests:
+              - unique
+              - not_null
+          - name: vehicle_id
+            description: "Foreign key to vehicle dimension"
+            tests:
+              - not_null
+          - name: maintenance_date
+            description: "Date when maintenance was performed"
+            tests:
+              - not_null
+          - name: maintenance_type
+            description: "Type of maintenance performed"
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['ROUTINE', 'REPAIR', 'INSPECTION', 'EMERGENCY']
+          - name: cost_usd
+            description: "Cost of maintenance in USD"
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+      
+      - name: customers
+        description: "Raw customer data from CRM system"
+        columns:
+          - name: customer_id
+            description: "Unique identifier for each customer"
+            tests:
+              - unique
+              - not_null
+          - name: customer_name
+            description: "Customer company name"
+            tests:
+              - not_null
+          - name: customer_tier
+            description: "Customer tier level"
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['BASIC', 'STANDARD', 'PREMIUM']
+      
+      - name: vehicles
+        description: "Raw vehicle data from fleet management system"
+        columns:
+          - name: vehicle_id
+            description: "Unique identifier for each vehicle"
+            tests:
+              - unique
+              - not_null
+          - name: vehicle_type
+            description: "Type of vehicle"
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['TRUCK', 'VAN', 'MOTORCYCLE', 'CAR']
+          - name: capacity_lbs
+            description: "Vehicle capacity in pounds"
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+      
+      - name: telematics
+        description: "Raw telematics data from vehicle sensors"
+        columns:
+          - name: telemetry_id
+            description: "Unique identifier for each telemetry record"
+            tests:
+              - unique
+              - not_null
+          - name: vehicle_id
+            description: "Foreign key to vehicle"
+            tests:
+              - not_null
+          - name: timestamp
+            description: "Timestamp of telemetry reading"
+            tests:
+              - not_null
+          - name: speed_mph
+            description: "Vehicle speed in miles per hour"
+            tests:
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  max_value: 120
+      
+      - name: traffic
+        description: "Raw traffic condition data from traffic APIs"
+        columns:
+          - name: traffic_id
+            description: "Unique identifier for each traffic record"
+            tests:
+              - unique
+              - not_null
+          - name: location_id
+            description: "Location identifier"
+            tests:
+              - not_null
+          - name: timestamp
+            description: "Timestamp of traffic reading"
+            tests:
+              - not_null
+          - name: traffic_level
+            description: "Traffic congestion level"
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['LOW', 'MODERATE', 'HIGH', 'SEVERE']
+      
+      - name: weather
+        description: "Raw weather data from weather APIs"
+        columns:
+          - name: weather_id
+            description: "Unique identifier for each weather record"
+            tests:
+              - unique
+              - not_null
+          - name: location_id
+            description: "Location identifier"
+            tests:
+              - not_null
+          - name: timestamp
+            description: "Timestamp of weather reading"
+            tests:
+              - not_null
+          - name: temperature_f
+            description: "Temperature in Fahrenheit"
+            tests:
+              - dbt_utils.accepted_range:
+                  min_value: -50
+                  max_value: 150
+          - name: precipitation_inches
+            description: "Precipitation in inches"
+            tests:
+              - dbt_utils.accepted_range:
+                  min_value: 0
 
 models:
   - name: tbl_stg_shipments

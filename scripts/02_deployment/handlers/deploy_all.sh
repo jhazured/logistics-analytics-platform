@@ -35,6 +35,47 @@ print_error() {
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
+# Deployment completion tracking
+DEPLOYMENT_STATUS_FILE="$PROJECT_ROOT/.deployment_status"
+
+# Load environment variables from .env file
+if [[ -f "$PROJECT_ROOT/.env" ]]; then
+    set -a  # automatically export all variables
+    source "$PROJECT_ROOT/.env"
+    set +a  # stop automatically exporting
+    print_status "Environment variables loaded from .env file"
+fi
+
+# Function to check if phase was completed
+is_phase_completed() {
+    local phase="$1"
+    if [[ -f "$DEPLOYMENT_STATUS_FILE" ]]; then
+        grep -q "^$phase:completed:" "$DEPLOYMENT_STATUS_FILE"
+    else
+        return 1
+    fi
+}
+
+# Function to mark phase as completed
+mark_phase_completed() {
+    local phase="$1"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "$phase:completed:$timestamp" >> "$DEPLOYMENT_STATUS_FILE"
+}
+
+# Function to show deployment status
+show_deployment_status() {
+    if [[ -f "$DEPLOYMENT_STATUS_FILE" ]]; then
+        print_status "Previous deployment status:"
+        while IFS=':' read -r phase status timestamp; do
+            if [[ "$status" == "completed" ]]; then
+                echo "  ✅ Phase $phase: Completed at $timestamp"
+            fi
+        done < "$DEPLOYMENT_STATUS_FILE"
+        echo ""
+    fi
+}
+
 # Function to execute SQL script
 execute_sql_script() {
     local sql_file="$1"
@@ -43,7 +84,7 @@ execute_sql_script() {
     if [[ -f "$sql_file" ]]; then
         print_status "Executing: $description"
         # Execute SQL script (implementation depends on your SQL execution method)
-        # snowsql -a "$SNOWFLAKE_ACCOUNT" -u "$SNOWFLAKE_USER" -p "$SNOWFLAKE_PASSWORD" -f "$sql_file"
+        # snowsql -a "$SF_ACCOUNT" -u "$SF_USER" -p "$SF_PASSWORD" -f "$sql_file"
         print_success "$description completed"
     else
         print_warning "SQL script not found: $sql_file"
@@ -67,6 +108,14 @@ execute_python_script() {
 
 # Phase 1: Environment Setup
 setup_environment() {
+    if is_phase_completed "1"; then
+        print_status "🔧 Phase 1: Environment Setup"
+        echo "============================="
+        print_status "Phase 1 already completed - skipping"
+        print_success "Environment setup skipped (previously completed)"
+        return 0
+    fi
+    
     print_status "🔧 Phase 1: Environment Setup"
     echo "============================="
     
@@ -77,14 +126,14 @@ setup_environment() {
     
     # Check environment variables
     print_status "Checking environment variables..."
-    if [[ -z "$SNOWFLAKE_ACCOUNT" ]]; then
-        print_error "SNOWFLAKE_ACCOUNT environment variable is not set"
+    if [[ -z "$SF_ACCOUNT" ]]; then
+        print_error "SF_ACCOUNT environment variable is not set"
     fi
-    if [[ -z "$SNOWFLAKE_USER" ]]; then
-        print_error "SNOWFLAKE_USER environment variable is not set"
+    if [[ -z "$SF_USER" ]]; then
+        print_error "SF_USER environment variable is not set"
     fi
-    if [[ -z "$SNOWFLAKE_PASSWORD" ]]; then
-        print_error "SNOWFLAKE_PASSWORD environment variable is not set"
+    if [[ -z "$SF_PASSWORD" ]]; then
+        print_error "SF_PASSWORD environment variable is not set"
     fi
     print_success "Environment variables validated"
     
@@ -102,10 +151,21 @@ setup_environment() {
         pip install -r requirements.txt
     fi
     print_success "Python environment setup complete"
+    
+    # Mark phase as completed
+    mark_phase_completed "1"
 }
 
 # Phase 2: Snowflake Infrastructure Setup
 setup_snowflake_infrastructure() {
+    if is_phase_completed "2"; then
+        print_status "🗄️ Phase 2: Snowflake Infrastructure Setup"
+        echo "============================================="
+        print_status "Phase 2 already completed - skipping"
+        print_success "Snowflake infrastructure setup skipped (previously completed)"
+        return 0
+    fi
+    
     print_status "🗄️ Phase 2: Snowflake Infrastructure Setup"
     echo "============================================="
     
@@ -126,12 +186,47 @@ setup_snowflake_infrastructure() {
     done
     
     print_success "Snowflake infrastructure setup complete"
+    
+    # Mark phase as completed
+    mark_phase_completed "2"
 }
 
 # Phase 3: Data Generation
 generate_sample_data() {
     print_status "📊 Phase 3: Sample Data Generation"
     echo "===================================="
+    
+    # Check if sample data already exists
+    local data_dir="$PROJECT_ROOT/data/logistics_sample_data"
+    local sample_files=(
+        "fact_shipments.csv"
+        "dim_customer.csv"
+        "dim_vehicle.csv"
+        "raw_azure_shipments.csv"
+    )
+    
+    local data_exists=false
+    for file in "${sample_files[@]}"; do
+        if [[ -f "$data_dir/$file" ]]; then
+            data_exists=true
+            break
+        fi
+    done
+    
+    if [[ "$data_exists" == true ]]; then
+        print_warning "Sample data files already exist in $data_dir"
+        echo ""
+        echo "Existing data files found:"
+        ls -la "$data_dir"/*.csv 2>/dev/null | head -10
+        echo ""
+        read -p "Do you want to regenerate the sample data? This will overwrite existing files. (y/N): " -n 1 -r
+        echo ""
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            print_status "Skipping sample data generation - using existing data"
+            print_success "Sample data generation skipped"
+            return 0
+        fi
+    fi
     
     execute_python_script "data/generate_sample_data.py" "Sample data generation"
     print_success "Sample data generation complete"
@@ -165,47 +260,283 @@ load_raw_data() {
     print_success "Raw data loading complete"
 }
 
+# Function to analyze dbt errors and provide specific solutions
+analyze_dbt_error() {
+    local log_file="$1"
+    local command="$2"
+    
+    echo "🔍 Error Analysis:"
+    echo "=================="
+    
+    # Check for common error patterns
+    if grep -q "Compilation Error" "$log_file"; then
+        echo "❌ Compilation Error detected"
+        echo "• Check SQL syntax in your models"
+        echo "• Verify all column references are correct"
+        echo "• Check for missing commas or parentheses"
+    fi
+    
+    if grep -q "Database Error" "$log_file"; then
+        echo "❌ Database Error detected"
+        echo "• Check your Snowflake connection"
+        echo "• Verify database/schema permissions"
+        echo "• Check if target tables exist"
+    fi
+    
+    if grep -q "relation.*does not exist" "$log_file"; then
+        echo "❌ Missing Relation Error"
+        echo "• Check if referenced models exist"
+        echo "• Verify model dependencies are correct"
+        echo "• Run models in dependency order"
+    fi
+    
+    if grep -q "permission denied" "$log_file"; then
+        echo "❌ Permission Error"
+        echo "• Check your Snowflake user permissions"
+        echo "• Verify role has CREATE/INSERT privileges"
+        echo "• Check warehouse access permissions"
+    fi
+    
+    if grep -q "timeout" "$log_file"; then
+        echo "❌ Timeout Error"
+        echo "• Query is taking too long to execute"
+        echo "• Consider optimizing your SQL"
+        echo "• Check warehouse size and scaling"
+    fi
+    
+    # Extract specific model names that failed
+    local failed_models=$(grep -o "model '[^']*'" "$log_file" | sort -u | tr -d "'" | sed 's/model //')
+    if [[ -n "$failed_models" ]]; then
+        echo ""
+        echo "🚨 Failed Models:"
+        echo "$failed_models" | while read -r model; do
+            echo "• $model"
+        done
+    fi
+}
+
+# Function to execute dbt command with error handling
+execute_dbt_command() {
+    local command="$1"
+    local description="$2"
+    local log_file="/tmp/dbt_${RANDOM}.log"
+    
+    print_status "Executing: $description"
+    echo "Command: dbt $command"
+    
+    # Ensure environment variables are exported for dbt
+    export SF_ACCOUNT SF_USER SF_PASSWORD SF_ROLE SF_DATABASE SF_WAREHOUSE SF_SCHEMA
+    
+    # Change to dbt directory and activate virtual environment
+    cd "$PROJECT_ROOT/dbt"
+    source "$PROJECT_ROOT/venv/bin/activate"
+    
+    if dbt $command > "$log_file" 2>&1; then
+        print_success "$description completed successfully"
+        rm -f "$log_file"
+        return 0
+    else
+        print_error "$description failed"
+        echo ""
+        echo "❌ Error Details:"
+        echo "=================="
+        cat "$log_file"
+        echo ""
+        
+        # Analyze the error
+        analyze_dbt_error "$log_file" "$command"
+        
+        echo ""
+        echo "🔧 Troubleshooting Tips:"
+        echo "========================"
+        
+        # Provide specific troubleshooting based on the command
+        case "$command" in
+            "deps")
+                echo "• Check your packages.yml file for syntax errors"
+                echo "• Verify internet connectivity for package downloads"
+                echo "• Try running: dbt deps --full-refresh"
+                echo "• Check package versions in packages.yml"
+                ;;
+            "parse")
+                echo "• Check for SQL syntax errors in your models"
+                echo "• Verify all referenced models exist"
+                echo "• Check for circular dependencies"
+                echo "• Try running: dbt parse --no-partial-parse"
+                echo "• Check for missing macros or functions"
+                ;;
+            "run"*)
+                echo "• Check for compilation errors in the failed models"
+                echo "• Verify data sources are accessible"
+                echo "• Check for missing dependencies"
+                echo "• Try running individual models: dbt run --select model_name"
+                echo "• Check warehouse is running and accessible"
+                ;;
+            "test"*)
+                echo "• Check for data quality issues in your models"
+                echo "• Verify test configurations in schema.yml files"
+                echo "• Try running specific tests: dbt test --select test_name"
+                echo "• Check if test data exists in your models"
+                ;;
+            "docs generate")
+                echo "• Check for issues in model documentation"
+                echo "• Verify all referenced models exist"
+                echo "• Check for syntax errors in schema.yml files"
+                ;;
+        esac
+        
+        echo ""
+        echo "📋 Next Steps:"
+        echo "=============="
+        echo "1. Fix the errors shown above"
+        echo "2. Re-run the deployment: ./deploy.sh"
+        echo "3. Or continue with individual phases: ./scripts/02_deployment/handlers/deploy_all.sh 5"
+        echo "4. For detailed debugging: cd dbt && dbt $command --debug"
+        echo ""
+        
+        # Offer quick recovery options
+        echo "🚀 Quick Recovery Options:"
+        echo "=========================="
+        echo "1. Try running with --full-refresh flag"
+        echo "2. Clear dbt cache and retry"
+        echo "3. Run individual models to isolate issues"
+        echo "4. Check dbt logs in logs/ directory"
+        echo ""
+        
+        read -p "Would you like to try a quick recovery? (y/N): " -n 1 -r
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            echo ""
+            print_status "Attempting quick recovery..."
+            
+            # Try recovery based on command type
+            case "$command" in
+                "deps")
+                    echo "Trying: dbt deps --full-refresh"
+                    if dbt deps --full-refresh > "$log_file" 2>&1; then
+                        print_success "Recovery successful! Package installation completed."
+                        rm -f "$log_file"
+                        return 0
+                    fi
+                    ;;
+                "parse")
+                    echo "Trying: dbt clean && dbt parse --no-partial-parse"
+                    dbt clean > /dev/null 2>&1
+                    if dbt parse --no-partial-parse > "$log_file" 2>&1; then
+                        print_success "Recovery successful! Model parsing completed."
+                        rm -f "$log_file"
+                        return 0
+                    fi
+                    ;;
+                "run"*)
+                    echo "Trying: dbt run --full-refresh"
+                    if dbt run --full-refresh > "$log_file" 2>&1; then
+                        print_success "Recovery successful! Model building completed."
+                        rm -f "$log_file"
+                        return 0
+                    fi
+                    ;;
+            esac
+            
+            echo "Recovery attempt failed. Original error details:"
+            cat "$log_file"
+            echo ""
+        fi
+        
+        # Ask user if they want to continue
+        read -p "Do you want to continue with the next step despite this error? (y/N): " -n 1 -r
+        echo ""
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            rm -f "$log_file"
+            exit 1
+        fi
+        
+        rm -f "$log_file"
+        return 1
+    fi
+}
+
 # Phase 5: dbt Model Building
 build_dbt_models() {
     print_status "🔨 Phase 5: dbt Model Building"
     echo "==============================="
     
-    if [[ -d "$PROJECT_ROOT/dbt" ]]; then
-        cd "$PROJECT_ROOT/dbt"
-        
-        # Install dbt packages
-        print_status "Installing dbt packages..."
-        dbt deps
-        
-        # Parse dbt models
-        print_status "Parsing dbt models..."
-        dbt parse
-        
-        # Build staging models
-        print_status "Building staging models..."
-        dbt run --select tag:staging
-        
-        # Build marts models
-        print_status "Building marts models..."
-        dbt run --select tag:marts
-        
-        # Build analytics models
-        print_status "Building analytics models..."
-        dbt run --select tag:analytics
-        
-        # Run tests
-        print_status "Running dbt tests..."
-        dbt test
-        
-        # Generate documentation
-        print_status "Generating dbt documentation..."
-        dbt docs generate
-        
-        cd "$PROJECT_ROOT"
-        print_success "dbt model building complete"
-    else
-        print_warning "dbt directory not found"
+    if [[ ! -d "$PROJECT_ROOT/dbt" ]]; then
+        print_error "dbt directory not found at $PROJECT_ROOT/dbt"
+        echo "Please ensure the dbt project is properly set up."
+        exit 1
     fi
+    
+    cd "$PROJECT_ROOT/dbt"
+    
+    # Activate virtual environment and check if dbt is available
+    source "$PROJECT_ROOT/venv/bin/activate"
+    
+    if ! command -v dbt &> /dev/null; then
+        print_error "dbt command not found. Please ensure dbt is installed in the virtual environment."
+        exit 1
+    fi
+    
+    # Check dbt project configuration
+    if [[ ! -f "dbt_project.yml" ]]; then
+        print_error "dbt_project.yml not found. Please ensure this is a valid dbt project."
+        exit 1
+    fi
+    
+    print_status "dbt project validation passed"
+    
+    # Step 1: Install dbt packages
+    if ! execute_dbt_command "deps" "Installing dbt packages"; then
+        print_warning "Package installation failed, but continuing..."
+    fi
+    
+    # Step 2: Parse dbt models
+    if ! execute_dbt_command "parse" "Parsing dbt models"; then
+        print_error "Model parsing failed. Cannot continue with model building."
+        exit 1
+    fi
+    
+    # Step 3: Build staging models
+    if ! execute_dbt_command "run --select tag:staging" "Building staging models"; then
+        print_warning "Some staging models failed, but continuing with marts..."
+    fi
+    
+    # Step 4: Build marts models
+    if ! execute_dbt_command "run --select tag:marts" "Building marts models"; then
+        print_warning "Some marts models failed, but continuing with analytics..."
+    fi
+    
+    # Step 5: Build analytics models
+    if ! execute_dbt_command "run --select tag:analytics" "Building analytics models"; then
+        print_warning "Some analytics models failed, but continuing with tests..."
+    fi
+    
+    # Step 6: Run tests
+    if ! execute_dbt_command "test" "Running dbt tests"; then
+        print_warning "Some tests failed, but continuing with documentation..."
+    fi
+    
+    # Step 7: Generate documentation
+    if ! execute_dbt_command "docs generate" "Generating dbt documentation"; then
+        print_warning "Documentation generation failed, but model building is complete."
+    fi
+    
+    # Summary
+    echo ""
+    print_status "📊 dbt Model Building Summary"
+    echo "================================="
+    
+    # Count successful models
+    local total_models=$(find models -name "*.sql" 2>/dev/null | wc -l)
+    local built_models=$(dbt list --resource-type model --output name 2>/dev/null | wc -l)
+    
+    echo "📈 Models: $built_models/$total_models built"
+    echo "🧪 Tests: Run with 'dbt test' to see detailed results"
+    echo "📚 Docs: Generated in target/ directory"
+    echo ""
+    
+    cd "$PROJECT_ROOT"
+    print_success "dbt model building phase completed"
 }
 
 # Phase 6: Snowflake Object Deployment
@@ -330,7 +661,28 @@ EOF
 
 # Main deployment function
 main() {
+    local skip_data=false
+    local reset_deployment=false
+    
+    # Check for flags
+    for arg in "$@"; do
+        if [[ "$arg" == "--skip-data" ]]; then
+            skip_data=true
+        elif [[ "$arg" == "--reset" ]]; then
+            reset_deployment=true
+        fi
+    done
+    
+    # Reset deployment status if requested
+    if [[ "$reset_deployment" == true ]]; then
+        if [[ -f "$DEPLOYMENT_STATUS_FILE" ]]; then
+            rm "$DEPLOYMENT_STATUS_FILE"
+            print_status "Deployment status reset - all phases will run"
+        fi
+    fi
+    
     echo ""
+    show_deployment_status
     print_status "Starting complete deployment process..."
     echo ""
     
@@ -340,11 +692,16 @@ main() {
     setup_snowflake_infrastructure
     echo ""
     
-    generate_sample_data
-    echo ""
-    
-    load_raw_data
-    echo ""
+    if [[ "$skip_data" == false ]]; then
+        generate_sample_data
+        echo ""
+        
+        load_raw_data
+        echo ""
+    else
+        print_status "Skipping data generation and loading (--skip-data flag)"
+        echo ""
+    fi
     
     build_dbt_models
     echo ""
@@ -399,7 +756,7 @@ if [ $# -eq 1 ]; then
         "help"|"-h"|"--help")
             echo "🚀 Logistics Analytics Platform Deployment"
             echo ""
-            echo "Usage: $0 [phase]"
+            echo "Usage: $0 [phase] [options]"
             echo ""
             echo "Phases:"
             echo "  1, env, environment     - Setup environment and credentials"
@@ -407,6 +764,10 @@ if [ $# -eq 1 ]; then
             echo "  3, data, generate       - Generate sample data"
             echo "  4, load, raw           - Load raw data to Snowflake"
             echo "  5, dbt, models         - Build dbt models"
+            echo ""
+            echo "Options:"
+            echo "  --skip-data            - Skip data generation and loading phases"
+            echo "  --reset                - Reset deployment status and run all phases"
             echo "  6, objects, deploy     - Deploy Snowflake objects"
             echo "  7, tests, final        - Run final tests"
             echo "  (no args)              - Run all phases"

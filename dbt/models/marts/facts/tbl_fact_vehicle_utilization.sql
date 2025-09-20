@@ -1,7 +1,7 @@
 with t as (
-  select * from {{ ref('fact_vehicle_telemetry') }}
+  select * from {{ ref('tbl_fact_vehicle_telemetry') }}
 ), d as (
-  select date_key, date from {{ ref('dim_date') }}
+  select date_key, date from {{ ref('tbl_dim_date') }}
 )
 select
   {{ dbt_utils.generate_surrogate_key(['vehicle_id','d.date_key']) }} as utilization_id,

@@ -6,9 +6,9 @@
 set -e  # Exit on any error
 
 # Configuration
-SNOWFLAKE_ACCOUNT="${SNOWFLAKE_ACCOUNT:-}"
-SNOWFLAKE_USER="${SNOWFLAKE_USER:-}"
-SNOWFLAKE_PASSWORD="${SNOWFLAKE_PASSWORD:-}"
+SF_ACCOUNT="${SF_ACCOUNT:-}"
+SF_USER="${SF_USER:-}"
+SF_PASSWORD="${SF_PASSWORD:-}"
 SNOWFLAKE_WAREHOUSE="${SNOWFLAKE_WAREHOUSE:-COMPUTE_WH}"
 SNOWFLAKE_DATABASE="${SNOWFLAKE_DATABASE:-LOGISTICS_DW_PROD}"
 SNOWFLAKE_SCHEMA="${SNOWFLAKE_SCHEMA:-MONITORING}"
@@ -35,8 +35,8 @@ warn() {
 
 # Check if required environment variables are set
 check_env() {
-    if [[ -z "$SNOWFLAKE_ACCOUNT" || -z "$SNOWFLAKE_USER" || -z "$SNOWFLAKE_PASSWORD" ]]; then
-        error "Required Snowflake environment variables not set. Please set SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, and SNOWFLAKE_PASSWORD"
+    if [[ -z "$SF_ACCOUNT" || -z "$SF_USER" || -z "$SF_PASSWORD" ]]; then
+        error "Required Snowflake environment variables not set. Please set SF_ACCOUNT, SF_USER, and SF_PASSWORD"
     fi
 }
 
@@ -53,9 +53,9 @@ execute_sql() {
     
     # Execute SQL using snowsql or snowflake CLI
     if command -v snowsql &> /dev/null; then
-        snowsql -a "$SNOWFLAKE_ACCOUNT" -u "$SNOWFLAKE_USER" -p "$SNOWFLAKE_PASSWORD" -w "$SNOWFLAKE_WAREHOUSE" -d "$SNOWFLAKE_DATABASE" -s "$SNOWFLAKE_SCHEMA" -f "$sql_file"
+        snowsql -a "$SF_ACCOUNT" -u "$SF_USER" -p "$SF_PASSWORD" -w "$SNOWFLAKE_WAREHOUSE" -d "$SNOWFLAKE_DATABASE" -s "$SNOWFLAKE_SCHEMA" -f "$sql_file"
     elif command -v snowflake &> /dev/null; then
-        snowflake -a "$SNOWFLAKE_ACCOUNT" -u "$SNOWFLAKE_USER" -p "$SNOWFLAKE_PASSWORD" -w "$SNOWFLAKE_WAREHOUSE" -d "$SNOWFLAKE_DATABASE" -s "$SNOWFLAKE_SCHEMA" -f "$sql_file"
+        snowflake -a "$SF_ACCOUNT" -u "$SF_USER" -p "$SF_PASSWORD" -w "$SNOWFLAKE_WAREHOUSE" -d "$SNOWFLAKE_DATABASE" -s "$SNOWFLAKE_SCHEMA" -f "$sql_file"
     else
         error "Neither snowsql nor snowflake CLI found. Please install one of them."
     fi

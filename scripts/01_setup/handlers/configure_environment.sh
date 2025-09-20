@@ -7,28 +7,35 @@ set -e
 ENVIRONMENT=${1:-dev}
 echo "🚀 Configuring environment: $ENVIRONMENT"
 
-# Environment-specific variables
+# Load existing environment variables if .env file exists
+if [[ -f ".env" ]]; then
+    set -a  # automatically export all variables
+    source .env
+    set +a  # stop automatically exporting
+fi
+
+# Environment-specific variables (override defaults from .env if needed)
 case $ENVIRONMENT in
   dev)
-    export SF_DATABASE="LOGISTICS_DW_DEV"
-    export SF_WAREHOUSE="COMPUTE_WH_XS"  
-    export SF_SCHEMA="ANALYTICS"
-    export SF_ROLE="DBT_DEV_ROLE"
-    export DBT_THREADS=4
+    export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_DEV}"
+    export SF_WAREHOUSE="${SF_WAREHOUSE:-COMPUTE_WH_XS}"  
+    export SF_SCHEMA="${SF_SCHEMA:-ANALYTICS}"
+    export SF_ROLE="${SF_ROLE:-DBT_DEV_ROLE}"
+    export DBT_THREADS="${DBT_THREADS:-4}"
     ;;
   staging)
-    export SF_DATABASE="LOGISTICS_DW_STAGING"
-    export SF_WAREHOUSE="COMPUTE_WH_SMALL"
-    export SF_SCHEMA="ANALYTICS"  
-    export SF_ROLE="DBT_STAGING_ROLE"
-    export DBT_THREADS=8
+    export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_STAGING}"
+    export SF_WAREHOUSE="${SF_WAREHOUSE:-COMPUTE_WH_SMALL}"
+    export SF_SCHEMA="${SF_SCHEMA:-ANALYTICS}"  
+    export SF_ROLE="${SF_ROLE:-DBT_STAGING_ROLE}"
+    export DBT_THREADS="${DBT_THREADS:-8}"
     ;;
   prod)
-    export SF_DATABASE="LOGISTICS_DW_PROD"
-    export SF_WAREHOUSE="COMPUTE_WH_MEDIUM"
-    export SF_SCHEMA="ANALYTICS"
-    export SF_ROLE="DBT_PROD_ROLE" 
-    export DBT_THREADS=12
+    export SF_DATABASE="${SF_DATABASE:-LOGISTICS_DW_PROD}"
+    export SF_WAREHOUSE="${SF_WAREHOUSE:-COMPUTE_WH_MEDIUM}"
+    export SF_SCHEMA="${SF_SCHEMA:-ANALYTICS}"
+    export SF_ROLE="${SF_ROLE:-DBT_PROD_ROLE}" 
+    export DBT_THREADS="${DBT_THREADS:-12}"
     ;;
   *)
     echo "❌ Invalid environment. Use: dev, staging, or prod"

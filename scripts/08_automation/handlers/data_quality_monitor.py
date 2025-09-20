@@ -19,9 +19,9 @@ class DataQualityMonitor:
     def __init__(self, environment: str = "prod"):
         self.environment = environment
         self.connection_params = {
-            'account': os.getenv('SNOWFLAKE_ACCOUNT'),
-            'user': os.getenv('SNOWFLAKE_USER'),
-            'password': os.getenv('SNOWFLAKE_PASSWORD'),
+            'account': os.getenv('SF_ACCOUNT'),
+            'user': os.getenv('SF_USER'),
+            'password': os.getenv('SF_PASSWORD'),
             'warehouse': 'COMPUTE_WH_XS',
             'database': f'LOGISTICS_DW_{environment.upper()}',
             'schema': 'MONITORING'

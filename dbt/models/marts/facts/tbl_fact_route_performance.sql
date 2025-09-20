@@ -20,12 +20,12 @@ with s as (
     weather_delay_minutes,
     traffic_delay_minutes,
     route_efficiency_score
-  from {{ ref('fact_shipments') }}
+  from {{ ref('tbl_fact_shipments') }}
   {% if is_incremental() %}
     where shipment_date > (select coalesce(max(performance_date), '1900-01-01') from {{ this }})
   {% endif %}
 ), d as (
-  select date_key, date from {{ ref('dim_date') }}
+  select date_key, date from {{ ref('tbl_dim_date') }}
 )
 select
   {{ dbt_utils.generate_surrogate_key(['route_id','d.date_key']) }} as performance_id,

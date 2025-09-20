@@ -23,13 +23,13 @@ WITH shipment_base AS (
         dd.is_weekend,
         dd.season,
         dd.logistics_day_type
-    FROM {{ ref('fact_shipments') }} fs
-    JOIN {{ ref('dim_location') }} dl_origin ON fs.origin_location_id = dl_origin.location_id
-    JOIN {{ ref('dim_location') }} dl_dest ON fs.destination_location_id = dl_dest.location_id
-    JOIN {{ ref('dim_route') }} dr ON fs.route_id = dr.route_id
-    JOIN {{ ref('dim_customer') }} dc ON fs.customer_id = dc.customer_id
-    JOIN {{ ref('dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
-    JOIN {{ ref('dim_date') }} dd ON fs.date_key = dd.date_key
+    FROM {{ ref('tbl_fact_shipments') }} fs
+    JOIN {{ ref('tbl_dim_location') }} dl_origin ON fs.origin_location_id = dl_origin.location_id
+    JOIN {{ ref('tbl_dim_location') }} dl_dest ON fs.destination_location_id = dl_dest.location_id
+    JOIN {{ ref('tbl_dim_route') }} dr ON fs.route_id = dr.route_id
+    JOIN {{ ref('tbl_dim_customer') }} dc ON fs.customer_id = dc.customer_id
+    JOIN {{ ref('tbl_dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
+    JOIN {{ ref('tbl_dim_date') }} dd ON fs.date_key = dd.date_key
     WHERE fs.is_delivered = TRUE
 )
 

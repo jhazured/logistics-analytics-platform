@@ -1,15 +1,15 @@
 with s as (
-  select route_id, shipment_date, origin_location_id from {{ ref('fact_shipments') }}
+  select route_id, shipment_date, origin_location_id from {{ ref('tbl_fact_shipments') }}
 ), d as (
-  select date_key, date from {{ ref('dim_date') }}
+  select date_key, date from {{ ref('tbl_dim_date') }}
 ), w as (
-  select date, city, weather_id, driving_impact_score from {{ ref('stg_weather_conditions') }}
+  select date, city, weather_id, driving_impact_score from {{ ref('tbl_stg_weather_conditions') }}
 ), t as (
-  select date, city, traffic_id, congestion_score from {{ ref('stg_traffic_conditions') }}
+  select date, city, traffic_id, congestion_score from {{ ref('tbl_stg_traffic_conditions') }}
 ), r as (
   select r.route_id, r.origin_location_id, l.city
-  from {{ ref('stg_routes') }} r
-  left join {{ ref('dim_location') }} l on r.origin_location_id = l.location_id
+  from {{ ref('tbl_stg_routes') }} r
+  left join {{ ref('tbl_dim_location') }} l on r.origin_location_id = l.location_id
 )
 select
   {{ dbt_utils.generate_surrogate_key(['s.route_id','d.date_key']) }} as condition_id,

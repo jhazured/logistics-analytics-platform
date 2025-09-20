@@ -140,7 +140,7 @@ maintenance_features AS (
         predictive_maintenance_score,
         maintenance_risk_score,
         next_maintenance_due_days
-    FROM {{ ref('ml_maintenance_features') }}
+    FROM {{ ref('tbl_ml_maintenance_features') }}
 ),
 
 -- Current shipment features for real-time scoring
@@ -167,10 +167,10 @@ current_shipment_features AS (
             ELSE 'LONG_HAUL'
         END AS haul_type
         
-    FROM {{ ref('fact_shipments') }} fs
-    JOIN {{ ref('dim_route') }} dr ON fs.route_id = dr.route_id
-    JOIN {{ ref('dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
-    JOIN {{ ref('dim_customer') }} dc ON fs.customer_id = dc.customer_id
+    FROM {{ ref('tbl_fact_shipments') }} fs
+    JOIN {{ ref('tbl_dim_route') }} dr ON fs.route_id = dr.route_id
+    JOIN {{ ref('tbl_dim_vehicle') }} dv ON fs.vehicle_id = dv.vehicle_id
+    JOIN {{ ref('tbl_dim_customer') }} dc ON fs.customer_id = dc.customer_id
     WHERE fs.shipment_date = CURRENT_DATE()
         AND fs.delivery_status = 'IN_TRANSIT'
 )

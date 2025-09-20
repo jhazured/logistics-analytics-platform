@@ -1,11 +1,11 @@
 {{ config(materialized='table') }}
 
 with weather_data as (
-    select * from {{ ref('raw_weather_data') }}
+    select * from {{ source('raw_logistics', 'weather') }}
 ),
 
 locations as (
-    select * from {{ ref('dim_location') }}
+    select * from {{ ref('tbl_dim_location') }}
 ),
 
 weather_enhanced as (

@@ -16,7 +16,7 @@ WITH source_freshness AS (
         COUNT(*) AS total_records,
         COUNT(CASE WHEN updated_at >= CURRENT_TIMESTAMP() - INTERVAL '{{ var("data_freshness_hours") }} hours' THEN 1 END) AS recent_updates,
         DATEDIFF(minute, MAX(updated_at), CURRENT_TIMESTAMP()) AS minutes_since_update
-    FROM {{ ref('fact_shipments') }}
+    FROM {{ ref('tbl_fact_shipments') }}
     
     UNION ALL
     
@@ -27,7 +27,7 @@ WITH source_freshness AS (
         COUNT(*) AS total_records,
         COUNT(CASE WHEN created_at >= CURRENT_TIMESTAMP() - INTERVAL '{{ var("critical_freshness_hours") }} hours' THEN 1 END) AS recent_updates,
         DATEDIFF(minute, MAX(created_at), CURRENT_TIMESTAMP()) AS minutes_since_update
-    FROM {{ ref('fact_vehicle_telemetry') }}
+    FROM {{ ref('tbl_fact_vehicle_telemetry') }}
     
     UNION ALL
     
@@ -38,7 +38,7 @@ WITH source_freshness AS (
         COUNT(*) AS total_records,
         COUNT(CASE WHEN created_at >= CURRENT_TIMESTAMP() - INTERVAL '{{ var("data_freshness_hours") }} hours' THEN 1 END) AS recent_updates,
         DATEDIFF(minute, MAX(created_at), CURRENT_TIMESTAMP()) AS minutes_since_update
-    FROM {{ ref('dim_weather') }}
+    FROM {{ ref('tbl_dim_weather') }}
     
     UNION ALL
     
@@ -49,7 +49,7 @@ WITH source_freshness AS (
         COUNT(*) AS total_records,
         COUNT(CASE WHEN updated_at >= CURRENT_TIMESTAMP() - INTERVAL '24 hours' THEN 1 END) AS recent_updates,
         DATEDIFF(minute, MAX(updated_at), CURRENT_TIMESTAMP()) AS minutes_since_update
-    FROM {{ ref('dim_customer') }}
+    FROM {{ ref('tbl_dim_customer') }}
 ),
 
 sla_thresholds AS (

@@ -1,11 +1,11 @@
 {{ config(materialized='table') }}
 
 with traffic_data as (
-    select * from {{ ref('raw_traffic_data') }}
+    select * from {{ source('raw_logistics', 'traffic') }}
 ),
 
 routes as (
-    select * from {{ ref('dim_route') }}
+    select * from {{ ref('tbl_dim_route') }}
 ),
 
 traffic_enhanced as (
