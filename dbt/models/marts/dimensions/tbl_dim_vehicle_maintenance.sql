@@ -1,11 +1,11 @@
 {{ config(materialized='table') }}
 
 with maintenance_data as (
-    select * from {{ ref('raw_azure_maintenance') }}
+    select * from {{ source('raw_logistics', 'maintenance') }}
 ),
 
 vehicles as (
-    select * from {{ ref('dim_vehicle') }}
+    select * from {{ ref('tbl_dim_vehicle') }}
 ),
 
 maintenance_enhanced as (
