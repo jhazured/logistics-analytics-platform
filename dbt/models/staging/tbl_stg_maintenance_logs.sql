@@ -1,5 +1,5 @@
 with src as (
-  select * from {{ source('raw', 'tbl_raw_azure_maintenance') }}
+  select * from {{ source('raw_logistics', 'maintenance') }}
 )
 select
   try_to_number(maintenance_id) as maintenance_id,

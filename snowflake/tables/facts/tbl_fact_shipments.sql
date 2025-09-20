@@ -1,5 +1,5 @@
 -- Fact Shipments (Core fact table)
-CREATE OR REPLACE TABLE fact_shipments (
+CREATE OR REPLACE TABLE TBL_FACT_SHIPMENTS (
     shipment_id NUMBER PRIMARY KEY,
     date_key NUMBER(8) NOT NULL,
     customer_id NUMBER NOT NULL,

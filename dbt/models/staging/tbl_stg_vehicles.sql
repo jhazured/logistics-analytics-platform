@@ -1,5 +1,5 @@
 with src as (
-  select * from {{ source('raw', 'tbl_raw_azure_vehicles') }}
+  select * from {{ source('raw_logistics', 'vehicles') }}
 )
 select
   cast(vehicle_id as varchar) as vehicle_id,

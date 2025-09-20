@@ -1,6 +1,6 @@
 -- Customer Dimension (ML-Optimized)
 -- This table is materialized from dbt model: dim_customer
-CREATE OR REPLACE TABLE MARTS.DIM_CUSTOMER (
+CREATE OR REPLACE TABLE MARTS.TBL_DIM_CUSTOMER (
     customer_id NUMBER PRIMARY KEY,
     customer_sk VARCHAR(50) NOT NULL,
     customer_name VARCHAR(200) NOT NULL,

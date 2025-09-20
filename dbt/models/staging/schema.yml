@@ -3,15 +3,15 @@ version: 2
 sources:
   - name: raw_logistics
     description: "Raw logistics data from various source systems"
-    database: "{{ var('raw_database', 'LOGISTICS_RAW') }}"
-    schema: raw
+    database: "{{ var('raw_database', 'LOGISTICS_DW_PROD') }}"
+    schema: RAW
     freshness:
       warn_after: {count: 2, period: hour}
       error_after: {count: 6, period: hour}
     loaded_at_field: _loaded_at
     
     tables:
-      - name: tbl_raw_azure_shipments
+      - name: shipments
         description: "Raw shipment data from TMS system"
         columns:
           - name: shipment_id
@@ -24,7 +24,7 @@ sources:
             tests:
               - not_null
               - relationships:
-                  to: source('raw_logistics', 'tbl_raw_azure_customers')
+                  to: source('raw_logistics', 'customers')
                   field: customer_id
           - name: origin_location_id
             description: "Pickup location identifier"

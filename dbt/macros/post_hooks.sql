@@ -42,7 +42,7 @@
 {% macro update_feature_store_metadata(table) %}
   {% if target.name == 'prod' %}
     {% set query %}
-      UPDATE ML_FEATURES.FEATURE_STORE_METADATA 
+      UPDATE LOGISTICS_DW_PROD.ML_FEATURES.FEATURE_STORE_METADATA 
       SET last_updated = CURRENT_TIMESTAMP(),
           row_count = (SELECT COUNT(*) FROM {{ table }})
       WHERE table_name = '{{ table }}'

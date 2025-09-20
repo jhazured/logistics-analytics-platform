@@ -1,5 +1,5 @@
 -- Real-time aggregation tables for streaming analytics
-CREATE OR REPLACE TABLE real_time_kpis (
+CREATE OR REPLACE TABLE LOGISTICS_DW_PROD.MONITORING.REAL_TIME_KPIS (
     kpi_timestamp TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
     metric_name VARCHAR(100),
     metric_value FLOAT,

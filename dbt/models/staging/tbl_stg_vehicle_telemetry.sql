@@ -1,5 +1,5 @@
 with src as (
-  select * from {{ source('raw', 'tbl_raw_telematics_data') }}
+  select * from {{ source('raw_logistics', 'telematics') }}
 )
 select
   try_to_number(telemetry_id) as telemetry_id,

@@ -4,7 +4,7 @@ WAREHOUSE = COMPUTE_WH_SMALL
 SCHEDULE = '1 MINUTE'
 COMMENT = 'Process real-time shipment updates'
 AS
-INSERT INTO real_time_kpis (metric_name, metric_value, dimensions)
+INSERT INTO LOGISTICS_DW_PROD.MONITORING.REAL_TIME_KPIS (metric_name, metric_value, dimensions)
 WITH shipment_updates AS (
     SELECT 
         shipment_id,
@@ -20,7 +20,7 @@ WITH shipment_updates AS (
         route_efficiency_score,
         METADATA$ACTION as action_type,
         METADATA$ISUPDATE as is_update
-    FROM shipments_stream
+    FROM LOGISTICS_DW_PROD.MARTS.SHIPMENTS_STREAM
     WHERE METADATA$ACTION IN ('INSERT', 'UPDATE')
 ),
 real_time_metrics AS (

@@ -1,5 +1,5 @@
 with src as (
-  select * from {{ source('raw', 'tbl_raw_azure_customers') }}
+  select * from {{ source('raw_logistics', 'customers') }}
 )
 select
   cast(customer_id as number) as customer_id,

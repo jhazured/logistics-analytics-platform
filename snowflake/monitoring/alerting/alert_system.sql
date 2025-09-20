@@ -1,5 +1,5 @@
 -- Real-time vehicle tracking and alerts
-CREATE OR REPLACE TABLE real_time_vehicle_alerts (
+CREATE OR REPLACE TABLE LOGISTICS_DW_PROD.MONITORING.REAL_TIME_VEHICLE_ALERTS (
     alert_id VARCHAR(50) DEFAULT UUID_STRING(),
     vehicle_id VARCHAR(20),
     alert_type VARCHAR(50),
@@ -15,7 +15,7 @@ WAREHOUSE = COMPUTE_WH_XS
 SCHEDULE = '30 SECONDS'
 COMMENT = 'Monitor vehicle telemetry for real-time alerts'
 AS
-INSERT INTO real_time_vehicle_alerts (vehicle_id, alert_type, severity, message)
+INSERT INTO LOGISTICS_DW_PROD.MONITORING.REAL_TIME_VEHICLE_ALERTS (vehicle_id, alert_type, severity, message)
 WITH telemetry_updates AS (
     SELECT 
         vehicle_id,

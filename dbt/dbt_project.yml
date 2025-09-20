@@ -26,6 +26,12 @@ vars:
   data_freshness_hours: 6
   critical_freshness_hours: 2
   
+  # Database and schema variables
+  raw_database: 'LOGISTICS_DW_PROD'
+  staging_database: 'LOGISTICS_DW_PROD'
+  marts_database: 'LOGISTICS_DW_PROD'
+  analytics_database: 'LOGISTICS_DW_PROD'
+  
   # Development environment
   dev:
     start_date: '2023-01-01'

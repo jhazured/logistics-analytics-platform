@@ -1,5 +1,5 @@
 with src as (
-  select * from {{ source('raw', 'tbl_raw_weather_data') }}
+  select * from {{ source('raw_logistics', 'weather') }}
 )
 select
   try_to_number(weather_id) as weather_id,

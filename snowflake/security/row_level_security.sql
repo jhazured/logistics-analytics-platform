@@ -2,32 +2,32 @@
 -- This script sets up row-level security for the logistics analytics platform
 
 -- Enable RLS on fact tables
-ALTER TABLE LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS ENABLE ROW ACCESS POLICY;
+ALTER TABLE LOGISTICS_DW_PROD.MARTS.TBL_FACT_SHIPMENTS ENABLE ROW ACCESS POLICY;
 
 -- Create RLS policy for shipments based on customer access
 CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.SHIPMENTS_CUSTOMER_ACCESS
 AS (customer_id IN (
     SELECT customer_id 
-    FROM LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER 
+    FROM LOGISTICS_DW_PROD.MARTS.TBL_DIM_CUSTOMER 
     WHERE account_manager = CURRENT_USER()
     OR customer_tier = 'PUBLIC'
 ));
 
 -- Apply the policy to shipments table
-ALTER TABLE LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS 
+ALTER TABLE LOGISTICS_DW_PROD.MARTS.TBL_FACT_SHIPMENTS 
 ADD ROW ACCESS POLICY SHIPMENTS_CUSTOMER_ACCESS ON (customer_id);
 
 -- Create RLS policy for vehicle data based on fleet access
 CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.VEHICLE_FLEET_ACCESS
 AS (vehicle_id IN (
     SELECT vehicle_id 
-    FROM LOGISTICS_DW_PROD.MARTS.DIM_VEHICLE 
+    FROM LOGISTICS_DW_PROD.MARTS.TBL_DIM_VEHICLE 
     WHERE assigned_driver_id = CURRENT_USER()
     OR vehicle_status = 'PUBLIC'
 ));
 
 -- Apply the policy to vehicle telemetry table
-ALTER TABLE LOGISTICS_DW_PROD.MARTS.FACT_VEHICLE_TELEMETRY 
+ALTER TABLE LOGISTICS_DW_PROD.MARTS.TBL_FACT_VEHICLE_TELEMETRY 
 ADD ROW ACCESS POLICY VEHICLE_FLEET_ACCESS ON (vehicle_id);
 
 -- Create RLS policy for location data based on service area
@@ -35,8 +35,8 @@ CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.LOCATION_SERVICE_ARE
 AS (location_id IN (
     SELECT DISTINCT l.location_id 
     FROM LOGISTICS_DW_PROD.MARTS.DIM_LOCATION l
-    INNER JOIN LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS s ON l.location_id = s.origin_location_id
-    INNER JOIN LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER c ON s.customer_id = c.customer_id
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.TBL_FACT_SHIPMENTS s ON l.location_id = s.origin_location_id
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.TBL_DIM_CUSTOMER c ON s.customer_id = c.customer_id
     WHERE c.account_manager = CURRENT_USER()
     OR CURRENT_ROLE() IN ('FLEET_MANAGER', 'OPERATIONS_MANAGER')
 ));
@@ -50,7 +50,7 @@ CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.FINANCIAL_DATA_ACCES
 AS (CURRENT_ROLE() IN ('DATA_ENGINEER', 'DATA_ANALYST', 'FINANCE_TEAM', 'EXECUTIVE'));
 
 -- Apply the policy to financial columns
-ALTER TABLE LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS 
+ALTER TABLE LOGISTICS_DW_PROD.MARTS.TBL_FACT_SHIPMENTS 
 ADD ROW ACCESS POLICY FINANCIAL_DATA_ACCESS ON (revenue_usd, total_cost_usd, profit_margin_pct);
 
 -- Create RLS policy for sensitive customer data
@@ -58,14 +58,14 @@ CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.CUSTOMER_PII_ACCESS
 AS (CURRENT_ROLE() IN ('DATA_ENGINEER', 'DATA_STEWARD', 'CUSTOMER_SERVICE'));
 
 -- Apply the policy to PII columns
-ALTER TABLE LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER 
+ALTER TABLE LOGISTICS_DW_PROD.MARTS.TBL_DIM_CUSTOMER 
 ADD ROW ACCESS POLICY CUSTOMER_PII_ACCESS ON (contact_email, contact_phone, billing_address);
 
 -- Create RLS policy for maintenance data based on vehicle ownership
 CREATE OR REPLACE ROW ACCESS POLICY LOGISTICS_DW_PROD.MARTS.MAINTENANCE_VEHICLE_ACCESS
 AS (vehicle_id IN (
     SELECT vehicle_id 
-    FROM LOGISTICS_DW_PROD.MARTS.DIM_VEHICLE 
+    FROM LOGISTICS_DW_PROD.MARTS.TBL_DIM_VEHICLE 
     WHERE assigned_driver_id = CURRENT_USER()
     OR CURRENT_ROLE() IN ('MAINTENANCE_TEAM', 'FLEET_MANAGER')
 ));
@@ -80,8 +80,8 @@ AS (route_id IN (
     SELECT DISTINCT r.route_id 
     FROM LOGISTICS_DW_PROD.MARTS.DIM_ROUTE r
     INNER JOIN LOGISTICS_DW_PROD.MARTS.DIM_LOCATION l ON r.origin_location_id = l.location_id
-    INNER JOIN LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS s ON r.route_id = s.route_id
-    INNER JOIN LOGISTICS_DW_PROD.MARTS.DIM_CUSTOMER c ON s.customer_id = c.customer_id
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.TBL_FACT_SHIPMENTS s ON r.route_id = s.route_id
+    INNER JOIN LOGISTICS_DW_PROD.MARTS.TBL_DIM_CUSTOMER c ON s.customer_id = c.customer_id
     WHERE c.account_manager = CURRENT_USER()
     OR CURRENT_ROLE() IN ('FLEET_MANAGER', 'OPERATIONS_MANAGER', 'ROUTE_PLANNER')
 ));
@@ -138,25 +138,25 @@ AS
 $$
     SELECT 
         'SHIPMENTS_CUSTOMER_ACCESS' as policy_name,
-        'FACT_SHIPMENTS' as table_name,
+        'TBL_FACT_SHIPMENTS' as table_name,
         CASE 
             WHEN COUNT(*) > 0 THEN 'PASS'
             ELSE 'FAIL'
         END as test_result,
         'RLS policy applied successfully' as test_message
-    FROM LOGISTICS_DW_PROD.MARTS.FACT_SHIPMENTS
+    FROM LOGISTICS_DW_PROD.MARTS.TBL_FACT_SHIPMENTS
     WHERE customer_id IS NOT NULL
     
     UNION ALL
     
     SELECT 
         'VEHICLE_FLEET_ACCESS' as policy_name,
-        'FACT_VEHICLE_TELEMETRY' as table_name,
+        'TBL_FACT_VEHICLE_TELEMETRY' as table_name,
         CASE 
             WHEN COUNT(*) > 0 THEN 'PASS'
             ELSE 'FAIL'
         END as test_result,
         'RLS policy applied successfully' as test_message
-    FROM LOGISTICS_DW_PROD.MARTS.FACT_VEHICLE_TELEMETRY
+    FROM LOGISTICS_DW_PROD.MARTS.TBL_FACT_VEHICLE_TELEMETRY
     WHERE vehicle_id IS NOT NULL
 $$;

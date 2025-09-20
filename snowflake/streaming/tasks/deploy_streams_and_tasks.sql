@@ -22,7 +22,7 @@ CREATE OR REPLACE STREAM stg_vehicle_telemetry_stream ON TABLE LOGISTICS_ANALYTI
 COMMENT = 'Stream for staging vehicle telemetry data changes';
 
 -- Step 2: Create real-time KPI table
-CREATE OR REPLACE TABLE real_time_kpis (
+CREATE OR REPLACE TABLE LOGISTICS_DW_PROD.MONITORING.REAL_TIME_KPIS (
     kpi_timestamp TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
     metric_name VARCHAR(100),
     metric_value FLOAT,
@@ -31,7 +31,7 @@ CREATE OR REPLACE TABLE real_time_kpis (
 ) COMMENT = 'Real-time KPI storage for streaming analytics';
 
 -- Step 3: Create vehicle alerts table
-CREATE OR REPLACE TABLE real_time_vehicle_alerts (
+CREATE OR REPLACE TABLE LOGISTICS_DW_PROD.MONITORING.REAL_TIME_VEHICLE_ALERTS (
     alert_id VARCHAR(50) DEFAULT UUID_STRING(),
     vehicle_id VARCHAR(20),
     alert_type VARCHAR(50),
@@ -49,7 +49,7 @@ WAREHOUSE = COMPUTE_WH_SMALL
 SCHEDULE = '1 MINUTE'
 COMMENT = 'Process real-time shipment updates'
 AS
-INSERT INTO real_time_kpis (metric_name, metric_value, dimensions)
+INSERT INTO LOGISTICS_DW_PROD.MONITORING.REAL_TIME_KPIS (metric_name, metric_value, dimensions)
 WITH shipment_updates AS (
     SELECT 
         shipment_id,
@@ -97,7 +97,7 @@ WAREHOUSE = COMPUTE_WH_XS
 SCHEDULE = '30 SECONDS'
 COMMENT = 'Monitor vehicle telemetry for real-time alerts'
 AS
-INSERT INTO real_time_vehicle_alerts (vehicle_id, alert_type, severity, message)
+INSERT INTO LOGISTICS_DW_PROD.MONITORING.REAL_TIME_VEHICLE_ALERTS (vehicle_id, alert_type, severity, message)
 WITH telemetry_updates AS (
     SELECT 
         vehicle_id,
@@ -150,7 +150,7 @@ WAREHOUSE = COMPUTE_WH_XS
 SCHEDULE = '5 MINUTES'
 COMMENT = 'Monitor task health and send alerts for failures'
 AS
-INSERT INTO real_time_vehicle_alerts (vehicle_id, alert_type, severity, message)
+INSERT INTO LOGISTICS_DW_PROD.MONITORING.REAL_TIME_VEHICLE_ALERTS (vehicle_id, alert_type, severity, message)
 SELECT 
     'SYSTEM' as vehicle_id,
     'TASK_FAILURE' as alert_type,
@@ -193,8 +193,8 @@ QUALIFY ROW_NUMBER() OVER (PARTITION BY task_name ORDER BY scheduled_time DESC) 
 GRANT USAGE ON WAREHOUSE COMPUTE_WH_SMALL TO ROLE ANALYST_ROLE;
 GRANT USAGE ON WAREHOUSE COMPUTE_WH_XS TO ROLE ANALYST_ROLE;
 GRANT SELECT ON VIEW task_execution_monitor TO ROLE ANALYST_ROLE;
-GRANT SELECT ON TABLE real_time_kpis TO ROLE ANALYST_ROLE;
-GRANT SELECT ON TABLE real_time_vehicle_alerts TO ROLE ANALYST_ROLE;
+GRANT SELECT ON TABLE LOGISTICS_DW_PROD.MONITORING.REAL_TIME_KPIS TO ROLE ANALYST_ROLE;
+GRANT SELECT ON TABLE LOGISTICS_DW_PROD.MONITORING.REAL_TIME_VEHICLE_ALERTS TO ROLE ANALYST_ROLE;
 
 -- Step 8: Create cleanup procedure
 CREATE OR REPLACE PROCEDURE cleanup_old_stream_data()
@@ -204,11 +204,11 @@ AS
 $$
 BEGIN
     -- Clean up old KPI data (keep last 7 days)
-    DELETE FROM real_time_kpis 
+    DELETE FROM LOGISTICS_DW_PROD.MONITORING.REAL_TIME_KPIS 
     WHERE created_at < DATEADD('day', -7, CURRENT_TIMESTAMP());
     
     -- Clean up resolved alerts (keep last 30 days)
-    DELETE FROM real_time_vehicle_alerts 
+    DELETE FROM LOGISTICS_DW_PROD.MONITORING.REAL_TIME_VEHICLE_ALERTS 
     WHERE resolved_at IS NOT NULL 
       AND resolved_at < DATEADD('day', -30, CURRENT_TIMESTAMP());
     

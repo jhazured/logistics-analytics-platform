@@ -1,5 +1,5 @@
 -- Vehicle Maintenance Dimension
-CREATE OR REPLACE TABLE dim_vehicle_maintenance (
+CREATE OR REPLACE TABLE TBL_DIM_VEHICLE_MAINTENANCE (
     maintenance_id NUMBER AUTOINCREMENT PRIMARY KEY,
     vehicle_id VARCHAR(20) NOT NULL,
     maintenance_type VARCHAR(50) NOT NULL,

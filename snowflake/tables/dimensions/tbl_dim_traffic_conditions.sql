@@ -1,5 +1,5 @@
 -- Traffic Conditions Dimension
-CREATE OR REPLACE TABLE dim_traffic_conditions (
+CREATE OR REPLACE TABLE TBL_DIM_TRAFFIC_CONDITIONS (
     traffic_id NUMBER AUTOINCREMENT PRIMARY KEY,
     date DATE NOT NULL,
     hour NUMBER(2) NOT NULL,
