@@ -1,40 +1,30 @@
 {{ config(
-    materialized='incremental',
-    unique_key='shipment_id',
-    on_schema_change='sync_all_columns',
+    materialized='table',
     tags=['marts', 'facts', 'shipments', 'load_second']
 ) }}
 
 with s as (
-  select * from {{ ref('tbl_raw_azure_shipments') }}
-  {% if is_incremental() %}
-    where shipment_date > (select coalesce(max(shipment_date), '1900-01-01') from {{ this }})
-  {% endif %}
+  select * from {{ ref('tbl_stg_shipments') }}
 ),
 
 -- Join with dimensions for calculated fields
 shipments_with_dims as (
   select 
     s.*,
-    ol.latitude as origin_lat,
-    ol.longitude as origin_lon,
-    dl.latitude as dest_lat,
-    dl.longitude as dest_lon,
     dv.vehicle_type,
     dv.fuel_efficiency_mpg,
-    dc.customer_tier
+    dv.make,
+    dv.model,
+    dv.vehicle_status
   from s
-  left join {{ ref('tbl_dim_location') }} ol on s.origin_location_id = ol.location_id
-  left join {{ ref('tbl_dim_location') }} dl on s.destination_location_id = dl.location_id
   left join {{ ref('tbl_dim_vehicle') }} dv on s.vehicle_id = dv.vehicle_id
-  left join {{ ref('tbl_dim_customer') }} dc on s.customer_id = dc.customer_id
 )
 
 select
   shipment_id,
-  {{ dbt_utils.generate_surrogate_key(['shipment_id']) }} as shipment_sk,
+  shipment_id as shipment_sk,
   date_trunc('day', shipment_date) as shipment_date,
-  to_number(to_char(shipment_date, 'YYYYMMDD')) as date_key,
+  null as date_key,
   customer_id,
   origin_location_id,
   destination_location_id,
@@ -109,5 +99,12 @@ select
   -- Status fields
   delivery_status,
   priority_level,
-  service_type
+  service_type,
+  
+  -- Dimension context fields
+  vehicle_type,
+  fuel_efficiency_mpg,
+  make,
+  model,
+  vehicle_status
 from shipments_with_dims

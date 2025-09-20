@@ -13,7 +13,7 @@ locations as (
 
 weather_enhanced as (
     select
-        {{ dbt_utils.generate_surrogate_key(['weather_id']) }} as weather_id,
+        weather_id,
         w.location_id,
         w.date as weather_date,
         w.temperature_c,

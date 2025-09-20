@@ -13,7 +13,7 @@ vehicles as (
 
 maintenance_enhanced as (
     select
-        {{ dbt_utils.generate_surrogate_key(['maintenance_id']) }} as maintenance_id,
+        maintenance_id,
         m.vehicle_id,
         m.maintenance_type,
         m.maintenance_date,

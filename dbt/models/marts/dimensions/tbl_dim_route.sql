@@ -4,12 +4,12 @@
 ) }}
 
 with r as (
-  select * from {{ ref('tbl_raw_azure_shipments') }}
+  select * from {{ ref('tbl_stg_shipments') }}
 )
 select
-  {{ dbt_utils.generate_surrogate_key(['"origin_location_id"', '"destination_location_id"']) }} as route_id,
-  {{ dbt_utils.generate_surrogate_key(['"origin_location_id"', '"destination_location_id"']) }} as route_sk,
-  "origin_location_id",
-  "destination_location_id",
-  "distance_miles" * 1.60934 as distance_km  -- Convert miles to km
+  concat(origin_location_id, '_', destination_location_id) as route_id,
+  concat(origin_location_id, '_', destination_location_id) as route_sk,
+  origin_location_id,
+  destination_location_id,
+  distance_km
 from r

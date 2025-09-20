@@ -7,14 +7,14 @@ with src as (
   select * from {{ source('raw_logistics', 'SHIPMENTS') }}
 )
 select
-  cast("shipment_id" as number) as shipment_id,
+  trim("shipment_id") as shipment_id,
   to_date(to_timestamp_ntz("pickup_date", 9)) as shipment_date,  -- Convert nanoseconds to date
-  cast("customer_id" as number) as customer_id,
-  cast("origin_location_id" as number) as origin_location_id,
-  cast("destination_location_id" as number) as destination_location_id,
+  trim("customer_id") as customer_id,
+  trim("origin_location_id") as origin_location_id,
+  trim("destination_location_id") as destination_location_id,
   cast("vehicle_id" as varchar) as vehicle_id,
   -- Generate route_id based on origin/destination (since raw doesn't have it)
-  cast(concat("origin_location_id", "destination_location_id") as number) as route_id,
+  concat("origin_location_id", '_', "destination_location_id") as route_id,
   "weight_lbs" / 2.20462 as weight_kg,  -- Convert lbs to kg
   "volume_cubic_feet" / 35.3147 as volume_m3,  -- Convert cubic feet to m3
   "distance_miles" * 1.60934 as distance_km,  -- Convert miles to km

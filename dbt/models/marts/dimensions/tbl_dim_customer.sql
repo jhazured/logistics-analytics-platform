@@ -8,7 +8,7 @@ with c as (
 )
 select
   customer_id,
-  {{ dbt_utils.generate_surrogate_key(['customer_id']) }} as customer_sk,
+  customer_id as customer_sk,
   customer_name,
   segment as customer_type,  -- Map segment to customer_type
   country,

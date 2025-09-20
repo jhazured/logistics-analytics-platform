@@ -5,10 +5,23 @@
 ) }}
 
 with s as (
-  select * from {{ ref('tbl_raw_telematics_data') }}
+  select * from {{ ref('tbl_stg_vehicle_telemetry') }}
   {% if is_incremental() %}
     where timestamp > (select coalesce(max(timestamp), '1900-01-01') from {{ this }})
   {% endif %}
+),
+
+-- Join with vehicle dimension for additional context
+telemetry_with_dims as (
+  select 
+    s.*,
+    dv.vehicle_type,
+    dv.fuel_efficiency_mpg,
+    dv.make,
+    dv.model,
+    dv.vehicle_status
+  from s
+  left join {{ ref('tbl_dim_vehicle') }} dv on s.vehicle_id = dv.vehicle_id
 )
 select
   telemetry_id,
@@ -28,6 +41,12 @@ select
   idle_time_minutes,
   diagnostic_codes,
   engine_health_score,
-  maintenance_alert
-from s
+  maintenance_alert,
+  -- Dimension context
+  vehicle_type,
+  fuel_efficiency_mpg,
+  make,
+  model,
+  vehicle_status
+from telemetry_with_dims
 

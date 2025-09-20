@@ -13,7 +13,7 @@ routes as (
 
 traffic_enhanced as (
     select
-        {{ dbt_utils.generate_surrogate_key(['traffic_id']) }} as traffic_id,
+        traffic_id,
         t.location_id as route_id,  -- Map location_id to route_id for consistency
         t.date as traffic_date,
         t.hour as time_of_day,
