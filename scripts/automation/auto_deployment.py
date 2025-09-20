@@ -145,15 +145,15 @@ class AutoDeployment:
         try:
             # Deploy Snowflake objects in order
             snowflake_scripts = [
-                "snowflake/setup/01_database_setup.sql",
-                "snowflake/setup/02_schema_creation.sql",
-                "snowflake/setup/03_warehouse_configuration.sql",
-                "snowflake/setup/04_user_roles_permissions.sql",
-                "snowflake/setup/05_resource_monitors.sql",
-                "snowflake/security/audit_logging.sql",
-                "snowflake/security/data_classification.sql",
-                "snowflake/security/row_level_security.sql",
-                "snowflake/governance/advanced_data_lineage.sql"
+                "scripts/setup/01_database_setup.sql",
+                "scripts/setup/02_schema_creation.sql",
+                "scripts/setup/03_warehouse_configuration.sql",
+                "scripts/setup/04_user_roles_permissions.sql",
+                "scripts/setup/05_resource_monitors.sql",
+                "scripts/security/audit_logging.sql",
+                "scripts/security/data_classification.sql",
+                "scripts/security/row_level_security.sql",
+                "scripts/governance/advanced_data_lineage.sql"
             ]
             
             for script in snowflake_scripts:

@@ -113,10 +113,17 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 
 ## Scripts
 ### Setup Scripts
+- [01_setup_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/01_setup_environment.sh)
+- [02_setup_snowflake.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/02_setup_snowflake.sh)
 - [configure_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/configure_environment.sh)
 
 ### Deployment Scripts
-- [deploy_dbt_models.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/deploy_dbt_models.sh)
+- [03_generate_data.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/03_generate_data.sh)
+- [04_load_raw_data.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/04_load_raw_data.sh)
+- [05_build_dbt_models.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/05_build_dbt_models.sh)
+- [06_deploy_snowflake_objects.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/06_deploy_snowflake_objects.sh)
+- [07_run_final_tests.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/07_run_final_tests.sh)
+- [deploy_all.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/deploy_all.sh)
 
 ### Monitoring Scripts
 - [generate_quality_report.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/monitoring/generate_quality_report.py)
@@ -147,6 +154,7 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [11_OPERATIONAL_RUNBOOKS.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/11_OPERATIONAL_RUNBOOKS.md)
 - [12_TROUBLESHOOTING_GUIDES.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/12_TROUBLESHOOTING_GUIDES.md)
 - [13_SCHEMA_MAPPING.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/13_SCHEMA_MAPPING.md)
+- [DEPLOYMENT_GUIDE.md](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/docs/DEPLOYMENT_GUIDE.md)
 
 ## dbt Business Rules Tests
 - [test_analytics_view_consistency.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_analytics_view_consistency.sql)
@@ -182,60 +190,58 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [data_quality_alerts.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/fivetran/monitoring/data_quality_alerts.sql)
 - [sync_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/fivetran/monitoring/sync_monitoring.sql)
 
-## Scripts
-- [deploy_dbt_models.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/deploy_dbt_models.sh)
-- [configure_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/configure_environment.sh)
 
 ## Snowflake Performance Optimization
 ### Cost Optimization
-- [cost_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/performance/cost_optimization/cost_monitoring.sql)
-- [predictive_cost_optimization.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/performance/cost_optimization/predictive_cost_optimization.sql)
+- [cost_monitoring.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/performance/cost_optimization/cost_monitoring.sql)
+- [predictive_cost_optimization.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/performance/cost_optimization/predictive_cost_optimization.sql)
 
 ### Query Optimization
-- [automated_query_optimization.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/performance/query_optimization/automated_query_optimization.sql)
-- [performance_tuning.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/performance/query_optimization/performance_tuning.sql)
+- [automated_query_optimization.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/performance/query_optimization/automated_query_optimization.sql)
+- [performance_tuning.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/performance/query_optimization/performance_tuning.sql)
 
 ### Table Optimization
-- [automated_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/performance/table_optimization/automated_tasks.sql)
-- [clustering_keys.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/performance/table_optimization/clustering_keys.sql)
+- [automated_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/performance/table_optimization/automated_tasks.sql)
+- [clustering_keys.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/performance/table_optimization/clustering_keys.sql)
 
 ## Snowflake Governance
-- [advanced_data_lineage.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/governance/advanced_data_lineage.sql)
+- [advanced_data_lineage.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/governance/advanced_data_lineage.sql)
 
 ## Snowflake Monitoring
 ### Alerting
-- [alert_system.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/monitoring/alerting/alert_system.sql)
-- [email_alerting_system.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/monitoring/alerting/email_alerting_system.sql)
+- [alert_system.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/monitoring/alerting/alert_system.sql)
+- [email_alerting_system.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/monitoring/alerting/email_alerting_system.sql)
 
 ### Emergency
-- [emergency_procedures.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/monitoring/emergency/emergency_procedures.sql)
+- [emergency_procedures.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/monitoring/emergency/emergency_procedures.sql)
 
 ### Real-time
-- [real_time_kpis.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/monitoring/real_time/real_time_kpis.sql)
+- [real_time_kpis.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/monitoring/real_time/real_time_kpis.sql)
 
 ## Snowflake Security
-- [audit_logging.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/security/audit_logging.sql)
-- [data_classification.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/security/data_classification.sql)
-- [data_masking_policies.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/security/data_masking_policies.sql)
-- [row_level_security.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/security/row_level_security.sql)
+- [audit_logging.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/security/audit_logging.sql)
+- [data_classification.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/security/data_classification.sql)
+- [data_masking_policies.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/security/data_masking_policies.sql)
+- [row_level_security.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/security/row_level_security.sql)
 
-## Snowflake Setup
-- [00_complete_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/00_complete_setup.sql)
-- [01_database_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/01_database_setup.sql)
-- [02_schema_creation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/02_schema_creation.sql)
-- [03_warehouse_configuration.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/03_warehouse_configuration.sql)
-- [04_user_roles_permissions.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/04_user_roles_permissions.sql)
-- [05_resource_monitors.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/05_resource_monitors.sql)
-- [99_verify_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/setup/99_verify_setup.sql)
+## Snowflake Setup SQL Scripts
+- [00_build_and_run_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/00_build_and_run_setup.sql)
+- [00_complete_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/00_complete_setup.sql)
+- [01_database_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/01_database_setup.sql)
+- [02_schema_creation.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/02_schema_creation.sql)
+- [03_warehouse_configuration.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/03_warehouse_configuration.sql)
+- [04_user_roles_permissions.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/04_user_roles_permissions.sql)
+- [05_resource_monitors.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/05_resource_monitors.sql)
+- [99_verify_setup.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/99_verify_setup.sql)
 
 ## Snowflake Streaming
 ### Streams
-- [create_streams.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/streaming/streams/create_streams.sql)
+- [create_streams.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/streaming/streams/create_streams.sql)
 
 ### Tasks
-- [create_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/streaming/tasks/create_tasks.sql)
-- [deploy_streams_and_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/streaming/tasks/deploy_streams_and_tasks.sql)
-- [task_management.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/streaming/tasks/task_management.sql)
+- [create_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/streaming/tasks/create_tasks.sql)
+- [deploy_streams_and_tasks.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/streaming/tasks/deploy_streams_and_tasks.sql)
+- [task_management.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/streaming/tasks/task_management.sql)
 
 ## Snowflake Tables - Dimensions
 - [tbl_dim_customer.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/snowflake/tables/dimensions/tbl_dim_customer.sql)

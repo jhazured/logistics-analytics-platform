@@ -10,23 +10,36 @@ This repository contains a **production-ready ML data product** for logistics an
 
 ## 🚀 Quick Start
 
-1. **Clone Repository**
-   ```bash
-   git clone https://github.com/jhazured/logistics-analytics-platform.git
-   cd logistics-analytics-platform
-   ```
+### **Option 1: Complete Automated Deployment**
+```bash
+# Clone repository
+git clone https://github.com/jhazured/logistics-analytics-platform.git
+cd logistics-analytics-platform
 
-2. **Initial Setup (Full Refresh)**
-   ```bash
-   dbt run --full-refresh --select tag:raw
-   ```
+# Create .env file with your Snowflake credentials (see .env.example)
+cp .env.example .env
+# Edit .env with your Snowflake credentials
 
-3. **Incremental Updates (Cost-Optimized)**
-   ```bash
-   dbt run --select tag:incremental
-   ```
+# Run complete deployment
+./deploy.sh
+```
+
+### **Option 2: Manual dbt Deployment**
+```bash
+# Clone repository
+git clone https://github.com/jhazured/logistics-analytics-platform.git
+cd logistics-analytics-platform
+
+# Initial Setup (Full Refresh)
+dbt run --full-refresh --select tag:raw
+
+# Incremental Updates (Cost-Optimized)
+dbt run --select tag:incremental
+```
 
 > **💡 Cost Optimization**: This project uses incremental loading to minimize Fivetran costs by 70-90%. See [docs/07_INCREMENTAL_LOADING_STRATEGY.md](docs/07_INCREMENTAL_LOADING_STRATEGY.md) for details.
+> 
+> **🚀 New Deployment System**: Use `./deploy.sh` for complete automated deployment with 7-phase orchestration. See [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) for details.
 
 ## 📚 Documentation
 
@@ -39,6 +52,7 @@ This repository contains a **production-ready ML data product** for logistics an
 - **[Business Impact & ROI](docs/06_BUSINESS_IMPACT.md)** - Business value and return on investment
 - **[Incremental Loading Strategy](docs/07_INCREMENTAL_LOADING_STRATEGY.md)** - Cost optimization guide
 - **[File Index](docs/08_INDEX.md)** - Raw GitHub URLs for all project files
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Complete deployment orchestration guide
 - **[Data Dictionary](docs/09_DATA_DICTIONARY.md)** - Business definitions and technical specifications
 - **[Business Processes](docs/10_BUSINESS_PROCESSES.md)** - Core business processes and procedures
 - **[Operational Runbooks](docs/11_OPERATIONAL_RUNBOOKS.md)** - Step-by-step operational procedures
@@ -115,31 +129,55 @@ logistics-analytics-platform/
 │   ├── macros/                                  # Reusable macros (8 files)
 │   ├── tests/                                   # Data quality tests (16+ tests)
 │   └── snapshots/                               # Change data capture (4 models)
-├── 📁 snowflake/                                # Snowflake-specific objects
-│   ├── governance/                              # Advanced data governance (1 file)
-│   ├── monitoring/                              # Monitoring & alerting (5 files)
-│   ├── performance/                             # Performance optimization (6 files)
-│   ├── security/                                # Security and governance (4 files)
-│   ├── setup/                                   # Environment setup (7 files)
-│   │   ├── 00_complete_setup.sql                # Complete setup script
+├── 📁 snowflake/                                # Snowflake object definitions
+│   ├── tables/                                  # ML-optimized table definitions
+│   │   ├── dimensions/                          # Dimension table definitions
+│   │   └── facts/                               # Fact table definitions
+│   ├── views/                                   # Business intelligence views
+│   │   ├── cost_optimization/                   # Cost optimization views
+│   │   └── monitoring/                          # Monitoring views
+│   └── ml_objects/                              # ML-specific infrastructure
+│       ├── model_registry/                      # Model registry definitions
+│       ├── monitoring/                          # ML monitoring views
+│       └── serving_views/                       # ML serving view definitions
+├── 📁 data/                                     # Sample data generation
+│   └── generate_sample_data.py                  # Python script for test data
+├── 📁 fivetran/                                 # Fivetran monitoring and management
+│   └── monitoring/                              # Fivetran connector monitoring (3 files)
+├── 📁 scripts/                                  # Operational scripts
+│   ├── setup/                                   # Environment setup scripts
+│   │   ├── 01_setup_environment.sh              # Environment setup
+│   │   ├── 02_setup_snowflake.sh                # Snowflake setup
+│   │   ├── configure_environment.sh             # Environment configuration
+│   │   ├── 00_build_and_run_setup.sql           # Complete build-and-run setup
+│   │   ├── 00_complete_setup.sql                # Complete setup orchestration
 │   │   ├── 01_database_setup.sql                # Database creation
 │   │   ├── 02_schema_creation.sql               # Schema creation
 │   │   ├── 03_warehouse_configuration.sql       # Warehouse configuration
 │   │   ├── 04_user_roles_permissions.sql        # Roles and permissions
 │   │   ├── 05_resource_monitors.sql             # Resource monitors
 │   │   └── 99_verify_setup.sql                  # Setup verification
-│   ├── streaming/                               # Stream processing (4 files)
-│   ├── tables/                                  # ML-optimized table definitions
-│   ├── views/                                   # Business intelligence views
-│   └── ml_objects/                              # ML-specific infrastructure
-├── 📁 data/                                     # Sample data generation
-│   └── generate_sample_data.py                  # Python script for test data
-├── 📁 fivetran/                                 # Fivetran monitoring and management
-│   └── monitoring/                              # Fivetran connector monitoring (3 files)
-├── 📁 scripts/                                  # Utility scripts
-│   ├── setup/                                   # Environment setup scripts
-│   ├── deployment/                              # Deployment scripts
+│   ├── deployment/                              # Deployment orchestration
+│   │   ├── 03_generate_data.sh                  # Sample data generation
+│   │   ├── 04_load_raw_data.sh                  # Load raw data to Snowflake
+│   │   ├── 05_build_dbt_models.sh               # Build dbt models
+│   │   ├── 06_deploy_snowflake_objects.sh       # Deploy Snowflake objects
+│   │   ├── 07_run_final_tests.sh                # Run tests and reports
+│   │   └── deploy_all.sh                        # Master orchestration script
 │   ├── monitoring/                              # Monitoring and quality scripts
+│   │   ├── generate_quality_report.py           # Quality report generation
+│   │   ├── alerting/                            # Alerting scripts
+│   │   ├── emergency/                           # Emergency procedures
+│   │   └── real_time/                           # Real-time monitoring
+│   ├── performance/                             # Performance optimization scripts
+│   │   ├── cost_optimization/                   # Cost optimization
+│   │   ├── query_optimization/                  # Query optimization
+│   │   └── table_optimization/                  # Table optimization
+│   ├── security/                                # Security and governance scripts
+│   ├── governance/                              # Advanced data governance scripts
+│   ├── streaming/                               # Stream processing scripts
+│   │   ├── streams/                             # Stream creation
+│   │   └── tasks/                               # Task management
 │   └── automation/                              # Automation framework (6 files)
 │       ├── auto_deployment.py                   # Automated deployment pipeline
 │       ├── data_quality_monitor.py              # Data quality monitoring

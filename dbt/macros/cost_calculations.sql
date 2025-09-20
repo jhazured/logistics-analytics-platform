@@ -55,38 +55,11 @@
   END
 {% endmacro %}
 
--- Macro for calculating trend indicators
-{% macro calculate_trend(current_value, previous_value) %}
-  CASE 
-    WHEN {{ previous_value }} IS NULL OR {{ previous_value }} = 0 THEN NULL
-    WHEN {{ current_value }} > {{ previous_value }} * 1.05 THEN 'improving'
-    WHEN {{ current_value }} < {{ previous_value }} * 0.95 THEN 'declining'
-    ELSE 'stable'
-  END
-{% endmacro %}
+-- Note: calculate_trend macro is defined in aggregations.sql
 
--- Macro for calculating volatility
-{% macro calculate_volatility(column_name, partition_by, order_by, window=30) %}
-  STDDEV({{ column_name }}) OVER (
-    PARTITION BY {{ partition_by }}
-    ORDER BY {{ order_by }}
-    ROWS BETWEEN {{ window - 1 }} PRECEDING AND CURRENT ROW
-  ) / NULLIF(AVG({{ column_name }}) OVER (
-    PARTITION BY {{ partition_by }}
-    ORDER BY {{ order_by }}
-    ROWS BETWEEN {{ window - 1 }} PRECEDING AND CURRENT ROW
-  ), 0)
-{% endmacro %}
+-- Note: calculate_volatility macro is defined in aggregations.sql
 
--- Macro for calculating percentiles
-{% macro calculate_percentiles(column_name, partition_by, percentiles=[25, 50, 75, 90]) %}
-  {% for percentile in percentiles %}
-    PERCENTILE_CONT({{ percentile / 100 }}) WITHIN GROUP (ORDER BY {{ column_name }}) OVER (
-      PARTITION BY {{ partition_by }}
-    ) AS {{ column_name }}_p{{ percentile }}
-    {%- if not loop.last -%},{%- endif %}
-  {% endfor %}
-{% endmacro %}
+-- Note: calculate_percentiles macro is defined in aggregations.sql
 
 
 

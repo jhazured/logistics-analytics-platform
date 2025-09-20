@@ -1,0 +1,51 @@
+alert_id,vehicle_id,alert_type,severity,message,timestamp,resolved,resolved_timestamp
+1,VH0155,MAINTENANCE_DUE,WARNING,Animi dicta cupiditate esse vel repellat occaecati ipsam.,2025-09-20 18:02:32.486067,False,
+2,VH0057,MAINTENANCE_DUE,CRITICAL,Molestiae aliquid amet quasi laborum.,2025-09-20 18:09:38.839655,True,
+3,VH0097,ENGINE_OVERHEATING,WARNING,Ab temporibus culpa quasi inventore unde tempore.,2025-09-20 18:08:08.254043,False,2025-09-20 18:17:51.042700
+4,VH0177,SPEEDING,CRITICAL,Animi reiciendis magni recusandae iste.,2025-09-20 18:31:24.133439,True,2025-09-20 18:43:05.052625
+5,VH0052,ENGINE_OVERHEATING,CRITICAL,Fuga nostrum laboriosam ad repudiandae velit maiores.,2025-09-20 18:03:57.282544,True,
+6,VH0069,HARSH_BRAKING,WARNING,Eveniet vero fugiat qui.,2025-09-20 18:25:34.757478,False,2025-09-20 18:13:50.905952
+7,VH0005,SPEEDING,CRITICAL,Cupiditate adipisci beatae a illo accusantium.,2025-09-20 17:54:06.525630,False,
+8,VH0158,ENGINE_OVERHEATING,INFO,Unde enim laudantium perspiciatis.,2025-09-20 18:10:01.154047,False,2025-09-20 18:13:56.850032
+9,VH0020,LOW_FUEL,WARNING,Possimus animi voluptates libero.,2025-09-20 18:28:37.213693,True,2025-09-20 18:23:27.657537
+10,VH0015,SPEEDING,WARNING,Quidem nam reprehenderit nesciunt magni.,2025-09-20 18:15:19.810261,True,2025-09-20 18:26:21.850669
+11,VH0048,LOW_FUEL,INFO,Iste harum similique dolorem natus iusto consequatur eum.,2025-09-20 18:45:24.026664,False,
+12,VH0108,GPS_SIGNAL_LOST,INFO,Enim hic modi inventore accusamus hic.,2025-09-20 18:25:39.967887,False,2025-09-20 18:12:51.831002
+13,VH0109,LOW_FUEL,INFO,Eveniet beatae excepturi voluptate expedita nesciunt.,2025-09-20 18:37:32.502649,False,2025-09-20 17:59:06.026725
+14,VH0143,SPEEDING,CRITICAL,Voluptatibus ab dolore ea adipisci libero quibusdam animi.,2025-09-20 18:41:54.171222,True,
+15,VH0068,SPEEDING,WARNING,Ad enim maiores nesciunt neque architecto aliquam vel.,2025-09-20 18:10:26.439950,True,2025-09-20 18:45:22.453236
+16,VH0028,HARSH_BRAKING,WARNING,Officiis magni molestiae sit.,2025-09-20 18:27:40.327379,True,
+17,VH0069,MAINTENANCE_DUE,CRITICAL,Error maxime tenetur consectetur velit aliquid facilis.,2025-09-20 18:32:01.735083,False,
+18,VH0043,LOW_FUEL,CRITICAL,Facilis maiores blanditiis sit facere totam ex.,2025-09-20 18:27:24.010932,True,
+19,VH0146,SPEEDING,INFO,Quos nihil aliquam quaerat illo.,2025-09-20 18:33:01.614083,False,
+20,VH0022,HARSH_BRAKING,WARNING,Esse vitae illum maxime in praesentium.,2025-09-20 18:41:21.980398,True,
+21,VH0058,MAINTENANCE_DUE,WARNING,Ratione ab minima eligendi quibusdam.,2025-09-20 18:05:52.671414,False,2025-09-20 18:09:01.813941
+22,VH0200,LOW_FUEL,WARNING,Quia eos fugiat iste.,2025-09-20 18:22:01.096982,True,2025-09-20 18:08:20.070499
+23,VH0182,LOW_FUEL,WARNING,Sed deserunt ducimus.,2025-09-20 18:07:54.815003,False,
+24,VH0053,LOW_FUEL,CRITICAL,Laboriosam deserunt ea iste fugit magni.,2025-09-20 17:53:41.096450,False,
+25,VH0041,HARSH_BRAKING,WARNING,Et quaerat maiores occaecati ipsum aut.,2025-09-20 17:55:43.068740,False,
+26,VH0049,LOW_FUEL,WARNING,Veniam consequatur ducimus earum similique.,2025-09-20 18:38:50.019083,True,
+27,VH0055,SPEEDING,INFO,Fugit incidunt quidem fuga illum.,2025-09-20 17:58:36.586155,False,2025-09-20 17:56:14.234779
+28,VH0143,MAINTENANCE_DUE,INFO,Iusto numquam minus consequuntur ipsa exercitationem.,2025-09-20 18:20:09.992343,True,
+29,VH0097,LOW_FUEL,WARNING,Ipsum sapiente excepturi ex perferendis saepe.,2025-09-20 18:08:07.280994,True,
+30,VH0128,HARSH_BRAKING,WARNING,Delectus illo mollitia possimus aliquid libero minima dolore.,2025-09-20 18:21:03.505832,False,
+31,VH0034,LOW_FUEL,CRITICAL,Temporibus qui inventore sed quasi.,2025-09-20 18:12:18.804610,False,2025-09-20 18:24:52.730939
+32,VH0169,LOW_FUEL,INFO,Facere soluta non occaecati.,2025-09-20 18:14:26.345706,False,2025-09-20 18:34:08.527020
+33,VH0091,GPS_SIGNAL_LOST,CRITICAL,Quaerat exercitationem enim consectetur totam ipsum.,2025-09-20 18:46:07.760954,False,2025-09-20 18:23:38.767821
+34,VH0044,GPS_SIGNAL_LOST,INFO,Veniam amet assumenda non.,2025-09-20 18:46:20.545878,False,2025-09-20 18:00:37.944137
+35,VH0005,LOW_FUEL,WARNING,Veniam quasi nemo doloremque magni cupiditate.,2025-09-20 18:27:03.263810,True,2025-09-20 18:11:58.688802
+36,VH0137,MAINTENANCE_DUE,INFO,Illo debitis asperiores.,2025-09-20 18:40:57.539348,False,
+37,VH0019,HARSH_BRAKING,WARNING,Sint rerum necessitatibus quas.,2025-09-20 18:09:46.854451,False,2025-09-20 18:27:28.458717
+38,VH0083,LOW_FUEL,CRITICAL,Repellendus fugit porro iure expedita eveniet.,2025-09-20 17:51:13.668335,False,2025-09-20 17:53:25.503251
+39,VH0143,SPEEDING,INFO,Ad doloremque dolor.,2025-09-20 18:25:13.222879,True,2025-09-20 18:16:25.387938
+40,VH0145,SPEEDING,WARNING,Perspiciatis fuga ut.,2025-09-20 18:23:49.758707,False,2025-09-20 18:34:00.900919
+41,VH0024,MAINTENANCE_DUE,INFO,Eius numquam numquam molestias sunt ipsa reprehenderit exercitationem.,2025-09-20 17:54:23.316702,True,
+42,VH0122,HARSH_BRAKING,CRITICAL,Voluptate reprehenderit velit et optio.,2025-09-20 17:52:26.968421,True,
+43,VH0184,HARSH_BRAKING,WARNING,Voluptatum nostrum reiciendis exercitationem natus quos fuga.,2025-09-20 18:08:50.371000,True,2025-09-20 18:36:01.259554
+44,VH0116,HARSH_BRAKING,INFO,Porro hic ducimus quia reprehenderit consectetur.,2025-09-20 18:26:39.222623,True,
+45,VH0183,GPS_SIGNAL_LOST,CRITICAL,Facilis dolorem in culpa autem quia tenetur.,2025-09-20 18:40:38.531526,True,
+46,VH0027,LOW_FUEL,WARNING,Voluptate illo voluptate facilis debitis.,2025-09-20 18:49:33.539192,False,2025-09-20 18:14:15.812333
+47,VH0096,LOW_FUEL,CRITICAL,Voluptatum id sapiente.,2025-09-20 18:25:38.568038,False,
+48,VH0070,LOW_FUEL,CRITICAL,Hic ratione ipsam excepturi nihil facere.,2025-09-20 18:45:12.935055,False,
+49,VH0167,ENGINE_OVERHEATING,INFO,Hic vero earum minus nemo.,2025-09-20 18:21:37.897753,True,
+50,VH0029,SPEEDING,INFO,Rem ut labore placeat dolorem possimus.,2025-09-20 17:55:16.038350,True,2025-09-20 18:10:55.534263

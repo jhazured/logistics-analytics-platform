@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-09-20T18:50:09.093232",
+  "status": "success",
+  "checks": {
+    "dbt_parse": "passed",
+    "dbt_test": "passed",
+    "sqlfluff": "passed",
+    "dependencies": "passed"
+  },
+  "summary": {
+    "total_checks": 4,
+    "passed": 4,
+    "failed": 0,
+    "warnings": 0
+  }
+}

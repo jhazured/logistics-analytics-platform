@@ -411,11 +411,11 @@ open http://localhost:5000
 1. **Deploy Snowflake Objects**
    ```bash
    # Run setup scripts
-   snowsql -f snowflake/setup/01_database_setup.sql
-   snowsql -f snowflake/setup/02_schema_creation.sql
-   snowsql -f snowflake/setup/03_warehouse_configuration.sql
-   snowsql -f snowflake/setup/04_user_roles_permissions.sql
-   snowsql -f snowflake/setup/05_resource_monitors.sql
+   snowsql -f scripts/setup/01_database_setup.sql
+   snowsql -f scripts/setup/02_schema_creation.sql
+   snowsql -f scripts/setup/03_warehouse_configuration.sql
+   snowsql -f scripts/setup/04_user_roles_permissions.sql
+   snowsql -f scripts/setup/05_resource_monitors.sql
    ```
 
 2. **Deploy dbt Models**
@@ -429,7 +429,7 @@ open http://localhost:5000
    ```bash
    snowsql -f snowflake/views/monitoring/vw_data_quality_summary.sql
    snowsql -f snowflake/views/monitoring/vw_performance_monitoring.sql
-   snowsql -f snowflake/streaming/email_alerting_system.sql
+   snowsql -f scripts/streaming/email_alerting_system.sql
    ```
 
 4. **Set up Monitoring**

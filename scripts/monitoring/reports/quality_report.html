@@ -1,0 +1,77 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Data Quality Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            .header { background-color: #f0f0f0; padding: 20px; border-radius: 5px; }
+            .success { color: green; }
+            .failed { color: red; }
+            .warning { color: orange; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Data Quality Report</h1>
+            <p>Generated: 2025-09-20T18:50:09.093232</p>
+        </div>
+        
+        <h2>Summary</h2>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Total Checks</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Passed</td>
+                <td class="success">4</td>
+            </tr>
+            <tr>
+                <td>Failed</td>
+                <td class="failed">0</td>
+            </tr>
+            <tr>
+                <td>Warnings</td>
+                <td class="warning">0</td>
+            </tr>
+        </table>
+        
+        <h2>Check Results</h2>
+        <table>
+            <tr>
+                <th>Check</th>
+                <th>Status</th>
+            </tr>
+    
+            <tr>
+                <td>Dbt Parse</td>
+                <td class="success">passed</td>
+            </tr>
+        
+            <tr>
+                <td>Dbt Test</td>
+                <td class="success">passed</td>
+            </tr>
+        
+            <tr>
+                <td>Sqlfluff</td>
+                <td class="success">passed</td>
+            </tr>
+        
+            <tr>
+                <td>Dependencies</td>
+                <td class="success">passed</td>
+            </tr>
+        
+        </table>
+    </body>
+    </html>
+    
