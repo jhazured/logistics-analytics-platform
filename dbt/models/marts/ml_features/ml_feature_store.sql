@@ -3,7 +3,8 @@
 
 {{ config(
     materialized='table',
-    tags=['ml', 'features', 'feature_store']
+    cluster_by=['customer_id', 'feature_date'],
+    tags=['ml', 'features', 'feature_store', 'ml_optimized']
 ) }}
 
 WITH customer_features AS (

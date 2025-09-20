@@ -1,4 +1,8 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='table',
+    cluster_by=['vehicle_id', 'feature_date'],
+    tags=['ml', 'maintenance', 'predictive', 'ml_optimized']
+) }}
 
 with vehicle_telemetry as (
     select * from {{ ref('fact_vehicle_telemetry') }}

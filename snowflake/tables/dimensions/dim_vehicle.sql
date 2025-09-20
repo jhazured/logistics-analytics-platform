@@ -1,23 +1,23 @@
--- Vehicle Dimension
-CREATE OR REPLACE TABLE dim_vehicle (
+-- Vehicle Dimension (ML-Optimized)
+-- This table is materialized from dbt model: dim_vehicle
+CREATE OR REPLACE TABLE MARTS.DIM_VEHICLE (
     vehicle_id VARCHAR(20) PRIMARY KEY,
+    vehicle_sk VARCHAR(50) NOT NULL,
     vehicle_type VARCHAR(50) NOT NULL,
+    capacity_kg NUMBER(10,2),
+    capacity_m3 NUMBER(10,3),
+    fuel_efficiency_mpg NUMBER(10,3),
     make VARCHAR(50),
     model VARCHAR(100),
-    year NUMBER(4),
-    capacity_kg NUMBER(10),
-    fuel_type VARCHAR(20),
-    fuel_efficiency_l_100km NUMBER(5,1),
-    purchase_date DATE,
-    last_service_date DATE,
-    next_service_due DATE,
-    odometer_km NUMBER(10),
-    condition_score NUMBER(3,1),
-    maintenance_cost_ytd NUMBER(10,2),
-    is_active BOOLEAN DEFAULT TRUE,
-    gps_enabled BOOLEAN DEFAULT FALSE,
-    telematics_enabled BOOLEAN DEFAULT FALSE,
+    model_year NUMBER(4),
+    vehicle_status VARCHAR(20),
+    current_mileage NUMBER(12,0),
+    last_maintenance_date DATE,
+    next_maintenance_date DATE,
+    maintenance_interval_miles NUMBER(10,0),
+    purchase_price NUMBER(15,2),
+    current_value NUMBER(15,2),
     created_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
     updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
 )
-CLUSTER BY (vehicle_type, is_active);
+CLUSTER BY (vehicle_type, vehicle_status);
