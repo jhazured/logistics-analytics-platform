@@ -21,7 +21,7 @@ WITH customer_daily_activity AS (
         SUM(fs.weight_kg) AS daily_weight,
         SUM(fs.volume_m3) AS daily_volume,
         SUM(fs.revenue) AS daily_revenue,
-        AVG(fs.customer_rating) AS daily_avg_rating,
+        AVG(fs.route_efficiency_score) AS daily_avg_rating,
         AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
         COUNT(DISTINCT fs.destination_location_id) AS daily_unique_destinations
         

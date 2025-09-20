@@ -13,7 +13,11 @@ WITH shipment_updates AS (
         planned_duration_minutes,
         actual_duration_minutes,
         is_on_time,
+        on_time_delivery_flag,
         revenue,
+        total_cost_usd,
+        profit_margin_pct,
+        route_efficiency_score,
         METADATA$ACTION as action_type,
         METADATA$ISUPDATE as is_update
     FROM shipments_stream
@@ -23,7 +27,7 @@ real_time_metrics AS (
     -- On-time delivery rate
     SELECT 
         'on_time_delivery_rate' as metric_name,
-        AVG(is_on_time::FLOAT) * 100 as metric_value,
+        AVG(on_time_delivery_flag::FLOAT) * 100 as metric_value,
         OBJECT_CONSTRUCT('timeframe', 'last_hour') as dimensions
     FROM shipment_updates
     
@@ -43,6 +47,24 @@ real_time_metrics AS (
         'revenue_per_hour' as metric_name,
         SUM(revenue) as metric_value,
         OBJECT_CONSTRUCT('timeframe', 'current_hour') as dimensions
+    FROM shipment_updates
+    
+    UNION ALL
+    
+    -- Average profit margin
+    SELECT 
+        'avg_profit_margin' as metric_name,
+        AVG(profit_margin_pct) as metric_value,
+        OBJECT_CONSTRUCT('timeframe', 'last_hour') as dimensions
+    FROM shipment_updates
+    
+    UNION ALL
+    
+    -- Average route efficiency
+    SELECT 
+        'avg_route_efficiency' as metric_name,
+        AVG(route_efficiency_score) as metric_value,
+        OBJECT_CONSTRUCT('timeframe', 'last_hour') as dimensions
     FROM shipment_updates
 )
 SELECT * FROM real_time_metrics;

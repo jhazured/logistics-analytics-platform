@@ -7,7 +7,7 @@ WITH kpi_validation AS (
         actual_delivery_time_hours,
         estimated_delivery_time_hours,
         on_time_delivery_flag,
-        revenue_usd,
+        revenue,
         total_cost_usd,
         profit_margin_pct,
         
@@ -18,7 +18,7 @@ WITH kpi_validation AS (
         END as expected_on_time_flag,
         
         CASE 
-            WHEN total_cost_usd > 0 THEN ((revenue_usd - total_cost_usd) / total_cost_usd) * 100
+            WHEN total_cost_usd > 0 THEN ((revenue - total_cost_usd) / total_cost_usd) * 100
             ELSE 0 
         END as expected_profit_margin,
         
@@ -29,7 +29,7 @@ WITH kpi_validation AS (
         END as invalid_delivery_time,
         
         CASE 
-            WHEN revenue_usd < 0 OR revenue_usd > 1000000 THEN 1 
+            WHEN revenue < 0 OR revenue > 1000000 THEN 1 
             ELSE 0 
         END as invalid_revenue,
         

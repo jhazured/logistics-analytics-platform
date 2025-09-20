@@ -22,7 +22,7 @@ WITH daily_kpis AS (
         
         -- Performance metrics
         AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS daily_on_time_rate,
-        AVG(fs.customer_rating) AS daily_satisfaction_score,
+        AVG(fs.route_efficiency_score) AS daily_satisfaction_score,
         
         -- Financial metrics
         SUM(fs.revenue) AS daily_revenue,

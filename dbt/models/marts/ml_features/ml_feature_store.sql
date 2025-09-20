@@ -73,7 +73,7 @@ shipment_features AS (
         actual_delivery_time_hours,
         estimated_delivery_time_hours,
         on_time_delivery_flag,
-        revenue_usd,
+        revenue,
         total_cost_usd,
         profit_margin_pct,
         route_efficiency_score,
@@ -84,7 +84,7 @@ shipment_features AS (
         EXTRACT(DOW FROM shipment_date) as shipment_day_of_week,
         EXTRACT(MONTH FROM shipment_date) as shipment_month,
         CASE 
-            WHEN EXTRACT(DOW FROM shipment_date) IN (1,7) THEN 1 ELSE 0 
+            WHEN EXTRACT(DOW FROM shipment_date) IN (6,7) THEN 1 ELSE 0 
         END as is_weekend,
         CASE 
             WHEN EXTRACT(HOUR FROM shipment_date) BETWEEN 6 AND 18 THEN 1 ELSE 0 
@@ -167,7 +167,7 @@ aggregated_features AS (
         s.delivery_time_variance_hours,
         s.is_delayed,
         s.on_time_delivery_flag,
-        s.revenue_usd,
+        s.revenue,
         s.total_cost_usd,
         s.profit_margin_pct,
         s.route_efficiency_score,
@@ -197,7 +197,7 @@ aggregated_features AS (
         tf.is_rush_hour,
         
         -- Derived features
-        s.revenue_usd / NULLIF(s.actual_delivery_time_hours, 0) as revenue_per_hour,
+        s.revenue / NULLIF(s.actual_delivery_time_hours, 0) as revenue_per_hour,
         s.total_cost_usd / NULLIF(s.distance_miles, 0) as cost_per_mile,
         s.carbon_emissions_kg / NULLIF(s.distance_miles, 0) as emissions_per_mile,
         

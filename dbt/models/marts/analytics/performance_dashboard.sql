@@ -27,7 +27,7 @@ WITH current_period AS (
         
         -- Performance metrics
         AVG(CASE WHEN fs.is_on_time THEN 1.0 ELSE 0.0 END) AS on_time_rate,
-        AVG(fs.customer_rating) AS avg_customer_satisfaction,
+        AVG(fs.route_efficiency_score) AS avg_customer_satisfaction,
         AVG(fs.actual_duration_minutes / NULLIF(fs.planned_duration_minutes, 1)) AS schedule_adherence,
         
         -- Financial metrics
