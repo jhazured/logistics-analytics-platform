@@ -1,5 +1,14 @@
+{{ config(
+    materialized='incremental',
+    unique_key='shipment_id',
+    on_schema_change='sync_all_columns'
+) }}
+
 with s as (
   select * from {{ ref('stg_shipments') }}
+  {% if is_incremental() %}
+    where shipment_date > (select coalesce(max(shipment_date), '1900-01-01') from {{ this }})
+  {% endif %}
 )
 select
   shipment_id,

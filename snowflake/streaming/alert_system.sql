@@ -19,24 +19,24 @@ INSERT INTO real_time_vehicle_alerts (vehicle_id, alert_type, severity, message)
 WITH telemetry_updates AS (
     SELECT 
         vehicle_id,
-        engine_temperature,
-        fuel_level,
-        speed_mph,
-        location_lat,
-        location_lon,
-        telemetry_timestamp
+        engine_temp_c,
+        fuel_level_percent,
+        speed_kmh,
+        latitude,
+        longitude,
+        timestamp
     FROM vehicle_telemetry_stream
     WHERE METADATA$ACTION = 'INSERT'
 ),
 alerts AS (
-    -- Engine temperature alerts
+    -- Engine temperature alerts (convert C to F for comparison)
     SELECT 
         vehicle_id,
         'ENGINE_OVERHEATING' as alert_type,
-        CASE WHEN engine_temperature > 250 THEN 'CRITICAL' ELSE 'WARNING' END as severity,
-        'Engine temperature: ' || engine_temperature || '°F' as message
+        CASE WHEN engine_temp_c > 100 THEN 'CRITICAL' ELSE 'WARNING' END as severity,
+        'Engine temperature: ' || engine_temp_c || '°C' as message
     FROM telemetry_updates
-    WHERE engine_temperature > 220
+    WHERE engine_temp_c > 90
     
     UNION ALL
     
@@ -44,21 +44,21 @@ alerts AS (
     SELECT 
         vehicle_id,
         'LOW_FUEL' as alert_type,
-        CASE WHEN fuel_level < 10 THEN 'CRITICAL' ELSE 'WARNING' END as severity,
-        'Fuel level: ' || fuel_level || '%' as message
+        CASE WHEN fuel_level_percent < 10 THEN 'CRITICAL' ELSE 'WARNING' END as severity,
+        'Fuel level: ' || fuel_level_percent || '%' as message
     FROM telemetry_updates
-    WHERE fuel_level < 20
+    WHERE fuel_level_percent < 20
     
     UNION ALL
     
-    -- Speeding alerts
+    -- Speeding alerts (convert kmh to mph for comparison)
     SELECT 
         vehicle_id,
         'SPEEDING' as alert_type,
         'WARNING' as severity,
-        'Speed: ' || speed_mph || ' mph' as message
+        'Speed: ' || speed_kmh || ' km/h' as message
     FROM telemetry_updates
-    WHERE speed_mph > 75
+    WHERE speed_kmh > 120
 )
 SELECT * FROM alerts;
 

@@ -1,6 +1,15 @@
+{{ config(
+    materialized='incremental',
+    unique_key='performance_id',
+    on_schema_change='sync_all_columns'
+) }}
+
 with s as (
   select route_id, shipment_id, shipment_date, planned_duration_minutes, actual_duration_minutes, fuel_cost, delivery_status, customer_rating
   from {{ ref('fact_shipments') }}
+  {% if is_incremental() %}
+    where shipment_date > (select coalesce(max(performance_date), '1900-01-01') from {{ this }})
+  {% endif %}
 ), d as (
   select date_key, date from {{ ref('dim_date') }}
 )

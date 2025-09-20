@@ -9,9 +9,11 @@ WITH shipment_updates AS (
     SELECT 
         shipment_id,
         customer_id,
-        actual_delivery_time_hours,
-        on_time_delivery_flag,
-        revenue_usd,
+        -- Use actual columns from current schema
+        planned_duration_minutes,
+        actual_duration_minutes,
+        is_on_time,
+        revenue,
         METADATA$ACTION as action_type,
         METADATA$ISUPDATE as is_update
     FROM shipments_stream
@@ -21,16 +23,16 @@ real_time_metrics AS (
     -- On-time delivery rate
     SELECT 
         'on_time_delivery_rate' as metric_name,
-        AVG(on_time_delivery_flag::FLOAT) * 100 as metric_value,
+        AVG(is_on_time::FLOAT) * 100 as metric_value,
         OBJECT_CONSTRUCT('timeframe', 'last_hour') as dimensions
     FROM shipment_updates
     
     UNION ALL
     
-    -- Average delivery time
+    -- Average delivery time (convert minutes to hours)
     SELECT 
         'avg_delivery_time_hours' as metric_name,
-        AVG(actual_delivery_time_hours) as metric_value,
+        AVG(actual_duration_minutes) / 60.0 as metric_value,
         OBJECT_CONSTRUCT('timeframe', 'last_hour') as dimensions
     FROM shipment_updates
     
@@ -39,7 +41,7 @@ real_time_metrics AS (
     -- Revenue per hour
     SELECT 
         'revenue_per_hour' as metric_name,
-        SUM(revenue_usd) as metric_value,
+        SUM(revenue) as metric_value,
         OBJECT_CONSTRUCT('timeframe', 'current_hour') as dimensions
     FROM shipment_updates
 )
