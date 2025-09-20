@@ -1,5 +1,121 @@
 # Monitoring & Alerting
 
+## 🤖 Automated Monitoring Framework
+
+This platform implements a **comprehensive automated monitoring framework** that provides continuous monitoring, automated alerting, and self-healing capabilities:
+
+### **Automated Data Quality Monitoring**
+
+Continuous monitoring of data quality with automated alerting and issue resolution:
+
+```python
+# Start automated data quality monitoring
+python scripts/automation/data_quality_monitor.py --environment prod
+
+# Monitoring capabilities:
+# - Data freshness checks every 15 minutes
+# - Completeness, accuracy, and consistency monitoring
+# - ML model performance and drift detection
+# - Referential integrity validation
+# - Automated alerting with severity-based notifications
+# - Issue resolution and escalation procedures
+```
+
+### **Automated Performance Monitoring**
+
+Real-time performance monitoring with automated optimization:
+
+```python
+# Start automated performance monitoring
+python scripts/automation/performance_optimizer.py --environment prod
+
+# Performance monitoring:
+# - Query performance analysis and optimization recommendations
+# - Warehouse utilization monitoring with auto-scaling suggestions
+# - Cost optimization with predictive cost analysis
+# - Clustering recommendations for large tables
+# - Automated optimization application where possible
+```
+
+### **ML Model Monitoring**
+
+Automated ML model lifecycle monitoring with drift detection:
+
+```python
+# Start ML lifecycle monitoring
+python scripts/automation/ml_lifecycle_manager.py --environment prod
+
+# ML monitoring capabilities:
+# - Model performance tracking and drift detection
+# - Automated retraining triggers based on performance degradation
+# - A/B testing framework for model comparison
+# - Model registry management with versioning
+# - Automated deployment and rollback capabilities
+```
+
+### **Master Monitoring Orchestrator**
+
+Unified monitoring interface coordinating all monitoring processes:
+
+```python
+# Start master monitoring orchestrator
+python scripts/automation/master_orchestrator.py --action health_check --environment prod
+
+# Orchestrator features:
+# - Unified monitoring interface for all systems
+# - Parallel execution of monitoring tasks
+# - Comprehensive health check system
+# - Automated reporting and recommendations
+# - Continuous monitoring with scheduled runs
+```
+
+### **Real-time Monitoring Dashboard**
+
+Web-based dashboard for real-time monitoring and alert visualization:
+
+```python
+# Start monitoring dashboard
+python scripts/automation/automation_dashboard.py --environment prod --port 5000
+
+# Dashboard features:
+# - Real-time monitoring with live metrics
+# - Alert visualization with severity-based color coding
+# - Performance metrics with trend analysis
+# - ML model status with health indicators
+# - Auto-refresh every 5 minutes
+# - Historical data and trend analysis
+```
+
+### **GitHub Actions Monitoring**
+
+Automated CI/CD monitoring with scheduled checks and manual triggers:
+
+```yaml
+# Automated monitoring pipeline
+# - Scheduled monitoring every 6 hours
+# - Manual triggers for specific monitoring types
+# - Parallel job execution for efficiency
+# - Artifact collection for monitoring results
+# - Notification system for alerts and issues
+```
+
+### **Monitoring Capabilities Summary**
+
+- **🔄 Continuous Monitoring**: Data quality checks every 15 minutes, performance optimization every hour
+- **⚡ Automated Optimization**: Query performance, cost reduction, warehouse scaling, table clustering
+- **🤖 ML Monitoring**: Model performance, drift detection, automated retraining, A/B testing
+- **🚀 Deployment Monitoring**: Environment-specific monitoring with automated testing and rollback
+- **📊 Alerting & Notifications**: Real-time dashboard, email notifications, alert history tracking
+- **🏥 Health Checks**: Comprehensive system health monitoring with automated recovery
+
+### **Enterprise-Grade Monitoring Features**
+
+- **100% Automated**: All monitoring processes are automated with self-healing capabilities
+- **Predictive**: Proactive monitoring and optimization with ML-driven insights
+- **Scalable**: Handles growth and complexity automatically with dynamic resource management
+- **Observable**: Complete visibility into all operations with comprehensive logging and monitoring
+- **Reliable**: Robust error handling, recovery mechanisms, and automated rollback capabilities
+
 ## Real-time Monitoring
 
 ### Data Quality Monitoring

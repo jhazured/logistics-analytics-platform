@@ -41,7 +41,24 @@ Before setting up the platform, ensure you have:
    dbt deps
    ```
 
-5. **Generate Sample Data**
+5. **Setup Automation Framework**
+   ```bash
+   # Install automation dependencies
+   pip install pandas numpy scikit-learn joblib
+   pip install snowflake-connector-python snowflake-snowpark-python
+   pip install flask schedule
+   
+   # Configure automation environment variables
+   export SNOWFLAKE_ACCOUNT="your_account"
+   export SNOWFLAKE_USER="your_user"
+   export SNOWFLAKE_PASSWORD="your_password"
+   export SNOWFLAKE_ROLE="your_role"
+   export SNOWFLAKE_WAREHOUSE="your_warehouse"
+   export SNOWFLAKE_DATABASE="LOGISTICS_DW_PROD"
+   export SNOWFLAKE_SCHEMA="MONITORING"
+   ```
+
+6. **Generate Sample Data**
    ```bash
    # Create virtual environment
    python3 -m venv venv
@@ -223,6 +240,97 @@ GRANT USAGE ON SCHEMA LOGISTICS_DW_PROD.STAGING TO ROLE DATA_ENGINEER;
 GRANT USAGE ON SCHEMA LOGISTICS_DW_PROD.MARTS TO ROLE DATA_ANALYST;
 GRANT USAGE ON SCHEMA LOGISTICS_DW_PROD.ML_FEATURES TO ROLE ML_ENGINEER;
 GRANT USAGE ON SCHEMA LOGISTICS_DW_PROD.ANALYTICS TO ROLE DATA_ANALYST;
+```
+
+## 🤖 Automation Framework Setup
+
+### 1. Install Automation Dependencies
+
+```bash
+# Install Python packages for automation
+pip install pandas numpy scikit-learn joblib
+pip install snowflake-connector-python snowflake-snowpark-python
+pip install flask schedule
+
+# Install dbt packages
+pip install dbt-snowflake
+```
+
+### 2. Configure Automation Environment
+
+```bash
+# Set automation environment variables
+export SNOWFLAKE_ACCOUNT="your_account"
+export SNOWFLAKE_USER="your_user"
+export SNOWFLAKE_PASSWORD="your_password"
+export SNOWFLAKE_ROLE="your_role"
+export SNOWFLAKE_WAREHOUSE="COMPUTE_WH_XS"
+export SNOWFLAKE_DATABASE="LOGISTICS_DW_PROD"
+export SNOWFLAKE_SCHEMA="MONITORING"
+```
+
+### 3. Setup Automation Scripts
+
+```bash
+# Make automation scripts executable
+chmod +x scripts/automation/*.py
+
+# Test automation connectivity
+python scripts/automation/master_orchestrator.py --action health_check --environment dev
+```
+
+### 4. Configure GitHub Actions
+
+```yaml
+# Add to .github/workflows/automation.yml
+# Configure secrets in GitHub repository settings:
+# - SNOWFLAKE_ACCOUNT
+# - SNOWFLAKE_USER
+# - SNOWFLAKE_PASSWORD
+# - SNOWFLAKE_ROLE
+# - SNOWFLAKE_WAREHOUSE
+```
+
+### 5. Start Automation Services
+
+```bash
+# Start data quality monitoring
+python scripts/automation/data_quality_monitor.py --environment prod &
+
+# Start performance optimizer
+python scripts/automation/performance_optimizer.py --environment prod &
+
+# Start ML lifecycle manager
+python scripts/automation/ml_lifecycle_manager.py --environment prod &
+
+# Start master orchestrator
+python scripts/automation/master_orchestrator.py --action monitor --environment prod &
+
+# Start monitoring dashboard
+python scripts/automation/automation_dashboard.py --environment prod --port 5000 &
+```
+
+### 6. Verify Automation Setup
+
+```bash
+# Run comprehensive health check
+python scripts/automation/master_orchestrator.py --action health_check --environment prod
+
+# Check automation status
+curl http://localhost:5000/api/health
+
+# View automation dashboard
+open http://localhost:5000
+```
+
+### 7. Automation Configuration
+
+```python
+# Configure automation thresholds in scripts/automation/
+# - data_quality_monitor.py: Quality thresholds and alert settings
+# - performance_optimizer.py: Performance thresholds and optimization settings
+# - ml_lifecycle_manager.py: ML model thresholds and retraining settings
+# - master_orchestrator.py: Orchestration settings and schedules
 ```
 
 ## Fivetran Setup

@@ -10,6 +10,7 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [.gitignore](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/.gitignore)
 
 ## GitHub Workflows
+- [automation.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/.github/workflows/automation.yml)
 - [dbt-docs.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/.github/workflows/dbt-docs.yml)
 - [dbt.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/.github/workflows/dbt.yml)
 - [dbt_ci_cd.yml](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/.github/workflows/dbt_ci_cd.yml)
@@ -110,8 +111,22 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 - [locations_snapshot.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/snapshots/locations_snapshot.sql)
 
 ## Scripts
+### Setup Scripts
 - [configure_environment.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/setup/configure_environment.sh)
+
+### Deployment Scripts
 - [deploy_dbt_models.sh](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/deployment/deploy_dbt_models.sh)
+
+### Automation Framework
+- [auto_deployment.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/auto_deployment.py)
+- [data_quality_monitor.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/data_quality_monitor.py)
+- [performance_optimizer.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/performance_optimizer.py)
+- [ml_lifecycle_manager.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/ml_lifecycle_manager.py)
+- [master_orchestrator.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/master_orchestrator.py)
+- [automation_dashboard.py](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/automation_dashboard.py)
+
+### Automation Templates
+- [automation_dashboard.html](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/scripts/automation/templates/automation_dashboard.html)
 
 ## dbt Business Rules Tests
 - [test_analytics_view_consistency.sql](https://raw.githubusercontent.com/jhazured/logistics-analytics-platform/refs/heads/main/dbt/tests/business_rules/test_analytics_view_consistency.sql)
@@ -247,7 +262,7 @@ This document contains raw GitHub URLs for all files in the logistics-analytics-
 
 ---
 
-**Total Files:** 150+ files across the entire logistics analytics platform
+**Total Files:** 160+ files across the entire logistics analytics platform
 
 **Repository:** [jhazured/logistics-analytics-platform](https://github.com/jhazured/logistics-analytics-platform)
 
