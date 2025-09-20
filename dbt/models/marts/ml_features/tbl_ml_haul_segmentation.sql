@@ -11,18 +11,39 @@
 
 WITH shipment_base AS (
     SELECT 
-        fs.*,
+        -- Fact table columns (primary data source)
+        fs.shipment_id,
+        fs.shipment_date,
+        fs.customer_id,
+        fs.vehicle_id,
+        fs.route_id,
+        fs.origin_location_id,
+        fs.destination_location_id,
+        fs.distance_km,
+        fs.weight_kg,
+        fs.priority_level,
+        fs.planned_duration_minutes,
+        fs.actual_duration_minutes,
+        fs.is_on_time,
+        fs.route_efficiency_score as customer_rating,
+        fs.fuel_cost,
+        fs.delivery_cost,
+        fs.revenue,
+        fs.vehicle_type,
+        
+        -- Dimension context (for additional features)
         dl_origin.location_id AS origin_city,
         dl_dest.location_id AS destination_city,
         null as route_type,
         null as complexity_score,
         dc.customer_tier as volume_segment,
         dc.customer_type as service_level,
-        dv.vehicle_type,
         dv.capacity_kg,
         dd.is_weekend,
         null as season,
-        null as logistics_day_type
+        null as logistics_day_type,
+        null as hour_of_day,
+        dd.day_of_week
     FROM {{ ref('tbl_fact_shipments') }} fs
     JOIN {{ ref('tbl_dim_location') }} dl_origin ON fs.origin_location_id = dl_origin.location_id
     JOIN {{ ref('tbl_dim_location') }} dl_dest ON fs.destination_location_id = dl_dest.location_id
@@ -69,13 +90,13 @@ SELECT
     priority_level,
     
     -- Vehicle features
-    dv.vehicle_type,
-    dv.capacity_kg,
-    fs.weight_kg / NULLIF(dv.capacity_kg, 0) AS capacity_utilization,
+    vehicle_type,
+    capacity_kg,
+    weight_kg / NULLIF(capacity_kg, 0) AS capacity_utilization,
     
     -- Temporal features
-    EXTRACT(hour FROM shipment_date) AS hour_of_day,
-    EXTRACT(dayofweek FROM shipment_date) AS day_of_week,
+    hour_of_day,
+    day_of_week,
     is_weekend,
     season,
     logistics_day_type,

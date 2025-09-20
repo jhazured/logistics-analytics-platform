@@ -439,9 +439,5 @@ route_rolling AS (
     FROM route_daily_performance rdp
 )
 
--- Union all rolling analytics
+-- Simplified rolling analytics (customer focus for now)
 SELECT * FROM customer_rolling
-UNION ALL
-SELECT * FROM vehicle_rolling
-UNION ALL
-SELECT * FROM route_rolling
